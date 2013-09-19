@@ -39,47 +39,44 @@
 		<div class="xd-map-wall" masonry="{ columnWidth: '.grid-sizer' }">
 			<div class="grid-sizer"></div>
 
-			<div masonry-brick>
+			<div masonry-brick ng-repeat="map in maps track by map.id">
 				<article class="xd-map-wall-card">
-					map1
-				</article>
-			</div>
-
-			<div masonry-brick>
-				<article class="xd-map-wall-card">
-					<img src="http://placehold.it/200x300" class="image" alt="">
+					<a ng-href="/graph/{{map.id}}"><img src="{{map.thumbnailUrl}}" class="image" alt=""></a>
 
 					<header class="content">
-						<h2 class="title">A title</h2>
-						<div class="meta">by <span class="author">Author Name</span></div>
+						<h2 class="title" ng-switch="!!map.title">
+							<a ng-href="/graph/{{map.id}}" ng-switch-when="true" ng-bind="map.title" class="custom-title"></a>
+							<a ng-href="/graph/{{map.id}}" ng-switch-default class="node-title">
+								<span class="sep">from</span>
+								<span ng-bind="map.nodes[0]">&ndash;</span>
+								<span class="sep">to</span>
+								<span ng-bind="map.nodes[map.nodes.length-1]">&ndash;</span>
+							</a>
+						</h2>
+						<div class="meta" ng-if="map.authorName">by <span class="author" ng-bind="map.authorName">&ndash;</span></div>
 					</header>
 
-					<ul class="nav nav-line">
-						<li class="active"><a href="#">About</a></li>
-						<li><a href="#">Share</a></li>
+					<ul class="nav nav-line" masonry-layout-on="contentTab">
+						<li ng-class="{ 'active':!contentTab }"><a href="" ng-click="contentTab=null">About</a></li>
+						<li ng-class="{ 'active':contentTab=='share' }"><a href="" ng-click="contentTab='share'">Share</a></li>
 					</ul>
 
-					<div class="content">
-						<p>Tiger| Bengali Tiger | Puma| Faelix | Another type of Tiger| Syberian tiger and other #28 topics.</p>
+					<div class="tabbed content" ng-switch="contentTab">
+						<p ng-switch-default ng-init="nodes = (map.nodes|limitTo:6)">
+							<span ng-repeat="node in nodes track by $index" ng-bind-template="{{node}}{{$middle&&' | '||' '}}"></span>
+							<span ng-if="nodes.length < map.nodes.length">
+								<span class="sep">and other</span>
+								<span ng-bind-template="#{{map.nodes.length - nodes.length}}"></span>
+								<span class="sep">topics.</span>
+							</span>
+						</p>
+						<p ng-switch-when="share">
+							share widgets here
+						</p>
 					</div>
 
-					<div class="flipside content">
-						<p>This a short description of the map when present.</p>
-						<p>Descriptions are visible on mouseover.</p>
-						<p>Descriptions are  currently available only on featured maps, the exaustive maps selected by XD. Featured maps are also result for a query for a given topic. A too long description is currently  shortened by [...]; later on it may be paginated within the box either external tooltip when clicking on description icon.</p>
+					<div class="flipside content" ng-bind="map.description">
 					</div>
-				</article>
-			</div>
-
-			<div masonry-brick>
-				<article class="xd-map-wall-card">
-					map2
-				</article>
-			</div>
-
-			<div masonry-brick>
-				<article class="xd-map-wall-card">
-					map3
 				</article>
 			</div>
 

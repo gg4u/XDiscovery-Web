@@ -1,0 +1,22 @@
+[
+	{
+		"id": "1",
+		"title": "Una mappa delle tigri",
+		"thumbnailUrl": "http://placehold.it/200x300&text=Tigri",
+		"authorName": "Author Name",
+		"nodes": ["Tiger", "Bengali Tiger" , "Puma", "Faelix" , "Another type of Tiger", "Syberian tiger", "Tiger", "Bengali Tiger" , "Puma", "Faelix" , "Another type of Tiger", "Syberian tiger"]
+	},
+	{
+		"id": "2",
+		"thumbnailUrl": "http://placehold.it/200x300&text=Math",
+		"authorName": "Author Name",
+		"nodes": ["Tango", "Tango (dance)", "Milonga", "Habanera (music)", "Jazz", "Piero della Francesca e Francesca Neri in Dante approached by Virgilio", "Interstellar overdrive (song)", "Tiger", "Bengali Tiger" , "Puma", "Faelix", "Jim Morrison"]
+	},
+	{
+		"id": "3",
+		"title": "118 chemical elements",
+		"thumbnailUrl": "http://placehold.it/200x300&text=Chem",
+		"authorName": "Author Name",
+		"nodes": ["Tiger", "Bengali Tiger" , "Puma", "Faelix" , "Another type of Tiger", "Syberian tiger", "Tiger", "Bengali Tiger" , "Puma", "Faelix" , "Another type of Tiger", "Syberian tiger"]
+	}
+]

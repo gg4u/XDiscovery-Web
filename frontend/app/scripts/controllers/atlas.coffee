@@ -2,7 +2,9 @@
 
 app = angular.module('xdiscoveryApp')
 
-app.controller 'AtlasCtrl', ($scope) ->
+app.controller 'AtlasCtrl', ($scope, xDiscoveryApi) ->
+	# Gather maps
+	$scope.maps = xDiscoveryApi.maps.query()
 
 	# Setup select2
 	# TODO this should be a directive

@@ -1,9 +1,11 @@
 "use strict"
-app = angular.module("xdiscoveryApp", ['ngRoute', 'ngAnimate'])
+app = angular.module("xdiscoveryApp", ['ngRoute', 'ngAnimate', 'ngResource'])
 
 app.config ($routeProvider, $locationProvider) ->
+	# Setup HTML5 push state
 	$locationProvider.html5Mode(yes).hashPrefix('!')
 
+	# Setup routes
 	$routeProvider
 
 	.when '/',
@@ -15,3 +17,7 @@ app.config ($routeProvider, $locationProvider) ->
 		controller: 'AtlasCtrl'
 
 	.otherwise redirectTo: "/"
+
+# App configuration
+app.constant 'config',
+	mapsApiUrl: '/test_data.json'

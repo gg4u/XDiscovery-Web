@@ -68,8 +68,39 @@
 		width: 100%;
 	}
 
+	.title {
+		margin-top: 0;
+		text-align: center;
+
+		> a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		.sep {
+			font-size: 0.5em;
+		}
+
+		.custom-title {
+			&:before { content: '“'; }
+			&:after { content: '”'; }
+		}
+	}
+
+	.meta {
+		text-align: center;
+	}
+
 	.content {
 		padding: 1.5em;
+
+		&.tabbed {
+			border-top: 1px solid $gray-light;
+		}
+
+		.sep {
+			color: $gray-light;
+		}
 	}
 
 	.flipside {
