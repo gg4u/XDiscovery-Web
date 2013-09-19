@@ -1,0 +1,20 @@
+.nav-line {
+	text-align: center;
+
+	> li {
+		display: inline-block;
+		border-bottom: 2px solid transparent;
+
+		a {
+			color: $text-color;
+		}
+
+		&:hover {
+			border-color: $gray-lighter;
+		}
+
+		&.active {
+			border-color: $component-active-bg;
+		}
+	}
+}
