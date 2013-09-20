@@ -16,7 +16,6 @@ app.service 'xDiscoveryApi', ($resource, config, $rootScope) ->
 					@isLoadingMore = yes
 					mapsApi.query { page: @lastFetchedPage + 1 }, (data) =>
 						if data?.length
-							d.id += @lastFetchedPage for d in data # DEBUG
 							@results = @results.concat data
 							@lastFetchedPage += 1
 						else
