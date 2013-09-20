@@ -9,14 +9,18 @@ app.config ($routeProvider, $locationProvider) ->
 	$routeProvider
 
 	.when '/',
-		templateUrl: "views/main.html"
+		templateUrl: "/views/main.html"
 		controller: "MainCtrl"
 
 	.when '/atlas',
-		templateUrl: 'views/atlas.html',
+		templateUrl: '/views/atlas.html',
 		controller: 'AtlasCtrl'
 
-	.otherwise redirectTo: "/"
+	.when '/graph/:id',
+		templateUrl: '/views/graph.html',
+		controller: 'GraphCtrl'
+
+	.otherwise redirectTo: '/'
 
 # App configuration
 app.constant 'config',
