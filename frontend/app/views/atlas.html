@@ -32,14 +32,14 @@
 
 <section class="xd-page-content xd-atlas-content">
 
-	<img class="xd-atlas-emotional-bg" src="http://placehold.it/200" alt="">
+	<img ng-if="false" class="xd-atlas-emotional-bg" src="http://placehold.it/200" alt="">
 
 	<div class="container">
 
-		<div class="xd-map-wall" masonry="{ columnWidth: '.grid-sizer' }">
+		<div class="xd-map-wall" masonry="{ columnWidth: '.grid-sizer' }" ng-cloak>
 			<div class="grid-sizer"></div>
 
-			<div masonry-brick ng-repeat="map in maps track by map.id">
+			<div masonry-brick ng-repeat="map in mapSearch.results track by map.id">
 				<article class="xd-map-wall-card">
 					<a ng-href="/graph/{{map.id}}"><img src="{{map.thumbnailUrl}}" class="image" alt=""></a>
 
@@ -77,10 +77,15 @@
 
 					<div class="flipside content" ng-bind="map.description">
 					</div>
+
+					<footer class="content social-footer">
+						social widgets
+					</footer>
 				</article>
 			</div>
 
 		</div>
+		<div class="loading" ng-if="mapSearch.hasMore" in-view="$inview&&mapSearch.loadMore()"></div>
 
 	</div>
 </section>

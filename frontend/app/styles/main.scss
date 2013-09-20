@@ -19,3 +19,7 @@ $portrait: "only screen and (orientation: portrait)";
 
 @import "modules";
 @import "themes";
+
+[ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none;
+}
