@@ -17,9 +17,6 @@ $large: "only screen and (min-width: #{$screen-lg})";
 $landscape: "only screen and (orientation: landscape)";
 $portrait: "only screen and (orientation: portrait)";
 
+@import "base";
 @import "modules";
 @import "themes";
-
-[ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none;
-}

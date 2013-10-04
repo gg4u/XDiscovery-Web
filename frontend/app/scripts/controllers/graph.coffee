@@ -1,9 +1,248 @@
 'use strict'
 
 angular.module('xdiscoveryApp')
-  .controller 'GraphCtrl', ($scope) ->
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate'
-      'AngularJS'
-      'Karma'
-    ]
+	.controller 'GraphCtrl', ($scope) ->
+		$scope.pageClass = ['graph']
+		$scope.map = {
+			"net": "numero rete api",
+			"name": "",
+			"shared": 1,
+			"author": {
+					"name": "",
+					"surname": ""
+			},
+			"title": "",
+			"description": "",
+			"thumbnail": {
+					"tag": "lista nome composto dai primi 3 nodi pagerank - es: 'About_Titolo_wiki1, Titolo_wiki2, ...,Titolo_wikiN'",
+					"name": "+name_json_+lista concatenata tag+ '.png' "
+			},
+			"graph": [
+					{
+							"source": 36896,
+							"target": 1635424,
+							"direction": 0,
+							"distance": 20
+					},
+					{
+							"source": 36896,
+							"target": 45609,
+							"direction": 0,
+							"distance": 17
+					},
+					{
+							"source": 36896,
+							"target": 28627592,
+							"direction": 0,
+							"distance": 14
+					},
+					{
+							"source": 36896,
+							"target": 44303,
+							"direction": 0,
+							"distance": 14
+					},
+					{
+							"source": 36896,
+							"target": 28652225,
+							"direction": 0,
+							"distance": 13
+					},
+					{
+							"source": 44303,
+							"target": 31531845,
+							"direction": 0,
+							"distance": 17
+					},
+					{
+							"source": 44303,
+							"target": 3741743,
+							"direction": 0,
+							"distance": 15
+					},
+					{
+							"source": 44303,
+							"target": 8940033,
+							"direction": 0,
+							"distance": 15
+					},
+					{
+							"source": 44303,
+							"target": 244841,
+							"direction": 0,
+							"distance": 14
+					},
+					{
+							"source": 44303,
+							"target": 165456,
+							"direction": 0,
+							"distance": 13
+					},
+					{
+							"source": 44303,
+							"target": 5451650,
+							"direction": 0,
+							"distance": 13
+					},
+					{
+							"source": 44303,
+							"target": 595962,
+							"direction": 0,
+							"distance": 13
+					},
+					{
+							"source": 44303,
+							"target": 7589080,
+							"direction": 0,
+							"distance": 13
+					},
+					{
+							"source": 44303,
+							"target": 45609,
+							"direction": 0,
+							"distance": 12
+					},
+					{
+							"source": 44303,
+							"target": 5930319,
+							"direction": 0,
+							"distance": 12
+					},
+					{
+							"source": 44303,
+							"target": 17641915,
+							"direction": 0,
+							"distance": 11
+					},
+					{
+							"source": 45609,
+							"target": 23275627,
+							"direction": 0,
+							"distance": 17
+					},
+					{
+							"source": 45609,
+							"target": 8010676,
+							"direction": 0,
+							"distance": 16
+					}
+			],
+			"pagerank": [
+					{
+							"id": "44303",
+							"title": "Leopard",
+							"weight": "148"
+					},
+					{
+							"id": "36896",
+							"title": "Lion",
+							"weight": "78"
+					},
+					{
+							"id": "45609",
+							"title": "Cheetah",
+							"weight": "33"
+					},
+					{
+							"id": "1635424",
+							"title": "Asiatic lion",
+							"weight": "0"
+					},
+					{
+							"id": "28627592",
+							"title": "Transvaal lion",
+							"weight": "0"
+					},
+					{
+							"id": "28652225",
+							"title": "Southwest African lion",
+							"weight": "0"
+					},
+					{
+							"id": "31531845",
+							"title": "Indochinese leopard",
+							"weight": "0"
+					},
+					{
+							"id": "3741743",
+							"title": "African leopard",
+							"weight": "0"
+					},
+					{
+							"id": "8940033",
+							"title": "North China leopard",
+							"weight": "0"
+					},
+					{
+							"id": "244841",
+							"title": "Felis",
+							"weight": "0"
+					},
+					{
+							"id": "165456",
+							"title": "Big cat",
+							"weight": "0"
+					},
+					{
+							"id": "5451650",
+							"title": "Arabian leopard",
+							"weight": "0"
+					},
+					{
+							"id": "595962",
+							"title": "Striped hyena",
+							"weight": "0"
+					},
+					{
+							"id": "7589080",
+							"title": "Indian leopard",
+							"weight": "0"
+					},
+					{
+							"id": "5930319",
+							"title": "Sri Lankan leopard",
+							"weight": "0"
+					},
+					{
+							"id": "17641915",
+							"title": "Javan leopard",
+							"weight": "0"
+					},
+					{
+							"id": "23275627",
+							"title": "Lycaon pictus",
+							"weight": "0"
+					},
+					{
+							"id": "8010676",
+							"title": "Northwest African cheetah",
+							"weight": "0"
+					}
+			],
+			"path": [
+					{
+							"source": 36896,
+							"target": 44303,
+							"direction": 0,
+							"distance": 20
+					},
+					{
+							"source": 44303,
+							"target": 17641915,
+							"direction": 0,
+							"distance": 15
+					}
+			],
+			"startNode": {
+					"id": "36896",
+					"title": "Lion"
+			},
+			"endNode": {
+					"id": "45609",
+					"title": "Cheetah"
+			},
+			"coordinates": {
+					"longitude": "13.772362",
+					"latitude": "45.659194"
+			}
+		}
