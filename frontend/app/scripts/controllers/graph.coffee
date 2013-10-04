@@ -3,6 +3,87 @@
 angular.module('xdiscoveryApp')
 	.controller 'GraphCtrl', ($scope) ->
 		$scope.pageClass = ['graph']
+		$scope.vivagraph =
+			nodeSize: 24
+			linkColors: [
+				"#ed13d1"
+				"#ed1393"
+				"#f30b6d"
+				"#ff0b6d"
+				"#f20bdd"
+				"#cc0000"
+				"#cccccc"
+				"#f20b6d"
+				"#f20b6d"
+				"#f20b6d"
+			]
+			layout: (graph) -> Viva.Graph.Layout.forceDirected graph,
+				#springLength : 35
+				springLength : 105
+				#springCoeff : 0.00055
+				springCoeff : 0.0000055
+				#dragCoeff : 0.09
+				dragCoeff : 0.01
+				#gravity : -1
+				gravity : -2.5
+			graphics: (graph) -> Viva.Graph.View.svgGraphics()
+				.node((node) ->
+					ui = Viva.Graph.svg("g")
+					svgText = Viva.Graph.svg("text")
+						.attr("y", "-30px")
+						.attr("text-anchor", "middle")
+						.attr("x", $scope.vivagraph.nodeSize / 2)
+						.text(node.title ? '')
+					circle = Viva.Graph.svg("circle")
+						.attr("r", 10)
+						.attr("cx", $scope.vivagraph.nodeSize / 2)
+						.attr("cy", $scope.vivagraph.nodeSize / 2)
+						.attr("stroke", "#fff")
+						.attr("stroke-width", "1.5px")
+						.attr("fill", "#f5f5f5")
+					if node.thumbnail?.source?
+						img = Viva.Graph.svg("image")
+							.attr("width", node.thumbnail.width)
+							.attr("height", node.thumbnail.height)
+						img.link node.thumbnail.source
+						ui.append("defs").append("pattern")
+							.attr("id", "nodeImg")
+							.attr("patternUnits", "userSpaceOnUse")
+							.attr("x", $scope.vivagraph.nodeSize / 2 - imgW / 2 + "px")
+							.attr("y", $scope.vivagraph.nodeSize / 2 - imgH / 2 + "px")
+							.attr("width", imgW)
+							.attr("height", imgH)
+							.append img
+						ui.append("circle")
+							.attr("fill", "url(#nodeImg)")
+							.attr("stroke", "#e7e7e7")
+							.attr("stroke-width", "3px")
+							.attr("r", 40)
+							.attr("cx", $scope.vivagraph.nodeSize / 2)
+							.attr("cy", $scope.vivagraph.nodeSize / 2)
+						ui.append svgText
+					else
+						ui.append circle
+						ui.append svgText
+					# $(ui).hover (->
+					# ), ->
+
+					# $(ui).click ->
+					# 	url = "http://en.wikipedia.org/wiki/" + node.id
+					# 	window.open url, node.id
+					# 	getChildren graph, url, node.id
+					ui)
+				.link (link) ->
+					groupId = Math.round(parseFloat(link.data * 100) / 10)
+					groupId = if groupId then groupId - 1 else 100
+					weight = Math.round(link.data * link.data * 30)
+					weight = 1 if weight < 1
+					Viva.Graph.svg("line")
+						.attr("stroke", $scope.vivagraph.linkColors[groupId] ? 'black')
+						.attr("stroke-width", weight)
+				.placeNode (nodeUI, pos) ->
+					nodeUI.attr "transform", "translate(#{(pos.x - $scope.vivagraph.nodeSize / 2)}, #{(pos.y - $scope.vivagraph.nodeSize / 2)})"
+
 		$scope.map = {
 			"net": "numero rete api",
 			"name": "",
@@ -17,7 +98,7 @@ angular.module('xdiscoveryApp')
 					"tag": "lista nome composto dai primi 3 nodi pagerank - es: 'About_Titolo_wiki1, Titolo_wiki2, ...,Titolo_wikiN'",
 					"name": "+name_json_+lista concatenata tag+ '.png' "
 			},
-			"graph": [
+			"links": [
 					{
 							"source": 36896,
 							"target": 1635424,
@@ -127,98 +208,80 @@ angular.module('xdiscoveryApp')
 							"distance": 16
 					}
 			],
-			"pagerank": [
-					{
-							"id": "44303",
+			"nodes": {
+					"44303": {
 							"title": "Leopard",
 							"weight": "148"
 					},
-					{
-							"id": "36896",
+					"36896": {
 							"title": "Lion",
 							"weight": "78"
 					},
-					{
-							"id": "45609",
+					"45609": {
 							"title": "Cheetah",
 							"weight": "33"
 					},
-					{
-							"id": "1635424",
+					"1635424": {
 							"title": "Asiatic lion",
 							"weight": "0"
 					},
-					{
-							"id": "28627592",
+					"28627592": {
 							"title": "Transvaal lion",
 							"weight": "0"
 					},
-					{
-							"id": "28652225",
+					"28652225": {
 							"title": "Southwest African lion",
 							"weight": "0"
 					},
-					{
-							"id": "31531845",
+					"31531845": {
 							"title": "Indochinese leopard",
 							"weight": "0"
 					},
-					{
-							"id": "3741743",
+					"3741743": {
 							"title": "African leopard",
 							"weight": "0"
 					},
-					{
-							"id": "8940033",
+					"8940033": {
 							"title": "North China leopard",
 							"weight": "0"
 					},
-					{
-							"id": "244841",
+					"244841": {
 							"title": "Felis",
 							"weight": "0"
 					},
-					{
-							"id": "165456",
+					"165456": {
 							"title": "Big cat",
 							"weight": "0"
 					},
-					{
-							"id": "5451650",
+					"5451650": {
 							"title": "Arabian leopard",
 							"weight": "0"
 					},
-					{
-							"id": "595962",
+					"595962": {
 							"title": "Striped hyena",
 							"weight": "0"
 					},
-					{
-							"id": "7589080",
+					"7589080": {
 							"title": "Indian leopard",
 							"weight": "0"
 					},
-					{
-							"id": "5930319",
+					"5930319": {
 							"title": "Sri Lankan leopard",
 							"weight": "0"
 					},
-					{
-							"id": "17641915",
+					"17641915": {
 							"title": "Javan leopard",
 							"weight": "0"
 					},
-					{
-							"id": "23275627",
+					"23275627": {
 							"title": "Lycaon pictus",
 							"weight": "0"
 					},
-					{
-							"id": "8010676",
+					"8010676": {
 							"title": "Northwest African cheetah",
 							"weight": "0"
 					}
-			],
+			},
 			"path": [
 					{
 							"source": 36896,

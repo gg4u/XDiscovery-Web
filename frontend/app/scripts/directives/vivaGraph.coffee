@@ -17,49 +17,41 @@ app.directive 'vivaGraph', ->
 	replace: yes
 	scope:
 		name: '@'
+		links: '='
 		nodes: '='
 		layout: '&'
 		graphics: '&'
 	link: (scope, element, attrs) ->
 		graph = Viva.Graph.graph()
 		graph.Name = scope.name
-		# Add graph nodes
-		scope.$watchCollection 'nodes', (nodes, oldNodes) ->
-			oldNodes = [] if angular.equals(nodes, oldNodes)
-			for n in nodes when oldNodes.indexOf(n) < 0
-				dist = nodes.distance
-				dist = 0.5 if dist < 0.5
-				graph.addLink(n.source, n.target, dist)
-		# Generate layout
-		layout = scope.layout({graph: graph})
-		unless layout?
-			layout = Viva.Graph.Layout.forceDirected graph,
-				#springLength : 35
-				springLength : 105
-				#springCoeff : 0.00055
-				springCoeff : 0.0000055
-				#dragCoeff : 0.09
-				dragCoeff : 0.01
-				#gravity : -1
-				gravity : -2.5
-		# Generate graphics
-		graphics = scope.graphics()
-		unless graphics?
-			graphics = Viva.Graph.View.cssGraphics();
-			graphics.node (node) ->
-				nodeUI = document.createElement('div')
-				nodeUI.setAttribute('class', 'node')
-				nodeUI.title = node.data.name
-				groupId = node.data.group
-				nodeUI.style.background = colorsNode[groupId ? groupId - 1 : 2]
-				nodeUI
+		# Decorate graph nodes
+		decorateNodes = ->
+			return unless scope.nodes?
+			graph.forEachNode (n) ->
+				angular.extend n, scope.nodes[n.id] if scope.nodes[n.id]?
+				no
+		scope.$watchCollection 'nodes', (nodes) ->
+			do decorateNodes
+		# Add graph links
+		scope.$watchCollection 'links', (links, oldLinks) ->
+			oldLinks = [] if angular.equals(links, oldLinks)
+			do graph.beginUpdate
+			for l in links when oldLinks.indexOf(l) < 0
+				dist = l.distance / 100.0
+				dist = 0.05 if dist < 0.05
+				graph.addLink(l.source, l.target, dist)
+			do decorateNodes
+			do graph.endUpdate
+		# Pagerank
 		# Graph renderer
 		renderer = Viva.Graph.View.renderer graph,
 			container: element[0]
-			layout: layout
-			# graphics: graphics
+			layout: scope.layout '$graph': graph
+			graphics: scope.graphics '$graph': graph
 			prerender: 20
 			renderLinks: yes
 		# Run the graph
-		renderer.run(500)
+		renderer.run()
+		console.log 'graph', graph
+		console.log 'renderer', renderer
 
