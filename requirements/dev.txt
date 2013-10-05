@@ -1,0 +1,3 @@
+-r  common.txt
+fabric==1.8
+nodeenv==0.7.0

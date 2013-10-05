@@ -1,0 +1,6 @@
+-r requirements/heroku.txt
+# for heroku to bootstrap memcache
+#pylibmc==1.2.2
+#django-pylibmc-sasl==0.2.4
+pylibmc==1.2.3
+django-pylibmc==0.5

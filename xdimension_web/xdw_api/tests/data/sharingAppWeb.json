@@ -1,0 +1,107 @@
+{
+    "map": {
+       "netName":"#numero rete api xd",
+        "title": {
+            "default": {
+                "from": "Titolo Wikipedia del nodo di partenza",
+                "to": "Titolo del nodo di arrivo del path"
+            },
+            "edited": "Empty if not present; if present the edited title is shown instead of the default one"
+        },
+        "creator": {
+            "default": "Anonymus",
+            "author": "Nome scelto dall'autore se ha voluto, il campo è vuoto di default, se è vuoto si mostra il default",
+            "editor": [
+                "Lista vuota",
+                "potrà poi contenere N nomi - e.g. XD che prende qualche app fatta dagli utenti per elaborarla"
+            ],
+            "geo": "coordinates where the map has been created - coordinates of the device; empty if user does not allow: Nota:il formato di come salvare le coordinate è scelto da 3dGIS "
+        },
+        "description": "Empty field by default - Le description potranno essere aggiunte o modificate in seguito via web, al momento disponibili solo per le featured create da XD",
+        "featured": 0,
+        "language": "en",
+        "upRating":"# of times map has been up voted",
+        "downRating":"# of times map has been down voted",
+        "visited":"#of times the map has been opened",
+        "thumbnail": {
+            "large": {
+                "tag": "nome composto dai primi # nodi che compongono la thumbnail - es: 'About Titolo wiki1, Titolo wiki2, ...,Titolo wikiN'",
+                "name": "nome composto da '300px-' + nome del tag + '.jpg' - nota i titoli possono essere normalizzati in caratteri latini se ci sono problemi di unicode, gli spazi vanno sostituiti da _",
+                "content": "value base 64"
+            },
+            "source": [
+                {
+                    "url": "urlwikipediaimmagine1"
+                },
+                {
+                    "url": "urlwikipediaimmagine2"
+                },
+                {
+                    "url": "urlwikipediaimmagine3"
+                },
+                {
+                    "url": "urlwikipediaimmagine4"
+                },
+                {
+                    "url": "urlwikipediaimmagine5"
+                }
+            ]
+        },
+        "totalNode":"#Numero Nodi",
+        "reversePagerank": [
+            "lista degli xid dei nodi ordinata per il valore di rPR decrescente_#idNodo1","#idNodo2","#idNodoN"
+        ],
+        "graph": [
+            {
+                "source": 0,
+                "target": 1,
+                "property":{
+                    "distance": 0.409878030638,
+                    "direction": 0
+                }
+            },
+            {
+                "source": 1,
+                "target": 2,
+                "property":{
+                    "distance": 0.409878030638,
+                    "direction": 3
+                }
+            },
+            {
+                "source": 2,
+                "target": 3,
+                "property":{
+                    "distance": 0.409878030638,
+                    "direction": 1
+                }
+            },
+            {
+                "source": 0,
+                "target": 4,
+                "property":{
+                    "distance": 0.409878030638,
+                    "direction": 0
+                }
+            }
+        ],
+        "path": [
+            {
+                "source": 0,
+                "target": 4,
+                "property":{
+                    "distance": 0.409878030638,
+                    "direction": 0
+                }
+            },
+            {
+                "source": 4,
+                "target": 2,
+                "property":{
+                    "distance": 0.409878030638,
+                    "direction": 1
+                }
+            }
+        ]
+    }
+}
