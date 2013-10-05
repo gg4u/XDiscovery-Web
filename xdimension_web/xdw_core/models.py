@@ -21,6 +21,9 @@ class Map(models.Model):
     popularity = models.IntegerField(default=0, db_index=True)
     featured = models.IntegerField(default=0, db_index=True)
 
+    # moved out of the original json
+    thumbnail_img = models.ImageField(blank=True, upload_to='map_thumbnail')
+
 
 class MapTopic(models.Model):
     ''' For searching. '''

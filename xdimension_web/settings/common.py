@@ -134,7 +134,7 @@ INSTALLED_APPS = (
     'corsheaders',
     # custom apps
     'xdimension_web.xdw_web',
-    'xdimension_web.xdw_api',
+    'xdimension_web.xdw_core',
 )
 
 # A sample logging configuration. The only tangible logging
