@@ -41,7 +41,7 @@
 
 			<div masonry-brick ng-repeat="map in mapSearch.results track by map.id">
 				<article class="xd-map-wall-card">
-					<a ng-href="/graph/{{map.id}}"><img src="{{map.thumbnailUrl}}" class="image" alt=""></a>
+					<a ng-href="/graph/{{map.id}}"><img ng-src="{{map.thumbnailUrl}}" masonry-layout-on="map.thumbnailUrl" class="image" alt=""></a>
 
 					<header class="content">
 						<h2 class="title" ng-switch="!!map.title">
