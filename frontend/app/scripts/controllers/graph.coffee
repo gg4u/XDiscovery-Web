@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('xdiscoveryApp')
-	.controller 'GraphCtrl', ($scope) ->
+	.controller 'GraphCtrl', ($scope, wikipediaApi) ->
 		$scope.pageClass = ['graph']
 
 		# Contains all the properties for the vivaGraph directive
@@ -30,7 +30,7 @@ angular.module('xdiscoveryApp')
 						else if c.changeType is 'add'
 							# Node watcher to update graphics on decorations update
 							node.$watcher?()
-							watcher = do (node) -> $scope.$watch "map.nodes['#{c.node.id}']", (decoration) ->
+							watcher = do (node) -> $scope.$watchCollection "map.nodes['#{c.node.id}']", (decoration) ->
 								drawNode node, decoration.title, decoration.thumbnail
 							node.$watcher = watcher
 							# TODO add hover and click handlers
@@ -75,10 +75,10 @@ angular.module('xdiscoveryApp')
 				ui.append("defs").append("pattern")
 					.attr("id", "nodeImg")
 					.attr("patternUnits", "userSpaceOnUse")
-					.attr("x", nodeSize / 2 - imgW / 2 + "px")
-					.attr("y", nodeSize / 2 - imgH / 2 + "px")
-					.attr("width", imgW)
-					.attr("height", imgH)
+					.attr("x", nodeSize / 2 - thumbnail.width / 2 + "px")
+					.attr("y", nodeSize / 2 - thumbnail.height / 2 + "px")
+					.attr("width", thumbnail.width)
+					.attr("height", thumbnail.height)
 					.append img
 				ui.append("circle")
 					.attr("fill", "url(#nodeImg)")
@@ -327,3 +327,20 @@ angular.module('xdiscoveryApp')
 					"latitude": "45.659194"
 			}
 		}
+
+		$scope.$watchCollection 'map.nodes', (nodes) ->
+			# Building list of names to fetch
+			articleNames = []
+			articleNames.push n.title for _, n of nodes when not n.thumbnail?
+			return unless articleNames.length
+			# Fetch thumbnails from wikipedia
+			do (nodes) -> wikipediaApi.thumbnails {
+				titles: articleNames.join('|')
+				pilimit: articleNames.length
+			}, (data) ->
+				# Assign a thumbnail for every node, use a placeholder if no thumbnail has been found
+				for id, n of nodes
+					n.thumbnail =
+						data?.query?.pages?[id]?.thumbnail ?
+						{source: "http://create-games.com/cache/thumbnail.php?url&#61;http%3A//i929.photobucket.com/albums/ad134/SavannahZCar/gHunter.jpg", height: 80, width: 100}
+
