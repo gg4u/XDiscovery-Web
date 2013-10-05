@@ -6,7 +6,6 @@ angular.module('xdiscoveryApp')
 
 		# Contains all the properties for the vivaGraph directive
 		$scope.vivagraph =
-			nodeSize: 24
 			linkColors: [
 				"#ed13d1"
 				"#ed1393"
@@ -27,12 +26,14 @@ angular.module('xdiscoveryApp')
 						if c.changeType is 'remove'
 							node.$watcher?()
 							delete node.$watcher
-						# Add node watcher
+						# Decorate node
 						else if c.changeType is 'add'
+							# Node watcher to update graphics on decorations update
 							node.$watcher?()
 							watcher = do (node) -> $scope.$watch "map.nodes['#{c.node.id}']", (decoration) ->
 								drawNode node, decoration.title, decoration.thumbnail
 							node.$watcher = watcher
+							# TODO add hover and click handlers
 			layout: (graph) -> Viva.Graph.Layout.forceDirected graph,
 				#springLength : 35
 				springLength : 105
@@ -47,13 +48,6 @@ angular.module('xdiscoveryApp')
 					ui = Viva.Graph.svg("g")
 					node.$graphics = ui
 					drawNode(node)
-					# $(ui).hover (->
-					# ), ->
-
-					# $(ui).click ->
-					# 	url = "http://en.wikipedia.org/wiki/" + node.id
-					# 	window.open url, node.id
-					# 	getChildren graph, url, node.id
 					ui)
 				.link (link) ->
 					groupId = Math.round(parseFloat(link.data * 100) / 10)
@@ -64,8 +58,10 @@ angular.module('xdiscoveryApp')
 						.attr("stroke", $scope.vivagraph.linkColors[groupId] ? 'black')
 						.attr("stroke-width", weight)
 				.placeNode (nodeUI, pos) ->
-					nodeUI.attr "transform", "translate(#{(pos.x - $scope.vivagraph.nodeSize / 2)}, #{(pos.y - $scope.vivagraph.nodeSize / 2)})"
+					nodeUI.attr "transform", "translate(#{(pos.x - nodeSize / 2)}, #{(pos.y - nodeSize / 2)})"
 
+		# Method to draw a node, this will be used when the node decorations are updated
+		nodeSize = 24
 		drawNode = (node, text, thumbnail) ->
 			ui = node.$graphics
 			return unless ui?
@@ -79,8 +75,8 @@ angular.module('xdiscoveryApp')
 				ui.append("defs").append("pattern")
 					.attr("id", "nodeImg")
 					.attr("patternUnits", "userSpaceOnUse")
-					.attr("x", $scope.vivagraph.nodeSize / 2 - imgW / 2 + "px")
-					.attr("y", $scope.vivagraph.nodeSize / 2 - imgH / 2 + "px")
+					.attr("x", nodeSize / 2 - imgW / 2 + "px")
+					.attr("y", nodeSize / 2 - imgH / 2 + "px")
 					.attr("width", imgW)
 					.attr("height", imgH)
 					.append img
@@ -89,24 +85,22 @@ angular.module('xdiscoveryApp')
 					.attr("stroke", "#e7e7e7")
 					.attr("stroke-width", "3px")
 					.attr("r", 40)
-					.attr("cx", $scope.vivagraph.nodeSize / 2)
-					.attr("cy", $scope.vivagraph.nodeSize / 2)
+					.attr("cx", nodeSize / 2)
+					.attr("cy", nodeSize / 2)
 			else
-				circle = Viva.Graph.svg("circle")
+				ui.append("circle")
 					.attr("r", 10)
-					.attr("cx", $scope.vivagraph.nodeSize / 2)
-					.attr("cy", $scope.vivagraph.nodeSize / 2)
+					.attr("cx", nodeSize / 2)
+					.attr("cy", nodeSize / 2)
 					.attr("stroke", "#fff")
 					.attr("stroke-width", "1.5px")
 					.attr("fill", "#f5f5f5")
-				ui.append circle
 			if text?
-				svgText = Viva.Graph.svg("text")
+				ui.append("text")
 					.attr("y", "-30px")
 					.attr("text-anchor", "middle")
-					.attr("x", $scope.vivagraph.nodeSize / 2)
+					.attr("x", nodeSize / 2)
 					.text(text)
-				ui.append svgText
 
 		$scope.map = {
 			"net": "numero rete api",

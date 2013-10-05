@@ -44,6 +44,3 @@ app.directive 'vivaGraph', ->
 			renderLinks: yes
 		# Run the graph
 		renderer.run()
-		console.log 'graph', graph
-		console.log 'renderer', renderer
-
