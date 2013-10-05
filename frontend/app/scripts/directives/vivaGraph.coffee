@@ -18,20 +18,13 @@ app.directive 'vivaGraph', ->
 	scope:
 		name: '@'
 		links: '='
-		nodes: '='
 		layout: '&'
 		graphics: '&'
+		onCreate: '&'
 	link: (scope, element, attrs) ->
 		graph = Viva.Graph.graph()
-		graph.Name = scope.name
-		# Decorate graph nodes
-		decorateNodes = ->
-			return unless scope.nodes?
-			graph.forEachNode (n) ->
-				angular.extend n, scope.nodes[n.id] if scope.nodes[n.id]?
-				no
-		scope.$watchCollection 'nodes', (nodes) ->
-			do decorateNodes
+		graph.name = scope.name
+		scope.onCreate '$graph': graph
 		# Add graph links
 		scope.$watchCollection 'links', (links, oldLinks) ->
 			oldLinks = [] if angular.equals(links, oldLinks)
@@ -40,7 +33,6 @@ app.directive 'vivaGraph', ->
 				dist = l.distance / 100.0
 				dist = 0.05 if dist < 0.05
 				graph.addLink(l.source, l.target, dist)
-			do decorateNodes
 			do graph.endUpdate
 		# Pagerank
 		# Graph renderer

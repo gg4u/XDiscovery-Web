@@ -3,6 +3,8 @@
 angular.module('xdiscoveryApp')
 	.controller 'GraphCtrl', ($scope) ->
 		$scope.pageClass = ['graph']
+
+		# Contains all the properties for the vivaGraph directive
 		$scope.vivagraph =
 			nodeSize: 24
 			linkColors: [
@@ -17,6 +19,20 @@ angular.module('xdiscoveryApp')
 				"#f20b6d"
 				"#f20b6d"
 			]
+			initialize: (graph) ->
+				graph.addEventListener 'changed', (changes) ->
+					for c in changes when c.node?
+						node = c.node
+						# Remove node watcher
+						if c.changeType is 'remove'
+							node.$watcher?()
+							delete node.$watcher
+						# Add node watcher
+						else if c.changeType is 'add'
+							node.$watcher?()
+							watcher = do (node) -> $scope.$watch "map.nodes['#{c.node.id}']", (decoration) ->
+								drawNode node, decoration.title, decoration.thumbnail
+							node.$watcher = watcher
 			layout: (graph) -> Viva.Graph.Layout.forceDirected graph,
 				#springLength : 35
 				springLength : 105
@@ -29,42 +45,8 @@ angular.module('xdiscoveryApp')
 			graphics: (graph) -> Viva.Graph.View.svgGraphics()
 				.node((node) ->
 					ui = Viva.Graph.svg("g")
-					svgText = Viva.Graph.svg("text")
-						.attr("y", "-30px")
-						.attr("text-anchor", "middle")
-						.attr("x", $scope.vivagraph.nodeSize / 2)
-						.text(node.title ? '')
-					circle = Viva.Graph.svg("circle")
-						.attr("r", 10)
-						.attr("cx", $scope.vivagraph.nodeSize / 2)
-						.attr("cy", $scope.vivagraph.nodeSize / 2)
-						.attr("stroke", "#fff")
-						.attr("stroke-width", "1.5px")
-						.attr("fill", "#f5f5f5")
-					if node.thumbnail?.source?
-						img = Viva.Graph.svg("image")
-							.attr("width", node.thumbnail.width)
-							.attr("height", node.thumbnail.height)
-						img.link node.thumbnail.source
-						ui.append("defs").append("pattern")
-							.attr("id", "nodeImg")
-							.attr("patternUnits", "userSpaceOnUse")
-							.attr("x", $scope.vivagraph.nodeSize / 2 - imgW / 2 + "px")
-							.attr("y", $scope.vivagraph.nodeSize / 2 - imgH / 2 + "px")
-							.attr("width", imgW)
-							.attr("height", imgH)
-							.append img
-						ui.append("circle")
-							.attr("fill", "url(#nodeImg)")
-							.attr("stroke", "#e7e7e7")
-							.attr("stroke-width", "3px")
-							.attr("r", 40)
-							.attr("cx", $scope.vivagraph.nodeSize / 2)
-							.attr("cy", $scope.vivagraph.nodeSize / 2)
-						ui.append svgText
-					else
-						ui.append circle
-						ui.append svgText
+					node.$graphics = ui
+					drawNode(node)
 					# $(ui).hover (->
 					# ), ->
 
@@ -83,6 +65,48 @@ angular.module('xdiscoveryApp')
 						.attr("stroke-width", weight)
 				.placeNode (nodeUI, pos) ->
 					nodeUI.attr "transform", "translate(#{(pos.x - $scope.vivagraph.nodeSize / 2)}, #{(pos.y - $scope.vivagraph.nodeSize / 2)})"
+
+		drawNode = (node, text, thumbnail) ->
+			ui = node.$graphics
+			return unless ui?
+			while ui.firstChild
+				ui.removeChild ui.firstChild
+			if thumbnail?.source?
+				img = Viva.Graph.svg("image")
+					.attr("width", thumbnail.width)
+					.attr("height", thumbnail.height)
+				img.link thumbnail.source
+				ui.append("defs").append("pattern")
+					.attr("id", "nodeImg")
+					.attr("patternUnits", "userSpaceOnUse")
+					.attr("x", $scope.vivagraph.nodeSize / 2 - imgW / 2 + "px")
+					.attr("y", $scope.vivagraph.nodeSize / 2 - imgH / 2 + "px")
+					.attr("width", imgW)
+					.attr("height", imgH)
+					.append img
+				ui.append("circle")
+					.attr("fill", "url(#nodeImg)")
+					.attr("stroke", "#e7e7e7")
+					.attr("stroke-width", "3px")
+					.attr("r", 40)
+					.attr("cx", $scope.vivagraph.nodeSize / 2)
+					.attr("cy", $scope.vivagraph.nodeSize / 2)
+			else
+				circle = Viva.Graph.svg("circle")
+					.attr("r", 10)
+					.attr("cx", $scope.vivagraph.nodeSize / 2)
+					.attr("cy", $scope.vivagraph.nodeSize / 2)
+					.attr("stroke", "#fff")
+					.attr("stroke-width", "1.5px")
+					.attr("fill", "#f5f5f5")
+				ui.append circle
+			if text?
+				svgText = Viva.Graph.svg("text")
+					.attr("y", "-30px")
+					.attr("text-anchor", "middle")
+					.attr("x", $scope.vivagraph.nodeSize / 2)
+					.text(text)
+				ui.append svgText
 
 		$scope.map = {
 			"net": "numero rete api",
