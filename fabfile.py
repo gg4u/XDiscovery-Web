@@ -45,8 +45,11 @@ def deploy(env='staging', frontend='True', backend='True'):
         pass
     elif env == 'staging':
         if frontend.lower() in YES_VALUES:
-            local('./run_in_env .env python manage.py collectstatic '
-                  '--noinput --settings=xdimension_web.settings.local_s3"')
+            local('ls -la run_in_env.sh')
+            local('{}/run_in_env.sh .env-staging python manage.py '
+                  'collectstatic --noinput '
+                  '--settings=xdimension_web.settings.local_s3'
+                  .format(os.getcwd()))
         if backend.lower() in YES_VALUES:
             # XXX this is not good for production:
             #  - Push of backend code into production API host should happen
@@ -187,11 +190,11 @@ def integrate_assets():
     dst_dir = os.path.abspath(
         os.path.join('xdimension_web', 'xdw_web', 'templates', 'frontend') )
     src_dir = os.path.join('.', 'frontend', 'dist')
-    os.chdir(src_dir)
     if not os.path.exists(os.path.join(dst_dir, 'views')):
         os.makedirs(os.path.join(dst_dir, 'views'))
     # Store source_file, dest_file in this list
     files = [('index.html', os.path.join(dst_dir, 'index.html'))]
+    os.chdir(src_dir)
     for path in os.listdir('views'):
         if (os.path.isfile(os.path.join('views', path)) and
             path.endswith('.html')):
