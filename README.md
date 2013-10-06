@@ -79,7 +79,6 @@ Provision heroku environment:
     heroku addons:add heroku-postgresql:dev --version=9.4 --app xdimension-web-staging
     heroku addons:add memcachier:dev -a xdimension-web-staging
     heroku addons:add sendgrid:starter -a xdimension-web-staging
-    heroku addons:add sendgrid:starter -a xdimension-web-staging
     heroku addons:add logentries:tryit -a xdimension-web-staging
     # no ssl endpoint needed as we leverage heroku piggyback ssl
 
@@ -109,10 +108,24 @@ has permissions set):
 Synchronize database:
 
     python manage.py syncdb
-	python manage.py migrate --all
+    python manage.py migrate --all
     python manage.py createsuperuser
 
 Set default site name from the admin web console.
+
+
+## Deploy
+
+To build the frontend app and integrate it into the backend do:
+
+    fab build
+
+Commit all the changes (if any) made by the build process to the
+auto-generated django templates.
+
+Deploy both frontend and backend:
+
+    fab deploy:environment=staging
 
 
 
