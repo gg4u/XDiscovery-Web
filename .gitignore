@@ -5,3 +5,7 @@ frontend/npm_debug.log
 virtual/
 virtualnode/
 .python-version
+.assets/
+.env-production
+.env-staging
+.env
