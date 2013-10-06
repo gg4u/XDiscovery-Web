@@ -14,6 +14,7 @@ class RobotsView(View):
                                 .format(site=Site.objects.get_current(),
                                         sitemap_url=reverse('sitemap')))
 
+
 class AtlasView(View):
-    def get(self, request):
-        return render(request, 'xdw_web/atlas_spa.html')
+    def get(self, request, path='index.html'):
+        return render(request, 'frontend/{}'.format(path))

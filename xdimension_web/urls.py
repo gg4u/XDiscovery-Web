@@ -12,8 +12,6 @@ urlpatterns = i18n_patterns(
     '',
     # Backoffice
     url(r'^admin{}/'.format(settings.ADMIN_URL_HASH), include(admin.site.urls)),
-    # Atlas app
-    url(r'^atlas/', AtlasView.as_view()),
     # CMS
     url(r'^', include('cms.urls')),
 )
@@ -21,6 +19,10 @@ urlpatterns = i18n_patterns(
 # non-i18n patterns
 urlpatterns += patterns(
     '',
+    # Atlas app
+    # XXX the SPA uris should all live under the /atlas/ uri
+    url(r'^atlas/', AtlasView.as_view()),
+    url(r'^(views/.*)', AtlasView.as_view()),
     # SEO stuff
     url(r'^robots.txt$', RobotsView.as_view()),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',

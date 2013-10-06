@@ -1,0 +1,93 @@
+<div class="xd-atlas learn-theme">
+
+<header class="xd-page-header xd-atlas-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4 hidden-xs">
+
+				Learn Discovery
+
+			</div>
+			<div class="col-sm-8 col-xs-12">
+
+				<div class="row">
+					<div class="col-sm-10 col-xs-12 xd-atlas-col-search-input">
+						<input class="xd-atlas-search-input" type="text" select2="" ng-model="select2" style="width:100%">
+					</div>
+					<div class="col-sm-2 hidden-xs xd-atlas-col-search-button">
+						<button type="button" class="btn btn-default xd-atlas-search-button">Search</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</header>
+
+<ul class="nav nav-line">
+	<li><a href="#">Recent</a></li>
+	<li class="active"><a href="#">Popular</a></li>
+	<li><a href="#">Featured</a></li>
+</ul>
+
+<section class="xd-page-content xd-atlas-content">
+
+	<img ng-if="false" class="xd-atlas-emotional-bg" src="http://placehold.it/200" alt="">
+
+	<div class="container">
+
+		<div class="xd-map-wall" masonry="{ columnWidth: '.grid-sizer' }" ng-cloak="">
+			<div class="grid-sizer"></div>
+
+			<div masonry-brick="" ng-repeat="map in mapSearch.results track by map.id">
+				<article class="xd-map-wall-card">
+					<a ng-href="/graph/{% verbatim %}{{map.id}}"><img ng-src="{{map.thumbnailUrl}}{% endverbatim %}" masonry-layout-on="map.thumbnailUrl" class="image" alt=""></a>
+
+					<header class="content">
+						<h2 class="title" ng-switch="!!map.title">
+							<a ng-href="/graph/{% verbatim %}{{map.id}}{% endverbatim %}" ng-switch-when="true" ng-bind="map.title" class="custom-title"></a>
+							<a ng-href="/graph/{% verbatim %}{{map.id}}{% endverbatim %}" ng-switch-default="" class="node-title">
+								<span class="sep">from</span>
+								<span ng-bind="map.nodes[0]">&ndash;</span>
+								<span class="sep">to</span>
+								<span ng-bind="map.nodes[map.nodes.length-1]">&ndash;</span>
+							</a>
+						</h2>
+						<div class="meta" ng-if="map.authorName">by <span class="author" ng-bind="map.authorName">&ndash;</span></div>
+					</header>
+
+					<ul class="nav nav-line" masonry-layout-on="contentTab">
+						<li ng-class="{ 'active':!contentTab }"><a href="" ng-click="contentTab=null">About</a></li>
+						<li ng-class="{ 'active':contentTab=='share' }"><a href="" ng-click="contentTab='share'">Share</a></li>
+					</ul>
+
+					<div class="tabbed content" ng-switch="contentTab">
+						<p ng-switch-default="" ng-init="nodes = (map.nodes|limitTo:6)">
+							<span ng-repeat="node in nodes track by $index" ng-bind-template="{% verbatim %}{{node}}{{$middle&&' | '||' '}}{% endverbatim %}"></span>
+							<span ng-if="nodes.length < map.nodes.length">
+								<span class="sep">and other</span>
+								<span ng-bind-template="#{% verbatim %}{{map.nodes.length - nodes.length}}{% endverbatim %}"></span>
+								<span class="sep">topics.</span>
+							</span>
+						</p>
+						<p ng-switch-when="share">
+							share widgets here
+						</p>
+					</div>
+
+					<div class="flipside content" ng-bind="map.description">
+					</div>
+
+					<footer class="content social-footer">
+						social widgets
+					</footer>
+				</article>
+			</div>
+
+		</div>
+		<div class="loading" ng-if="mapSearch.hasMore" in-view="$inview&&mapSearch.loadMore()"></div>
+
+	</div>
+</section>
+
+</div><!-- .xd-atlas -->

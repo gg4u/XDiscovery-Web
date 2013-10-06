@@ -1,10 +1,12 @@
 import os
 import subprocess
 import re
+import shutil
 
-from fabric.api import local, task, abort, puts
+from fabric.api import local, task, abort, puts, lcd
 from fabric.contrib import django
 
+# XXX for some reason this is not working properly
 django.project('xdimension_web')
 
 YES_VALUES = ('1', 'true', 'yes')
@@ -30,16 +32,21 @@ def get_db_config():
 
 
 @task
-def deploy(env='staging', frontend='True', backend='True'):
-    local('python manage.py xdw_web_build')
+def build():
+    with lcd('frontend'):
+        local('grunt build')
+        integrate_assets()
 
+
+@task
+def deploy(env='staging', frontend='True', backend='True'):
+    build()
     if env == 'local':
-        local('python manage.py collectstatic --noinput '
-              '--settings=xdimension_web.settings.local')
+        pass
     elif env == 'staging':
         if frontend.lower() in YES_VALUES:
-            local('./run_in_env .env python manage.py collectstatic --noinput '
-                  '--settings=xdimension_web.settings.local_s3"')
+            local('./run_in_env .env python manage.py collectstatic '
+                  '--noinput --settings=xdimension_web.settings.local_s3"')
         if backend.lower() in YES_VALUES:
             # XXX this is not good for production:
             #  - Push of backend code into production API host should happen
@@ -53,7 +60,7 @@ def deploy(env='staging', frontend='True', backend='True'):
 
 @task
 def test():
-    local('python manage.py test  ')
+    local('python manage.py test xdw_web xdw_core')
 
 
 @task
@@ -168,3 +175,38 @@ def env_to_heroku(fname='.env'):
             if re.match('^\s*[a-zA-Z0-9]*.*=', l):
                 chunks.append(l.strip())
     print u' '.join(chunks)
+
+
+@task
+def integrate_assets():
+    ''' Puts some of the frontend html assets in django project.
+
+    There they will be served directly by the application layer with the
+    usual django templating system.
+    '''
+    dst_dir = os.path.abspath(
+        os.path.join('xdimension_web', 'xdw_web', 'templates', 'frontend') )
+    src_dir = os.path.join('.', 'frontend', 'dist')
+    os.chdir(src_dir)
+    if not os.path.exists(os.path.join(dst_dir, 'views')):
+        os.makedirs(os.path.join(dst_dir, 'views'))
+    # Store source_file, dest_file in this list
+    files = [('index.html', os.path.join(dst_dir, 'index.html'))]
+    for path in os.listdir('views'):
+        if (os.path.isfile(os.path.join('views', path)) and
+            path.endswith('.html')):
+            files.append((os.path.join('views', path),
+                          os.path.join(dst_dir, 'views', path)))
+    for src_path, dst_path in files:
+        with open(src_path, 'rb') as src_f, open(dst_path, 'wb') as dst_f:
+            data = src_f.read()
+            # Protect angular vars from django template machinery
+            data, n = re.subn(r'({{.*}})',
+                              r'{% verbatim %}\1{% endverbatim %}',
+                              data)
+            # Prepend django static url logic to all assets
+            data, n = re.subn(
+                r'(href="|src=")/(bower_components|scripts|styles)',
+                r'\1{{ STATIC_URL }}frontend/\2', data)
+            dst_f.write(data)
+    puts('Integrated {} files into django app'.format(len(files)))
