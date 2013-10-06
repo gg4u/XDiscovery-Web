@@ -27,8 +27,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "xdimension_web.settings")
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
-from wdb.ext import WdbMiddleware
-application = WdbMiddleware(application)
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
 # application = HelloWorldApplication(application)
