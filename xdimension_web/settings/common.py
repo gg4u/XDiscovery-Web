@@ -186,6 +186,14 @@ LOGGING = {
     }
 }
 
+if DEPLOY_MODE == 'production':
+    ALLOWED_HOSTS = ['xdiscovery.com', 'www.xdiscovery.com']
+elif DEPLOY_MODE == 'staging':
+    ALLOWED_HOSTS = ['xdiscovery-web-staging.herokuapp.com']
+elif DEPLOY_MODE == 'local':
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+
 ADMIN_URL_HASH = os.environ.get('ADMIN_URL_HASH', '')
 
 # djangorestframework
