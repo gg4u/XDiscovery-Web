@@ -1,107 +1,245 @@
 {
     "map": {
-       "netName":"#numero rete api xd",
-        "title": {
-            "default": {
-                "from": "Titolo Wikipedia del nodo di partenza",
-                "to": "Titolo del nodo di arrivo del path"
-            },
-            "edited": "Empty if not present; if present the edited title is shown instead of the default one"
+        "net": "numero rete api",
+        "name": "",
+        "shared": 1,
+        "author": {
+            "name": "",
+            "surname": ""
         },
-        "creator": {
-            "default": "Anonymus",
-            "author": "Nome scelto dall'autore se ha voluto, il campo è vuoto di default, se è vuoto si mostra il default",
-            "editor": [
-                "Lista vuota",
-                "potrà poi contenere N nomi - e.g. XD che prende qualche app fatta dagli utenti per elaborarla"
-            ],
-            "geo": "coordinates where the map has been created - coordinates of the device; empty if user does not allow: Nota:il formato di come salvare le coordinate è scelto da 3dGIS "
-        },
-        "description": "Empty field by default - Le description potranno essere aggiunte o modificate in seguito via web, al momento disponibili solo per le featured create da XD",
-        "featured": 0,
-        "language": "en",
-        "upRating":"# of times map has been up voted",
-        "downRating":"# of times map has been down voted",
-        "visited":"#of times the map has been opened",
+        "title": "titolo",
+        "description": "",
         "thumbnail": {
-            "large": {
-                "tag": "nome composto dai primi # nodi che compongono la thumbnail - es: 'About Titolo wiki1, Titolo wiki2, ...,Titolo wikiN'",
-                "name": "nome composto da '300px-' + nome del tag + '.jpg' - nota i titoli possono essere normalizzati in caratteri latini se ci sono problemi di unicode, gli spazi vanno sostituiti da _",
-                "content": "value base 64"
-            },
-            "source": [
-                {
-                    "url": "urlwikipediaimmagine1"
-                },
-                {
-                    "url": "urlwikipediaimmagine2"
-                },
-                {
-                    "url": "urlwikipediaimmagine3"
-                },
-                {
-                    "url": "urlwikipediaimmagine4"
-                },
-                {
-                    "url": "urlwikipediaimmagine5"
-                }
-            ]
+            "tag": "lista nome composto dai primi 3 nodi pagerank - es: 'About_Titolo_wiki1, Titolo_wiki2, ...,Titolo_wikiN'",
+            "name": "+name_json_+lista concatenata tag+ '.png' "
         },
-        "totalNode":"#Numero Nodi",
-        "reversePagerank": [
-            "lista degli xid dei nodi ordinata per il valore di rPR decrescente_#idNodo1","#idNodo2","#idNodoN"
-        ],
         "graph": [
             {
-                "source": 0,
-                "target": 1,
-                "property":{
-                    "distance": 0.409878030638,
-                    "direction": 0
-                }
+                "source": 36896,
+                "target": 1635424,
+                "direction": 0,
+                "distance": 20
             },
             {
-                "source": 1,
-                "target": 2,
-                "property":{
-                    "distance": 0.409878030638,
-                    "direction": 3
-                }
+                "source": 36896,
+                "target": 45609,
+                "direction": 0,
+                "distance": 17
             },
             {
-                "source": 2,
-                "target": 3,
-                "property":{
-                    "distance": 0.409878030638,
-                    "direction": 1
-                }
+                "source": 36896,
+                "target": 28627592,
+                "direction": 0,
+                "distance": 14
             },
             {
-                "source": 0,
-                "target": 4,
-                "property":{
-                    "distance": 0.409878030638,
-                    "direction": 0
-                }
+                "source": 36896,
+                "target": 44303,
+                "direction": 0,
+                "distance": 14
+            },
+            {
+                "source": 36896,
+                "target": 28652225,
+                "direction": 0,
+                "distance": 13
+            },
+            {
+                "source": 44303,
+                "target": 31531845,
+                "direction": 0,
+                "distance": 17
+            },
+            {
+                "source": 44303,
+                "target": 3741743,
+                "direction": 0,
+                "distance": 15
+            },
+            {
+                "source": 44303,
+                "target": 8940033,
+                "direction": 0,
+                "distance": 15
+            },
+            {
+                "source": 44303,
+                "target": 244841,
+                "direction": 0,
+                "distance": 14
+            },
+            {
+                "source": 44303,
+                "target": 165456,
+                "direction": 0,
+                "distance": 13
+            },
+            {
+                "source": 44303,
+                "target": 5451650,
+                "direction": 0,
+                "distance": 13
+            },
+            {
+                "source": 44303,
+                "target": 595962,
+                "direction": 0,
+                "distance": 13
+            },
+            {
+                "source": 44303,
+                "target": 7589080,
+                "direction": 0,
+                "distance": 13
+            },
+            {
+                "source": 44303,
+                "target": 45609,
+                "direction": 0,
+                "distance": 12
+            },
+            {
+                "source": 44303,
+                "target": 5930319,
+                "direction": 0,
+                "distance": 12
+            },
+            {
+                "source": 44303,
+                "target": 17641915,
+                "direction": 0,
+                "distance": 11
+            },
+            {
+                "source": 45609,
+                "target": 23275627,
+                "direction": 0,
+                "distance": 17
+            },
+            {
+                "source": 45609,
+                "target": 8010676,
+                "direction": 0,
+                "distance": 16
+            }
+        ],
+        "pagerank": [
+            {
+                "id": "44303",
+                "title": "Leopard",
+                "weight": "148"
+            },
+            {
+                "id": "36896",
+                "title": "Lion",
+                "weight": "78"
+            },
+            {
+                "id": "45609",
+                "title": "Cheetah",
+                "weight": "33"
+            },
+            {
+                "id": "1635424",
+                "title": "Asiatic lion",
+                "weight": "0"
+            },
+            {
+                "id": "28627592",
+                "title": "Transvaal lion",
+                "weight": "0"
+            },
+            {
+                "id": "28652225",
+                "title": "Southwest African lion",
+                "weight": "0"
+            },
+            {
+                "id": "31531845",
+                "title": "Indochinese leopard",
+                "weight": "0"
+            },
+            {
+                "id": "3741743",
+                "title": "African leopard",
+                "weight": "0"
+            },
+            {
+                "id": "8940033",
+                "title": "North China leopard",
+                "weight": "0"
+            },
+            {
+                "id": "244841",
+                "title": "Felis",
+                "weight": "0"
+            },
+            {
+                "id": "165456",
+                "title": "Big cat",
+                "weight": "0"
+            },
+            {
+                "id": "5451650",
+                "title": "Arabian leopard",
+                "weight": "0"
+            },
+            {
+                "id": "595962",
+                "title": "Striped hyena",
+                "weight": "0"
+            },
+            {
+                "id": "7589080",
+                "title": "Indian leopard",
+                "weight": "0"
+            },
+            {
+                "id": "5930319",
+                "title": "Sri Lankan leopard",
+                "weight": "0"
+            },
+            {
+                "id": "17641915",
+                "title": "Javan leopard",
+                "weight": "0"
+            },
+            {
+                "id": "23275627",
+                "title": "Lycaon pictus",
+                "weight": "0"
+            },
+            {
+                "id": "8010676",
+                "title": "Northwest African cheetah",
+                "weight": "0"
             }
         ],
         "path": [
             {
-                "source": 0,
-                "target": 4,
-                "property":{
-                    "distance": 0.409878030638,
-                    "direction": 0
-                }
+                "source": 36896,
+                "target": 44303,
+                "direction": 0,
+                "distance": 20
             },
             {
-                "source": 4,
-                "target": 2,
-                "property":{
-                    "distance": 0.409878030638,
-                    "direction": 1
-                }
+                "source": 44303,
+                "target": 17641915,
+                "direction": 0,
+                "distance": 15
             }
-        ]
+        ],
+        "startNode": {
+            "id": "36896",
+            "title": "Lion"
+        },
+        "endNode": {
+            "id": "45609",
+            "title": "Cheetah"
+        },
+        "coordinates": {
+            "longitude": "13.772362",
+            "latitude": "45.659194"
+        }
     }
 }
