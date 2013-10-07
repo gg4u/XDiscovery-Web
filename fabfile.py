@@ -209,7 +209,7 @@ def integrate_assets():
                               data)
             # Prepend django static url logic to all assets
             data, n = re.subn(
-                r'(href="|src=")/(bower_components|scripts|styles)',
+                r'(href="|src=")/(bower_components|scripts|styles|images)',
                 r'\1{{ STATIC_URL }}frontend/\2', data)
             dst_f.write(data)
     puts('Integrated {} files into django app'.format(len(files)))
