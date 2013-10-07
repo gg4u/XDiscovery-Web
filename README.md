@@ -1,4 +1,4 @@
-# xdimension_web
+# xdiscovery_web
 
 
 ## Development environment
@@ -36,8 +36,8 @@ Setup ruby environment:
 	rvm install 1.9.3
 	# select ruby package
 	rvm use 1.9.3
-	rvm gemset create xdimension_web
-	rvm gemset use xdimension_web
+	rvm gemset create xdiscovery_web
+	rvm gemset use xdiscovery_web
 
 
 ### NodeJS
@@ -64,7 +64,7 @@ To start developing, activate the local develpment environment:
 
 
 ### Setup S3 environment:
- - create a bucket named ``xdimension_web-staging`` with a public read access policy
+ - create a bucket named ``xdiscovery_web-staging`` with a public read access policy
  - add a IAM user with put permission on the bucket
  - setup CORS policy for bucket
  - set user access credentials and bucket name in heroku config vars (see
@@ -75,17 +75,17 @@ To start developing, activate the local develpment environment:
 
 Provision heroku environment:
 
-    heroku apps:create xdimension-web-staging -s cedar
-    heroku addons:add heroku-postgresql:dev --version=9.4 --app xdimension-web-staging
-    heroku addons:add memcachier:dev -a xdimension-web-staging
-    heroku addons:add sendgrid:starter -a xdimension-web-staging
-    heroku addons:add logentries:tryit -a xdimension-web-staging
+    heroku apps:create xdiscovery-web-staging -s cedar
+    heroku addons:add heroku-postgresql:dev --version=9.4 --app xdiscovery-web-staging
+    heroku addons:add memcachier:dev -a xdiscovery-web-staging
+    heroku addons:add sendgrid:starter -a xdiscovery-web-staging
+    heroku addons:add logentries:tryit -a xdiscovery-web-staging
     # no ssl endpoint needed as we leverage heroku piggyback ssl
 
 
 Define app-specific environment variables:
 
-	heroku config:add SECRET_KEY=xxxx ADMIN_URL_HASH=secret -a xdimension-web_staging
+	heroku config:add SECRET_KEY=xxxx ADMIN_URL_HASH=secret -a xdiscovery-web_staging
     heroku config:set DJANGO_SETTINGS_MODULE=xdimension_web.settings.heroku --app xdimension-web-staging
     heroku config:set DISABLE_CSRF=1 DEPLOY_MODE=staging REST_API_DOCS_ENABLE=1 -a xdimension-web-staging
 
