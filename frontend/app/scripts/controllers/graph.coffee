@@ -18,7 +18,13 @@ angular.module('xdiscoveryApp')
 				"#f20b6d"
 				"#f20b6d"
 			]
+
+			graph: null
+			highlightNode: null
+			selectedNode: null
+
 			initialize: (graph) ->
+				$scope.vivagraph.graph = graph
 				graph.addEventListener 'changed', (changes) ->
 					for c in changes when c.node?
 						node = c.node
@@ -31,9 +37,9 @@ angular.module('xdiscoveryApp')
 							# Node watcher to update graphics on decorations update
 							node.$watcher?()
 							watcher = do (node) -> $scope.$watchCollection "map.nodes['#{c.node.id}']", (decoration) ->
-								drawNode node, decoration.title, decoration.thumbnail
+								drawNode node.ui, decoration.title, decoration.thumbnail
 							node.$watcher = watcher
-							# TODO add hover and click handlers
+
 			layout: (graph) -> Viva.Graph.Layout.forceDirected graph,
 				#springLength : 35
 				springLength : 105
@@ -43,11 +49,16 @@ angular.module('xdiscoveryApp')
 				dragCoeff : 0.01
 				#gravity : -1
 				gravity : -2.5
+
 			graphics: (graph) -> Viva.Graph.View.svgGraphics()
 				.node((node) ->
 					ui = Viva.Graph.svg("g")
-					node.$graphics = ui
-					drawNode(node)
+					drawNode(ui)
+					# Adding hover and click handlers for graph node ui
+					angular.element(ui)
+						.bind('mouseenter', -> $scope.$apply -> $scope.vivagraph.highlightNode = node)
+						.bind('mouseleave', -> $scope.$apply -> $scope.vivagraph.highlightNode = null)
+						.bind('click', -> $scope.$apply -> $scope.vivagraph.selectedNode = node)
 					ui)
 				.link (link) ->
 					groupId = Math.round(parseFloat(link.data * 100) / 10)
@@ -62,8 +73,7 @@ angular.module('xdiscoveryApp')
 
 		# Method to draw a node, this will be used when the node decorations are updated
 		nodeSize = 24
-		drawNode = (node, text, thumbnail) ->
-			ui = node.$graphics
+		drawNode = (ui, text, thumbnail) ->
 			return unless ui?
 			while ui.firstChild
 				ui.removeChild ui.firstChild
@@ -101,6 +111,21 @@ angular.module('xdiscoveryApp')
 					.attr("text-anchor", "middle")
 					.attr("x", nodeSize / 2)
 					.text(text)
+
+		# Handle highlight of node by coloring connected links
+		$scope.$watch 'vivagraph.highlightNode', (node, lastNode) ->
+			return unless $scope.vivagraph.graph?
+			isOn = node?
+			node = lastNode unless node?
+			if node?
+				$scope.vivagraph.graph.forEachLinkedNode node.id, (n, link) ->
+					return unless link.ui?
+					if isOn
+						link.$oldStroke = link.ui.attr 'stroke'
+						link.ui.attr 'stroke', 'green'
+					else
+						link.ui.attr 'stroke', link.$oldStroke
+						delete link.$oldStroke
 
 		$scope.map = {
 			"net": "numero rete api",
