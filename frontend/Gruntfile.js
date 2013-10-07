@@ -382,7 +382,9 @@ module.exports = function (grunt) {
     'ngmin',
     'cssmin',
     'uglify',
-    'rev',
+    // rev-ing is done by django static assets logic. Doing it here breaks
+    // the automatic deploy scripts
+    //'rev',
     'usemin'
   ]);
 
