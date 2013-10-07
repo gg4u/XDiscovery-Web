@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.webdesign',
     # 'django.contrib.admindocs',
+    'json_field',
     # DjangoCMS
     'cms',
     'mptt',

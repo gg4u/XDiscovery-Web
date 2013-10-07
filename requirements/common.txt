@@ -14,3 +14,4 @@ git+git://github.com/mpaolini/django-versioned-storages@v0.1
 # needed by django-storages boto backend
 pytz==2013d
 python-dateutil==2.1
+django-json-field==0.5.5
