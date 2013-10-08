@@ -105,6 +105,9 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    # custom apps
+    'xdimension_web.xdw_web',
+    'xdimension_web.xdw_core',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -133,9 +136,6 @@ INSTALLED_APPS = (
     'rest_framework_swagger',
     'south',
     'corsheaders',
-    # custom apps
-    'xdimension_web.xdw_web',
-    'xdimension_web.xdw_core',
 )
 
 # A sample logging configuration. The only tangible logging
