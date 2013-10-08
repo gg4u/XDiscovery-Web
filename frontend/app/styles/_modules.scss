@@ -133,6 +133,14 @@
 // Atlas
 //
 
+.xd-atlas {
+	height: 100%;
+}
+
+.xd-atlas-content {
+	min-height: 100%;
+}
+
 // Search bar
 .xd-atlas-search-button {
 	@include border-top-left-radius(0);
@@ -168,3 +176,10 @@
 	overflow: hidden;
 }
 
+.viva-graph-detail-pane {
+	background: $body-bg;
+	position: absolute;
+	top: 0; right: 0; height: 100%;
+	width: 200px;
+	margin-top: $navbar-height;
+}

@@ -27,6 +27,7 @@ app.directive 'vivaGraph', ->
 		scope.onCreate '$graph': graph
 		# Add graph links
 		scope.$watchCollection 'links', (links, oldLinks) ->
+			return unless links?
 			oldLinks = [] if angular.equals(links, oldLinks)
 			do graph.beginUpdate
 			for l in links when oldLinks.indexOf(l) < 0
