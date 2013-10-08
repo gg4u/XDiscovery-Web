@@ -199,7 +199,7 @@ module.exports = function (grunt) {
       }
     },
     useminPrepare: {
-      html: '<%= yeoman.app %>/index.html',
+      html: '<%= yeoman.app %>/index_dist.html',
       options: {
         dest: '<%= yeoman.dist %>'
       }
@@ -260,7 +260,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>',
-          src: ['*.html', 'views/*.html'],
+          src: ['index_dist.html', 'views/*.html'],
           dest: '<%= yeoman.dist %>'
         }]
       }
@@ -295,6 +295,12 @@ module.exports = function (grunt) {
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
       }
+    },
+    rename: {
+	dist: {
+	    src: '<%= yeoman.dist %>/index_dist.html',
+	    dest: '<%= yeoman.dist %>/index.html'
+	}
     },
     concurrent: {
       server: [
@@ -345,6 +351,26 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+    preprocess: {
+	test: {
+	    src: '.tmp/index.html',
+	    options: {
+		inline: true,
+		context: {
+		    ENV: 'test'
+		}
+	    }
+	},
+	dist: {
+	    src: '<%= yeoman.app %>/index.html',
+	    dest: '<%= yeoman.app %>/index_dist.html',
+	    options: {
+		context: {
+		    ENV: 'dist'
+		}
+	    }
+	}
     }
   });
 
@@ -355,6 +381,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'preprocess:test',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -372,12 +399,22 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'clean:server',
     'clean:dist',
+    'preprocess:dist',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
     'concat',
     'copy:dist',
+    /* index.html dance goes like this:
+     1) index.html is preprocess'ed into index_dist.html
+     2) useminPrepare uses index_dist.html (needs to be in the very same
+        dir as index.html otherwise assets are not found)
+     3) we rename dist/index_dist.html into dist/index.html
+     4) usemin dos his things
+    */
+    'rename:dist',
     'cdnify',
     'ngmin',
     'cssmin',
