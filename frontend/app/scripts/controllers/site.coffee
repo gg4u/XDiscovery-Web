@@ -15,3 +15,6 @@ app.controller 'siteCtrl', ($scope, $rootScope, $location, config, ngProgress) -
 
 	$rootScope.$on '$routeChangeSuccess', ->
 		do ngProgress.complete
+
+	$rootScope.$on '$routeChangeError', ->
+		do ngProgress.complete
