@@ -5,7 +5,6 @@ app.controller 'siteCtrl', ($scope, $rootScope, $location, config, ngProgress) -
 	$scope.mainMenu =
 		items: config.mainMenuItems
 		isCurrent: (href) ->
-			console.log $location.path(), href
 			$location.path() is href
 
 	# Progress bar control
