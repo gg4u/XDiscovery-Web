@@ -24,4 +24,4 @@ app.config ($routeProvider, $locationProvider) ->
 
 # App configuration
 app.constant 'config',
-	mapsApiUrl: 'http://private-71fd-xdiscovery2.apiary.io/api/map/:id'
+	mapsApiUrl: 'https://xdiscovery-web-staging.herokuapp.com/api/map/:id'
