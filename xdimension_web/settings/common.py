@@ -187,6 +187,8 @@ LOGGING = {
     }
 }
 
+APPEND_SLASH = False  # Otherwise AngularJS complains
+
 if DEPLOY_MODE == 'production':
     ALLOWED_HOSTS = ['xdiscovery.com', 'www.xdiscovery.com']
 elif DEPLOY_MODE == 'staging':
