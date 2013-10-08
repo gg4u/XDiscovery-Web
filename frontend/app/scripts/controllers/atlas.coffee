@@ -10,6 +10,6 @@ app.controller 'AtlasCtrl', ($scope, xDiscoveryApi) ->
 	# TODO this should be a directive
 	filterEl = angular.element('[select2]')
 	filterEl.select2
-		tags: ['one', 'two']
+		tags: []
 		tokenSeparators: [","]
 		multiple: yes

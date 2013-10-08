@@ -1,26 +1,23 @@
 'use strict';
 
 app = angular.module('xdiscoveryApp')
-app.service 'xDiscoveryApi', ($resource, config, $rootScope) ->
-	mapsApi = $resource config.mapsApiUrl, {}, {
+app.service 'xDiscoveryApi', ($resource, $http, config) ->
+	mapsApi = $resource config.mapsApiUrl, { format: 'json' }, {
 		search:
 			method: 'GET'
 			responseType: 'json'
 			transformResponse: (data) ->
-				results: JSON.parse data
-				lastFetchedPage: 1
-				hasMore: yes
-				isLoadingMore: no
-				loadMore: ->
-					return if @isLoadingMore or not @hasMore
+				result = JSON.parse data
+				result.isLoadingMore = no
+				result.loadMore = ->
+					return if @isLoadingMore or not @next
 					@isLoadingMore = yes
-					mapsApi.query { page: @lastFetchedPage + 1 }, (data) =>
-						if data?.length
-							@results = @results.concat data
-							@lastFetchedPage += 1
-						else
-							@hasMore = no
+					$http.get config.mapsApiUrl + @next, (data) =>
+						@map = @map.concat data['map'] if data?['map']?.length
+						@next = data.next
+						@count += data.count
 						@isLoadingMore = no
+				result
 	}
 
 	{

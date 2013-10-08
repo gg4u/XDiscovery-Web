@@ -39,21 +39,21 @@
 		<div class="xd-map-wall" masonry="{ columnWidth: '.grid-sizer' }" ng-cloak>
 			<div class="grid-sizer"></div>
 
-			<div masonry-brick ng-repeat="map in mapSearch.results track by map.id">
+			<div masonry-brick ng-repeat="map in mapSearch.map track by map.id">
 				<article class="xd-map-wall-card">
-					<a ng-href="/graph/{{map.id}}"><img ng-src="{{map.thumbnailUrl}}" masonry-layout-on="map.thumbnailUrl" class="image" alt=""></a>
+					<a ng-href="/graph/{{map.id}}"><img ng-src="{{map.thumbnail.url}}" masonry-layout-on="map.thumbnail.url" class="image" alt=""></a>
 
 					<header class="content">
 						<h2 class="title" ng-switch="!!map.title">
 							<a ng-href="/graph/{{map.id}}" ng-switch-when="true" ng-bind="map.title" class="custom-title"></a>
 							<a ng-href="/graph/{{map.id}}" ng-switch-default class="node-title">
 								<span class="sep">from</span>
-								<span ng-bind="map.nodes[0]">&ndash;</span>
+								<span ng-bind="map.nodeTitles.start[0]">&ndash;</span>
 								<span class="sep">to</span>
-								<span ng-bind="map.nodes[map.nodes.length-1]">&ndash;</span>
+								<span ng-bind="map.nodeTitles.last">&ndash;</span>
 							</a>
 						</h2>
-						<div class="meta" ng-if="map.authorName">by <span class="author" ng-bind="map.authorName">&ndash;</span></div>
+						<div class="meta" ng-if="map.authorName">by <span class="author" ng-bind-template="{{map.author.name}} {{map.author.surname}}">&ndash;</span></div>
 					</header>
 
 					<ul class="nav nav-line" masonry-layout-on="contentTab">
@@ -62,11 +62,11 @@
 					</ul>
 
 					<div class="tabbed content" ng-switch="contentTab">
-						<p ng-switch-default ng-init="nodes = (map.nodes|limitTo:6)">
+						<p ng-switch-default ng-init="nodes = (map.nodeTitles.start|limitTo:6)">
 							<span ng-repeat="node in nodes track by $index" ng-bind-template="{{node}}{{$middle&&' | '||' '}}"></span>
-							<span ng-if="nodes.length < map.nodes.length">
+							<span ng-if="nodes.length < map.node_count">
 								<span class="sep">and other</span>
-								<span ng-bind-template="#{{map.nodes.length - nodes.length}}"></span>
+								<span ng-bind-template="#{{map.node_count - nodes.length}}"></span>
 								<span class="sep">topics.</span>
 							</span>
 						</p>
@@ -85,7 +85,7 @@
 			</div>
 
 		</div>
-		<div class="loading" ng-if="mapSearch.hasMore" in-view="$inview&&mapSearch.loadMore()"></div>
+		<div class="loading" ng-if="mapSearch.next" in-view="$inview&&mapSearch.loadMore()"></div>
 
 	</div>
 </section>

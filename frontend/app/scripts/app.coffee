@@ -24,4 +24,4 @@ app.config ($routeProvider, $locationProvider) ->
 
 # App configuration
 app.constant 'config',
-	mapsApiUrl: '/test_data.json'
+	mapsApiUrl: 'http://private-71fd-xdiscovery2.apiary.io/api/map/:id'
