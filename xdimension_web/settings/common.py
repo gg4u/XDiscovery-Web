@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     'mptt',
     'menus',
     'sekizai',
+    'cms.plugins.text',
     'cms.plugins.file',
     'cms.plugins.picture',
     'cms.plugins.video',
