@@ -41,7 +41,10 @@ class MapSerializer(MapSimpleSerializer):
                     'pagerank': data['pagerank'],
                     'path': data['path'],
                     'startNode': data['startNode'],
-                    'endNode': data['endNode']})
+                    'endNode': data['endNode'],
+                    'nodes': {n['id']: {'title': n['title'],
+                                        'weight': n['weight']}
+                              for n in data['graph']}})
         return ret
 
     class Meta(MapSimpleSerializer.Meta):
