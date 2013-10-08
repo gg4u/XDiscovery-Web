@@ -6,8 +6,12 @@ app.config ($routeProvider, $locationProvider, config) ->
 	$locationProvider.html5Mode(yes).hashPrefix('!')
 
 	# Setup custom routes
-	for route, settings of config.additionalRoutes
-		$routeProvider.when route, settings
+	for route, customPageUrl of config.customPageRoutes
+		$routeProvider.when route,
+			templateUrl: '/views/custompage.html'
+			controller: 'custompageCtrl'
+			resolve:
+				pageContentUrl: do (customPageUrl) -> -> customPageUrl
 
 	# Setup routes
 	$routeProvider

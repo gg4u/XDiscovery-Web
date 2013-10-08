@@ -113,8 +113,8 @@
 		<script type="text/javascript">
 		angular.module('xdiscoveryApp').constant('config', {
 			mapsApiUrl: 'https://xdiscovery-web-staging.herokuapp.com/api/map/:id',
-			additionalRoutes: {
-				'/prova': { templateUrl: '/views/custompage.html', controller: 'custompageCtrl', resolve: { pageContentUrl: function() { return 'something.html'; } } }
+			customPageRoutes: {
+				'/prova': 'something.html'
 			}
 		});
 		</script>
