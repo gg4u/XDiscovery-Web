@@ -13,6 +13,18 @@ __all__ = ['MapTestCase']
 
 class MapTestCase(LiveServerTestCase):
 
+    def create_maps(self, num):
+        start = datetime.datetime.now(utc)
+        maps = []
+        for i in range(num):
+            mp = Map(map_data=get_test_data('sharingAppWeb.json'))
+            mp.popularity = i
+            mp.title = str(i)
+            mp.date_created = start - datetime.timedelta(i)
+            mp.save()
+            maps.append(mp)
+        return maps
+
     def test_html(self):
         resp = self.client.get('/atlas/', follow=True)
         self.assertContains(resp, '/frontend/styles/')
@@ -41,6 +53,46 @@ class MapTestCase(LiveServerTestCase):
         obj = data['map'][0]
         self.assertNotIn('map_data', obj)
         self.assertNotIn('path', obj)
+
+    def test_list_sort_popular(self):
+        self.create_maps(10)
+        resp = self.client.get('/api/map/',
+                               {'ordering': 'popularity'},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 10)
+        self.assertEqual([str(i) for i in range(10)],
+                         [obj['title'] for obj in data['map']])
+        # reverse
+        resp = self.client.get('/api/map/',
+                               {'ordering': '-popularity'},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 10)
+        self.assertEqual([str(i) for i in range(9, -1, -1)],
+                         [obj['title'] for obj in data['map']])
+
+    def test_list_sort_date_created(self):
+        self.create_maps(10)
+        resp = self.client.get('/api/map/',
+                               {'ordering': 'date_created'},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 10)
+        self.assertEqual([str(i) for i in range(9, -1, -1)],
+                         [obj['title'] for obj in data['map']])
+        # reverse
+        resp = self.client.get('/api/map/',
+                               {'ordering': '-date_created'},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 10)
+        self.assertEqual([str(i) for i in range(10)],
+                         [obj['title'] for obj in data['map']])
 
     def test_detail(self):
         mp = Map.objects.create(map_data=get_test_data('sharingAppWeb.json'))

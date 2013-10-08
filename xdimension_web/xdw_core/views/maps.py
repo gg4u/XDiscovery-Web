@@ -7,6 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.serializers import ModelSerializer
 from rest_framework import fields
+from rest_framework import filters
 from rest_framework.pagination import PaginationSerializer
 from rest_framework import permissions
 
@@ -64,6 +65,7 @@ class MapList(ListAPIView):
     serializer_class = MapSerializer
     pagination_serializer_class = MapPaginationSerializer
     permission_classes = [permissions.AllowAny]
+    filter_backends = (filters.OrderingFilter,)
 
     def get_pagination_serializer(self, page):
         context = self.get_serializer_context()
