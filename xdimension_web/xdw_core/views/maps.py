@@ -60,12 +60,22 @@ class MapPaginationSerializer(PaginationSerializer):
         object_serializer_class = MapSimpleSerializer
 
 
+class TopicSearchFilter(filters.BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        topic = request.QUERY_PARAMS.get('topic')
+        if topic:
+            topics = [t.strip().lower() for t in topic.split(',')]
+            if topics:
+                return queryset.filter(maptopic__topic__in=topics)
+        return queryset
+
+
 class MapList(ListAPIView):
     queryset = Map.objects.filter(status=Map.STATUS_OK)
     serializer_class = MapSerializer
     pagination_serializer_class = MapPaginationSerializer
     permission_classes = [permissions.AllowAny]
-    filter_backends = (filters.OrderingFilter,)
+    filter_backends = (filters.OrderingFilter, TopicSearchFilter)
 
     def get_pagination_serializer(self, page):
         context = self.get_serializer_context()

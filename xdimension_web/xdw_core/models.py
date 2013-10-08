@@ -4,12 +4,9 @@ Base models for the xDimension web project
 from __future__ import absolute_import
 
 from django.db import models
-from django.db.models.signals import pre_save
 from django.utils.timezone import now as now_tz
 
 from json_field import JSONField
-
-from .map_data import set_from_map_data
 
 
 class Map(models.Model):
@@ -56,6 +53,3 @@ class MapTopic(models.Model):
         index_together = [
             ['topic', 'relevance']
         ]
-
-
-pre_save.connect(set_from_map_data, sender=Map)

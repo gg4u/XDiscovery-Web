@@ -6,6 +6,7 @@ from django.test import TestCase, LiveServerTestCase
 from django.utils.timezone import utc
 
 from ..models import Map
+from ..maps import save_map
 from .utils import get_test_data
 
 __all__ = ['MapTestCase']
@@ -21,7 +22,7 @@ class MapTestCase(LiveServerTestCase):
             mp.popularity = i
             mp.title = str(i)
             mp.date_created = start - datetime.timedelta(i)
-            mp.save()
+            save_map(mp)
             maps.append(mp)
         return maps
 
@@ -33,10 +34,10 @@ class MapTestCase(LiveServerTestCase):
         resp = self.client.get('/api/map/', content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
-        self.assertEqual(len(data['results']), 0)
+        self.assertEqual(len(data['map']), 0)
 
     def test_load_map(self):
-        Map.objects.create(map_data=get_test_data('sharingAppWeb.json'))
+        save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
         mp = Map.objects.get()
         self.assertEqual(mp.title, 'titolo')
         self.assertEqual(mp.node_count, 18)
@@ -45,7 +46,7 @@ class MapTestCase(LiveServerTestCase):
         self.assertEqual(mp.last_node_title, 'Cheetah')
 
     def test_list(self):
-        Map.objects.create(map_data=get_test_data('sharingAppWeb.json'))
+        save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
         resp = self.client.get('/api/map/', content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
@@ -94,8 +95,34 @@ class MapTestCase(LiveServerTestCase):
         self.assertEqual([str(i) for i in range(10)],
                          [obj['title'] for obj in data['map']])
 
+    def test_list_search_empty(self):
+        save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
+        resp = self.client.get('/api/map/',
+                               {'topic': 'xxxxxxxxxxx'},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 0)
+
+    def test_list_search(self):
+        save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
+        resp = self.client.get('/api/map/',
+                               {'topic': 'lion'},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 1)
+        # case-insensitive
+        resp = self.client.get('/api/map/',
+                               {'topic': 'liON'},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 1)
+
+
     def test_detail(self):
-        mp = Map.objects.create(map_data=get_test_data('sharingAppWeb.json'))
+        mp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
         resp = self.client.get('/api/map/{}/'.format(mp.pk),
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
