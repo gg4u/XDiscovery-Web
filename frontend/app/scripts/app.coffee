@@ -20,8 +20,4 @@ app.config ($routeProvider, $locationProvider) ->
 		templateUrl: '/views/graph.html',
 		controller: 'GraphCtrl'
 
-	.otherwise redirectTo: '/'
-
-# App configuration
-app.constant 'config',
-	mapsApiUrl: 'https://xdiscovery-web-staging.herokuapp.com/api/map/:id'
+	.otherwise redirectTo: '/atlas'

@@ -109,5 +109,14 @@
 		<script src="/scripts/services/wikipediaApi.js"></script>
 		<!-- endbuild -->
 
+		<script type="text/javascript">
+		angular.module('xdiscoveryApp').constant('config', {
+			mapsApiUrl: 'https://xdiscovery-web-staging.herokuapp.com/api/map/:id',
+			additionalRoutes: {
+				'/prova': { templateUrl: '/views/prova.html', controller: 'provaCtrl' }
+			}
+		});
+		</script>
+
 </body>
 </html>
