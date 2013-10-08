@@ -27,6 +27,7 @@
 			<script src="/bower_components/json3/lib/json3.min.js"></script>
 		<![endif]-->
 
+		<!-- @if ENV!='dist' -->
 		<header class="navbar navbar-inverse navbar-fixed-top xd-nav" role="banner">
 
 				<div class="navbar-header">
@@ -58,6 +59,10 @@
 				</nav>
 
 		</header>
+		<!-- @endif -->
+		<!-- @if ENV='dist' -->
+		{% include "xdw_web/navbar.html" %}
+		<!-- @endif -->
 
 		<section id="page" role="main" ng-class="pageClass" ng-view></section>
 
