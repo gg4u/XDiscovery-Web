@@ -230,7 +230,7 @@ if DEPLOY_MODE == 'staging':
 
 # CMS
 CMS_TEMPLATES = (
-    ('xdw_web/templates/xdw_web/base.html', 'Generic page'),
+    ('xdw_web/base.html', 'Generic page'),
 )
 
 CMS_CACHE_DURATIONS = {
