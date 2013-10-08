@@ -14,10 +14,11 @@
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 	<!-- build:css({.tmp,app}) /styles/main.css -->
 	<link rel="stylesheet" href="/bower_components/select2/select2.css">
+	<link rel="stylesheet" href="/bower_components/ngprogress/ngProgress.css">
 	<link rel="stylesheet" href="/styles/main.css">
 	<!-- endbuild -->
 </head>
-	<body>
+	<body ng-controller="siteCtrl">
 		<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
@@ -43,17 +44,8 @@
 				</div>
 				<nav class="collapse navbar-collapse xd-navbar-collapse" role="navigation">
 					<ul class="nav navbar-nav">
-						<li>
-							<a href="/services">Services</a>
-						</li>
-						<li>
-							<a href="/mobile">Mobile</a>
-						</li>
-						<li class="active">
-							<a href="/atlas">Atlas</a>
-						</li>
-						<li>
-							<a href="/blog">Blog</a>
+						<li ng-repeat="m in mainMenu.items" ng-class="{'active': mainMenu.isCurrent(m.href)}">
+							<a ng-href="{{m.href}}" ng-bind="m.title"></a>
 						</li>
 					</ul>
 				</nav>
@@ -95,11 +87,12 @@
 		<script src="/bower_components/angular-cookies/angular-cookies.js"></script>
 		<script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
 		<script src="/bower_components/angular-inview/angular-inview.js"></script>
+		<script src="/bower_components/ngprogress/build/ngProgress.js"></script>
 		<!-- endbuild -->
 
 		<!-- build:js({.tmp,app}) /scripts/scripts.js -->
 		<script src="/scripts/app.js"></script>
-		<script src="/scripts/controllers/main.js"></script>
+		<script src="/scripts/controllers/site.js"></script>
 		<script src="/scripts/controllers/atlas.js"></script>
 		<script src="/scripts/controllers/graph.js"></script>
 		<script src="/scripts/controllers/custompage.js"></script>
@@ -115,7 +108,11 @@
 			mapsApiUrl: 'https://xdiscovery-web-staging.herokuapp.com/api/map/:id',
 			customPageRoutes: {
 				'/prova': 'something.html'
-			}
+			},
+			mainMenuItems: [
+				{ title: 'Atlas', href: '/atlas' },
+				{ title: 'Prova', href: '/prova' }
+			]
 		});
 		</script>
 
