@@ -1,4 +1,4 @@
-<!doctype html>
+{% load cms_tags %}{% if not request.GET.angular %}<!doctype html>
 <!--[if lt IE 7]>      <html ng-app="xdiscoveryApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html ng-app="xdiscoveryApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html ng-app="xdiscoveryApp" class="no-js lt-ie9"> <![endif]-->
@@ -14,7 +14,7 @@
 	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}frontend/styles/main.css">
 </head>
-	<body>
+	<body ng-controller="siteCtrl">
 		<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
@@ -25,6 +25,7 @@
 		<![endif]-->
 
 		{% include "xdw_web/navbar.html" %}
+		{% placeholder "main" current_page or %}{% endplaceholder %}
 		<section id="page" role="main" ng-class="pageClass" ng-view=""></section>
 
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -49,5 +50,15 @@
 
 		<script src="{{ STATIC_URL }}frontend/scripts/scripts.js"></script>
 
+		<script type="text/javascript">
+		angular.module('xdiscoveryApp').constant('config', {
+			mapsApiUrl: 'https://xdiscovery-web-staging.herokuapp.com/api/map/:id',
+			customPageRoutes: {
+				'/en/blog': '/en/blog?angular=1',
+				'/en/mobile': '/en/mobile?angular=1',
+				'/en/': '/en/?angular=1'
+			}
+		});
+		</script>
 </body>
-</html>
+</html>{% else %}{% placeholder "main" %}{% endif %}
