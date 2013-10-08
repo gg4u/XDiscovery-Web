@@ -31,7 +31,7 @@ class MapTestCase(LiveServerTestCase):
         self.assertContains(resp, '/frontend/styles/')
 
     def test_empty(self):
-        resp = self.client.get('/api/map/', content_type='application/json')
+        resp = self.client.get('/api/map', content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertEqual(len(data['map']), 0)
@@ -47,7 +47,7 @@ class MapTestCase(LiveServerTestCase):
 
     def test_list(self):
         save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        resp = self.client.get('/api/map/', content_type='application/json')
+        resp = self.client.get('/api/map', content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertEqual(len(data['map']), 1)
@@ -57,7 +57,7 @@ class MapTestCase(LiveServerTestCase):
 
     def test_list_sort_popular(self):
         self.create_maps(10)
-        resp = self.client.get('/api/map/',
+        resp = self.client.get('/api/map',
                                {'ordering': 'popularity'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -66,7 +66,7 @@ class MapTestCase(LiveServerTestCase):
         self.assertEqual([str(i) for i in range(10)],
                          [obj['title'] for obj in data['map']])
         # reverse
-        resp = self.client.get('/api/map/',
+        resp = self.client.get('/api/map',
                                {'ordering': '-popularity'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -77,7 +77,7 @@ class MapTestCase(LiveServerTestCase):
 
     def test_list_sort_date_created(self):
         self.create_maps(10)
-        resp = self.client.get('/api/map/',
+        resp = self.client.get('/api/map',
                                {'ordering': 'date_created'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -86,7 +86,7 @@ class MapTestCase(LiveServerTestCase):
         self.assertEqual([str(i) for i in range(9, -1, -1)],
                          [obj['title'] for obj in data['map']])
         # reverse
-        resp = self.client.get('/api/map/',
+        resp = self.client.get('/api/map',
                                {'ordering': '-date_created'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -97,7 +97,7 @@ class MapTestCase(LiveServerTestCase):
 
     def test_list_search_empty(self):
         save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        resp = self.client.get('/api/map/',
+        resp = self.client.get('/api/map',
                                {'topic': 'xxxxxxxxxxx'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -106,14 +106,14 @@ class MapTestCase(LiveServerTestCase):
 
     def test_list_search(self):
         save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        resp = self.client.get('/api/map/',
+        resp = self.client.get('/api/map',
                                {'topic': 'lion'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertEqual(len(data['map']), 1)
         # case-insensitive
-        resp = self.client.get('/api/map/',
+        resp = self.client.get('/api/map',
                                {'topic': 'liON'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -123,7 +123,7 @@ class MapTestCase(LiveServerTestCase):
 
     def test_detail(self):
         mp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        resp = self.client.get('/api/map/{}/'.format(mp.pk),
+        resp = self.client.get('/api/map/{}'.format(mp.pk),
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
