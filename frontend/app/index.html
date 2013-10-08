@@ -1,3 +1,4 @@
+<!-- @if ENV='dist' -->{% load cms_tags %}{% if not request.GET.angular %}<!-- @endif -->
 <!doctype html>
 <!--[if lt IE 7]>      <html ng-app="xdiscoveryApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html ng-app="xdiscoveryApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -44,9 +45,8 @@
 				</div>
 				<nav class="collapse navbar-collapse xd-navbar-collapse" role="navigation">
 					<ul class="nav navbar-nav">
-						<li ng-repeat="m in mainMenu.items" ng-class="{'active': mainMenu.isCurrent(m.href)}">
-							<a ng-href="{{m.href}}" ng-bind="m.title"></a>
-						</li>
+					  <li ng-class="{'active': mainMenu.isCurrent('/en/blog')}"><a href="/en/blog">home</a></li>
+					  <li ng-class="{'active': mainMenu.isCurrent('/en/atlas')}"><a href="/en/atlas">atlas</a></li>
 					</ul>
 				</nav>
 
@@ -54,6 +54,7 @@
 		<!-- @endif -->
 		<!-- @if ENV='dist' -->
 		{% include "xdw_web/navbar.html" %}
+		{% placeholder "main" current_page or %}{% endplaceholder %}
 		<!-- @endif -->
 
 		<section id="page" role="main" ng-class="pageClass" ng-view></section>
@@ -107,14 +108,11 @@
 		angular.module('xdiscoveryApp').constant('config', {
 			mapsApiUrl: 'https://xdiscovery-web-staging.herokuapp.com/api/map/:id',
 			customPageRoutes: {
-				'/prova': 'something.html'
-			},
-			mainMenuItems: [
-				{ title: 'Atlas', href: '/atlas' },
-				{ title: 'Prova', href: '/prova' }
-			]
+				'/en/blog': '/en/blog?angular=1',
+				'/en/mobile': '/en/mobile?angular=1',
+				'/en/': '/en/?angular=1'
+			}
 		});
 		</script>
-
 </body>
-</html>
+</html><!-- @if ENV='dist' -->{% else %}{% placeholder "main" %}{% endif %}<!-- @endif -->
