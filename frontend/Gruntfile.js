@@ -354,9 +354,9 @@ module.exports = function (grunt) {
     },
     preprocess: {
 	test: {
-	    src: '.tmp/index.html',
+	    src: '<%= yeoman.app %>/index.html',
+	    dest: '.tmp/index.html',
 	    options: {
-		inline: true,
 		context: {
 		    ENV: 'test'
 		}
