@@ -9,3 +9,4 @@ virtualnode/
 .env-production
 .env-staging
 .env
+db.sqlite
