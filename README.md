@@ -6,7 +6,7 @@
 Requirements:
 	``pyenv``
 
-## Python 
+### Python 
 
 Pyenv (optional):
 
@@ -53,11 +53,65 @@ Nodeenv:
 	npm install
 
 
-Install other services: ``postgresql``, ``memcache`
 
-To start developing, activate the local develpment environment:
+When all the above is done, to start developing, activate the local develpment 
+environment:
 
 	source ./activate.sh
+
+
+### Local develpment environment for frontend testing
+
+A stripped-down version of the backend environment, using sqlite.
+
+Bootstrapping:
+
+ pip install -r requirements/test.txt
+ python manage.py syncdb --settings=xdimension_web.settings.test --noinput
+ python manage.py migrate --all --settings=xdimension_web.settings.test --noinput
+
+Load initial data
+
+ python manage.py loaddata xdimension_web/fixtures/test_data.json --settings=xdimension_web.settings.test
+
+Build the app:
+
+ fab build:test
+
+Now the views are in ``xdimension_web/xdw_web/templates/frontend``
+
+Run the app:
+
+ python manage.py runserver --settings=xdimension_web.settings.test
+
+
+For the admin go to ``http://localhost:8000/en/admin/`` (username: admin, password: admin)
+
+
+### Local full development environment
+
+Install other services and libraries: ``postgresql``, ``memcache``, ``libmemcached-dev``, ``libevent``, ...
+
+Create postgres db and user account:
+
+    fab create_db_local
+
+Bootstrapping:
+
+    pip install -r requirements/dev.txt
+    python manage.py syncdb
+    python manage.py migrate --all
+
+Run the app:
+
+ fab build
+ python manage.py runserver
+
+
+
+## Random notes
+
+Set default site name from the admin web console.
 
 
 ## Staging environment setup
@@ -112,6 +166,7 @@ Synchronize database:
     python manage.py createsuperuser
 
 Set default site name from the admin web console.
+
 
 
 ## Deploy

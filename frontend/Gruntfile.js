@@ -293,6 +293,20 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      test: { 
+	files: [{
+	    expand: true,
+	    cwd: '<%= yeoman.app %>',    
+            src: 'bower_components/**',
+            dest: '<%= yeoman.dist %>'
+	},
+	{
+	    expand: true,
+	    cwd: '.tmp',
+            src: '**',
+            dest: '<%= yeoman.dist %>'
+	}]
       }
     },
     rename: {
@@ -423,7 +437,33 @@ module.exports = function (grunt) {
     //'rev',
     'usemin'
   ]);
-
+  grunt.registerTask('buildtest', [
+    'clean:server',
+    'clean:dist',
+    'preprocess:dist',
+    'useminPrepare',
+    'concurrent:dist',
+    'autoprefixer',
+    //'concat',
+    'copy:dist',
+    /* index.html dance goes like this:
+     1) index.html is preprocess'ed into index_dist.html
+     2) useminPrepare uses index_dist.html (needs to be in the very same
+        dir as index.html otherwise assets are not found)
+     3) we rename dist/index_dist.html into dist/index.html
+     4) usemin dos his things
+    */
+    'rename:dist',
+    //'cdnify',
+    //'ngmin',
+    //'cssmin',
+    //'uglify',
+    'copy:test',
+    // rev-ing is done by django static assets logic. Doing it here breaks
+    // the automatic deploy scripts
+    //'rev',
+    //'usemin'
+  ]);
   grunt.registerTask('default', [
     'jshint',
     'test',

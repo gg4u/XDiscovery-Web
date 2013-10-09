@@ -32,9 +32,9 @@ def get_db_config():
 
 
 @task
-def build():
+def build(dest='dist'):
     with lcd('frontend'):
-        local('grunt build')
+        local('grunt build{}'.format('test' if dest == 'test' else ''))
         integrate_assets()
 
 
