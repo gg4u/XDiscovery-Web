@@ -7,7 +7,8 @@ app.service 'xDiscoveryApi', ($resource, $http, config) ->
 			method: 'GET'
 			responseType: 'json'
 			transformResponse: (data) ->
-				result = JSON.parse data
+				data = JSON.parse data unless angular.isObject(data)
+				result = data
 				result.isLoadingMore = no
 				result.loadMore = ->
 					return if @isLoadingMore or not @next
