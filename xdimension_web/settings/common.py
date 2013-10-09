@@ -119,11 +119,11 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'json_field',
     # DjangoCMS
+    'djangocms_text_ckeditor',
     'cms',
     'mptt',
     'menus',
     'sekizai',
-    'djangocms_text_ckeditor',
     'cms.plugins.file',
     'cms.plugins.picture',
     'cms.plugins.video',
