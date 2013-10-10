@@ -108,9 +108,14 @@
 		angular.module('xdiscoveryApp').constant('config', {
 			mapsApiUrl: '/api/map/:id',
 			customPageRoutes: {
+		  <!-- @if ENV='dist' -->
+		     {% include "xdw_web/routes.html" %}
+		  <!-- @endif -->
+		  <!-- @if ENV!='dist' -->
 				'/en/blog': '/en/blog?angular=1',
 				'/en/mobile': '/en/mobile?angular=1',
 				'/en/': '/en/?angular=1'
+		  <!-- @endif -->
 			}
 		});
 		</script>

@@ -41,7 +41,7 @@
 
 			<div masonry-brick="" ng-repeat="map in mapSearch.map track by map.id">
 				<article class="xd-map-wall-card">
-					<a ng-href="/graph/{% verbatim %}{{map.id}}"><img ng-src="{{map.thumbnail.url}}{% endverbatim %}" masonry-layout-on="map.thumbnail.url" class="image" alt=""></a>
+					<a ng-href="/graph/{% verbatim %}{{map.id}}{% endverbatim %}"><img ng-src="{% verbatim %}{{map.thumbnail.url}}{% endverbatim %}" masonry-layout-on="map.thumbnail.url" class="image" alt=""></a>
 
 					<header class="content">
 						<h2 class="title" ng-switch="!!map.title">
@@ -53,7 +53,7 @@
 								<span ng-bind="map.nodeTitles.last">&ndash;</span>
 							</a>
 						</h2>
-						<div class="meta" ng-if="map.authorName">by <span class="author" ng-bind-template="{% verbatim %}{{map.author.name}} {{map.author.surname}}{% endverbatim %}">&ndash;</span></div>
+						<div class="meta" ng-if="map.authorName">by <span class="author" ng-bind-template="{% verbatim %}{{map.author.name}}{% endverbatim %} {% verbatim %}{{map.author.surname}}{% endverbatim %}">&ndash;</span></div>
 					</header>
 
 					<ul class="nav nav-line" masonry-layout-on="contentTab">
@@ -63,7 +63,7 @@
 
 					<div class="tabbed content" ng-switch="contentTab">
 						<p ng-switch-default="" ng-init="nodes = (map.nodeTitles.start|limitTo:6)">
-							<span ng-repeat="node in nodes track by $index" ng-bind-template="{% verbatim %}{{node}}{{$middle&&' | '||' '}}{% endverbatim %}"></span>
+							<span ng-repeat="node in nodes track by $index" ng-bind-template="{% verbatim %}{{node}}{% endverbatim %}{% verbatim %}{{$middle&&' | '||' '}}{% endverbatim %}"></span>
 							<span ng-if="nodes.length < map.node_count">
 								<span class="sep">and other</span>
 								<span ng-bind-template="#{% verbatim %}{{map.node_count - nodes.length}}{% endverbatim %}"></span>
