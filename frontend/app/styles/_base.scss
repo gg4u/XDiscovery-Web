@@ -19,3 +19,8 @@ html, body {
 		margin-top: 0;
 	}
 }
+
+svg {
+	// Firefox fix for vivagraph
+  overflow: visible !important;
+}
