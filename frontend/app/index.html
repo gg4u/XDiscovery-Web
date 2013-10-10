@@ -57,7 +57,8 @@
 		{% placeholder "main" current_page or %}{% endplaceholder %}
 		<!-- @endif -->
 
-		<section id="page" role="main" ng-class="pageClass" ng-view></section>
+		<section id="page" role="main" ng-class="pageClass" ng-view ng-cloak>
+		</section>
 
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 		 <script>
