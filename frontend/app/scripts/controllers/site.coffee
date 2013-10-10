@@ -3,7 +3,7 @@ app = angular.module('xdiscoveryApp')
 app.controller 'siteCtrl', ($scope, $rootScope, $location, config, ngProgress) ->
 	# Menu items setup
 	$scope.mainMenu =
-		items: config.mainMenuItems
+		collapsed: yes
 		isCurrent: (href) ->
 			$location.path() is href
 
@@ -12,6 +12,7 @@ app.controller 'siteCtrl', ($scope, $rootScope, $location, config, ngProgress) -
 
 	$rootScope.$on '$routeChangeStart', ->
 		do ngProgress.start
+		$scope.mainMenu.collapsed = yes
 
 	$rootScope.$on '$routeChangeSuccess', ->
 		do ngProgress.complete
