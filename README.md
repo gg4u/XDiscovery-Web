@@ -113,6 +113,11 @@ Run the app:
 
 Set default site name from the admin web console.
 
+AngularJS html views are served by the django backend as and rendered as 
+django templates. The `fab build` task integrates the fontend views into the django project as templates. All angular variables syntax (`{`) is escaped by the
+build sstem using `{% verbatim %}`; if you really want to use django template
+variables in angular vies, use this supernice syntax: `{dj{ variable_name }dj}`.
+
 
 ## Staging environment setup
 

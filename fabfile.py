@@ -204,8 +204,12 @@ def integrate_assets():
         with open(src_path, 'rb') as src_f, open(dst_path, 'wb') as dst_f:
             data = src_f.read()
             # Protect angular vars from django template machinery
-            data, n = re.subn(r'({{.*}})',
+            data, n = re.subn(r'({{.*?}})',
                               r'{% verbatim %}\1{% endverbatim %}',
+                              data)
+            # Decode *real* django vars
+            data, n = re.subn(r'{dj{(.*?)}dj}',
+                              r'{{\1}}',
                               data)
             # Prepend django static url logic to all assets
             data, n = re.subn(
