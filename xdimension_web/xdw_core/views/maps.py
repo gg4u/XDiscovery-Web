@@ -78,7 +78,9 @@ class MapList(ListAPIView):
     serializer_class = MapSerializer
     pagination_serializer_class = MapPaginationSerializer
     permission_classes = [permissions.AllowAny]
-    filter_backends = (filters.OrderingFilter, TopicSearchFilter)
+    filter_backends = (filters.OrderingFilter, TopicSearchFilter,
+                       filters.DjangoFilterBackend)
+    filter_fields = ('featured',)
 
     def get_pagination_serializer(self, page):
         context = self.get_serializer_context()

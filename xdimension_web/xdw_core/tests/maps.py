@@ -14,11 +14,15 @@ __all__ = ['MapTestCase']
 
 class MapTestCase(LiveServerTestCase):
 
-    def create_maps(self, num):
+    def create_maps(self, num, **kwargs):
+        defaults = {
+            'map_data': get_test_data('sharingAppWeb.json')
+            }
+        defaults.update(kwargs)
         start = datetime.datetime.now(utc)
         maps = []
         for i in range(num):
-            mp = Map(map_data=get_test_data('sharingAppWeb.json'))
+            mp = Map(**defaults)
             mp.popularity = i
             mp.title = str(i)
             mp.date_created = start - datetime.timedelta(i)
@@ -94,6 +98,22 @@ class MapTestCase(LiveServerTestCase):
         self.assertEqual(len(data['map']), 10)
         self.assertEqual([str(i) for i in range(10)],
                          [obj['title'] for obj in data['map']])
+
+    def test_list_filter_featured(self):
+        self.create_maps(10, featured=False)
+        resp = self.client.get('/api/map',
+                               {'featured': '1'},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 0)
+        # not featured
+        resp = self.client.get('/api/map',
+                               {'featured': '0'},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 10)
 
     def test_list_search_empty(self):
         save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
