@@ -12,10 +12,10 @@
 
 				<div class="row">
 					<div class="col-sm-10 col-xs-12 xd-atlas-col-search-input">
-						<input class="xd-atlas-search-input" type="text" select2 ng-model="select2" style="width:100%">
+						<input class="xd-atlas-search-input" type="text" select2 ng-model="search.query" style="width:100%">
 					</div>
 					<div class="col-sm-2 hidden-xs xd-atlas-col-search-button">
-						<button type="button" class="btn btn-default xd-atlas-search-button">Search</button>
+						<button type="button" class="btn btn-default xd-atlas-search-button" ng-click="search.search()">Search</button>
 					</div>
 				</div>
 
@@ -25,9 +25,12 @@
 </header>
 
 <ul class="nav nav-line">
-	<li><a href="#">Recent</a></li>
-	<li class="active"><a href="#">Popular</a></li>
-	<li><a href="#">Featured</a></li>
+	<li ng-class="{ 'active':search.ordering=='date_created' }">
+		<a href="" ng-click="search.ordering = 'date_created';search.search()">Recent</a></li>
+	<li ng-class="{ 'active':search.ordering=='popular' }">
+		<a href="" ng-click="search.ordering = 'popular';search.search()">Popular</a></li>
+	<li ng-class="{ 'active':search.featured }">
+		<a href="" ng-click="search.featured = 1;search.search()">Featured</a></li>
 </ul>
 
 <section class="xd-page-content xd-atlas-content">
@@ -39,7 +42,7 @@
 		<div class="xd-map-wall" masonry="{ columnWidth: '.grid-sizer' }" ng-cloak>
 			<div class="grid-sizer"></div>
 
-			<div masonry-brick ng-repeat="map in mapSearch.map track by map.id">
+			<div masonry-brick ng-repeat="map in search.results.map track by map.id">
 				<article class="xd-map-wall-card">
 					<a ng-href="/graph/{{map.id}}"><img ng-src="{{map.thumbnail.url}}" masonry-layout-on="map.thumbnail.url" class="image" alt=""></a>
 
@@ -85,7 +88,7 @@
 			</div>
 
 		</div>
-		<div class="loading" ng-if="mapSearch.next" in-view="$inview&&mapSearch.loadMore()"></div>
+		<div class="loading" ng-if="search.results.next" in-view="$inview&&search.results.loadMore()"></div>
 
 	</div>
 </section>
