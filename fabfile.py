@@ -35,7 +35,7 @@ def get_db_config():
 def build(dest='dist'):
     with lcd('frontend'):
         local('grunt build{}'.format('test' if dest == 'test' else ''))
-        integrate_assets()
+    integrate_assets()
 
 
 @task
@@ -45,7 +45,6 @@ def deploy(env='staging', frontend='True', backend='True'):
         pass
     elif env == 'staging':
         if frontend.lower() in YES_VALUES:
-            local('ls -la run_in_env.sh')
             local('{}/run_in_env.sh .env-staging python manage.py '
                   'collectstatic --noinput '
                   '--settings=xdimension_web.settings.local_s3'
@@ -194,26 +193,30 @@ def integrate_assets():
         os.makedirs(os.path.join(dst_dir, 'views'))
     # Store source_file, dest_file in this list
     files = [('index.html', os.path.join(dst_dir, 'index.html'))]
-    os.chdir(src_dir)
-    for path in os.listdir('views'):
-        if (os.path.isfile(os.path.join('views', path)) and
-            path.endswith('.html')):
-            files.append((os.path.join('views', path),
-                          os.path.join(dst_dir, 'views', path)))
-    for src_path, dst_path in files:
-        with open(src_path, 'rb') as src_f, open(dst_path, 'wb') as dst_f:
-            data = src_f.read()
-            # Protect angular vars from django template machinery
-            data, n = re.subn(r'({{.*?}})',
-                              r'{% verbatim %}\1{% endverbatim %}',
-                              data)
-            # Decode *real* django vars
-            data, n = re.subn(r'{dj{(.*?)}dj}',
-                              r'{{\1}}',
-                              data)
-            # Prepend django static url logic to all assets
-            data, n = re.subn(
-                r'(href="|src=")/(bower_components|scripts|styles|images)',
-                r'\1{{ STATIC_URL }}frontend/\2', data)
-            dst_f.write(data)
+    prev_cwd = os.getcwd()
+    try:
+        os.chdir(src_dir)
+        for path in os.listdir('views'):
+            if (os.path.isfile(os.path.join('views', path)) and
+                path.endswith('.html')):
+                files.append((os.path.join('views', path),
+                              os.path.join(dst_dir, 'views', path)))
+        for src_path, dst_path in files:
+            with open(src_path, 'rb') as src_f, open(dst_path, 'wb') as dst_f:
+                data = src_f.read()
+                # Protect angular vars from django template machinery
+                data, n = re.subn(r'({{.*?}})',
+                                  r'{% verbatim %}\1{% endverbatim %}',
+                                  data)
+                # Decode *real* django vars
+                data, n = re.subn(r'{dj{(.*?)}dj}',
+                                  r'{{\1}}',
+                                  data)
+                # Prepend django static url logic to all assets
+                data, n = re.subn(
+                    r'(href="|src=")/(bower_components|scripts|styles|images)',
+                    r'\1{{ STATIC_URL }}frontend/\2', data)
+                dst_f.write(data)
+    finally:
+        os.chdir(prev_cwd)
     puts('Integrated {} files into django app'.format(len(files)))
