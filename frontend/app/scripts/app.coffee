@@ -20,7 +20,8 @@ app.config ($routeProvider, $locationProvider, config) ->
 		templateUrl: '/views/atlas.html',
 		controller: 'AtlasCtrl'
 		resolve:
-			mapSearch: (xDiscoveryApi) -> xDiscoveryApi.maps.search().$promise
+			mapSearch: ($location, xDiscoveryApi) ->
+				xDiscoveryApi.maps.search($location.search()).$promise
 
 	.when '/graph/:id',
 		templateUrl: '/views/graph.html',
