@@ -18,13 +18,13 @@ def save_map(obj):
     data = obj.map_data['map']
     if not obj.title:
         obj.title = data['title']
-    if not obj.author_name:
+    if not obj.author_name and 'author' in data:
         obj.author_name = data['author']['name']
-    if not obj.author_surname:
+    if not obj.author_surname and 'author' in data:
         obj.author_surname = data['author']['surname']
     if not obj.description:
         obj.description = data['description']
-    if not obj.picture_url:
+    if not obj.picture_url and 'thumbnail' in data:
         obj.picture_url = data['thumbnail'].get('url', '')
     # XXX FIXME here we should be walking the path from first to last...
     obj.node_titles = [n['title'] for n in data['pagerank']\
