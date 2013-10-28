@@ -69,7 +69,7 @@ class TopicSearchFilter(filters.BaseFilterBackend):
         if topic:
             topics = [t.strip().lower() for t in topic.split(',')]
             if topics:
-                return queryset.filter(maptopic__topic__in=topics)
+                return queryset.filter(maptopic__topic__in=topics).distinct()
         return queryset
 
 

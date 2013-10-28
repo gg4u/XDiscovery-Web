@@ -5,7 +5,7 @@ import json
 from django.test import TestCase, LiveServerTestCase
 from django.utils.timezone import utc
 
-from ..models import Map
+from ..models import Map, MapTopic
 from ..maps import save_map
 from .utils import get_test_data
 
@@ -128,6 +128,31 @@ class MapTestCase(LiveServerTestCase):
         save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
         resp = self.client.get('/api/map',
                                {'topic': 'lion'},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 1)
+        # case-insensitive
+        resp = self.client.get('/api/map',
+                               {'topic': 'liON'},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 1)
+
+
+    def test_list_search_2_terms(self):
+        mp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
+        topics = [u'african leopard', u'arabian leopard', u'asiatic lion', u'big cat', u'cheetah', u'felis', u'indian leopard', u'indochinese leopard', u'javan leopard', u'leopard', u'lion', u'lycaon pictus', u'north china leopard', u'northwest african cheetah', u'southwest african lion', u'sri lankan leopard', u'striped hyena', u'transvaal lion']
+        # Topics need to be saved in db
+        self.assertEqual(
+            topics,
+            list(MapTopic.objects.order_by('topic').values_list('topic', flat=True)))
+        self.assertEqual(
+            topics,
+            list(mp.maptopic_set.order_by('topic').values_list('topic', flat=True)))
+        resp = self.client.get('/api/map',
+                               {'topic': 'lion,felis'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
