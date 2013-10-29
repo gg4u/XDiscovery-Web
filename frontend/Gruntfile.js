@@ -431,7 +431,8 @@ module.exports = function (grunt) {
     'cdnify',
     'ngmin',
     'cssmin',
-    'uglify',
+    // XXX Uglify temporarly disabled: it triggers an angular error...
+    //'uglify',
     // rev-ing is done by django static assets logic. Doing it here breaks
     // the automatic deploy scripts
     //'rev',
