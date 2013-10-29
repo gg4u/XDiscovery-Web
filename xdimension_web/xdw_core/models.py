@@ -30,7 +30,7 @@ class Map(models.Model):
     # Non-editable fields calculated from map_data
     node_count = models.IntegerField(editable=False)
     node_titles = JSONField(editable=False)
-    last_node_title = models.CharField(max_length=500, editable=False) 
+    last_node_title = models.CharField(max_length=500, editable=False)
     # for sorting
     date_created = models.DateField(db_index=True, default=now_tz)
     popularity = models.IntegerField(default=0, db_index=True)
@@ -53,3 +53,7 @@ class MapTopic(models.Model):
         index_together = [
             ['topic', 'relevance']
         ]
+
+
+class Topic(models.Model):
+    topic = models.CharField(max_length=500, primary_key=True)

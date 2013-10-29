@@ -6,7 +6,7 @@ from __future__ import absolute_import
 
 from django.db import transaction
 
-from .models import Map, MapTopic
+from .models import Map, MapTopic, Topic
 
 
 @transaction.commit_on_success
@@ -39,4 +39,5 @@ def save_map(obj):
         # XXX what if title is empty? Is it right to save it lowercased?
         title = n['title'].lower()
         MapTopic.objects.create(map=obj, topic=title, relevance=n['weight'])
+        Topic.objects.get_or_create(topic=title)
     return obj
