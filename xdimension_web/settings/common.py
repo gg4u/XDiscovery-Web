@@ -220,7 +220,7 @@ REST_FRAMEWORK = {
 REST_API_DOCS_ENABLE = os.environ.get('REST_API_DOCS_ENABLE') in ('True', '1')
 
 # CORS (deveopment only)
-if DEPLOY_MODE == 'staging':
+if DEPLOY_MODE in ('staging', 'local'):
     CORS_ALLOW_CREDENTIALS = True
     CORS_ORIGIN_WHITELIST = ('127.0.0.1:9000', 'localhost:9000', 'null', None)
     CORS_ALLOW_HEADERS = ('x-requested-with',
