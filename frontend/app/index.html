@@ -54,10 +54,10 @@
 		<!-- @endif -->
 		<!-- @if ENV='dist' -->
 		{% include "xdw_web/navbar.html" %}
-		{% placeholder "main" current_page or %}{% endplaceholder %}
 		<!-- @endif -->
 
 		<section id="page" role="main" ng-class="pageClass" ng-view ng-cloak>
+		{% placeholder "main" current_page or %}{% endplaceholder %}
 		</section>
 
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
