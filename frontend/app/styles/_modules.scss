@@ -23,6 +23,40 @@
 	.search-button {
 		margin: 0;
 	}
+
+	.back-button {
+		-webkit-mask: url(../images/xd-header-back-arrow.svg) no-repeat center center;
+		-o-mask: url(../images/xd-header-back-arrow.svg) no-repeat center center;
+		-ms-mask: url(../images/xd-header-back-arrow.svg) no-repeat center center;
+		min-width: 32px;
+		min-height: 32px;
+		display: inline-block;
+		background: $primary-color;
+	}
+
+	.info-button,
+	.share-button {
+		-webkit-mask: url(../images/info-button.svg) no-repeat center center;
+		-o-mask: url(../images/info-button.svg) no-repeat center center;
+		-ms-mask: url(../images/info-button.svg) no-repeat center center;
+		-webkit-mask-size: cover;
+		-o-mask-size: cover;
+		-ms-mask-size: cover;
+		min-width: 28px;
+		min-height: 28px;
+		display: inline-block;
+		background: $body-font-color;
+
+		&:hover {
+			background: $primary-color;
+		}
+	}
+
+	.share-button {
+		-webkit-mask-image: url(../images/share-button.svg);
+		-o-mask-image: url(../images/share-button.svg);
+		-ms-mask-image: url(../images/share-button.svg);
+	}
 }
 
 .xd-page-content {
@@ -171,8 +205,32 @@
 }
 
 //
-// VivaGraph
+// Graph
 //
+.xd-graph-page-header {
+	margin-bottom: 0;
+	padding: 8px 8px 0;
+	overflow: auto;
+	vertical-align: middle;
+
+	.title {
+		margin: 0;
+		display: inline-block;
+		font-size: 2em;
+		font-weight: 300;
+		position: relative;
+		top: -4px;
+
+		.sep {
+			font-size: 0.5em;
+		}
+	}
+}
+
+.xd-graph-tools {
+	margin: 0;
+}
+
 .viva-graph {
 	position: relative;
 	width: 100%;

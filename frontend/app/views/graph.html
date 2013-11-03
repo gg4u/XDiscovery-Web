@@ -1,3 +1,24 @@
+<header class="xd-page-header xd-graph-page-header">
+
+	<a class="back-button" href=""></a>
+
+	<h1 class="title" ng-switch="!!map.title" ng-cloak>
+		<span ng-switch-when="true" ng-bind="map.title" class="custom-title"></span>
+		<span ng-switch-default class="node-title">
+			<span class="sep">from</span>
+			<span ng-bind="map.nodeTitles.start[0]">&ndash;</span>
+			<span class="sep">to</span>
+			<span ng-bind="map.nodeTitles.last">&ndash;</span>
+		</span>
+	</h1>
+
+	<ul class="right inline-list xd-graph-tools">
+		<li><a href="" class="info-button"></a></li>
+		<li><a href="" class="share-button"></a></li>
+	</ul>
+
+</header>
+
 <div viva-graph
 	name="{{map.name}}"
 	links="map.graph"

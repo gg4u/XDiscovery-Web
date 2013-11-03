@@ -10,15 +10,19 @@ html, body {
 	position: absolute;
 	top: 0;
 	left: 0;
-
-	&.graph {
-		margin-top: 0;
-	}
 }
 
 svg {
 	// Firefox fix for vivagraph
   overflow: visible !important;
+}
+
+// Buttons
+.button.invisible,
+button.invisible {
+	@include box-shadow(none);
+	background: transparent;
+	border: none;
 }
 
 // Foundation Top Bar changes
