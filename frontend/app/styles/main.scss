@@ -1,6 +1,6 @@
 @import "settings";
-@import "bootstrap-sass/lib/bootstrap";
-@import "bootstrap-customization";
+@import "foundation/scss/normalize";
+@import "foundation/scss/foundation";
 @import "compass";
 
 // stile atlas si ripete per altre pagine
@@ -8,14 +8,6 @@
 // chiarimenti plugin per mappe/demo (jquery)
 // iframe per embedding (da valutare per preventivo)
 // passaggio a mobile (top bar)
-
-$screen: "only screen";
-$xsmall: "only screen and (min-width: #{$screen-xs})";
-$small: "only screen and (min-width: #{$screen-sm})";
-$medium: "only screen and (min-width: #{$screen-md})";
-$large: "only screen and (min-width: #{$screen-lg})";
-$landscape: "only screen and (orientation: landscape)";
-$portrait: "only screen and (orientation: portrait)";
 
 @import "base";
 @import "modules";
