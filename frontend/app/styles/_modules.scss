@@ -15,6 +15,14 @@
 	background: $gray-lighter;
 	padding: 1em 0;
 	margin-bottom: $column-gutter;
+
+	input {
+		height: auto;
+	}
+
+	.search-button {
+		margin: 0;
+	}
 }
 
 .xd-page-content {
@@ -143,11 +151,7 @@
 
 // Search bar
 .xd-atlas-search-button {
-	@include border-top-left-radius(0);
-	@include border-bottom-left-radius(0);
-	border-left: none;
 	width: 100%;
-	background: inherit;
 }
 
 @media #{$small} {

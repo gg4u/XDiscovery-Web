@@ -2,15 +2,11 @@
 $learn-theme-color: #428bca;
 
 .learn-theme {
-	.nav-line > li.active {
-		border-color: $learn-theme-color;
-	}
-
 	.xd-atlas-header {
-		background: lighten($learn-theme-color, 40%); //#f5f9fa;
+		background: lighten($learn-theme-color, 45%); //#f5f9fa;
 	}
 
-	.xd-map-wall-card .flipside {
+	.sub-nav dd.active a {
 		background: $learn-theme-color;
 	}
 }

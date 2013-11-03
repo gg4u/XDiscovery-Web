@@ -20,3 +20,31 @@ svg {
 	// Firefox fix for vivagraph
   overflow: visible !important;
 }
+
+// Foundation Top Bar changes
+.top-bar-section ul li.active > a {
+	position: relative;
+	font-weight: bold;
+
+	&:after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		background: $primary-color;
+	}
+}
+
+// Foundation sub-nav changes
+.centered.sub-nav {
+	text-align: center;
+
+	dd {
+		display: inline-block;
+		float: none;
+		margin-left: .6em;
+		margin-right: .6em;
+	}
+}

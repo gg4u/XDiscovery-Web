@@ -18,8 +18,8 @@
 
 // Various global styles
 
-// $body-bg: #fff;
-// $body-font-color: #222;
+$body-bg: #fff;
+$body-font-color: #222;
 // $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
@@ -112,8 +112,8 @@ $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 // Grid Variables
 //
 
-// $row-width: em-calc(1000);
-// $column-gutter: em-calc(30);
+$row-width: 1170px;
+$column-gutter: 30px;
 // $total-columns: 12;
 
 //
@@ -1071,8 +1071,8 @@ $header-font-weight: normal;
 
 // We use these to control margin and padding
 
-// $sub-nav-list-margin: em-calc(-4 0 18);
-// $sub-nav-list-padding-top: em-calc(4);
+$sub-nav-list-margin: 0;
+$sub-nav-list-padding-top: 0;
 
 // We use this to control the definition
 
@@ -1218,8 +1218,8 @@ $header-font-weight: normal;
 
 // Background color for the top bar
 
-// $topbar-bg-color: #111;
-// $topbar-bg: $topbar-bg-color;
+$topbar-bg-color: $body-bg;
+$topbar-bg: $topbar-bg-color;
 
 // Height and margin
 
@@ -1237,8 +1237,8 @@ $topbar-margin-bottom: 0;
 
 // Style the top bar dropdown elements
 
-// $topbar-dropdown-bg: #222;
-// $topbar-dropdown-link-color: #fff;
+// $topbar-dropdown-bg: $body-bg;
+// $topbar-dropdown-link-color: $body-font-color;
 // // $topbar-dropdown-link-bg: lighten($topbar-bg-color, 5%);
 // $topbar-dropdown-toggle-size: 5px;
 // $topbar-dropdown-toggle-color: #fff;
@@ -1246,14 +1246,14 @@ $topbar-margin-bottom: 0;
 
 // Set the link colors and styles for top-level nav
 
-// $topbar-link-color: #fff;
-// $topbar-link-color-hover: #fff;
-// $topbar-link-color-active: #fff;
-// $topbar-link-weight: bold;
+$topbar-link-color: $body-font-color;
+$topbar-link-color-hover: $body-font-color;
+$topbar-link-color-active: $body-font-color;
+$topbar-link-weight: normal;
 // $topbar-link-font-size: em-calc(13);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
-// $topbar-link-bg-hover: darken($topbar-bg-color, 3%);
-// $topbar-link-bg-active: darken($topbar-bg-color, 3%);
+$topbar-link-bg-hover: darken($topbar-bg-color, 3%);
+$topbar-link-bg-active: $topbar-bg-color;
 
 // $topbar-dropdown-label-color: #555;
 // $topbar-dropdown-label-text-transform: uppercase;
@@ -1274,8 +1274,8 @@ $topbar-margin-bottom: 0;
 // Transitions and breakpoint styles
 
 // $topbar-transition-speed: 300ms;
-// $topbar-breakpoint: 940 !default; // Change to 9999px for always mobile layout
-// $topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
+$topbar-breakpoint: 0; // Change to 9999px for always mobile layout
+$topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
 
 // Divider Styles
 

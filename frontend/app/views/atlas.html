@@ -1,43 +1,44 @@
 <div class="xd-atlas learn-theme">
 
 <header class="xd-page-header xd-atlas-header">
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-4 hidden-xs">
 
-				<img retina-src="/images/atlas-learn.png" alt="learnDiscovery">
+	<div class="row">
+		<div class="large-4 columns hide-for-small">
 
-			</div>
-			<div class="col-sm-8 col-xs-12">
+			<img retina-src="/images/atlas-learn.png" alt="learnDiscovery">
 
-				<div class="row">
-					<div class="col-sm-10 col-xs-12 xd-atlas-col-search-input">
-						<input class="xd-atlas-search-input" type="text" select2 ng-model="search.query" style="width:100%">
-					</div>
-					<div class="col-sm-2 hidden-xs xd-atlas-col-search-button">
-						<button type="button" class="btn btn-default xd-atlas-search-button" ng-click="search.search()">Search</button>
-					</div>
+		</div>
+		<div class="small-12 large-8 columns">
+
+			<div class="row">
+				<div class="small-12 large-10 columns xd-atlas-col-search-input">
+					<input class="xd-atlas-search-input" type="text" select2 ng-model="search.query" style="width:100%">
 				</div>
-
+				<div class="large-2 columns hide-for-small xd-atlas-col-search-button">
+					<button type="button" class="postfix radius secondary button search-button xd-atlas-search-button" ng-click="search.search()">Search</button>
+				</div>
 			</div>
+
 		</div>
 	</div>
+
 </header>
 
-<ul class="nav nav-line">
-	<li ng-class="{ 'active':search.ordering=='date_created' }">
-		<a href="" ng-click="search.ordering = 'date_created';search.search()">Recent</a></li>
-	<li ng-class="{ 'active':search.ordering=='popular' }">
-		<a href="" ng-click="search.ordering = 'popular';search.search()">Popular</a></li>
-	<li ng-class="{ 'active':search.featured }">
-		<a href="" ng-click="search.featured = 1;search.search()">Featured</a></li>
-</ul>
+<dl class="centered sub-nav">
+	<dd ng-class="{ 'active':search.ordering=='date_created' }">
+		<a href="" ng-click="search.ordering = 'date_created';search.search()">Recent</a></dd>
+	<dd ng-class="{ 'active':search.ordering=='popular' }">
+		<a href="" ng-click="search.ordering = 'popular';search.search()">Popular</a></dd>
+	<dd ng-class="{ 'active':search.featured }">
+		<a href="" ng-click="search.featured = 1;search.search()">Featured</a></dd>
+</dl>
 
 <section class="xd-page-content xd-atlas-content">
 
 	<img ng-if="false" class="xd-atlas-emotional-bg" src="http://placehold.it/200" alt="">
 
-	<div class="container">
+	<div class="row">
+		<div class="small-12 columns">
 
 		<div class="xd-map-wall" masonry="{ columnWidth: '.grid-sizer' }" ng-cloak>
 			<div class="grid-sizer"></div>
@@ -59,10 +60,10 @@
 						<div class="meta" ng-if="map.authorName">by <span class="author" ng-bind-template="{{map.author.name}} {{map.author.surname}}">&ndash;</span></div>
 					</header>
 
-					<ul class="nav nav-line" masonry-layout-on="contentTab">
-						<li ng-class="{ 'active':!contentTab }"><a href="" ng-click="contentTab=null">About</a></li>
-						<li ng-class="{ 'active':contentTab=='share' }"><a href="" ng-click="contentTab='share'">Share</a></li>
-					</ul>
+					<dl class="centered sub-nav" masonry-layout-on="contentTab">
+						<dd ng-class="{ 'active':!contentTab }"><a href="" ng-click="contentTab=null">About</a></dd>
+						<dd ng-class="{ 'active':contentTab=='share' }"><a href="" ng-click="contentTab='share'">Share</a></dd>
+					</dl>
 
 					<div class="tabbed content" ng-switch="contentTab">
 						<p ng-switch-default ng-init="nodes = (map.nodeTitles.start|limitTo:6)">
@@ -90,7 +91,9 @@
 		</div>
 		<div class="loading" ng-if="search.results.next" in-view="$inview&&search.results.loadMore()"></div>
 
-	</div>
+	</div><!-- .small-12.columns -->
+	</div><!-- .row -->
+
 </section>
 
 </div><!-- .xd-atlas -->
