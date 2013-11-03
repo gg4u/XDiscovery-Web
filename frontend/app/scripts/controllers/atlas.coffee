@@ -2,7 +2,7 @@
 
 app = angular.module('xdiscoveryApp')
 
-app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch) ->
+app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config) ->
 	# Search functionality model
 	$scope.search =
 		ordering: $location.search()['ordering']
@@ -20,9 +20,26 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch) ->
 	# TODO this should be a directive
 	filterEl = angular.element('[select2]')
 	filterEl.select2
-		tags: []
+		tags: yes
 		tokenSeparators: [",", "\t"]
 		multiple: yes
+		placeholder: "Search for a topic",
+		minimumInputLength: 2,
+		ajax:
+			url: config.apiUrl + '/topic'
+			dataType: "json"
+			data: (term, page) ->
+				console.log 'data', term, page
+				return q: term
+			results: (data, page) ->
+				return results: [] unless data?.topic?.length
+				return results: ({ id: t.topic, text: t.topic} for t in data.topic)
+		createSearchChoice: (term, data) ->
+			{
+				id: term
+				text: term
+			} unless data?.length
+
 	if $scope.search.query?
 		filterEl.select2 'val', $scope.search.query
 	# Bind select2 val to search query
