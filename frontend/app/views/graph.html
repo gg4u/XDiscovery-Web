@@ -25,3 +25,7 @@
 	layout="vivagraph.layout($graph)"
 	graphics="vivagraph.graphics()"
 	on-create="vivagraph.initialize($graph)"></div>
+
+<section class="viva-graph-detail-pane" ng-if="vivagraph.selectedNode">
+	node details <a href="" on-click="vivagraph.selectedNode = null">close</a>
+</section>
