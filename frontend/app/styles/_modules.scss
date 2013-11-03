@@ -8,6 +8,33 @@
 }
 
 //
+// Site
+//
+
+.xd-site-footer {
+	background: lighten($primary-color, 58%);
+
+	h4 {
+		color: $primary-color;
+		margin-bottom: 1em;
+	}
+
+	a {
+		color: $body-font-color;
+		font-weight: 300;
+	}
+
+	.legals {
+		background: $body-font-color;
+		color: $body-bg;
+
+		a {
+			color: $body-bg;
+		}
+	}
+}
+
+//
 // Page
 //
 
@@ -174,14 +201,6 @@
 //
 // Atlas
 //
-
-.xd-atlas {
-	height: 100%;
-}
-
-.xd-atlas-content {
-	min-height: 100%;
-}
 
 // Search bar
 .xd-atlas-search-button {
