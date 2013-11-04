@@ -11,8 +11,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css">
+	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet" type="text/css">
+	<!-- build:css({.tmp,app}) /styles/main.css -->
+	<link rel="stylesheet" href="{{ STATIC_URL }}frontend/bower_components/select2/select2.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}frontend/bower_components/ngprogress/ngProgress.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}frontend/styles/main.css">
+	<!-- endbuild -->
 </head>
 	<body ng-controller="siteCtrl">
 		<!--[if lt IE 7]>
@@ -24,10 +28,48 @@
 			<script src="{{ STATIC_URL }}frontend/bower_components/json3/lib/json3.min.js"></script>
 		<![endif]-->
 
-		{% include "xdw_web/navbar.html" %}
 		<section id="page" role="main" ng-class="pageClass" ng-view="" ng-cloak="">
 		{% placeholder "main" current_page or %}{% endplaceholder %}
 		</section>
+
+		<footer class="xd-site-footer" ng-cloak="">
+			<div class="row">
+				<div class="small-12 large-3 columns">
+					<h4>Company</h4>
+					<p><a href="">Who we are</a></p>
+					<p><a href="">What we do</a></p>
+					<p><a href="">Why we do it</a></p>
+				</div>
+				<div class="small-12 large-3 columns">
+					<h4>Services</h4>
+					<p><a href="">Discovery vs Search</a></p>
+					<p><a href="">Discovery Engine for Business</a></p>
+					<p><a href="">Portable Discovery Engine</a></p>
+					<p><a href="">The Atlas Project</a></p>
+				</div>
+				<div class="small-12 large-3 columns">
+					<h4>Atlas</h4>
+					<p><a href="">Learn Discovery Atlas</a></p>
+				</div>
+				<div class="small-12 large-3 columns">
+					<h4>Contacts</h4>
+					<p><a href="">Contact Us</a></p>
+					<p><a href="">Facebook</a></p>
+					<p><a href="">Twitter</a></p>
+				</div>
+			</div>
+
+			<div class="legals">
+				<div class="row">
+					<div class="small-12 columns">
+						<ul class="right inline-list">
+							<li><a href="">Term of Service</a></li>
+							<li><a href="">Patent Pending</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</footer>
 
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 		 <script>
@@ -40,19 +82,44 @@
 			 ga('send', 'pageview');
 		</script>
 
-		<script src="{{ STATIC_URL }}frontend/scripts/vendor.js"></script>
+		<!-- build:js /scripts/vendor.js -->
+		<script src="{{ STATIC_URL }}frontend/bower_components/jquery/jquery.js"></script>
+		<script src="{{ STATIC_URL }}frontend/bower_components/angular/angular.js"></script>
+		<!-- endbuild -->
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/2.1.0/jquery.imagesloaded.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.0.0/masonry.pkgd.js"></script>
 
-		<script src="{{ STATIC_URL }}frontend/scripts/plugins.js"></script>
+		<!-- build:js /scripts/plugins.js -->
+		<script src="{{ STATIC_URL }}frontend/bower_components/select2/select2.js"></script>
+		<script src="{{ STATIC_URL }}frontend/bower_components/vivagraph/dist/vivagraph.js"></script>
+		<!-- endbuild -->
 
-		<script src="{{ STATIC_URL }}frontend/scripts/modules.js"></script>
+		<!-- build:js /scripts/modules.js -->
+		<script src="{{ STATIC_URL }}frontend/bower_components/angular-route/angular-route.js"></script>
+		<script src="{{ STATIC_URL }}frontend/bower_components/angular-animate/angular-animate.js"></script>
+		<script src="{{ STATIC_URL }}frontend/bower_components/angular-resource/angular-resource.js"></script>
+		<script src="{{ STATIC_URL }}frontend/bower_components/angular-cookies/angular-cookies.js"></script>
+		<script src="{{ STATIC_URL }}frontend/bower_components/angular-sanitize/angular-sanitize.js"></script>
+		<script src="{{ STATIC_URL }}frontend/bower_components/angular-inview/angular-inview.js"></script>
+		<script src="{{ STATIC_URL }}frontend/bower_components/ngprogress/build/ngProgress.js"></script>
+		<!-- endbuild -->
 
-		<script src="{{ STATIC_URL }}frontend/scripts/scripts.js"></script>
+		<!-- build:js({.tmp,app}) /scripts/scripts.js -->
+		<script src="{{ STATIC_URL }}frontend/scripts/app.js"></script>
+		<script src="{{ STATIC_URL }}frontend/scripts/controllers/site.js"></script>
+		<script src="{{ STATIC_URL }}frontend/scripts/controllers/atlas.js"></script>
+		<script src="{{ STATIC_URL }}frontend/scripts/controllers/graph.js"></script>
+		<script src="{{ STATIC_URL }}frontend/scripts/controllers/custompage.js"></script>
+		<script src="{{ STATIC_URL }}frontend/scripts/directives/masonry.js"></script>
+		<script src="{{ STATIC_URL }}frontend/scripts/directives/vivaGraph.js"></script>
+		<script src="{{ STATIC_URL }}frontend/scripts/directives/retinaSrc.js"></script>
+		<script src="{{ STATIC_URL }}frontend/scripts/services/xDiscoveryApi.js"></script>
+		<script src="{{ STATIC_URL }}frontend/scripts/services/wikipediaApi.js"></script>
+		<!-- endbuild -->
 
 		<script type="text/javascript">
 		angular.module('xdiscoveryApp').constant('config', {
-			mapsApiUrl: '/api/map/:id',
+			apiUrl: '/api',
 			customPageRoutes: {
 		     {% include "xdw_web/routes.html" %}
 			}
