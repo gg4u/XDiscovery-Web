@@ -1,17 +1,16 @@
 # ~*~ coding: utf8 ~*~
 from __future__ import absolute_import
 
-import json
-
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveAPIView
 from rest_framework.serializers import ModelSerializer
 from rest_framework import fields
 from rest_framework import filters
 from rest_framework.pagination import PaginationSerializer
 from rest_framework import permissions
+from rest_framework import authentication
 
 from ..models import Map
+from ..maps import save_map
 
 
 class MapSimpleSerializer(ModelSerializer):
@@ -34,6 +33,16 @@ class MapSimpleSerializer(ModelSerializer):
 
 
 class MapSerializer(MapSimpleSerializer):
+
+    def restore_fields(self, data, files):
+        attrs = super(MapSerializer, self).restore_fields(data, files)
+        attrs['map_data'] = data
+        attrs['status'] = Map.STATUS_UNPUBLISHED
+        return attrs
+
+    def save_object(self, obj, **kwargs):
+        save_map(obj)
+
     def to_native(self, obj):
         ret = super(MapSimpleSerializer, self).to_native(obj)
         data = obj.map_data['map']
@@ -73,11 +82,12 @@ class TopicSearchFilter(filters.BaseFilterBackend):
         return queryset
 
 
-class MapList(ListAPIView):
+class MapList(ListCreateAPIView):
     queryset = Map.objects.filter(status=Map.STATUS_OK)
     serializer_class = MapSerializer
     pagination_serializer_class = MapPaginationSerializer
     permission_classes = [permissions.AllowAny]
+    authentication_classes = [authentication.BasicAuthentication]
     filter_backends = (filters.OrderingFilter, TopicSearchFilter,
                        filters.DjangoFilterBackend)
     filter_fields = ('featured',)
@@ -85,6 +95,12 @@ class MapList(ListAPIView):
     def get_pagination_serializer(self, page):
         context = self.get_serializer_context()
         return MapPaginationSerializer(instance=page, context=context)
+
+    def check_permissions(self, request):
+        if (request.method == 'POST' and
+            not permissions.IsAuthenticated().has_permission(request, self)):
+            self.permission_denied(request)
+        super(MapList, self).check_permissions(request)
 
 
 class MapDetail(RetrieveAPIView):

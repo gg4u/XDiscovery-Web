@@ -1,14 +1,16 @@
 from __future__ import absolute_import
 import json
+import base64
 
 from django.test import LiveServerTestCase
+from django.contrib.auth.models import User
 
 from ..models import Map, MapTopic
 from ..maps import save_map
 from .test_utils import MapTestCaseMixIn, get_test_data
 
 
-__all__ = ['MapTestCase']
+__all__ = ['MapTestCase', 'MapUploadTestCase']
 
 
 class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
@@ -123,6 +125,25 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         data = json.loads(resp.content)
         self.assertEqual(len(data['map']), 1)
 
+    def test_list_search_unpublished(self):
+        mapp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
+        mapp.status = Map.STATUS_UNPUBLISHED
+        mapp.save()
+        resp = self.client.get('/api/map',
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 0)
+
+    def test_list_search_deleted(self):
+        mapp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
+        mapp.status = Map.STATUS_DELETED
+        mapp.save()
+        resp = self.client.get('/api/map',
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 0)
 
     def test_list_search_2_terms(self):
         mp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
@@ -157,3 +178,28 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         data = json.loads(resp.content)
         self.assertNotIn('map_data', data)
         self.assertIn('path', data)
+
+
+class MapUploadTestCase(LiveServerTestCase, MapTestCaseMixIn):
+
+    def test_no_auth(self):
+        resp = self.client.post('/api/map',
+                                get_test_data('sharingAppWeb.json'),
+                                content_type='application/json')
+        self.assertEqual(resp.status_code, 401)
+        self.assertFalse(Map.objects.count())
+
+    def test_create(self):
+        user = User(username='test', email='test@example.com')
+        user.set_password('pass')
+        user.save()
+        print 'Basic {}'.format(base64.b64encode('test:pass'))
+        resp = self.client.post(
+            '/api/map',
+            get_test_data('sharingAppWeb.json'),
+            content_type='application/json',
+            HTTP_AUTHORIZATION='Basic {}'.format(base64.b64encode('test:pass')))
+        self.assertEqual(resp.status_code, 201, resp.content)
+        self.assertEqual(Map.objects.count(), 1)
+        mapp = Map.objects.get()
+        self.assertEqual(mapp.status, 'U')

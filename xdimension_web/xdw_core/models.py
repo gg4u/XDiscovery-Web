@@ -15,6 +15,7 @@ class Map(models.Model):
 
     STATUS_OK = 'O'
     STATUS_DELETED = 'D'
+    STATUS_UNPUBLISHED = 'U'
 
     # To be stored inside the grouped title list
     MAX_NODE_TITLES = 20
@@ -38,7 +39,8 @@ class Map(models.Model):
     # generic
     status = models.CharField(max_length=1,
                               choices=[(STATUS_OK, 'Ok'),
-                                       (STATUS_DELETED, 'Deleted')],
+                                       (STATUS_DELETED, 'Deleted'),
+                                       (STATUS_UNPUBLISHED, 'Unpublished')],
                               default=STATUS_OK,
                               db_index=True)
 
