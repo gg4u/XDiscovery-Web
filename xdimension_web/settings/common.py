@@ -137,6 +137,8 @@ INSTALLED_APPS = (
     'rest_framework_swagger',
     'south',
     'corsheaders',
+    # Misc
+    'jfu'  # Uploader
 )
 
 # A sample logging configuration. The only tangible logging

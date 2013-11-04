@@ -27,6 +27,9 @@ urlpatterns += patterns(
     url(r'^robots.txt$', RobotsView.as_view()),
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
         {'sitemap': []}, name='sitemap'),
+    # multiple file upload
+    url(r'^upload/', 'xdimension_web.xdw_core.views.upload.upload_multi',
+        name='jfu_upload'),
     # REST API
     url(r'^api/', include('xdimension_web.xdw_core.urls',
                           namespace='xdw_core')),

@@ -1,0 +1,21 @@
+{% extends 'jfu/upload_form.html' %}
+{% block UPLOAD_FORM_BUTTON_BAR_CONTROL %}
+<button type="submit" class="btn btn-primary start">
+    <i class="icon-upload icon-white"></i>
+    <span>Start upload</span>
+</button>
+<button type="reset" class="btn btn-warning cancel">
+    <i class="icon-ban-circle icon-white"></i>
+    <span>Cancel upload</span>
+</button>
+{% endblock %}
+{% block JS_DOWNLOAD_TEMPLATE_DELETE %}
+{% endblock %}
+{% block JS_DOWNLOAD_TEMPLATE_DOWNLOAD %}
+<td class="name">
+    <a href="{{ JQ_OPEN }}=file.url{{ JQ_CLOSE }}"
+        title="{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}"
+        target="_blank">{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}
+    </a>
+</td>
+{% endblock %}
