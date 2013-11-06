@@ -202,6 +202,15 @@
 // Atlas
 //
 
+.xd-atlas-header {
+	@extend .fixed;
+	margin-top: $topbar-height;
+}
+
+.xd-atlas > .sub-nav {
+	margin-top: 115px;
+}
+
 // Search bar
 .xd-atlas-search-button {
 	width: 100%;
