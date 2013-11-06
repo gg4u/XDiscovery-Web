@@ -6,7 +6,7 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 	# Search functionality model
 	$scope.search =
 		ordering: $location.search()['ordering']
-		featured: yes
+		featured: $location.search()['featured'] == 1
 		query: $location.search()['topic']?.split(',')
 		results: mapSearch or xDiscoveryApi.maps.search($location.search())
 		search: ->
@@ -15,6 +15,12 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 			query.topic = $scope.search.query.join(',') if $scope.search.query?.length
 			query.ordering = $scope.search.ordering if $scope.search.ordering
 			$location.search query
+		toggleOrdering: (ordering) ->
+			$scope.search.ordering = if $scope.search.ordering is ordering then null else ordering
+			do $scope.search.search
+		toggleFeatured: ->
+			$scope.search.featured = !$scope.search.featured
+			do $scope.search.search
 
 	# Setup select2
 	# TODO this should be a directive
