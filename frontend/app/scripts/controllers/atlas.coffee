@@ -45,9 +45,12 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 				id: term
 				text: term
 			} unless data?.length
+		initSelection: (elem, callback) ->
+			callback ({id: tag, text:tag} for tag in elem.val()?.split(','))
 
 	if $scope.search.query?
 		filterEl.select2 'val', $scope.search.query
+
 	# Bind select2 val to search query
 	filterEl.on 'change', (e) -> $scope.$apply ->
 		$scope.search.query = e.val
