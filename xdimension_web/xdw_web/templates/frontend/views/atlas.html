@@ -26,11 +26,11 @@
 
 <dl class="centered sub-nav">
 	<dd ng-class="{ 'active':search.ordering=='date_created' }">
-		<a href="" ng-click="search.ordering = 'date_created';search.search()">Recent</a></dd>
+		<a href="" ng-click="search.toggleOrdering('date_created')">Recent</a></dd>
 	<dd ng-class="{ 'active':search.ordering=='popular' }">
-		<a href="" ng-click="search.ordering = 'popular';search.search()">Popular</a></dd>
+		<a href="" ng-click="search.toggleOrdering('popular')">Popular</a></dd>
 	<dd ng-class="{ 'active':search.featured }">
-		<a href="" ng-click="search.featured = 1;search.search()">Featured</a></dd>
+		<a href="" ng-click="search.toggleFeatured()">Featured</a></dd>
 </dl>
 
 <section class="xd-page-content xd-atlas-content">

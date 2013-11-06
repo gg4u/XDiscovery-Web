@@ -28,8 +28,10 @@
 			<script src="{{ STATIC_URL }}frontend/bower_components/json3/lib/json3.min.js"></script>
 		<![endif]-->
 
-		<section id="page" role="main" ng-class="pageClass" ng-view="" ng-cloak="">
-		{% placeholder "main" current_page or %}{% endplaceholder %}
+		<section id="page" role="main" ng-class="pageClass">
+			<div ng-view="" ng-cloak="">
+				{% placeholder "main" current_page or %}{% endplaceholder %}
+			</div>
 		</section>
 
 		<footer class="xd-site-footer" ng-cloak="">
