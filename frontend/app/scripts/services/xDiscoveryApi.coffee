@@ -15,7 +15,7 @@ app.service 'xDiscoveryApi', ($resource, $http, config) ->
 				result.loadMore = ->
 					return if @isLoadingMore or not @next
 					@isLoadingMore = yes
-					$http.get mapsApiUrl + @next, (data) =>
+					$http.get(@next).success (data) =>
 						@map = @map.concat data['map'] if data?['map']?.length
 						@next = data.next
 						@count += data.count
