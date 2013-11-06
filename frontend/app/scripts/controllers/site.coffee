@@ -11,10 +11,8 @@ app.controller 'siteCtrl', ($scope, $rootScope, $location, config, ngProgress) -
 	ngProgress.color '#12af83'
 
 	$rootScope.$on '$routeChangeStart', ->
-		do ngProgress.start
+		do ngProgress.start unless ngProgress.status()
 		$scope.mainMenu.collapsed = yes
-		setTimeout (->
-			do ngProgress.complete if ngProgress.status()), 6000
 
 	$rootScope.$on '$routeChangeSuccess', ->
 		do ngProgress.complete
