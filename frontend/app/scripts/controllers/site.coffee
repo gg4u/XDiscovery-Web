@@ -13,6 +13,8 @@ app.controller 'siteCtrl', ($scope, $rootScope, $location, config, ngProgress) -
 	$rootScope.$on '$routeChangeStart', ->
 		do ngProgress.start
 		$scope.mainMenu.collapsed = yes
+		setTimeout (->
+			do ngProgress.complete if ngProgress.status()), 6000
 
 	$rootScope.$on '$routeChangeSuccess', ->
 		do ngProgress.complete
