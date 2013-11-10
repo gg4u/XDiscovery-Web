@@ -1,11 +1,14 @@
 app = angular.module('xdiscoveryApp')
 
-app.controller 'siteCtrl', ($scope, $rootScope, $location, config, ngProgress) ->
+app.controller 'siteCtrl', ($scope, $rootScope, $location, $window, config, ngProgress) ->
 	# Menu items setup
 	$scope.mainMenu =
 		collapsed: yes
 		isCurrent: (href) ->
 			$location.path() is href
+
+	# History back functionality
+	$scope.goBack = -> do $window.history.back
 
 	# Progress bar control
 	ngProgress.color '#12af83'
