@@ -26,6 +26,11 @@
 	graphics="vivagraph.graphics()"
 	on-create="vivagraph.initialize($graph)"></div>
 
-<section class="viva-graph-detail-pane" ng-if="vivagraph.selectedNode">
-	node details <a href="" on-click="vivagraph.selectedNode = null">close</a>
+<section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node">
+	<div class="content row">
+		<div class="small-12 columns">
+			<a href="" ng-click="vivagraph.selected = null" class="close-button">close</a>
+			<h2 ng-bind="vivagraph.selected.info.title">&ndash;</h2>
+		</div>
+	</div>
 </section>
