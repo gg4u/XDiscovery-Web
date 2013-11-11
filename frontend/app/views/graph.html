@@ -29,8 +29,23 @@
 <section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node">
 	<div class="content row">
 		<div class="small-12 columns">
+
 			<a href="" ng-click="vivagraph.selected = null" class="close-button">close</a>
+
 			<h2 ng-bind="vivagraph.selected.info.title">&ndash;</h2>
+
+			<dl class="sub-nav">
+				<dd ng-class="{ 'active':!vivagraph.selected.tab }">
+					<a href="" ng-click="vivagraph.selected.tab = null">Topic</a></dd>
+				<dd ng-class="{ 'active':vivagraph.selected.tab=='external' }">
+					<a href="" ng-click="vivagraph.selected.tab = 'external'">External Sources</a></dd>
+			</dl>
+
+			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
+				<div ng-switch-default>topic</div>
+				<div ng-switch-when="external">External</div>
+			</div>
+
 		</div>
 	</div>
 </section>
