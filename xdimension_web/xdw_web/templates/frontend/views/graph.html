@@ -1,6 +1,6 @@
 <header class="xd-page-header xd-graph-page-header">
 
-	<a class="back-button" href=""></a>
+	<a class="back-button" href="" ng-click="goBack()"></a>
 
 	<h1 class="title" ng-switch="!!map.title" ng-cloak="">
 		<span ng-switch-when="true" ng-bind="map.title" class="custom-title"></span>
@@ -21,6 +21,26 @@
 
 <div viva-graph="" name="{% verbatim %}{{map.name}}{% endverbatim %}" links="map.graph" layout="vivagraph.layout($graph)" graphics="vivagraph.graphics()" on-create="vivagraph.initialize($graph)"></div>
 
-<section class="viva-graph-detail-pane" ng-if="vivagraph.selectedNode">
-	node details <a href="" on-click="vivagraph.selectedNode = null">close</a>
+<section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node">
+	<div class="content row">
+		<div class="small-12 columns">
+
+			<a href="" ng-click="vivagraph.selected = null" class="close-button">close</a>
+
+			<h2 ng-bind="vivagraph.selected.info.title">&ndash;</h2>
+
+			<dl class="sub-nav">
+				<dd ng-class="{ 'active':!vivagraph.selected.tab }">
+					<a href="" ng-click="vivagraph.selected.tab = null">Topic</a></dd>
+				<dd ng-class="{ 'active':vivagraph.selected.tab=='external' }">
+					<a href="" ng-click="vivagraph.selected.tab = 'external'">External Sources</a></dd>
+			</dl>
+
+			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
+				<div ng-switch-default="">topic</div>
+				<div ng-switch-when="external">External</div>
+			</div>
+
+		</div>
+	</div>
 </section>
