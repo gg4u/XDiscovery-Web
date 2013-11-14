@@ -12,6 +12,7 @@
 //
 
 .xd-site-footer {
+	position: relative;
 	background: $footer-bg;
 
 	h4 {
@@ -235,11 +236,16 @@
 //
 // Graph
 //
+$graph-page-header-height: 52px;
+
 .xd-graph-page-header {
+	height: $graph-page-header-height;
 	margin-bottom: 0;
-	padding: 8px 8px 0;
 	overflow: auto;
+	padding: 8px 8px 0;
+	position: relative;
 	vertical-align: middle;
+	z-index: 1;
 
 	.title {
 		margin: 0;
@@ -260,16 +266,23 @@
 }
 
 .viva-graph {
-	position: relative;
+	position: absolute;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
 }
 
 .viva-graph-detail-pane {
-	background: $body-bg;
+	padding-top: $graph-page-header-height;
 	position: absolute;
 	top: 0; right: 0; height: 100%;
-	width: 200px;
-	margin-top: $topbar-height;
+	width: 40%;
+
+	> .content {
+		height: 100%;
+		background: $body-bg;
+		border: 1px solid $gray-lighter;
+		padding-top: 1em;
+		padding-bottom: 1em;
+	}
 }

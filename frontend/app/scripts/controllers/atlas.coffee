@@ -35,7 +35,6 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 			url: config.apiUrl + '/topic'
 			dataType: "json"
 			data: (term, page) ->
-				console.log 'data', term, page
 				return q: term
 			results: (data, page) ->
 				return results: [] unless data?.topic?.length
