@@ -55,7 +55,6 @@ def build(dest='dist'):
 
 @task
 def deploy(env='staging', frontend='True', backend='True'):
-    build()
     if env == 'local':
         pass
     elif env == 'staging':
@@ -71,7 +70,8 @@ def deploy(env='staging', frontend='True', backend='True'):
             #  - Db migration should happen in a separate utility heroku app
             app = get_app_name(env)
             local('git push {} master'.format(app))
-            local('heroku run python manage.py migrate --all --noinput')
+            local('heroku run python manage.py migrate --all --noinput --app {}'
+                  .format(app))
     else:
         assert False
 
