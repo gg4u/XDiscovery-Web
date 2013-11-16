@@ -3,7 +3,7 @@ import json
 
 from django.test import TestCase
 
-from ..models import MapTopic
+from ..models import MapTopic, Map
 from .test_utils import MapTestCaseMixIn
 
 __all__ = ['TopicTestCase']
@@ -27,16 +27,16 @@ class TopicTestCase(TestCase, MapTestCaseMixIn):
         self.assertEqual(len(data['topic']), 10)
         self.assertEqual(
             data['topic'],
-            [{u'topic': u'leopard'},
-             {u'topic': u'lion'},
-             {u'topic': u'cheetah'},
-             {u'topic': u'asiatic lion'},
-             {u'topic': u'transvaal lion'},
-             {u'topic': u'southwest african lion'},
-             {u'topic': u'indochinese leopard'},
-             {u'topic': u'african leopard'},
-             {u'topic': u'north china leopard'},
-             {u'topic': u'felis'}])
+            [{u'topic': u'Arabian leopard'},
+             {u'topic': u'Felis'},
+             {u'topic': u'Indochinese leopard'},
+             {u'topic': u'Lycaon pictus'},
+             {u'topic': u'Leopard'},
+             {u'topic': u'Asiatic lion'},
+             {u'topic': u'Big cat'},
+             {u'topic': u'Transvaal lion'},
+             {u'topic': u'African leopard'},
+             {u'topic': u'Indian leopard'}])
 
     def test_list_filter(self):
         self.create_maps(10)
@@ -47,7 +47,15 @@ class TopicTestCase(TestCase, MapTestCaseMixIn):
         self.assertEqual(len(data['topic']), 4)
         self.assertEqual(
             data['topic'],
-            [{u'topic': u'lion'},
-             {u'topic': u'asiatic lion'},
-             {u'topic': u'transvaal lion'},
-             {u'topic': u'southwest african lion'}])
+            [{u'topic': u'Asiatic lion'},
+             {u'topic': u'Lion'},
+             {u'topic': u'Southwest African lion'},
+             {u'topic': u'Transvaal lion'}])
+
+    def test_unpublished(self):
+        self.create_maps(10, status=Map.STATUS_UNPUBLISHED)
+        resp = self.client.get('/api/topic', {'q': 'lio'})
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertIn('topic', data)
+        self.assertEqual(len(data['topic']), 0)

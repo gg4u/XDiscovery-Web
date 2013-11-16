@@ -31,7 +31,7 @@ class TopicSearchFilter(filters.BaseFilterBackend):
         q = request.QUERY_PARAMS.get('q')
         if q:
             q = q.lower()
-            return queryset.filter(pk__contains=q)[:self.page_size]
+            return queryset.filter(pk__icontains=q).order_by('pk')[:self.page_size]
         return queryset[:self.page_size]
 
 

@@ -128,7 +128,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
     def test_list_search_unpublished(self):
         mapp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
         mapp.status = Map.STATUS_UNPUBLISHED
-        mapp.save()
+        save_map(mapp)
         resp = self.client.get('/api/map',
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -147,7 +147,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
 
     def test_list_search_2_terms(self):
         mp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        topics = [u'african leopard', u'arabian leopard', u'asiatic lion', u'big cat', u'cheetah', u'felis', u'indian leopard', u'indochinese leopard', u'javan leopard', u'leopard', u'lion', u'lycaon pictus', u'north china leopard', u'northwest african cheetah', u'southwest african lion', u'sri lankan leopard', u'striped hyena', u'transvaal lion']
+        topics = [u'African leopard', u'Arabian leopard', u'Asiatic lion', u'Big cat', u'Cheetah', u'Felis', u'Indian leopard', u'Indochinese leopard', u'Javan leopard', u'Leopard', u'Lion', u'Lycaon pictus', u'North China leopard', u'Northwest African cheetah', u'Southwest African lion', u'Sri Lankan leopard', u'Striped hyena', u'Transvaal lion']
         # Topics need to be saved in db
         self.assertEqual(
             topics,
@@ -193,7 +193,6 @@ class MapUploadTestCase(LiveServerTestCase, MapTestCaseMixIn):
         user = User(username='test', email='test@example.com')
         user.set_password('pass')
         user.save()
-        print 'Basic {}'.format(base64.b64encode('test:pass'))
         resp = self.client.post(
             '/api/map',
             get_test_data('sharingAppWeb.json'),
