@@ -39,15 +39,25 @@ def save_map(obj):
 
     # Delete all past topics
     for topic in set(topics_prev).difference(topics_next):
-        topics_prev[topic].delete()
-        if not Topic.objects.filter(pk=topic).delete():
+        try:
+            topic = Topic.objects.get(pk=topic)
+        except Topic.DoesNotExist:
             logger.warning('failed to delete topic {}'.format(topic))
+        else:
+            topic.count -= 1
+            if topic.count <= 0:
+                topic.delete()
+            else:
+                topic.save(update_fields=['count'])
 
     # Create new topics
     for topic in set(topics_next).difference(topics_prev):
         MapTopic.objects.create(map=obj, topic=topic,
                                 relevance=topics_next[topic]['relevance'])
-        Topic.objects.get_or_create(topic=topic)
+        topic, created = Topic.objects.get_or_create(topic=topic)
+        if not created:
+            topic.count += 1
+            topic.save(update_fields=['count'])
 
     # Alter existing topics
     for topic in set(topics_next).intersection(topics_prev):
@@ -58,3 +68,10 @@ def save_map(obj):
             map_topic.save(update_fields=['relevance'])
 
     return obj
+
+
+@transaction.commit_on_success
+def delete_map(obj):
+    obj.status = Map.STATUS_DELETED
+    save_map(obj)
+    obj.delete()

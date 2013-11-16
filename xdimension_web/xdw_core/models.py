@@ -93,3 +93,5 @@ class MapTopic(models.Model):
 
 class Topic(models.Model):
     topic = models.CharField(max_length=500, primary_key=True)
+    # used to automatically GC topic on map deletion
+    count = models.IntegerField(default=1)

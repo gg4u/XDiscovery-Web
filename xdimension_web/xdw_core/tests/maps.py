@@ -138,7 +138,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
     def test_list_search_deleted(self):
         mapp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
         mapp.status = Map.STATUS_DELETED
-        mapp.save()
+        save_map(mapp)
         resp = self.client.get('/api/map',
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)

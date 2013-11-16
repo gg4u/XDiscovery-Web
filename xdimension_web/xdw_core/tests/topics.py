@@ -3,8 +3,9 @@ import json
 
 from django.test import TestCase
 
-from ..models import MapTopic, Map
+from ..models import MapTopic, Map, Topic
 from .test_utils import MapTestCaseMixIn
+from ..maps import save_map, delete_map
 
 __all__ = ['TopicTestCase']
 
@@ -17,6 +18,23 @@ class TopicTestCase(TestCase, MapTestCaseMixIn):
         data = json.loads(resp.content)
         self.assertIn('topic', data)
         self.assertEqual(data['topic'], [])
+
+    def test_topic_create(self):
+        mp_1 = self.create_maps(1)[0]
+        self.assertEqual(Topic.objects.count(), 18)
+        mp_2 = self.create_maps(1)[0]
+        self.assertEqual(Topic.objects.count(), 18)
+        delete_map(mp_1)
+        self.assertEqual(Topic.objects.count(), 18)
+        delete_map(mp_2)
+        self.assertEqual(Topic.objects.count(), 0)
+
+    def test_topic_create_2(self):
+        mp_1 = self.create_maps(1)[0]
+        self.assertEqual(Topic.objects.count(), 18)
+        mp_1.status = Map.STATUS_DELETED
+        save_map(mp_1)
+        self.assertEqual(Topic.objects.count(), 0)
 
     def test_list(self):
         self.create_maps(10)
