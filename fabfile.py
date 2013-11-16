@@ -2,11 +2,19 @@ import os
 import subprocess
 import re
 import shutil
+import sys
 
 from fabric.api import local, task, abort, puts, lcd
 from fabric.contrib import django
 
-# XXX for some reason this is not working properly
+
+# Configuration
+APP_NAME = 'xdiscovery-web'
+# Needed for Ubuntu multi-tenant setup.
+# NOTE: this has to match with the db specified in local settings.
+DB_CLUSTER = '9.1/main'
+
+sys.path.insert(0, '.')
 django.project('xdimension_web')
 
 YES_VALUES = ('1', 'true', 'yes')
@@ -14,9 +22,6 @@ YES_VALUES = ('1', 'true', 'yes')
 BACKUP_DIR = './backups'
 BACKUP_PATH = os.path.join(BACKUP_DIR, 'pgdump.db')
 
-# Needed for Ubuntu multi-tenant setup.
-# NOTE: this has to match with the db specified in local settings.
-DB_CLUSTER = '9.2/main'
 
 
 def run_sql(sql):
@@ -31,10 +36,20 @@ def get_db_config():
     return settings.DATABASES['default']
 
 
+def get_app_name(environment):
+    return '{}-{}'.format(APP_NAME, environment) if environment != 'production' \
+        else APP_NAME
+
 @task
 def build(dest='dist'):
     with lcd('frontend'):
         local('grunt build{}'.format('test' if dest == 'test' else ''))
+    # Remove useless files
+    if dest == 'test':
+        for d in ['bootstrap-sass/examples',
+                  'foundation/docs',
+                  'json3/vendor']:
+            shutil.rmtree(os.path.join('frontend/dist/bower_components', d))
     integrate_assets()
 
 
@@ -54,7 +69,8 @@ def deploy(env='staging', frontend='True', backend='True'):
             #  - Push of backend code into production API host should happen
             #  *after* db migration.
             #  - Db migration should happen in a separate utility heroku app
-            local('git push xdimension_web-staging master')
+            app = get_app_name(env)
+            local('git push {} master'.format(app))
             local('heroku run python manage.py migrate --all --noinput')
     else:
         assert False
@@ -66,7 +82,8 @@ def test():
 
 
 @task
-def backup(app='xdimension_web-staging'):
+def backup(env='staging'):
+    app = get_app_name(env)
     if not os.path.exists(BACKUP_DIR):
         puts('Creating default backup dir {}'.format(BACKUP_DIR))
         os.mkdir(BACKUP_DIR)
@@ -120,8 +137,11 @@ def create_db_local(drop=False, create_role=False, test=False):
         run_sql("create role {USER} {createdb};".format(
                 createdb='with createdb' if test else '',
                 **db_config))
-    run_sql("create database {NAME} with ENCODING 'UTF8' "
-            "LC_COLLATE='it_IT.UTF8' LC_CTYPE='it_IT.UTF8' "
+    # If this fails try
+    #    sudo locale-gen it_IT.UTF-8
+    # ... and restart db server
+    run_sql("create database {NAME} with ENCODING 'UTF-8' "
+            "LC_COLLATE='it_IT.UTF-8' LC_CTYPE='it_IT.UTF-8' "
             "template=template0 owner={USER};".format(**db_config))
 
 
@@ -140,7 +160,8 @@ def restore_local():
 
 
 @task
-def restore(app='xdimension_web-staging'):
+def restore(env='staging'):
+    app = get_app_name(env)
     '''Tested on an ubuntu machine.'''
     puts('To restore the heroku db:')
     puts(' 1) make the db dump accessible from an https url <url>')
