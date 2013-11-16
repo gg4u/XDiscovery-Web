@@ -7,12 +7,12 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 	$scope.search =
 		ordering: $location.search()['ordering']
 		featured: $location.search()['featured'] == 1
-		query: $location.search()['topic']?.split(',')
+		query: $location.search()['topic']
 		results: mapSearch or xDiscoveryApi.maps.search($location.search())
 		search: ->
 			query = {}
 			query.featured = 1 if $scope.search.featured
-			query.topic = $scope.search.query.join(',') if $scope.search.query?.length
+			query.topic = $scope.search.query if $scope.search.query?.length
 			query.ordering = $scope.search.ordering if $scope.search.ordering
 			$location.search query
 		toggleOrdering: (ordering) ->
@@ -27,7 +27,7 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 	filterEl = angular.element('[select2]')
 	filterEl.select2
 		tags: yes
-		tokenSeparators: [",", "\t"]
+		tokenSeparators: ["\t"]
 		multiple: yes
 		placeholder: "Search for a topic",
 		minimumInputLength: 2,
@@ -45,7 +45,8 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 				text: term
 			} unless data?.length
 		initSelection: (elem, callback) ->
-			callback ({id: tag, text:tag} for tag in elem.val()?.split(','))
+			# XXX this splitting is wrong: some topic contain ","
+			callback ({id: tag, text:tag} for tag in elem.val().split(','))
 
 	if $scope.search.query?
 		filterEl.select2 'val', $scope.search.query
