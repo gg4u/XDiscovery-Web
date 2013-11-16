@@ -145,6 +145,36 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         data = json.loads(resp.content)
         self.assertEqual(len(data['map']), 0)
 
+    def test_list_search_comma(self):
+        save_map(Map(map_data=get_test_data('sharing_2.json')))
+        save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
+        resp = self.client.get('/api/map',
+                               {'topic': ['camillo borghese, 6th']},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 1)
+
+    def test_list_search_comma_2(self):
+        save_map(Map(map_data=get_test_data('sharing_2.json')))
+        save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
+        resp = self.client.get('/api/map',
+                               {'topic': ['camillo borghese, 7th']},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 0)
+
+    def test_list_search_comma_3(self):
+        save_map(Map(map_data=get_test_data('sharing_2.json')))
+        save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
+        resp = self.client.get('/api/map',
+                               {'topic': ['camillo borghese, lion']},
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(len(data['map']), 0)
+
     def test_list_search_2_terms(self):
         mp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
         topics = [u'African leopard', u'Arabian leopard', u'Asiatic lion', u'Big cat', u'Cheetah', u'Felis', u'Indian leopard', u'Indochinese leopard', u'Javan leopard', u'Leopard', u'Lion', u'Lycaon pictus', u'North China leopard', u'Northwest African cheetah', u'Southwest African lion', u'Sri Lankan leopard', u'Striped hyena', u'Transvaal lion']
@@ -156,7 +186,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
             topics,
             list(mp.maptopic_set.order_by('topic').values_list('topic', flat=True)))
         resp = self.client.get('/api/map',
-                               {'topic': 'lion,felis'},
+                               {'topic': ['lion', 'felis']},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
