@@ -74,11 +74,11 @@ class MapPaginationSerializer(PaginationSerializer):
 
 class TopicSearchFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        topic = request.QUERY_PARAMS.get('topic')
-        if topic:
-            topics = [t.strip().lower() for t in topic.split(',')]
-            if topics:
-                return queryset.filter(maptopic__topic__in=topics).distinct()
+        topics = [t.strip().lower() for t in request.QUERY_PARAMS.getlist('topic')]
+        if topics:
+            # XXX TODO: escape the regexp contents for safety
+            regex = '({})'.format('|'.join(topics))
+            return queryset.filter(maptopic__topic__iregex=regex).distinct()
         return queryset
 
 
