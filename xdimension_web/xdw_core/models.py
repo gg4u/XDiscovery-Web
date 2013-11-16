@@ -2,12 +2,14 @@
 Base models for the xDimension web project
 '''
 from __future__ import absolute_import
+import logging
 
 from django.db import models
 from django.utils.timezone import now as now_tz
 
 from json_field import JSONField
 
+logger = logging.getLogger(__name__)
 
 class Map(models.Model):
     ''' Contains nodes connected into a graph.
@@ -16,6 +18,9 @@ class Map(models.Model):
     STATUS_OK = 'O'
     STATUS_DELETED = 'D'
     STATUS_UNPUBLISHED = 'U'
+
+    FEATURED_NOT = 0
+    FEATURED_YES = 1
 
     # To be stored inside the grouped title list
     MAX_NODE_TITLES = 20
@@ -28,6 +33,7 @@ class Map(models.Model):
     author_surname = models.CharField(max_length=500, blank=True)
     description = models.TextField(blank=True)
     picture_url = models.CharField(max_length=1000, blank=True)
+    net = models.IntegerField(db_index=True, blank=True, null=True)
     # Non-editable fields calculated from map_data
     node_count = models.IntegerField(editable=False)
     node_titles = JSONField(editable=False)
@@ -35,7 +41,9 @@ class Map(models.Model):
     # for sorting
     date_created = models.DateField(db_index=True, default=now_tz)
     popularity = models.IntegerField(default=0, db_index=True)
-    featured = models.IntegerField(default=0, db_index=True)
+    featured = models.IntegerField(default=FEATURED_NOT, db_index=True,
+                                   choices=[(FEATURED_NOT, 'no'),
+                                            (FEATURED_YES, 'yes')])
     # generic
     status = models.CharField(max_length=1,
                               choices=[(STATUS_OK, 'Ok'),
@@ -44,12 +52,38 @@ class Map(models.Model):
                               default=STATUS_OK,
                               db_index=True)
 
+    def update_from_map_data(self):
+        if not self.map_data:
+            return
+        data = self.map_data['map']
+        if not self.title:
+            self.title = data['title']
+        if not self.author_name and 'author' in data:
+            self.author_name = data['author']['name']
+        if not self.author_surname and 'author' in data:
+            self.author_surname = data['author']['surname']
+        if not self.description:
+            self.description = data['description']
+        if not self.picture_url and 'thumbnail' in data:
+            self.picture_url = data['thumbnail'].get('url', '')
+        net = data.get('net')
+        try:
+            self.net = int(net)
+        except ValueError:
+            logger.warning('bad value for \"net\" field: {}'.format(net))
+        # XXX FIXME here we should be walking the path from first to last...
+        self.node_titles = [n['title'] for n in data['pagerank']\
+                                    [:Map.MAX_NODE_TITLES]]
+        self.last_node_title = data['pagerank'][-1]['title']
+        self.node_count = len(data['graph'])
+        return data
+
 
 class MapTopic(models.Model):
     ''' For searching. '''
     map = models.ForeignKey(Map)
     topic = models.CharField(max_length=500)
-    relevance = models.IntegerField()
+    relevance = models.FloatField()
 
     class Meta:
         index_together = [

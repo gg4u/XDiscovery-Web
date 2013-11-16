@@ -3,41 +3,58 @@ Manipulation of Map models and friends.
 '''
 
 from __future__ import absolute_import
+import logging
 
 from django.db import transaction
 
 from .models import Map, MapTopic, Topic
 
+logger = logging.getLogger(__name__)
+
 
 @transaction.commit_on_success
 def save_map(obj):
-    ''' Save a map, the right way.
+    ''' Save a map, the right way. Mantaining all other ancillary models.
     '''
-    if not obj.map_data:
+
+    data = obj.update_from_map_data()
+
+    if not data:
         return
-    data = obj.map_data['map']
-    if not obj.title:
-        obj.title = data['title']
-    if not obj.author_name and 'author' in data:
-        obj.author_name = data['author']['name']
-    if not obj.author_surname and 'author' in data:
-        obj.author_surname = data['author']['surname']
-    if not obj.description:
-        obj.description = data['description']
-    if not obj.picture_url and 'thumbnail' in data:
-        obj.picture_url = data['thumbnail'].get('url', '')
-    # XXX FIXME here we should be walking the path from first to last...
-    obj.node_titles = [n['title'] for n in data['pagerank']\
-                                [:Map.MAX_NODE_TITLES]]
-    obj.last_node_title = data['pagerank'][-1]['title']
-    obj.node_count = len(data['graph'])
+
+    # Previous published topics
+    if obj.pk is not None:
+        topics_prev = {o.topic: o for o in obj.maptopic_set.all()}
+    else:
+        topics_prev = {}
+
     # save obj into db
     obj.save()
-    # Set related model for searching
-    obj.maptopic_set.all().delete()
-    for n in data['pagerank']:
-        # XXX what if title is empty? Is it right to save it lowercased?
-        title = n['title'].lower()
-        MapTopic.objects.create(map=obj, topic=title, relevance=n['weight'])
-        Topic.objects.get_or_create(topic=title)
+
+    if obj.status == Map.STATUS_OK:
+        topics_next = {pr['title'].strip(): {'relevance': pr['weight']}
+                       for pr in data['pagerank']}
+    else:
+        topics_next = {}
+
+    # Delete all past topics
+    for topic in set(topics_prev).difference(topics_next):
+        topics_prev[topic].delete()
+        if not Topic.objects.filter(pk=topic).delete():
+            logger.warning('failed to delete topic {}'.format(topic))
+
+    # Create new topics
+    for topic in set(topics_next).difference(topics_prev):
+        MapTopic.objects.create(map=obj, topic=topic,
+                                relevance=topics_next[topic]['relevance'])
+        Topic.objects.get_or_create(topic=topic)
+
+    # Alter existing topics
+    for topic in set(topics_next).intersection(topics_prev):
+        relevance_next = topics_next[topic]['relevance']
+        map_topic = topics_prev[topic]
+        if relevance_next != map_topic.relevance:
+            map_topic.relevance = relevance_next
+            map_topic.save(update_fields=['relevance'])
+
     return obj
