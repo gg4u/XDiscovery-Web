@@ -1,0 +1,5 @@
+{% extends "frontend/index.html" %}
+{% load cms_tags %}
+{% block extrahead %}
+{% for property, content in meta_items %}<meta property="{{property}}" content="{{content}}">{% endfor %}
+{% endblock %}

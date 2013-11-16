@@ -3,7 +3,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.conf import settings
 
-from xdw_web.views import RobotsView, AtlasView
+from xdw_web.views import RobotsView, AtlasView, GraphDetailView
 
 admin.autodiscover()
 
@@ -21,7 +21,8 @@ urlpatterns += patterns(
     '',
     # Atlas app
     # XXX the SPA uris should all live under the /atlas/ uri
-    url(r'^atlas/', AtlasView.as_view()),
+    url(r'^atlas/', AtlasView.as_view(), name='atlas'),
+    url(r'^graph/(?P<pk>\d+)', GraphDetailView.as_view(), name='graph_detail'),
     url(r'^(views/.*)', AtlasView.as_view()),
     # SEO stuff
     url(r'^robots.txt$', RobotsView.as_view()),
@@ -40,7 +41,7 @@ if settings.DEBUG:
     urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-    url(r'', include('django.contrib.staticfiles.urls')),    
+    url(r'', include('django.contrib.staticfiles.urls')),
 ) + urlpatterns
 
 

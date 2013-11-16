@@ -245,3 +245,13 @@ CMS_CACHE_DURATIONS = {
 }
 
 CMS_SEO_FIELDS = True
+
+
+# Facebook
+FB_APP_ID = {
+    'staging': 186960618160957,
+    'production': '',
+    'local': 186960618160957,
+}
+
+FB_SITE_NAME = 'xDiscovery'

@@ -7,8 +7,6 @@ from .views import AtlasView
 
 urlpatterns = patterns(
     'xdw_web.views',
-    # Atlas app
+    # Atlas CMS app
     url(r'^', AtlasView.as_view()),
-    #url(r'^atlas/', AtlasView.as_view()),
-    #url(r'^(views/.*)', AtlasView.as_view()),
 )
