@@ -107,3 +107,13 @@ class MapDetail(RetrieveAPIView):
     queryset = Map.objects.filter(status=Map.STATUS_OK)
     serializer_class = MapSerializer
     permission_classes = [permissions.AllowAny]
+
+    def retrieve(self, *args, **kwargs):
+        resp = super(MapDetail, self).retrieve(*args, **kwargs)
+
+        # Update popularity counter
+        # TODO: decouple from request handling
+        self.object.popularity += 1
+        self.object.save(update_fields=['popularity'])
+
+        return resp

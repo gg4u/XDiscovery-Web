@@ -199,7 +199,6 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         data = json.loads(resp.content)
         self.assertEqual(len(data['map']), 1)
 
-
     def test_detail(self):
         mp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
         resp = self.client.get('/api/map/{}'.format(mp.pk),
@@ -208,7 +207,13 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         data = json.loads(resp.content)
         self.assertNotIn('map_data', data)
         self.assertIn('path', data)
-
+        self.assertEqual(data['popularity'], 0)
+        # popularity is increased
+        resp = self.client.get('/api/map/{}'.format(mp.pk),
+                               content_type='application/json')
+        self.assertEqual(resp.status_code, 200)
+        data = json.loads(resp.content)
+        self.assertEqual(data['popularity'], 1)
 
 class MapUploadTestCase(LiveServerTestCase, MapTestCaseMixIn):
 
