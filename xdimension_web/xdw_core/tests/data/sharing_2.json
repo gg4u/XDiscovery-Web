@@ -1,0 +1,754 @@
+{
+  "map": {
+    "startNode": {
+      "id": "990186",
+      "title": "French Academy in Rome"
+    },
+    "description": "",
+    "title": "",
+    "graph": [
+      {
+        "distance": "123.0",
+        "direction": 0,
+        "target": 15,
+        "id": "0",
+        "source": 0
+      },
+      {
+        "distance": "100.0",
+        "direction": 0,
+        "target": 2,
+        "id": "2",
+        "source": 1
+      },
+      {
+        "distance": "158.0",
+        "direction": 0,
+        "target": 3,
+        "id": "1",
+        "source": 1
+      },
+      {
+        "distance": "134.0",
+        "direction": 0,
+        "target": 6,
+        "id": "3",
+        "source": 1
+      },
+      {
+        "distance": "203.0",
+        "direction": 0,
+        "target": 8,
+        "id": "4",
+        "source": 1
+      },
+      {
+        "distance": "164.0",
+        "direction": 0,
+        "target": 9,
+        "id": "5",
+        "source": 1
+      },
+      {
+        "distance": "123.0",
+        "direction": 0,
+        "target": 38,
+        "id": "6",
+        "source": 1
+      },
+      {
+        "distance": "106.0",
+        "direction": 0,
+        "target": 14,
+        "id": "7",
+        "source": 1
+      },
+      {
+        "distance": "105.0",
+        "direction": 0,
+        "target": 15,
+        "id": "8",
+        "source": 1
+      },
+      {
+        "distance": "174.0",
+        "direction": 0,
+        "target": 18,
+        "id": "9",
+        "source": 1
+      },
+      {
+        "distance": "175.0",
+        "direction": 0,
+        "target": 20,
+        "id": "10",
+        "source": 1
+      },
+      {
+        "distance": "102.0",
+        "direction": 0,
+        "target": 22,
+        "id": "11",
+        "source": 1
+      },
+      {
+        "distance": "149.0",
+        "direction": 0,
+        "target": 27,
+        "id": "12",
+        "source": 1
+      },
+      {
+        "distance": "242.0",
+        "direction": 0,
+        "target": 28,
+        "id": "13",
+        "source": 1
+      },
+      {
+        "distance": "131.0",
+        "direction": 0,
+        "target": 32,
+        "id": "14",
+        "source": 1
+      },
+      {
+        "distance": "111.0",
+        "direction": 0,
+        "target": 33,
+        "id": "15",
+        "source": 1
+      },
+      {
+        "distance": "109.0",
+        "direction": 0,
+        "target": 41,
+        "id": "16",
+        "source": 1
+      },
+      {
+        "distance": "184.0",
+        "direction": 0,
+        "target": 36,
+        "id": "17",
+        "source": 1
+      },
+      {
+        "distance": "147.0",
+        "direction": 0,
+        "target": 11,
+        "id": "18",
+        "source": 1
+      },
+      {
+        "distance": "49.0",
+        "direction": 0,
+        "target": 13,
+        "id": "19",
+        "source": 1
+      },
+      {
+        "distance": "128.0",
+        "direction": 0,
+        "target": 34,
+        "id": "20",
+        "source": 1
+      },
+      {
+        "distance": "150.0",
+        "direction": 0,
+        "target": 5,
+        "id": "21",
+        "source": 1
+      },
+      {
+        "distance": "102.0",
+        "direction": 0,
+        "target": 43,
+        "id": "22",
+        "source": 1
+      },
+      {
+        "distance": "130.0",
+        "direction": 0,
+        "target": 47,
+        "id": "23",
+        "source": 1
+      },
+      {
+        "distance": "127.0",
+        "direction": 0,
+        "target": 48,
+        "id": "24",
+        "source": 1
+      },
+      {
+        "distance": "119.0",
+        "direction": 0,
+        "target": 51,
+        "id": "25",
+        "source": 1
+      },
+      {
+        "distance": "150.0",
+        "direction": 0,
+        "target": 52,
+        "id": "26",
+        "source": 1
+      },
+      {
+        "distance": "122.0",
+        "direction": 0,
+        "target": 15,
+        "id": "45",
+        "source": 4
+      },
+      {
+        "distance": "233.0",
+        "direction": 0,
+        "target": 12,
+        "id": "28",
+        "source": 7
+      },
+      {
+        "distance": "225.0",
+        "direction": 0,
+        "target": 51,
+        "id": "29",
+        "source": 7
+      },
+      {
+        "distance": "104.0",
+        "direction": 0,
+        "target": 41,
+        "id": "30",
+        "source": 10
+      },
+      {
+        "distance": "43.0",
+        "direction": 0,
+        "target": 13,
+        "id": "31",
+        "source": 12
+      },
+      {
+        "distance": "101.0",
+        "direction": 0,
+        "target": 42,
+        "id": "32",
+        "source": 12
+      },
+      {
+        "distance": "169.0",
+        "direction": 0,
+        "target": 30,
+        "id": "33",
+        "source": 12
+      },
+      {
+        "distance": "174.0",
+        "direction": 0,
+        "target": 16,
+        "id": "34",
+        "source": 12
+      },
+      {
+        "distance": "163.0",
+        "direction": 0,
+        "target": 24,
+        "id": "35",
+        "source": 12
+      },
+      {
+        "distance": "222.0",
+        "direction": 0,
+        "target": 51,
+        "id": "39",
+        "source": 12
+      },
+      {
+        "distance": "176.0",
+        "direction": 0,
+        "target": 35,
+        "id": "37",
+        "source": 12
+      },
+      {
+        "distance": "239.0",
+        "direction": 0,
+        "target": 49,
+        "id": "38",
+        "source": 12
+      },
+      {
+        "distance": "388.0",
+        "direction": 0,
+        "target": 39,
+        "id": "36",
+        "source": 12
+      },
+      {
+        "distance": "62.0",
+        "direction": 0,
+        "target": 15,
+        "id": "40",
+        "source": 13
+      },
+      {
+        "distance": "41.0",
+        "direction": 0,
+        "target": 41,
+        "id": "41",
+        "source": 13
+      },
+      {
+        "distance": "56.0",
+        "direction": 0,
+        "target": 50,
+        "id": "42",
+        "source": 13
+      },
+      {
+        "distance": "72.0",
+        "direction": 0,
+        "target": 51,
+        "id": "43",
+        "source": 13
+      },
+      {
+        "distance": "128.0",
+        "direction": 0,
+        "target": 29,
+        "id": "44",
+        "source": 15
+      },
+      {
+        "distance": "108.0",
+        "direction": 0,
+        "target": 25,
+        "id": "27",
+        "source": 15
+      },
+      {
+        "distance": "201.0",
+        "direction": 0,
+        "target": 21,
+        "id": "46",
+        "source": 15
+      },
+      {
+        "distance": "196.0",
+        "direction": 0,
+        "target": 41,
+        "id": "47",
+        "source": 15
+      },
+      {
+        "distance": "142.0",
+        "direction": 0,
+        "target": 51,
+        "id": "48",
+        "source": 15
+      },
+      {
+        "distance": "285.0",
+        "direction": 0,
+        "target": 46,
+        "id": "49",
+        "source": 15
+      },
+      {
+        "distance": "128.0",
+        "direction": 0,
+        "target": 51,
+        "id": "50",
+        "source": 17
+      },
+      {
+        "distance": "174.0",
+        "direction": 0,
+        "target": 41,
+        "id": "51",
+        "source": 19
+      },
+      {
+        "distance": "151.0",
+        "direction": 0,
+        "target": 50,
+        "id": "52",
+        "source": 21
+      },
+      {
+        "distance": "123.0",
+        "direction": 0,
+        "target": 41,
+        "id": "53",
+        "source": 23
+      },
+      {
+        "distance": "135.0",
+        "direction": 0,
+        "target": 51,
+        "id": "54",
+        "source": 24
+      },
+      {
+        "distance": "169.0",
+        "direction": 0,
+        "target": 51,
+        "id": "56",
+        "source": 26
+      },
+      {
+        "distance": "119.0",
+        "direction": 0,
+        "target": 51,
+        "id": "57",
+        "source": 28
+      },
+      {
+        "distance": "158.0",
+        "direction": 0,
+        "target": 51,
+        "id": "58",
+        "source": 30
+      },
+      {
+        "distance": "314.0",
+        "direction": 0,
+        "target": 51,
+        "id": "59",
+        "source": 31
+      },
+      {
+        "distance": "111.0",
+        "direction": 0,
+        "target": 51,
+        "id": "60",
+        "source": 37
+      },
+      {
+        "distance": "168.0",
+        "direction": 0,
+        "target": 51,
+        "id": "61",
+        "source": 39
+      },
+      {
+        "distance": "148.0",
+        "direction": 0,
+        "target": 50,
+        "id": "62",
+        "source": 40
+      },
+      {
+        "distance": "147.0",
+        "direction": 0,
+        "target": 44,
+        "id": "63",
+        "source": 41
+      },
+      {
+        "distance": "176.0",
+        "direction": 0,
+        "target": 50,
+        "id": "64",
+        "source": 45
+      },
+      {
+        "distance": "184.0",
+        "direction": 0,
+        "target": 51,
+        "id": "55",
+        "source": 46
+      }
+    ],
+    "author": {
+      "surname": "",
+      "name": ""
+    },
+    "coordinates": {
+      "latidute": "",
+      "longitude": ""
+    },
+    "pagerank": [
+      {
+        "id": "990186",
+        "weight": "0.19576466121677505",
+        "title": "French Academy in Rome"
+      },
+      {
+        "id": "846869",
+        "weight": "0.09009505314396435",
+        "title": "Villa Borghese gardens"
+      },
+      {
+        "id": "7107824",
+        "weight": "0.07312271413725804",
+        "title": "Villa Borghese"
+      },
+      {
+        "id": "3111013",
+        "weight": "0.06964829427688815",
+        "title": "British School at Rome"
+      },
+      {
+        "id": "574950",
+        "weight": "0.048713611651304486",
+        "title": "American Academy in Rome"
+      },
+      {
+        "id": "4377174",
+        "weight": "0.02967829437561404",
+        "title": "American University of Rome"
+      },
+      {
+        "id": "11973219",
+        "weight": "0.02114719237882669",
+        "title": "Giovanni Vasanzio"
+      },
+      {
+        "id": "7379800",
+        "weight": "0.020510736126492263",
+        "title": "International Exhibition of Art (1911)"
+      },
+      {
+        "id": "4131507",
+        "weight": "0.018125320945476437",
+        "title": "Villa Medici"
+      },
+      {
+        "id": "684689",
+        "weight": "0.018087679483529913",
+        "title": "Richard Hodges (archaeologist)"
+      },
+      {
+        "id": "736555",
+        "weight": "0.018024317658529184",
+        "title": "Galleria Borghese"
+      },
+      {
+        "id": "25458",
+        "weight": "0.01599977390015459",
+        "title": "Rome"
+      },
+      {
+        "id": "7107237",
+        "weight": "0.013675172989536492",
+        "title": "Borghese Collection"
+      },
+      {
+        "id": "12185185",
+        "weight": "0.013442002308602765",
+        "title": "Hydrochronometer"
+      },
+      {
+        "id": "931785",
+        "weight": "0.012702420743328563",
+        "title": "Scipione Borghese"
+      },
+      {
+        "id": "14762884",
+        "weight": "0.01228684945554836",
+        "title": "Charles Th\u00e9venin"
+      },
+      {
+        "id": "14766296",
+        "weight": "0.011401743274515057",
+        "title": "Nicolas Vleughels"
+      },
+      {
+        "id": "35322219",
+        "weight": "0.011191531124804352",
+        "title": "Bjorn Thomassen"
+      },
+      {
+        "id": "169980",
+        "weight": "0.010982482451920352",
+        "title": "Prix de Rome"
+      },
+      {
+        "id": "14791544",
+        "weight": "0.0109358979160765",
+        "title": "Matthieu de La Teuli\u00e8re"
+      },
+      {
+        "id": "380497",
+        "weight": "0.010889185506122164",
+        "title": "Charles Follen McKim"
+      },
+      {
+        "id": "9765724",
+        "weight": "0.010615764872633087",
+        "title": "Flaminio Ponzio"
+      },
+      {
+        "id": "14791582",
+        "weight": "0.010470052557637903",
+        "title": "Charles-Fran\u00e7ois Poerson"
+      },
+      {
+        "id": "14766628",
+        "weight": "0.010190545342574778",
+        "title": "Louis-Nicolas Cabat"
+      },
+      {
+        "id": "23397783",
+        "weight": "0.009861317553919948",
+        "title": "James Walston"
+      },
+      {
+        "id": "14781648",
+        "weight": "0.00981786905582391",
+        "title": "Jean-Marie Drot"
+      },
+      {
+        "id": "14375531",
+        "weight": "0.00981786905582391",
+        "title": "Pierre de l\u2019Estache"
+      },
+      {
+        "id": "433764",
+        "weight": "0.009771284519980055",
+        "title": "Joseph-Marie Vien"
+      },
+      {
+        "id": "14784219",
+        "weight": "0.009678115448292335",
+        "title": "Charles Errard"
+      },
+      {
+        "id": "38784201",
+        "weight": "0.009638651515744726",
+        "title": "Austin W. Lord"
+      },
+      {
+        "id": "2678766",
+        "weight": "0.009072516482322192",
+        "title": "Jean Fran\u00e7ois de Troy"
+      },
+      {
+        "id": "1141555",
+        "weight": "0.008932762874790627",
+        "title": "Carolus-Duran"
+      },
+      {
+        "id": "35779980",
+        "weight": "0.008886178338946761",
+        "title": "\u00c9ric de Chassey"
+      },
+      {
+        "id": "14762994",
+        "weight": "0.008793009267259054",
+        "title": "Jean Alaux"
+      },
+      {
+        "id": "14745757",
+        "weight": "0.008746424731415205",
+        "title": "Joseph-Beno\u00eet Suv\u00e9e"
+      },
+      {
+        "id": "746518",
+        "weight": "0.00856350001830911",
+        "title": "House of Borghese"
+      },
+      {
+        "id": "824183",
+        "weight": "0.008560086588039766",
+        "title": "Pierre-Narcisse Gu\u00e9rin"
+      },
+      {
+        "id": "8901592",
+        "weight": "0.008541642511606475",
+        "title": "Camillo Borghese, 6th Prince of Sulmona"
+      },
+      {
+        "id": "575710",
+        "weight": "0.008527065746520318",
+        "title": "John Russell Pope"
+      },
+      {
+        "id": "13562948",
+        "weight": "0.008498348753092487",
+        "title": "It Happened in the Park"
+      },
+      {
+        "id": "14766489",
+        "weight": "0.008001072157913474",
+        "title": "Jules Eug\u00e8ne Lenepveu"
+      },
+      {
+        "id": "4175321",
+        "weight": "0.007978106082319629",
+        "title": "Graeme Barker"
+      },
+      {
+        "id": "3342598",
+        "weight": "0.007777015558762042",
+        "title": "John Bryan Ward-Perkins"
+      },
+      {
+        "id": "14696276",
+        "weight": "0.007768149478694193",
+        "title": "Jean-Victor Schnetz"
+      },
+      {
+        "id": "12578888",
+        "weight": "0.007736797454050529",
+        "title": "Thomas Ashby"
+      },
+      {
+        "id": "8972094",
+        "weight": "0.007647060345884346",
+        "title": "Aqua Traiana"
+      },
+      {
+        "id": "3087552",
+        "weight": "0.007581811335318759",
+        "title": "Louis-Jean-Fran\u00e7ois Lagren\u00e9e"
+      },
+      {
+        "id": "865930",
+        "weight": "0.007581811335318759",
+        "title": "No\u00ebl Coypel"
+      },
+      {
+        "id": "14753469",
+        "weight": "0.007488642263631027",
+        "title": "Fran\u00e7ois-Guillaume M\u00e9nageot"
+      },
+      {
+        "id": "37098243",
+        "weight": "0.007173743988089271",
+        "title": "Colin Hardie"
+      },
+      {
+        "id": "2394569",
+        "weight": "0.007156023534524766",
+        "title": "Equestrian at the 1960 Summer Olympics"
+      },
+      {
+        "id": "336373",
+        "weight": "0.006581498592807959",
+        "title": "Gardens of Lucullus"
+      },
+      {
+        "id": "2929505",
+        "weight": "0.006120327572685329",
+        "title": "Eidos"
+      }
+    ],
+    "shared": 0,
+    "endNode": {
+      "id": "2929505",
+      "title": "Eidos"
+    },
+    "path": null,
+    "net": 21,
+    "thumbnail": {
+      "tag": "",
+      "name": ""
+    },
+    "name": ""
+  }
+}
