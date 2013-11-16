@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="{{ STATIC_URL }}frontend/bower_components/ngprogress/ngProgress.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}frontend/styles/main.css">
 	<!-- endbuild -->
+        {% block extrahead %}{% endblock %}
 </head>
 	<body ng-controller="siteCtrl">
 		<!--[if lt IE 7]>
