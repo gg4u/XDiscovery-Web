@@ -46,14 +46,11 @@ class MapSerializer(MapSimpleSerializer):
     def to_native(self, obj):
         ret = super(MapSimpleSerializer, self).to_native(obj)
         data = obj.map_data['map']
+
         ret.update({'graph': data['graph'],
-                    'pagerank': data['pagerank'],
                     'path': data['path'],
                     'startNode': data['startNode'],
-                    'endNode': data['endNode'],
-                    'nodes': {n['id']: {'title': n['title'],
-                                        'weight': n['weight']}
-                              for n in data['pagerank']}})
+                    'endNode': data['endNode']})
         return ret
 
     class Meta(MapSimpleSerializer.Meta):
