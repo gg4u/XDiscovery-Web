@@ -69,8 +69,12 @@ angular.module('xdiscoveryApp')
 				.link (link) ->
 					groupId = Math.round(parseFloat(link.data * 100) / 10)
 					groupId = if groupId then groupId - 1 else 100
+
+					# XXX fix arc weight calculation
 					weight = Math.round(link.data * link.data * 30)
 					weight = 1 if weight < 1
+					weight = 5 if weight > 5
+
 					Viva.Graph.svg("line")
 						.attr('class', 'map-node-link')
 						.attr("stroke", $scope.vivagraph.linkColors[groupId] ? 'black')
