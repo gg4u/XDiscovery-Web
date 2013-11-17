@@ -69,8 +69,12 @@ angular.module('xdiscoveryApp')
 				.link (link) ->
 					groupId = Math.round(parseFloat(link.data * 100) / 10)
 					groupId = if groupId then groupId - 1 else 100
+
+					# XXX fix arc weight calculation
 					weight = Math.round(link.data * link.data * 30)
 					weight = 1 if weight < 1
+					weight = 5 if weight > 5
+
 					Viva.Graph.svg("line")
 						.attr('class', 'map-node-link')
 						.attr("stroke", $scope.vivagraph.linkColors[groupId] ? 'black')
@@ -139,19 +143,23 @@ angular.module('xdiscoveryApp')
 
 		$scope.map = xDiscoveryApi.maps.get id: $routeParams.id
 
-		$scope.$watchCollection 'map.nodes', (nodes) ->
-			# Building list of names to fetch
-			articleNames = []
-			articleNames.push n.title for _, n of nodes when not n.thumbnail?
-			return unless articleNames.length
+		$scope.$watchCollection 'map.graph', (graph) ->
+			return unless graph?.length
+			# Build list of nodes from the arc list
+			nodes = {}
+			for arc in graph
+				do (arc) ->
+					nodes[arc.source] = {}
+					nodes[arc.target] = {}
+			$scope.map.nodes = nodes
+			# TODO: fetch more than 20 nodes issuing multiple API calls
+			pageIds = (key for key of nodes)[..20]
 			# Fetch thumbnails from wikipedia
 			do (nodes) -> wikipediaApi.thumbnails {
-				titles: articleNames.join('|')
-				pilimit: articleNames.length
+				pageids: pageIds.join('|')
+				pilimit: pageIds.length
 			}, (data) ->
-				# Assign a thumbnail for every node, use a placeholder if no thumbnail has been found
+				# Assign node decorations
 				for id, n of nodes
-					n.thumbnail =
-						data?.query?.pages?[id]?.thumbnail ?
-						{source: "http://create-games.com/cache/thumbnail.php?url&#61;http%3A//i929.photobucket.com/albums/ad134/SavannahZCar/gHunter.jpg", height: 80, width: 100}
-
+					n.thumbnail = data?.query?.pages?[id]?.thumbnail
+					n.title = data?.query?.pages?[id]?.title

@@ -207,6 +207,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         data = json.loads(resp.content)
         self.assertNotIn('map_data', data)
         self.assertIn('path', data)
+        self.assertIn('graph', data)
         self.assertEqual(data['popularity'], 0)
         # popularity is increased
         resp = self.client.get('/api/map/{}'.format(mp.pk),
