@@ -50,6 +50,10 @@
 
 	.search-button {
 		margin: 0;
+		background-color: $gray-lighter;
+		border-color: rgb(170, 170, 170);
+		border-left-width: 0;
+		color: $body-font-color;
 	}
 
 	.back-button {
