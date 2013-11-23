@@ -1,4 +1,18 @@
-
+<div class="xd-carousel-container" ng-init="carouselIndex = 0">
+	<ul rn-carousel rn-carousel-index="carouselIndex" rn-carousel-indicator>
+		<li><div class="slogan">Mapping Human Knowledge</div></li>
+		<li><div class="slogan">Message 2</div></li>
+		<li><div class="slogan">Message 3</div></li>
+	</ul>
+	<button
+		class="xd-carousel-nav prev hide-for-small"
+		ng-click="carouselIndex = carouselIndex - 1"
+		ng-disabled="carouselIndex == 0"></button>
+	<button
+		class="xd-carousel-nav next hide-for-small"
+		ng-click="carouselIndex = carouselIndex + 1"
+		ng-disabled="carouselIndex == 2"></button>
+</div>
 
 <div class="row">
 	<div class="large-3 columns hide-for-small">
