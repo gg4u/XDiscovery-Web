@@ -448,7 +448,7 @@ a.xd-back-to-top {
 		margin: 0;
 
 		@media #{$small} {
-			padding: 5em 0;
+			padding: 7em 0;
 		}
 
 		li {
@@ -478,5 +478,41 @@ a.xd-back-to-top {
 	}
 	.rn-carousel-indicator span.active {
 		opacity: 1;
+	}
+}
+
+//
+// Panels
+//
+
+.panel {
+	.title {
+		text-align: center;
+		color: $primary-color;
+	}
+
+	.more {
+		display: block;
+		text-align: right;
+		&:after {
+			content: ' »';
+		}
+	}
+
+	&.callout {
+		background: #F3F7FA;
+		border-color: #0042AA;
+
+		p {
+			color: $body-font-color;
+		}
+
+		.title, a {
+			color: #0042AA;
+		}
+
+		a:hover {
+			color: darken(#0042AA, 5%);
+		}
 	}
 }
