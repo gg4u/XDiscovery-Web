@@ -6,12 +6,16 @@ app.config ($routeProvider, $locationProvider, config) ->
 	$locationProvider.html5Mode(yes).hashPrefix('!')
 
 	# Setup custom routes
-	for route, customPageUrl of config.customPageRoutes
-		$routeProvider.when route,
-			templateUrl: '/views/custompage.html'
-			controller: 'custompageCtrl'
-			resolve:
-				pageContentUrl: do (customPageUrl) -> -> customPageUrl
+	for route, customPageSettings of config.customPageRoutes
+		do (customPageSettings) ->
+			if angular.isString(customPageSettings)
+				customPageSettings = contentUrl: customPageSettings
+			$routeProvider.when route,
+				templateUrl: '/views/custompage.html'
+				controller: 'custompageCtrl'
+				reloadOnSearch: no
+				resolve:
+					pageSettings: -> customPageSettings
 
 	# Setup routes
 	$routeProvider

@@ -18,7 +18,7 @@
 	<link rel="stylesheet" href="/bower_components/ngprogress/ngProgress.css">
 	<link rel="stylesheet" href="/styles/main.css">
 	<!-- endbuild -->
-        {% block extrahead %}{% endblock %}
+	{% block extrahead %}{% endblock %}
 </head>
 	<body ng-controller="siteCtrl">
 		<!--[if lt IE 7]>
@@ -134,6 +134,7 @@
 		<script src="/scripts/directives/masonry.js"></script>
 		<script src="/scripts/directives/vivaGraph.js"></script>
 		<script src="/scripts/directives/retinaSrc.js"></script>
+		<script src="/scripts/directives/xdAccordion.js"></script>
 		<script src="/scripts/services/xDiscoveryApi.js"></script>
 		<script src="/scripts/services/wikipediaApi.js"></script>
 		<!-- endbuild -->
@@ -142,14 +143,24 @@
 		angular.module('xdiscoveryApp').constant('config', {
 			apiUrl: '/api',
 			customPageRoutes: {
-		  <!-- @if ENV='dist' -->
-		     {% include "xdw_web/routes.html" %}
-		  <!-- @endif -->
-		  <!-- @if ENV!='dist' -->
+			<!-- @if ENV='dist' -->
+				 {% include "xdw_web/routes.html" %}
+			<!-- @endif -->
+			<!-- @if ENV!='dist' -->
 				'/en/blog': '/en/blog?angular=1',
 				'/en/mobile': '/en/mobile?angular=1',
-				'/en/': '/en/?angular=1'
-		  <!-- @endif -->
+				'/en/': '/en/?angular=1',
+				'/en/static': {
+					contentUrl: '/internal.html',
+					showHeader: true,
+					breadcrumbs: [
+						{ title: 'Home', href: '#' },
+						{ title: 'Features', href: '#' },
+						{ title: 'Gene Splicing', href: '#', unavailable: true },
+						{ title: 'Cloning', href: '#', current: true }
+					]
+				}
+			<!-- @endif -->
 			}
 		});
 		</script>
