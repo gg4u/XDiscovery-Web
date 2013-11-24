@@ -57,37 +57,23 @@
 	}
 
 	.back-button {
-		-webkit-mask: url(../images/xd-back-arrow.svg) no-repeat center center;
-		-o-mask: url(../images/xd-back-arrow.svg) no-repeat center center;
-		-ms-mask: url(../images/xd-back-arrow.svg) no-repeat center center;
 		min-width: 32px;
 		min-height: 32px;
 		display: inline-block;
-		background: $primary-color;
+		background: url(../images/header-back-arrow.svg) no-repeat center center;
 	}
 
 	.info-button,
 	.share-button {
-		-webkit-mask: url(../images/info-button.svg) no-repeat center center;
-		-o-mask: url(../images/info-button.svg) no-repeat center center;
-		-ms-mask: url(../images/info-button.svg) no-repeat center center;
-		-webkit-mask-size: cover;
-		-o-mask-size: cover;
-		-ms-mask-size: cover;
 		min-width: 28px;
 		min-height: 28px;
 		display: inline-block;
-		background: $body-font-color;
-
-		&:hover {
-			background: $primary-color;
-		}
+		background: url(../images/info-button.svg) no-repeat center center;
+		background-size: cover;
 	}
 
 	.share-button {
-		-webkit-mask-image: url(../images/share-button.svg);
-		-o-mask-image: url(../images/share-button.svg);
-		-ms-mask-image: url(../images/share-button.svg);
+		background-image: url(../images/share-button.svg);
 	}
 }
 
@@ -402,7 +388,6 @@ a.xd-back-to-top {
 
 	.xd-carousel-nav {
 		@include box-shadow(none);
-		background: white !important;
 		border: none;
 		margin: 0 ($column-gutter / 2);
 		position: absolute;
@@ -411,16 +396,12 @@ a.xd-back-to-top {
 
 		&.prev {
 			left: 0;
-			-webkit-mask: url(../images/xd-back-arrow.svg) no-repeat center center;
-			-o-mask: url(../images/xd-back-arrow.svg) no-repeat center center;
-			-ms-mask: url(../images/xd-back-arrow.svg) no-repeat center center;
+			background: url(../images/white-back-arrow.svg) no-repeat center center;
 		}
 
 		&.next {
 			right: 0;
-			-webkit-mask: url(../images/xd-forward-arrow.svg) no-repeat center center;
-			-o-mask: url(../images/xd-forward-arrow.svg) no-repeat center center;
-			-ms-mask: url(../images/xd-forward-arrow.svg) no-repeat center center;
+			background: url(../images/white-forward-arrow.svg) no-repeat center center;
 		}
 	}
 
