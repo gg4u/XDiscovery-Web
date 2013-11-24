@@ -39,7 +39,7 @@ angular.module('xdiscoveryApp')
 							# Node watcher to update graphics on decorations update
 							node.$watcher?()
 							watcher = do (node) -> $scope.$watchCollection "map.nodes['#{c.node.id}']", (decoration) ->
-								drawNode node.ui, decoration.title, decoration.thumbnail
+								drawNode node.ui, decoration.title, decoration.thumbnail if decoration?
 							node.$watcher = watcher
 
 			layout: (graph) -> Viva.Graph.Layout.forceDirected graph,

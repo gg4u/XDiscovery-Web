@@ -6,9 +6,9 @@
 		<span ng-switch-when="true" ng-bind="map.title" class="custom-title"></span>
 		<span ng-switch-default class="node-title">
 			<span class="sep">from</span>
-			<span ng-bind="map.nodeTitles.start[0]">&ndash;</span>
+			<span ng-bind="map.startNode.title">&ndash;</span>
 			<span class="sep">to</span>
-			<span ng-bind="map.nodeTitles.last">&ndash;</span>
+			<span ng-bind="map.endNode.title">&ndash;</span>
 		</span>
 	</h1>
 
