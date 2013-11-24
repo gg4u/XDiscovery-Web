@@ -6,7 +6,7 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 	# Search functionality model
 	$scope.search =
 		ordering: $location.search()['ordering']
-		featured: $location.search()['featured'] == 1
+		featured: $location.search()['featured'] == '1'
 		query: $location.search()['topic']
 		results: mapSearch or xDiscoveryApi.maps.search($location.search())
 		search: ->
