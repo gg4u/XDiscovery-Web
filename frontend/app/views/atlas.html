@@ -15,7 +15,7 @@
 					<input class="xd-atlas-search-input" type="text" select2 ng-model="search.query" style="width:100%">
 				</div>
 				<div class="large-2 columns hide-for-small xd-atlas-col-search-button">
-					<button type="button" class="postfix radius secondary button search-button xd-atlas-search-button" ng-click="search.search()">Search</button>
+					<button type="button" class="postfix radius button search-button xd-atlas-search-button" ng-click="search.search()">Search</button>
 				</div>
 			</div>
 
@@ -45,12 +45,12 @@
 
 			<div masonry-brick ng-repeat="map in search.results.map track by map.id">
 				<article class="xd-map-wall-card">
-					<a ng-href="/graph/{{map.id}}"><img ng-src="{{map.thumbnail.url}}" masonry-layout-on="map.thumbnail.url" class="image" alt=""></a>
+					<a ng-href="/graph/{{map.id}}" target="_self"><img ng-src="{{map.thumbnail.url}}" masonry-layout-on="map.thumbnail.url" class="image" alt=""></a>
 
 					<header class="content">
 						<h2 class="title" ng-switch="!!map.title">
-							<a ng-href="/graph/{{map.id}}" ng-switch-when="true" ng-bind="map.title" class="custom-title"></a>
-							<a ng-href="/graph/{{map.id}}" ng-switch-default class="node-title">
+							<a ng-href="/graph/{{map.id}}" ng-switch-when="true" ng-bind="map.title" class="custom-title" target="_self"></a>
+							<a ng-href="/graph/{{map.id}}" ng-switch-default class="node-title" target="_self">
 								<span class="sep">from</span>
 								<span ng-bind="map.nodeTitles.start[0]">&ndash;</span>
 								<span class="sep">to</span>

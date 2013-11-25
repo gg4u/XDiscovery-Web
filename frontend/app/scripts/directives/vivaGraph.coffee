@@ -45,3 +45,10 @@ app.directive 'vivaGraph', ->
 			renderLinks: yes
 		# Run the graph
 		renderer.run()
+		# Pause/resume policy
+		$window = angular.element(window)
+		$window.on 'blur', renderer.pause
+		$window.on 'focus', renderer.resume
+		scope.$on '$destroy', ->
+			$window.off 'blur', renderer.pause
+			$window.off 'focus', renderer.resume

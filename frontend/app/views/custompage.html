@@ -1,1 +1,24 @@
-<div class="xd-custom-page" ng-include="pageContentUrl"></div>
+<header class="xd-page-header xd-custom-page-header" ng-cloak ng-if="settings.showHeader">
+
+	<div class="header-content">
+		<div class="row">
+			<div class="small-12 columns">
+				<img src="/images/xdiscovery-logo.svg">
+			</div>
+		</div>
+	</div>
+
+	<div class="header-secondary" ng-if="settings.breadcrumbs">
+		<div class="row">
+			<div class="small-12 columns">
+				<ul class="breadcrumbs">
+					<li ng-repeat="b in settings.breadcrumbs" ng-class="{ 'current':b.current, 'unavailable':b.unavailable }">
+						<a ng-href="{{b.href}}" ng-bind="b.title"></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</header>
+<div class="xd-custom-page-content" ng-include="settings.contentUrl"></div>
