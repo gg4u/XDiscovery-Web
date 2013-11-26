@@ -18,7 +18,9 @@
 	<link rel="stylesheet" href="/bower_components/ngprogress/ngProgress.css">
 	<link rel="stylesheet" href="/styles/main.css">
 	<!-- endbuild -->
+        <!-- @if ENV='dist' -->
 	{% block extrahead %}{% endblock %}
+        <!-- @endif -->
 </head>
 	<body ng-controller="siteCtrl">
 		<!--[if lt IE 7]>
@@ -52,7 +54,14 @@
 
 		<section id="page" role="main" ng-class="pageClass">
 			<div ng-view ng-cloak>
-				{% placeholder "main" current_page or %}{% endplaceholder %}
+		            <!-- @if ENV='dist' -->
+                            {% comment %}This condition splits the whole page
+                            in two parts, so that when angular loads it only the
+                            `content` block is rendered{% endcomment %}
+                            {% endif %}
+		            {% block content %}{% endblock %}
+                            {% if not request.GET.angular %}
+                            <!-- @endif -->
 			</div>
 		</section>
 
@@ -169,4 +178,4 @@
 		});
 		</script>
 </body>
-</html><!-- @if ENV='dist' -->{% else %}{% placeholder "main" %}{% endif %}<!-- @endif -->
+</html><!-- @if ENV='dist' -->{% endif %}<!-- @endif -->
