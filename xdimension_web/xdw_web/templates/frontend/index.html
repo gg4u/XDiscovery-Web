@@ -28,7 +28,12 @@
                 {% include "xdw_web/navbar.html" %}
 		<section id="page" role="main" ng-class="pageClass">
 			<div ng-view="" ng-cloak="">
-				{% placeholder "main" current_page or %}{% endplaceholder %}
+                            {% comment %}This condition splits the whole page
+                            in two parts, so that when angular loads it only the
+                            `content` block is rendered{% endcomment %}
+                            {% endif %}
+		            {% block content %}{% endblock %}
+                            {% if not request.GET.angular %}
 			</div>
 		</section>
 
@@ -101,4 +106,4 @@
 		});
 		</script>
 </body>
-</html>{% else %}{% placeholder "main" %}{% endif %}
+</html>{% endif %}
