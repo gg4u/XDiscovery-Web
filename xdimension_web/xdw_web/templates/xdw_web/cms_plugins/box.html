@@ -1,0 +1,7 @@
+						<div class="small-12 large-4 columns">
+							<div class="radius panel">
+								<h4 class="title">{{ instance.title }}</h4>
+								{{ instance.body | safe }}
+								{% if instance.more %}<a href="{{ instance.more }}" class="more">More</a>{% endif %}
+							</div>
+						</div>

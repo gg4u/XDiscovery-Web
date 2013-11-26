@@ -1,0 +1,60 @@
+{% extends "frontend/index.html" %}
+{% load cms_tags menu_tags %}
+{% block content %}
+<header class="xd-page-header xd-custom-page-header">
+
+	<div class="header-content">
+		<div class="row">
+			<div class="small-12 columns">
+				<img src="{{ STATIC_URL }}frontend/images/xdiscovery-logo.svg">
+			</div>
+		</div>
+	</div>
+	<div class="header-secondary">
+		<div class="row">
+			<div class="small-12 columns">
+				<ul class="breadcrumbs">
+                                    {% show_breadcrumb 1 %}
+				</ul>
+			</div>
+		</div>
+	</div>
+<div class="xd-carousel-container" ng-init="carouselIndex = 0">
+	<ul rn-carousel rn-carousel-index="carouselIndex" rn-carousel-indicator>
+            {% placeholder carousel %}
+	</ul>
+	<button
+		class="xd-carousel-nav prev hide-for-small"
+		ng-click="carouselIndex = carouselIndex - 1"
+		ng-disabled="carouselIndex == 0"></button>
+	<button
+		class="xd-carousel-nav next hide-for-small"
+		ng-click="carouselIndex = carouselIndex + 1"
+		ng-disabled="carouselIndex == 2"></button>
+</div>
+</header>
+<div class="row">
+	<div class="small-12 large-12 columns">
+
+		<div id="page-accordion" xd-accordion active-section="activeSect">
+			<section xd-accordion-section="what-we-do">
+                            {% comment %}TODO: add page title in print only{% endcomment %}
+				<div xd-accordion-content>
+
+					<div class="row">
+						<div class="small-12 large-8 large-centered columns">
+							<h2 style="text-align:center">{% placeholder abstract %}</h2>
+						</div>
+					</div>
+
+					<div class="row">
+                                            {% placeholder box %}
+					</div>
+
+				</div>
+			</section>
+
+		</div>
+	</div>
+</div>
+{% endblock %}

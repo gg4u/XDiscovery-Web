@@ -237,8 +237,38 @@ if DEPLOY_MODE in ('staging', 'local'):
 
 # CMS
 CMS_TEMPLATES = (
-    ('xdw_web/base.html', 'Generic page'),
+    ('xdw_web/base.html', 'Empty page'),  # TODO: remove this one
+    ('xdw_web/cms_templates/landing.html', 'Landing page')
 )
+
+CMS_PLACEHOLDER_CONF = {
+    'content': {
+        'plugins': ['TextPlugin'],
+        'text_only_plugins': ['LinkPlugin'],
+        'name': 'Content',
+    },
+    'carousel': {
+        'plugins': ['CarouselPlugin'],
+        'name': 'Carousel',
+        'limits': {
+            'global': 10
+        },
+    },
+    'abstract': {
+        'plugins': ['AbstractPlugin'],
+        'name': 'Abstract',
+        'limits': {
+            'global': 1
+        },
+    },
+    'box': {
+        'plugins': ['BoxPlugin'],
+        'name': 'Box',
+        'limits': {
+            'global': 3
+        },
+    }
+}
 
 CMS_CACHE_DURATIONS = {
     'content': 1,
