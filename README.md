@@ -6,7 +6,7 @@
 Requirements:
 	``pyenv``
 
-### Python 
+### Python
 
 Pyenv (optional):
 
@@ -54,7 +54,7 @@ Nodeenv:
 
 
 
-When all the above is done, to start developing, activate the local develpment 
+When all the above is done, to start developing, activate the local develpment
 environment:
 
 	source ./activate.sh
@@ -113,7 +113,7 @@ Run the app:
 
 Set default site name from the admin web console.
 
-AngularJS html views are served by the django backend as and rendered as 
+AngularJS html views are served by the django backend as and rendered as
 django templates. The `fab build` task integrates the fontend views into the django project as templates. All angular variables syntax (`{`) is escaped by the
 build sstem using `{% verbatim %}`; if you really want to use django template
 variables in angular vies, use this supernice syntax: `{dj{ variable_name }dj}`.
@@ -159,7 +159,7 @@ see ``.secret/config_staging.sh`` and ``.env-staging``
 
 ## Bootstrapping the app
 
-Create postgres db and user account (only in local mode, as heroku already 
+Create postgres db and user account (only in local mode, as heroku already
 has permissions set):
 
     fab create_db_local

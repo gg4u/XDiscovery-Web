@@ -1,7 +1,6 @@
 # Common settings
 
 import os
-import datetime
 
 DEPLOY_MODE = os.environ.get('DEPLOY_MODE', 'local')
 
@@ -192,12 +191,15 @@ LOGGING = {
 
 APPEND_SLASH = False  # Otherwise AngularJS complains
 
-if DEPLOY_MODE == 'production':
-    ALLOWED_HOSTS = ['xdiscovery.com', 'www.xdiscovery.com']
-elif DEPLOY_MODE == 'staging':
-    ALLOWED_HOSTS = ['xdiscovery-web-staging.herokuapp.com']
+
+ALLOWED_HOSTS = ['xdiscovery.com', 'www.xdiscovery.com',
+                 'api-app.xdiscovery.com', 'www-staging.xdiscovery.com',
+                 'api-app-staging.xdiscovery.com']
+
+if DEPLOY_MODE == 'staging':
+    ALLOWED_HOSTS += ['xdiscovery-web-staging.herokuapp.com']
 elif DEPLOY_MODE == 'local':
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+    ALLOWED_HOSTS += ['localhost', '127.0.0.1']
 
 
 ADMIN_URL_HASH = os.environ.get('ADMIN_URL_HASH', '')
