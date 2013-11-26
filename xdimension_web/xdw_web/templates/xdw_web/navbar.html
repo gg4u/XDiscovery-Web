@@ -1,20 +1,14 @@
 {% load menu_tags %}
-		<header class="navbar navbar-inverse navbar-fixed-top xd-nav" role="banner">
-				<div class="navbar-header">
-					<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".xd-navbar-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a href="/" class="navbar-brand">xDiscovery</a>
-				</div>
-				<nav class="collapse navbar-collapse xd-navbar-collapse" role="navigation">
-				  <ul class="nav navbar-nav">
-				    {% show_menu 0 2 0 3 "xdw_web/menu.html" %}
-				  </ul>
+		<header role="banner">
 
+			<div class="fixed">
+				<nav class="top-bar" role="navigation">
+					<section class="top-bar-section">
+						<ul class="right">
+				                    {% show_menu 0 2 0 3 "xdw_web/menu.html" %}
+						</ul>
+					</section>
 				</nav>
+			</div>
 
 		</header>
-
