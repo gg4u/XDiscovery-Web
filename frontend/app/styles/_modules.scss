@@ -59,8 +59,12 @@
 	.back-button {
 		min-width: 32px;
 		min-height: 32px;
-		display: inline-block;
+		display: none;
 		background: url(../images/header-back-arrow.svg) no-repeat center center;
+
+		@media #{$small} {
+			display: inline-block;
+		}
 	}
 
 	.info-button,
@@ -229,7 +233,7 @@
 $graph-page-header-height: 52px;
 
 .xd-graph-page-header {
-	height: $graph-page-header-height;
+	min-height: $graph-page-header-height;
 	margin-bottom: 0;
 	overflow: auto;
 	padding: 8px 8px 0;
@@ -238,7 +242,7 @@ $graph-page-header-height: 52px;
 	z-index: 1;
 
 	.title {
-		margin: 0;
+		margin: 0 100px 0 0;
 		display: inline-block;
 		font-size: 2em;
 		font-weight: 300;
@@ -252,7 +256,8 @@ $graph-page-header-height: 52px;
 }
 
 .xd-graph-tools {
-	margin: 0;
+	margin: 8px;
+	position: absolute; right: 0; top: 0;
 }
 
 .viva-graph {
