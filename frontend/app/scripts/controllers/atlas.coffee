@@ -6,7 +6,7 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 	# Search functionality model
 	$scope.search =
 		ordering: $location.search()['ordering']
-		featured: $location.search()['featured'] == '1'
+		featured: parseInt($location.search()['featured']) == 1
 		query: $location.search()['topic']
 		results: mapSearch or xDiscoveryApi.maps.search($location.search())
 		search: ->
@@ -45,7 +45,6 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 				text: term
 			} unless data?.length
 		initSelection: (elem, callback) ->
-			# XXX this splitting is wrong: some topic contain ","
 			callback ({id: tag, text:tag} for tag in elem.val().split(','))
 
 	if $scope.search.query?
