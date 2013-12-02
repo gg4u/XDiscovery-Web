@@ -16,7 +16,7 @@
     "angular-inview": "~1.0.2",
     "vivagraph": "*",
     "ngprogress": "~1.0.4",
-    "foundation": "~4.3.2"
+    "foundation": "~5.0.2"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.2",

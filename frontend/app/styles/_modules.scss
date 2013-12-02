@@ -52,8 +52,11 @@
 		margin: 0;
 		background-color: $gray-lighter;
 		border-color: rgb(170, 170, 170);
-		border-left-width: 0;
+		border-width: 1px 1px 1px 0;
+		border-style: solid;
 		color: $body-font-color;
+		height: 32px;
+		line-height: 32px;
 	}
 
 	.back-button {
