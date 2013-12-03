@@ -271,6 +271,25 @@ $graph-page-header-height: 52px;
 
 	.map-node {
 		cursor: pointer;
+
+		&.selected circle,
+		&.highlighted circle {
+			stroke: $primary-color;
+		}
+	}
+
+	.map-link {
+		&.map-link-group-0 { stroke: #ed13d1 }
+		&.map-link-group-1 { stroke:#ed1393 }
+		&.map-link-group-2 { stroke:#f30b6d }
+		&.map-link-group-3 { stroke:#ff0b6d }
+		&.map-link-group-4 { stroke:#f20bdd }
+		&.map-link-group-5 { stroke:#cc0000 }
+		&.map-link-group-6 { stroke:#cccccc }
+		&.map-link-group-7 { stroke:#f20b6d }
+		&.map-link-group-8 { stroke:#f20b6d }
+		&.map-link-group-9 { stroke:#f20b6d }
+		&.highlighted { stroke: $primary-color; }
 	}
 }
 

@@ -32,7 +32,7 @@ app.directive 'vivaGraph', ->
 			oldLinks = [] if angular.equals(links, oldLinks)
 			do graph.beginUpdate
 			for l in links when oldLinks.indexOf(l) < 0
-				graph.addLink(l.source, l.target, l.distance)
+				graph.addLink(l.source, l.target, l)
 			do graph.endUpdate
 		# Pagerank
 		# Graph renderer

@@ -6,19 +6,6 @@ angular.module('xdiscoveryApp')
 
 		# Contains all the properties for the vivaGraph directive
 		$scope.vivagraph =
-			linkColors: [
-				"#ed13d1"
-				"#ed1393"
-				"#f30b6d"
-				"#ff0b6d"
-				"#f20bdd"
-				"#cc0000"
-				"#cccccc"
-				"#f20b6d"
-				"#f20b6d"
-				"#f20b6d"
-			]
-
 			maxDistance: 0
 			pauseRender: no
 			graph: null
@@ -55,8 +42,12 @@ angular.module('xdiscoveryApp')
 			graphics: (graph) -> Viva.Graph.View.svgGraphics()
 				.node((node) ->
 					ui = Viva.Graph.svg("g")
-					ui.attr('class', 'map-node')
 					drawNode(ui)
+					# Modify class to indicate interactively opened nodes
+					if (l for l in node.links when l.data.class? and l.toId is node.id).length
+						ui.attr('class', 'map-node opened')
+					else
+						ui.attr('class', 'map-node initial')
 					# Adding hover and click handlers for graph node ui
 					angular.element(ui)
 						.bind('mouseenter', -> $scope.$apply ->
@@ -67,6 +58,7 @@ angular.module('xdiscoveryApp')
 							$scope.vivagraph.highlightNode = null)
 						.bind('click', -> $scope.$apply ->
 							for link in $scope.map.graph when link.source is node.id and $scope.map.visibleLinks.indexOf(link) == -1
+								link.class = "opened"
 								$scope.map.visibleLinks.push(link))
 						.bind('dblclick', -> $scope.$apply ->
 							$scope.vivagraph.selected = {
@@ -74,16 +66,16 @@ angular.module('xdiscoveryApp')
 								info: $scope.map.nodes[node.id]})
 					ui)
 				.link (link) ->
-					groupId = Math.round(link.data / 10)
+					groupId = Math.round(link.data.distance / 10)
 					groupId = if groupId then groupId - 1 else 100
 
-					weight = Math.round(link.data / $scope.vivagraph.maxDistance * 5)
+					weight = Math.round(link.data.distance / $scope.vivagraph.maxDistance * 5)
 					weight = 1 if weight < 1
 					weight = 5 if weight > 5
 
 					Viva.Graph.svg("line")
-						.attr('class', 'map-node-link')
-						.attr("stroke", $scope.vivagraph.linkColors[groupId] ? 'black')
+						.attr('class', "map-link map-link-group-#{groupId} #{link.data.class||''}")
+						.attr("stroke", 'black')
 						.attr("stroke-width", weight)
 				.placeNode (nodeUI, pos) ->
 					nodeUI.attr "transform", "translate(#{(pos.x - nodeSize / 2)}, #{(pos.y - nodeSize / 2)})"
@@ -133,22 +125,30 @@ angular.module('xdiscoveryApp')
 					.attr("x", nodeSize / 2)
 					.text(text)
 
-		# Handle highlight of node by coloring connected links
+		# Adding highlighted class to hovered node and links
 		$scope.$watch 'vivagraph.highlightNode', (node, lastNode) ->
 			return unless $scope.vivagraph.graph?
 			isOn = node?
 			node = lastNode unless node?
 			if node?
+				klass = angular.element(node.ui).attr('class').replace(' highlighted', '')
+				node.ui.attr('class', klass + (if isOn then ' highlighted' else ''))
 				$scope.vivagraph.graph.forEachLinkedNode node.id, (n, link) ->
 					return unless link.ui?
+					klass = angular.element(link.ui).attr('class').replace(' highlighted', '')
 					if isOn
-						link.$oldStroke = link.ui.attr 'stroke'
-						return unless link.$oldStroke?
-						link.ui.attr 'stroke', 'green'
+						angular.element(link.ui).attr 'class', klass + ' highlighted'
 					else
-						return unless link.$oldStroke?
-						link.ui.attr 'stroke', link.$oldStroke
-						delete link.$oldStroke
+						angular.element(link.ui).attr 'class', klass
+
+		# Adding selected class to node ui
+		$scope.$watch 'vivagraph.selected.node', (node, lastNode) ->
+			if lastNode?
+				klass = angular.element(lastNode.ui).attr('class').replace(' selected', '')
+				lastNode.ui.attr('class', klass)
+			if node?
+				klass = angular.element(node.ui).attr('class').replace(' selected', '')
+				node.ui.attr('class', klass + ' selected')
 
 		# Load map from server
 		xDiscoveryApi.maps.get {id: $routeParams.id}, (graph) ->
