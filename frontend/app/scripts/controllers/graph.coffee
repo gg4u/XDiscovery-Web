@@ -59,7 +59,7 @@ angular.module('xdiscoveryApp')
 					angular.element(ui)
 						.bind('mouseenter', -> $scope.$apply -> $scope.vivagraph.highlightNode = node)
 						.bind('mouseleave', -> $scope.$apply -> $scope.vivagraph.highlightNode = null)
-						.bind('click', -> $scope.$apply ->
+						.bind('dblclick', -> $scope.$apply ->
 							$scope.vivagraph.selected = {
 								node: node
 								info: $scope.map.nodes[node.id]})
