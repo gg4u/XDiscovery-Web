@@ -44,10 +44,13 @@ angular.module('xdiscoveryApp')
 					ui = Viva.Graph.svg("g")
 					drawNode(ui)
 					# Modify class to indicate interactively opened nodes
-					if (l for l in node.links when l.data.class? and l.toId is node.id).length
-						ui.attr('class', 'map-node opened')
-					else
-						ui.attr('class', 'map-node initial')
+					isOpened = no
+					hasDescendants = no
+					for l in $scope.map.graph
+						isOpened or= l.class? and l.target is node.id
+						hasDescendants or= l.source is node.id
+						break if isOpened and hasDescendants
+					ui.attr('class', "map-node #{isOpened&&'opened'||'initial'}#{hasDescendants&&' has-descendants'||''}")
 					# Adding hover and click handlers for graph node ui
 					angular.element(ui)
 						.bind('mouseenter', -> $scope.$apply ->
