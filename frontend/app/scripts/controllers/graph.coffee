@@ -155,18 +155,22 @@ angular.module('xdiscoveryApp')
 					nodes[arc.source] = {}
 					nodes[arc.target] = {}
 			$scope.map.nodes = nodes
-			# TODO: fetch more than 20 nodes issuing multiple API calls
-			pageIds = (key for key of nodes)[..20]
 			# Fetch thumbnails from wikipedia
-			do (nodes) -> wikipediaApi.query {
-				pageids: pageIds.join('|')
-				prop: 'pageimages|extracts'
-				pilimit: pageIds.length
-				pithumbsize: 100
-				exlimit: pageIds.length
-				exintro: 1
-			}, (data) ->
-				# Assign node decorations
-				for id, n of nodes when data?.query?.pages?[id]?
-					angular.extend n, data.query.pages[id]
-					n.extract = $sce.trustAsHtml(n.extract) if n.extract?
+			fetchNodes = (nodes, ids) ->
+				batchIds = ids[..19]
+				ids = ids[20..]
+				wikipediaApi.query {
+					pageids: batchIds.join('|')
+					prop: 'pageimages|extracts'
+					pilimit: batchIds.length
+					pithumbsize: 100
+					exlimit: batchIds.length
+					exintro: 1
+				}, (data) ->
+					# Fetch more nodes
+					fetchNodes(nodes, ids) if ids?.length
+					# Assign node decorations
+					for id, n of nodes when data?.query?.pages?[id]?
+						angular.extend n, data.query.pages[id]
+						n.extract = $sce.trustAsHtml(n.extract) if n.extract?
+			fetchNodes(nodes, (key for key of nodes))
