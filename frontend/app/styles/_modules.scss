@@ -284,6 +284,12 @@ $graph-page-header-height: 52px;
 		padding-bottom: 1em;
 		overflow: auto;
 	}
+
+	.close-button {
+		position: absolute;
+		right: 1em;
+		top: 0;
+	}
 }
 
 //

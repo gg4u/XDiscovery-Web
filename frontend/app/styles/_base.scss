@@ -22,6 +22,15 @@ button.invisible {
 	border: none;
 }
 
+.close-button {
+	background: url(../images/close-button.svg) no-repeat center center;
+	width: 20px;
+	height: 20px;
+	display: block;
+	overflow: hidden;
+	text-indent: -2000px;
+}
+
 // Foundation Top Bar changes
 .top-bar-section ul li.active > a {
 	position: relative;
