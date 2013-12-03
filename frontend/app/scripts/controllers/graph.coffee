@@ -19,6 +19,8 @@ angular.module('xdiscoveryApp')
 				"#f20b6d"
 			]
 
+			maxDistance: 0
+
 			graph: null
 			highlightNode: null
 			selected:
@@ -43,13 +45,9 @@ angular.module('xdiscoveryApp')
 							node.$watcher = watcher
 
 			layout: (graph) -> Viva.Graph.Layout.forceDirected graph,
-				#springLength : 35
 				springLength : 50
-				#springCoeff : 0.00055
 				springCoeff : 0.0000055
-				#dragCoeff : 0.09
 				dragCoeff : 0.01
-				#gravity : -1
 				gravity : -2.5
 
 			graphics: (graph) -> Viva.Graph.View.svgGraphics()
@@ -67,11 +65,10 @@ angular.module('xdiscoveryApp')
 								info: $scope.map.nodes[node.id]})
 					ui)
 				.link (link) ->
-					groupId = Math.round(parseFloat(link.data * 100) / 10)
+					groupId = Math.round(link.data / 10)
 					groupId = if groupId then groupId - 1 else 100
 
-					# XXX fix arc weight calculation
-					weight = Math.round(link.data * link.data * 30)
+					weight = Math.round(link.data / $scope.vivagraph.maxDistance * 5)
 					weight = 1 if weight < 1
 					weight = 5 if weight > 5
 
@@ -141,7 +138,13 @@ angular.module('xdiscoveryApp')
 						link.ui.attr 'stroke', link.$oldStroke
 						delete link.$oldStroke
 
-		$scope.map = xDiscoveryApi.maps.get id: $routeParams.id
+		# Load map from server
+		xDiscoveryApi.maps.get {id: $routeParams.id}, (graph) ->
+			$scope.map = graph
+			# Calculate maximum distance for the graph
+			$scope.vivagraph.maxDistance = 0
+			$scope.vivagraph.maxDistance = f for g in $scope.map.graph when (f = parseFloat(g.distance)) > $scope.vivagraph.maxDistance
+
 
 		$scope.$watchCollection 'map.graph', (graph) ->
 			return unless graph?.length
