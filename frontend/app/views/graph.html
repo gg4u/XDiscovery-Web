@@ -42,7 +42,7 @@
 			</dl>
 
 			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
-				<div ng-switch-default>topic</div>
+				<div ng-switch-default ng-bind-html="vivagraph.selected.info.extract"></div>
 				<div ng-switch-when="external">External</div>
 			</div>
 

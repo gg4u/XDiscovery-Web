@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('xdiscoveryApp')
-	.controller 'GraphCtrl', ($scope, xDiscoveryApi, wikipediaApi, $routeParams) ->
+	.controller 'GraphCtrl', ($scope, xDiscoveryApi, wikipediaApi, $routeParams, $sce) ->
 		$scope.pageClass = ['graph']
 
 		# Contains all the properties for the vivaGraph directive
@@ -44,7 +44,7 @@ angular.module('xdiscoveryApp')
 
 			layout: (graph) -> Viva.Graph.Layout.forceDirected graph,
 				#springLength : 35
-				springLength : 105
+				springLength : 50
 				#springCoeff : 0.00055
 				springCoeff : 0.0000055
 				#dragCoeff : 0.09
@@ -83,7 +83,7 @@ angular.module('xdiscoveryApp')
 					nodeUI.attr "transform", "translate(#{(pos.x - nodeSize / 2)}, #{(pos.y - nodeSize / 2)})"
 
 		# Method to draw a node, this will be used when the node decorations are updated
-		nodeSize = 24
+		nodeSize = 80
 		drawNode = (ui, text, thumbnail) ->
 			return unless ui?
 			while ui.firstChild
@@ -106,7 +106,7 @@ angular.module('xdiscoveryApp')
 					.attr("fill", "url(#nodeImg)")
 					.attr("stroke", "#e7e7e7")
 					.attr("stroke-width", "3px")
-					.attr("r", 40)
+					.attr("r", nodeSize / 2)
 					.attr("cx", nodeSize / 2)
 					.attr("cy", nodeSize / 2)
 			else
@@ -155,11 +155,15 @@ angular.module('xdiscoveryApp')
 			# TODO: fetch more than 20 nodes issuing multiple API calls
 			pageIds = (key for key of nodes)[..20]
 			# Fetch thumbnails from wikipedia
-			do (nodes) -> wikipediaApi.thumbnails {
+			do (nodes) -> wikipediaApi.query {
 				pageids: pageIds.join('|')
+				prop: 'pageimages|extracts'
 				pilimit: pageIds.length
+				pithumbsize: 100
+				exlimit: pageIds.length
+				exintro: 1
 			}, (data) ->
 				# Assign node decorations
-				for id, n of nodes
-					n.thumbnail = data?.query?.pages?[id]?.thumbnail
-					n.title = data?.query?.pages?[id]?.title
+				for id, n of nodes when data?.query?.pages?[id]?
+					angular.extend n, data.query.pages[id]
+					n.extract = $sce.trustAsHtml(n.extract) if n.extract?
