@@ -123,7 +123,7 @@ angular.module('xdiscoveryApp')
 			if text?
 				ui.append("text")
 					.attr('class', 'map-node-title')
-					.attr("y", "-30px")
+					.attr("y", "-10")
 					.attr("text-anchor", "middle")
 					.attr("x", nodeSize / 2)
 					.text(text)
