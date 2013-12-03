@@ -44,15 +44,15 @@ angular.module('xdiscoveryApp')
 								drawNode node.ui, decoration.title, decoration.thumbnail if decoration?
 							node.$watcher = watcher
 
+			onAddLink: (link) -> link.show
+
 			layout: (graph) -> Viva.Graph.Layout.forceDirected graph,
 				springLength : 50
 				springCoeff : 0.0000055
 				dragCoeff : 0.01
 				gravity : -2.5
 
-			graphics: (graph) ->
-				console.log graph
-				Viva.Graph.View.svgGraphics()
+			graphics: (graph) -> Viva.Graph.View.svgGraphics()
 				.node((node) ->
 					ui = Viva.Graph.svg("g")
 					ui.attr('class', 'map-node')
@@ -65,6 +65,9 @@ angular.module('xdiscoveryApp')
 						.bind('mouseleave', -> $scope.$apply ->
 							$scope.vivagraph.pauseRender = no
 							$scope.vivagraph.highlightNode = null)
+						.bind('click', -> $scope.$apply ->
+							for link in $scope.map.graph when link.source is node.id and $scope.map.visibleLinks.indexOf(link) == -1
+								$scope.map.visibleLinks.push(link))
 						.bind('dblclick', -> $scope.$apply ->
 							$scope.vivagraph.selected = {
 								node: node
@@ -139,14 +142,20 @@ angular.module('xdiscoveryApp')
 					return unless link.ui?
 					if isOn
 						link.$oldStroke = link.ui.attr 'stroke'
+						return unless link.$oldStroke?
 						link.ui.attr 'stroke', 'green'
 					else
+						return unless link.$oldStroke?
 						link.ui.attr 'stroke', link.$oldStroke
 						delete link.$oldStroke
 
 		# Load map from server
 		xDiscoveryApi.maps.get {id: $routeParams.id}, (graph) ->
 			$scope.map = graph
+			# DEBUG
+			# TODO use proper logic
+			# $scope.map.visibleLinks = (g for g in $scope.map.graph when g.source is 36896)
+			$scope.map.visibleLinks = $scope.map.graph
 			# Calculate maximum distance for the graph
 			$scope.vivagraph.maxDistance = 0
 			$scope.vivagraph.maxDistance = f for g in $scope.map.graph when (f = parseFloat(g.distance)) > $scope.vivagraph.maxDistance
