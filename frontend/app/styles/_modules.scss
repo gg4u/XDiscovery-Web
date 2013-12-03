@@ -268,21 +268,34 @@ $graph-page-header-height: 52px;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+
+	.map-node {
+		cursor: pointer;
+	}
 }
 
 .viva-graph-detail-pane {
-	padding-top: $graph-page-header-height;
+	padding: ($graph-page-header-height + 10) 10px ($graph-page-header-height - 20px);
 	position: absolute;
 	top: 0; right: 0; height: 100%;
-	width: 40%;
 
 	> .content {
+		@include border-radius($global-radius);
 		height: 100%;
 		background: $body-bg;
 		border: 1px solid $gray-lighter;
 		padding-top: 1em;
 		padding-bottom: 1em;
 		overflow: auto;
+	}
+
+	@media #{$small} {
+		padding: $graph-page-header-height 0 0;
+		width: 40%;
+
+		> .content {
+			@include border-radius(0);
+		}
 	}
 
 	.close-button {
