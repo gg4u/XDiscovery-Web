@@ -20,7 +20,7 @@ angular.module('xdiscoveryApp')
 			]
 
 			maxDistance: 0
-
+			pauseRender: no
 			graph: null
 			highlightNode: null
 			selected:
@@ -50,15 +50,21 @@ angular.module('xdiscoveryApp')
 				dragCoeff : 0.01
 				gravity : -2.5
 
-			graphics: (graph) -> Viva.Graph.View.svgGraphics()
+			graphics: (graph) ->
+				console.log graph
+				Viva.Graph.View.svgGraphics()
 				.node((node) ->
 					ui = Viva.Graph.svg("g")
 					ui.attr('class', 'map-node')
 					drawNode(ui)
 					# Adding hover and click handlers for graph node ui
 					angular.element(ui)
-						.bind('mouseenter', -> $scope.$apply -> $scope.vivagraph.highlightNode = node)
-						.bind('mouseleave', -> $scope.$apply -> $scope.vivagraph.highlightNode = null)
+						.bind('mouseenter', -> $scope.$apply ->
+							$scope.vivagraph.pauseRender = yes
+							$scope.vivagraph.highlightNode = node)
+						.bind('mouseleave', -> $scope.$apply ->
+							$scope.vivagraph.pauseRender = no
+							$scope.vivagraph.highlightNode = null)
 						.bind('dblclick', -> $scope.$apply ->
 							$scope.vivagraph.selected = {
 								node: node

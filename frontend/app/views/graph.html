@@ -19,7 +19,8 @@
 	links="map.graph"
 	layout="vivagraph.layout($graph)"
 	graphics="vivagraph.graphics()"
-	on-create="vivagraph.initialize($graph)"></div>
+	on-create="vivagraph.initialize($graph)"
+	pause-render="vivagraph.pauseRender"></div>
 
 <section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node">
 	<div class="content row">

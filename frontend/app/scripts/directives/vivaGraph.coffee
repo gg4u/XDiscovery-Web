@@ -21,6 +21,7 @@ app.directive 'vivaGraph', ->
 		layout: '&'
 		graphics: '&'
 		onCreate: '&'
+		pauseRender: '='
 	link: (scope, element, attrs) ->
 		graph = Viva.Graph.graph()
 		graph.name = scope.name
@@ -44,6 +45,8 @@ app.directive 'vivaGraph', ->
 		# Run the graph
 		renderer.run()
 		# Pause/resume policy
+		scope.$watch 'pauseRender', (pause, oldPause) ->
+			do renderer[pause&&'pause'||'resume']
 		$window = angular.element(window)
 		$window.on 'blur', renderer.pause
 		$window.on 'focus', renderer.resume
