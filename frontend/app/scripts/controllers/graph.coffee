@@ -43,14 +43,14 @@ angular.module('xdiscoveryApp')
 				.node((node) ->
 					ui = Viva.Graph.svg("g")
 					drawNode(ui)
-					# Modify class to indicate interactively opened nodes
-					isOpened = no
+					# Modify class to indicate interactively revealed nodes
+					isRevealed = no
 					hasDescendants = no
 					for l in $scope.map.graph
-						isOpened or= l.class? and l.target is node.id
+						isRevealed or= l.class? and l.target is node.id
 						hasDescendants or= l.source is node.id
-						break if isOpened and hasDescendants
-					ui.attr('class', "map-node #{isOpened&&'opened'||'initial'}#{hasDescendants&&' has-descendants'||''}")
+						break if isRevealed and hasDescendants
+					ui.attr('class', "map-node #{isRevealed&&'revealed'||'initial'}#{hasDescendants&&' has-descendants'||''}")
 					# Adding hover and click handlers for graph node ui
 					angular.element(ui)
 						.bind('mouseenter', -> $scope.$apply ->
@@ -60,8 +60,10 @@ angular.module('xdiscoveryApp')
 							$scope.vivagraph.pauseRender = no
 							$scope.vivagraph.highlightNode = null)
 						.bind('click', -> $scope.$apply ->
+							klass = angular.element(node.ui).attr('class').replace(' expanded', '')
+							node.ui.attr('class', klass + ' expanded')
 							for link in $scope.map.graph when link.source is node.id and $scope.map.visibleLinks.indexOf(link) == -1
-								link.class = "opened"
+								link.class = "revealed"
 								$scope.map.visibleLinks.push(link))
 						.bind('dblclick', -> $scope.$apply ->
 							$scope.vivagraph.selected = {
