@@ -49,6 +49,7 @@ angular.module('xdiscoveryApp')
 					for l in $scope.map.graph
 						isRevealed or= l.class? and l.target is node.id
 						hasDescendants or= l.source is node.id
+						# TODO add `expanded` class if all descendants are already visible
 						break if isRevealed and hasDescendants
 					ui.attr('class', "map-node #{isRevealed&&'revealed'||'initial'}#{hasDescendants&&' has-descendants'||''}")
 					# Adding hover and click handlers for graph node ui
@@ -91,6 +92,7 @@ angular.module('xdiscoveryApp')
 			return unless ui?
 			while ui.firstChild
 				ui.removeChild ui.firstChild
+			circleRadius = nodeSize / 2
 			if thumbnail?.source?
 				img = Viva.Graph.svg("image")
 					.attr("width", thumbnail.width)
@@ -106,22 +108,24 @@ angular.module('xdiscoveryApp')
 					.attr("height", thumbnail.height)
 					.append img
 				ui.append("circle")
-					.attr('class', 'map-node-circle with-thumbnail')
+					.attr('class', 'map-node-circle thumbnail')
 					.attr("fill", "url(##{ingId})")
 					.attr("stroke", "#e7e7e7")
 					.attr("stroke-width", "3px")
-					.attr("r", nodeSize / 2)
+					.attr("r", circleRadius)
 					.attr("cx", nodeSize / 2)
 					.attr("cy", nodeSize / 2)
 			else
+				circleRadius = nodeSize / 4
 				ui.append("circle")
-					.attr('class', 'map-node-circle')
-					.attr("r", 10)
+					.attr('class', 'map-node-circle no-thumbnail')
+					.attr("r", circleRadius)
 					.attr("cx", nodeSize / 2)
 					.attr("cy", nodeSize / 2)
 					.attr("stroke", "#fff")
 					.attr("stroke-width", "1.5px")
 					.attr("fill", "#f5f5f5")
+				circleRadius = nodeSize * 3 / 2
 			if text?
 				ui.append("text")
 					.attr('class', 'map-node-title')
@@ -129,6 +133,22 @@ angular.module('xdiscoveryApp')
 					.attr("text-anchor", "middle")
 					.attr("x", nodeSize / 2)
 					.text(text)
+			# Expand icon
+			expand = ui.append('g')
+				.attr('class', 'map-node-expand')
+			expand.append('circle')
+				.attr('r', 10)
+				.attr('cx', circleRadius / 3)
+				.attr('cy', circleRadius / 3)
+				.attr('fill', '#ffffff')
+				.attr("stroke", "#e7e7e7")
+				.attr("stroke-width", "1")
+			expand.append("text")
+				.attr('class', 'map-node-expand-text')
+				.attr("text-anchor", "middle")
+				.attr("x", circleRadius / 3)
+				.attr("y", circleRadius / 3 + 4)
+				.text('+')
 
 		# Adding highlighted class to hovered node and links
 		$scope.$watch 'vivagraph.highlightNode', (node, lastNode) ->
@@ -158,6 +178,7 @@ angular.module('xdiscoveryApp')
 		# Load map from server
 		xDiscoveryApi.maps.get {id: $routeParams.id}, (graph) ->
 			$scope.map = graph
+			console.log graph
 			# DEBUG
 			# TODO use proper logic
 			# $scope.map.visibleLinks = (g for g in $scope.map.graph when g.source is 36896)

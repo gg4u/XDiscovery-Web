@@ -276,6 +276,23 @@ $graph-page-header-height: 52px;
 		&.highlighted circle {
 			stroke: $primary-color;
 		}
+
+		.map-node-expand {
+			display: none;
+
+			text {
+				font-weight: bold;
+				fill: $body-font-color;
+			}
+		}
+
+		&.has-descendants .map-node-expand {
+			display: block;
+		}
+
+		&.has-descendants.expanded .map-node-expand {
+			display: none;
+		}
 	}
 
 	.map-link {
