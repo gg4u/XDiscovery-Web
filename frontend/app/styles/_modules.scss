@@ -445,6 +445,7 @@ a.xd-back-to-top {
 .xd-carousel-container {
 	position: relative;
 	margin-bottom: $column-gutter;
+	background: $primary-color;
 
 	.xd-custom-page-content > &:first-child {
 		margin-top: (-$column-gutter);
@@ -470,6 +471,7 @@ a.xd-back-to-top {
 	}
 
 	.slogan {
+		display: block;
 		text-align: center;
 		color: white;
 		height: 100%;
@@ -479,7 +481,7 @@ a.xd-back-to-top {
 
 	.rn-carousel-container {
 		overflow: hidden;
-		background: $primary-color;
+		background: inherit;
 	}
 
 	.rn-carousel-slides {
