@@ -2,8 +2,12 @@
 
 app = angular.module('xdiscoveryApp')
 app.service 'xDiscoveryApi', ($resource, $http, config) ->
-	voteUp = -> mapsApi.vote { id: @id }, { vote: { value: 1 } }
-	voteDown = -> mapsApi.vote { id: @id }, { vote: { value: -1 } }
+	voteUp = ->
+		mapsApi.vote { id: @id }, { vote: { value: 1 } }
+		@myVote = 1
+	voteDown = ->
+		mapsApi.vote { id: @id }, { vote: { value: -1 } }
+		@myVote = -1
 	addVotingToMaps = (maps) ->
 		for m in maps
 			m.voteUp = voteUp

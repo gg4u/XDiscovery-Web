@@ -62,8 +62,8 @@
 
 					<dl class="centered sub-nav" masonry-layout-on="contentTab">
 						<dd>
-							<a href="" ng-click="map.voteUp()" class="vote-button vote-up">up</a>
-							<a href="" ng-click="map.voteDown()" class="vote-button vote-down">down</a>
+							<a href="" ng-click="map.voteUp()" class="vote-button vote-up" ng-class="{ selected:map.myVote == 1 }">up</a>
+							<a href="" ng-click="map.voteDown()" class="vote-button vote-down" ng-class="{ selected:map.myVote == -1 }">down</a>
 						</dd>
 						<dd ng-class="{ 'active':!contentTab }"><a href="" ng-click="contentTab=null">About</a></dd>
 						<dd ng-class="{ 'active':contentTab=='share' }"><a href="" ng-click="contentTab='share'">Share</a></dd>
