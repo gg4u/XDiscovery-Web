@@ -239,6 +239,7 @@ if DEPLOY_MODE in ('staging', 'local'):
 CMS_TEMPLATES = (
     ('xdw_web/base.html', 'Empty page'),  # TODO: remove this one
     ('xdw_web/cms_templates/landing.html', 'Landing page'),
+    ('xdw_web/cms_templates/internal.html', 'Internal page'),
     ('xdw_web/cms_templates/wip.html', 'WIP page')
 )
 

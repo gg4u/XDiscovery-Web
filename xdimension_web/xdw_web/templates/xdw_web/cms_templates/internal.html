@@ -1,0 +1,14 @@
+{% extends "xdw_web/base.html" %}
+{% load cms_tags menu_tags %}
+{% block content %}
+{# TODO: add header or carousel #}
+<div class="row">
+    {% placeholder accordion_navigation %}
+	<div class="small-12 large-9 columns">
+
+		<div id="page-accordion" xd-accordion active-section="activeSect">
+                    {% placeholder accordion %}
+		</div>
+	</div>
+</div>
+{% endblock %}
