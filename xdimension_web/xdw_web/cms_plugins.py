@@ -37,7 +37,11 @@ class BoxPlugin(CMSPluginBase):
     form = BoxForm
 
     def render(self, context, instance, placeholder):
-        context['more'] = instance.page_external or instance.page
+        context.update({
+            'more': instance.page_external or instance.page,
+            'instance': instance,
+            'placeholder': placeholder
+        })
         return context
 
 plugin_pool.register_plugin(BoxPlugin)
