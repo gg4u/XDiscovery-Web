@@ -38,7 +38,7 @@ module.exports = function (grunt) {
         files: ['test/spec/{,*/}*.coffee'],
         tasks: ['coffee:test']
       },
-      compass: {
+      copmpass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer']
       },
@@ -304,18 +304,26 @@ module.exports = function (grunt) {
         src: '{,*/}*.css'
       },
       test: {
-	files: [{
-	    expand: true,
-	    cwd: '<%= yeoman.app %>',
-            src: 'bower_components/**',
-            dest: '<%= yeoman.dist %>'
-	},
-	{
-	    expand: true,
-	    cwd: '.tmp',
-            src: '**',
-            dest: '<%= yeoman.dist %>'
-	}]
+	files: [
+            {
+	        expand: true,
+	        cwd: '<%= yeoman.app %>',
+                src: 'bower_components/**',
+                dest: '<%= yeoman.dist %>'
+	    },
+            {
+	        expand: true,
+	        cwd: '<%= yeoman.app %>',
+                src: 'scripts/directives/*.js',
+                dest: '<%= yeoman.dist %>'
+	    },	
+            {
+	        expand: true,
+	        cwd: '.tmp',
+                src: '**',
+                dest: '<%= yeoman.dist %>'
+	    }
+        ]
       }
     },
     rename: {
