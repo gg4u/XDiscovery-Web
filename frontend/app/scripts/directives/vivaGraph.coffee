@@ -21,6 +21,7 @@ app.directive 'vivaGraph', ->
 		layout: '&'
 		graphics: '&'
 		onCreate: '&'
+		pauseRender: '='
 	link: (scope, element, attrs) ->
 		graph = Viva.Graph.graph()
 		graph.name = scope.name
@@ -31,9 +32,7 @@ app.directive 'vivaGraph', ->
 			oldLinks = [] if angular.equals(links, oldLinks)
 			do graph.beginUpdate
 			for l in links when oldLinks.indexOf(l) < 0
-				dist = l.distance / 100.0
-				dist = 0.05 if dist < 0.05
-				graph.addLink(l.source, l.target, dist)
+				graph.addLink(l.source, l.target, l)
 			do graph.endUpdate
 		# Pagerank
 		# Graph renderer
@@ -46,6 +45,8 @@ app.directive 'vivaGraph', ->
 		# Run the graph
 		renderer.run()
 		# Pause/resume policy
+		scope.$watch 'pauseRender', (pause, oldPause) ->
+			do renderer[pause&&'pause'||'resume']
 		$window = angular.element(window)
 		$window.on 'blur', renderer.pause
 		$window.on 'focus', renderer.resume

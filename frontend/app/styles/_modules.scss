@@ -52,15 +52,22 @@
 		margin: 0;
 		background-color: $gray-lighter;
 		border-color: rgb(170, 170, 170);
-		border-left-width: 0;
+		border-width: 1px 1px 1px 0;
+		border-style: solid;
 		color: $body-font-color;
+		height: 32px;
+		line-height: 32px;
 	}
 
 	.back-button {
 		min-width: 32px;
 		min-height: 32px;
-		display: inline-block;
+		display: none;
 		background: url(../images/header-back-arrow.svg) no-repeat center center;
+
+		@media #{$small} {
+			display: inline-block;
+		}
 	}
 
 	.info-button,
@@ -229,7 +236,7 @@
 $graph-page-header-height: 52px;
 
 .xd-graph-page-header {
-	height: $graph-page-header-height;
+	min-height: $graph-page-header-height;
 	margin-bottom: 0;
 	overflow: auto;
 	padding: 8px 8px 0;
@@ -238,7 +245,7 @@ $graph-page-header-height: 52px;
 	z-index: 1;
 
 	.title {
-		margin: 0;
+		margin: 0 100px 0 0;
 		display: inline-block;
 		font-size: 2em;
 		font-weight: 300;
@@ -252,7 +259,8 @@ $graph-page-header-height: 52px;
 }
 
 .xd-graph-tools {
-	margin: 0;
+	margin: 8px;
+	position: absolute; right: 0; top: 0;
 }
 
 .viva-graph {
@@ -260,20 +268,76 @@ $graph-page-header-height: 52px;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+
+	.map-node {
+		cursor: pointer;
+
+		&.selected circle,
+		&.highlighted circle {
+			stroke: $primary-color;
+		}
+
+		.map-node-expand {
+			display: none;
+
+			text {
+				font-weight: bold;
+				fill: $body-font-color;
+			}
+		}
+
+		&.has-descendants .map-node-expand {
+			display: block;
+		}
+
+		&.has-descendants.expanded .map-node-expand {
+			display: none;
+		}
+	}
+
+	.map-link {
+		&.map-link-group-0 { stroke: #ed13d1 }
+		&.map-link-group-1 { stroke:#ed1393 }
+		&.map-link-group-2 { stroke:#f30b6d }
+		&.map-link-group-3 { stroke:#ff0b6d }
+		&.map-link-group-4 { stroke:#f20bdd }
+		&.map-link-group-5 { stroke:#cc0000 }
+		&.map-link-group-6 { stroke:#cccccc }
+		&.map-link-group-7 { stroke:#f20b6d }
+		&.map-link-group-8 { stroke:#f20b6d }
+		&.map-link-group-9 { stroke:#f20b6d }
+		&.highlighted { stroke: $primary-color; }
+	}
 }
 
 .viva-graph-detail-pane {
-	padding-top: $graph-page-header-height;
+	padding: ($graph-page-header-height + 10) 10px ($graph-page-header-height - 20px);
 	position: absolute;
 	top: 0; right: 0; height: 100%;
-	width: 40%;
 
 	> .content {
+		@include border-radius($global-radius);
 		height: 100%;
 		background: $body-bg;
 		border: 1px solid $gray-lighter;
 		padding-top: 1em;
 		padding-bottom: 1em;
+		overflow: auto;
+	}
+
+	@media #{$small} {
+		padding: $graph-page-header-height 0 0;
+		width: 40%;
+
+		> .content {
+			@include border-radius(0);
+		}
+	}
+
+	.close-button {
+		position: absolute;
+		right: 1em;
+		top: 0;
 	}
 }
 
@@ -381,6 +445,7 @@ a.xd-back-to-top {
 .xd-carousel-container {
 	position: relative;
 	margin-bottom: $column-gutter;
+	background: $primary-color;
 
 	.xd-custom-page-content > &:first-child {
 		margin-top: (-$column-gutter);
@@ -406,6 +471,7 @@ a.xd-back-to-top {
 	}
 
 	.slogan {
+		display: block;
 		text-align: center;
 		color: white;
 		height: 100%;
@@ -415,7 +481,7 @@ a.xd-back-to-top {
 
 	.rn-carousel-container {
 		overflow: hidden;
-		background: $primary-color;
+		background: inherit;
 	}
 
 	.rn-carousel-slides {
