@@ -12,14 +12,9 @@
 		</span>
 	</h1>
 
-	<ul class="right inline-list xd-graph-tools">
-		<li><a href="" class="info-button"></a></li>
-		<li><a href="" class="share-button"></a></li>
-	</ul>
-
 </header>
 
-<div viva-graph="" name="{% verbatim %}{{map.name}}{% endverbatim %}" links="map.graph" layout="vivagraph.layout($graph)" graphics="vivagraph.graphics()" on-create="vivagraph.initialize($graph)"></div>
+<div viva-graph="" name="{% verbatim %}{{map.name}}{% endverbatim %}" links="map.visibleLinks" layout="vivagraph.layout($graph)" graphics="vivagraph.graphics()" on-create="vivagraph.initialize($graph)" pause-render="vivagraph.pauseRender"></div>
 
 <section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node">
 	<div class="content row">
@@ -37,7 +32,7 @@
 			</dl>
 
 			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
-				<div ng-switch-default="">topic</div>
+				<div ng-switch-default="" ng-bind-html="vivagraph.selected.info.extract"></div>
 				<div ng-switch-when="external">External</div>
 			</div>
 
