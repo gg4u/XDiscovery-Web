@@ -1,1 +1,16 @@
-<li><div class="slogan">{{ body|safe }}</div></li>
+{% if carouselcontent_items %}<div class="xd-carousel-container" ng-init="carouselIndex = 0">
+	<ul {% if carouselcontent_items|length > 1 %}rn-carousel rn-carousel-index="carouselIndex" rn-carousel-indicator{% endif %}>
+            {% for item in carouselcontent_items %}
+            <li><div class="slogan">{{ item.body | safe }}</div></li>
+            {% endfor %}
+	</ul>
+        {% if carouselcontent_items|length > 1 %}
+	<button
+		class="xd-carousel-nav prev hide-for-small"
+		ng-click="carouselIndex = carouselIndex - 1"
+		ng-disabled="carouselIndex == 0"></button>
+	<button
+		class="xd-carousel-nav next hide-for-small"
+		ng-click="carouselIndex = carouselIndex + 1"
+		ng-disabled="carouselIndex == 2"></button>
+</div>{% endif %}{% endif %}

@@ -19,19 +19,7 @@
 			</div>
 		</div>
 	</div>
-<div class="xd-carousel-container" ng-init="carouselIndex = 0">
-	<ul rn-carousel rn-carousel-index="carouselIndex" rn-carousel-indicator>
-            {% placeholder carousel %}
-	</ul>
-	<button
-		class="xd-carousel-nav prev hide-for-small"
-		ng-click="carouselIndex = carouselIndex - 1"
-		ng-disabled="carouselIndex == 0"></button>
-	<button
-		class="xd-carousel-nav next hide-for-small"
-		ng-click="carouselIndex = carouselIndex + 1"
-		ng-disabled="carouselIndex == 2"></button>
-</div>
+        {% placeholder carousel %}
 </header>
 <div class="row">
 	<div class="small-12 large-12 columns">

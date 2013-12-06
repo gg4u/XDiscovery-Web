@@ -1,0 +1,8 @@
+	<div class="large-3 columns hide-for-small">
+		<ul class="xd-side-menu">
+                    {% for item in accordion_items %}
+			<li ng-class="{ 'active': activeSect == '{{ item.tag_id }}' }"><a href="" ng-click="activeSect = '{{ item.tag_id }}'">{{ item.title }}</a></li>
+                    {% endfor %}
+
+		</ul>
+	</div>
