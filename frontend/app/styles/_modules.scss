@@ -333,11 +333,40 @@ $graph-page-header-height: 52px;
 			@include border-radius(0);
 		}
 	}
+}
+
+.graph-share-pane {
+	background: rgba(black, 0.6);
+	position: absolute;
+	width: 100%;
+	height: 100%;
+
+	.panel {
+		@include border-radius($global-radius);
+		background: $body-bg;
+		border-color: $gray-light;
+		margin: $column-gutter 0;
+		text-align: center;
+		position: relative;
+	}
+
+	.title {
+		.sep {
+			font-size: 0.5em;
+		}
+	}
+
+	.inline-list > li {
+		float: none;
+		display: inline-block;
+	}
+
+	.social-button {
+		display: block;
+	}
 
 	.close-button {
-		position: absolute;
-		right: 1em;
-		top: 0;
+		margin-top: 1em;
 	}
 }
 

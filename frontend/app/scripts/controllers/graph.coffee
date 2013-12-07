@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('xdiscoveryApp')
-	.controller 'GraphCtrl', ($scope, xDiscoveryApi, wikipediaApi, $routeParams, $sce) ->
+	.controller 'GraphCtrl', ($scope, xDiscoveryApi, wikipediaApi, $routeParams, $sce, $location) ->
 		$scope.pageClass = ['graph']
 
 		# Contains all the properties for the vivaGraph directive
@@ -186,6 +186,8 @@ angular.module('xdiscoveryApp')
 			# Calculate maximum distance for the graph
 			$scope.vivagraph.maxDistance = 0
 			$scope.vivagraph.maxDistance = f for g in $scope.map.graph when (f = parseFloat(g.distance)) > $scope.vivagraph.maxDistance
+			# Decorate map to have a url property
+			$scope.map.url = "#{$location.protocol()}://#{$location.host()}/graph/#{graph.id}"
 
 
 		$scope.$watchCollection 'map.graph', (graph) ->

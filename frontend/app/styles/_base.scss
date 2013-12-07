@@ -29,6 +29,10 @@ button.invisible {
 	display: block;
 	overflow: hidden;
 	text-indent: -2000px;
+
+	position: absolute;
+	right: 1em;
+	top: 0;
 }
 
 .vote-button {
