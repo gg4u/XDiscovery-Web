@@ -54,6 +54,35 @@ button.invisible {
 	}
 }
 
+.social-button {
+	width: 75px;
+	height: 75px;
+	background-size: cover;
+	display: block;
+	overflow: hidden;
+
+	&.small {
+		width: 40px;
+		height: 40px;
+	}
+
+	&.facebook {
+		background-image: url(../images/social-icon-facebook.png);
+	}
+
+	&.twitter {
+		background-image: url(../images/social-icon-twitter.png);
+	}
+
+	&.google-plus {
+		background-image: url(../images/social-icon-google-plus.png);
+	}
+
+	&.linkedin {
+		background-image: url(../images/social-icon-linkedin.png);
+	}
+}
+
 // Foundation Top Bar changes
 .top-bar-section ul li.active > a {
 	position: relative;

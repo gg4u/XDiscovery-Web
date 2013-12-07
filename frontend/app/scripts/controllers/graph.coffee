@@ -185,11 +185,6 @@ angular.module('xdiscoveryApp')
 			# Calculate maximum distance for the graph
 			$scope.vivagraph.maxDistance = 0
 			$scope.vivagraph.maxDistance = f for g in $scope.map.graph when (f = parseFloat(g.distance)) > $scope.vivagraph.maxDistance
-			# Decorate map to have a url property
-			$scope.map.url = "#{$location.protocol()}://#{$location.host()}/graph/#{graph.id}"
-			$scope.map.facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=#{encodeURIComponent($scope.map.url)}"
-			$scope.map.gplusUrl = "https://plus.google.com/share?url=#{encodeURIComponent($scope.map.url)}"
-			$scope.map.twitterUrl = "https://twitter.com/share?url=#{encodeURIComponent($scope.map.url)}"
 
 
 		$scope.$watchCollection 'map.graph', (graph) ->

@@ -70,24 +70,31 @@
 					</dl>
 
 					<div class="tabbed content" ng-switch="contentTab">
-						<p ng-switch-default ng-init="nodes = (map.nodeTitles.start|limitTo:6)">
-							<span ng-repeat="node in nodes track by $index" ng-bind-template="{{node}}{{$middle&&' | '||' '}}"></span>
-							<span ng-if="nodes.length < map.node_count">
-								<span class="sep">and other</span>
-								<span ng-bind-template="#{{map.node_count - nodes.length}}"></span>
-								<span class="sep">topics.</span>
-							</span>
-						</p>
-						<p ng-switch-when="share">
-							share widgets here
-						</p>
+						<div ng-switch-default ng-init="nodes = (map.nodeTitles.start|limitTo:6)">
+							<p>
+								<span ng-repeat="node in nodes track by $index" ng-bind-template="{{node}}{{$middle&&' | '||' '}}"></span>
+								<span ng-if="nodes.length < map.node_count">
+									<span class="sep">and other</span>
+									<span ng-bind-template="#{{map.node_count - nodes.length}}"></span>
+									<span class="sep">topics.</span>
+								</span>
+							</p>
+						</div>
+						<div ng-switch-when="share">
+							<ul class="inline-list social-buttons-list">
+								<li><a ng-href="{{map.facebookUrl}}" target="_blank" class="social-button small facebook"></a></li>
+								<li><a ng-href="{{map.gplusUrl}}" target="_blank" class="social-button small google-plus"></a></li>
+								<li><a ng-href="{{map.twitterUrl}}" target="_blank" class="social-button small twitter"></a></li>
+							</ul>
+							<input type="text" value="{{map.url}}" readonly onClick="this.select()" style="text-align:center;">
+						</div>
 					</div>
 
 					<div class="flipside content" ng-bind="map.description">
 					</div>
 
 					<footer class="content social-footer">
-						social widgets
+
 					</footer>
 				</article>
 			</div>
