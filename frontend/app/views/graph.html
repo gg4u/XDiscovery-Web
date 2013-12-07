@@ -53,7 +53,7 @@
 <section class="graph-share-pane" ng-show="shouldShowSharePane" ng-click="shouldShowSharePane = false">
 	<div class="content row">
 		<div class="small-12 large-4 large-centered columns">
-			<div class="panel">
+			<div class="panel" ng-click="$event.stopPropagation()">
 				<a href="" ng-click="shouldShowSharePane = false" class="close-button"></a>
 				<h5>Share this Map</h5>
 				<h6 class="title" ng-switch="!!map.title" ng-cloak>
@@ -66,9 +66,9 @@
 					</span>
 				</h6>
 				<ul class="inline-list">
-					<li><a href="" class="social-button social-icon-facebook"></a></li>
-					<li><a href="" class="social-button social-icon-google-plus"></a></li>
-					<li><a href="" class="social-button social-icon-twitter"></a></li>
+					<li><a ng-href="{{map.facebookUrl}}" target="_blank" class="social-button social-icon-facebook"></a></li>
+					<li><a ng-href="{{map.gplusUrl}}" target="_blank" class="social-button social-icon-google-plus"></a></li>
+					<li><a ng-href="{{map.twitterUrl}}" target="_blank" class="social-button social-icon-twitter"></a></li>
 				</ul>
 				<input type="text" value="{{map.url}}" readonly onClick="this.select()" style="text-align:center;">
 			</div>
