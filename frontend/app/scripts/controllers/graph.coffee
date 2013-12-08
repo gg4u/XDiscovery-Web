@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('xdiscoveryApp')
-	.controller 'GraphCtrl', ($scope, xDiscoveryApi, wikipediaApi, $routeParams, $sce) ->
+	.controller 'GraphCtrl', ($scope, xDiscoveryApi, wikipediaApi, $routeParams, $sce, $location) ->
 		$scope.pageClass = ['graph']
 
 		# Contains all the properties for the vivaGraph directive
@@ -178,7 +178,6 @@ angular.module('xdiscoveryApp')
 		# Load map from server
 		xDiscoveryApi.maps.get {id: $routeParams.id}, (graph) ->
 			$scope.map = graph
-			console.log graph
 			# DEBUG
 			# TODO use proper logic
 			# $scope.map.visibleLinks = (g for g in $scope.map.graph when g.source is 36896)

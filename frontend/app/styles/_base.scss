@@ -29,6 +29,10 @@ button.invisible {
 	display: block;
 	overflow: hidden;
 	text-indent: -2000px;
+
+	position: absolute;
+	right: 1em;
+	top: 0;
 }
 
 .vote-button {
@@ -47,6 +51,35 @@ button.invisible {
 
 	&.selected {
 		background-position-y: -20px;
+	}
+}
+
+.social-button {
+	width: 75px;
+	height: 75px;
+	background-size: cover;
+	display: block;
+	overflow: hidden;
+
+	&.small {
+		width: 40px;
+		height: 40px;
+	}
+
+	&.facebook {
+		background-image: url(../images/social-icon-facebook.png);
+	}
+
+	&.twitter {
+		background-image: url(../images/social-icon-twitter.png);
+	}
+
+	&.google-plus {
+		background-image: url(../images/social-icon-google-plus.png);
+	}
+
+	&.linkedin {
+		background-image: url(../images/social-icon-linkedin.png);
 	}
 }
 
