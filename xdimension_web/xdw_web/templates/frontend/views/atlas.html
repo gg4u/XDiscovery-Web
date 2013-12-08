@@ -94,7 +94,7 @@
 					</div>
 
 					<footer class="content social-footer">
-						<iframe ng-src="'http://www.facebook.com/plugins/like.php?href='+map.url+'&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21'" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px" allowtransparency="true"></iframe>
+						<iframe ng-src="{% verbatim %}{{map.getFacebookLikeUrl()}}{% endverbatim %}" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px" allowtransparency="true"></iframe>
 					</footer>
 				</article>
 			</div>
