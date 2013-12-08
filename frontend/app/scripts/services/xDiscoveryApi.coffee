@@ -1,7 +1,7 @@
 'use strict';
 
 app = angular.module('xdiscoveryApp')
-app.service 'xDiscoveryApi', ($resource, $http, $location, config) ->
+app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 	voteUp = ->
 		mapsApi.vote { id: @id }, { vote: { value: 1 } }
 		@myVote = 1
@@ -21,7 +21,7 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, config) ->
 		map.getFacebookLikeUrl = (params) ->
 			url = "#{$location.protocol()}://www.facebook.com/plugins/like.php?href=#{encodedMapUrl}"
 			url += "&#{p}=v" for p, v of params
-			url
+			$sce.trustAsResourceUrl url
 		map
 	decorateMaps = (maps) ->
 		decorateMap(m) for m in maps
