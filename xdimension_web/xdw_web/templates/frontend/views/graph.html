@@ -12,6 +12,10 @@
 		</span>
 	</h1>
 
+	<ul class="right inline-list xd-graph-tools">
+		<li><a href="" class="share-button" ng-click="shouldShowSharePane = !shouldShowSharePane"></a></li>
+	</ul>
+
 </header>
 
 <div viva-graph="" name="{% verbatim %}{{map.name}}{% endverbatim %}" links="map.visibleLinks" layout="vivagraph.layout($graph)" graphics="vivagraph.graphics()" on-create="vivagraph.initialize($graph)" pause-render="vivagraph.pauseRender"></div>
@@ -20,7 +24,7 @@
 	<div class="content row">
 		<div class="small-12 columns">
 
-			<a href="" ng-click="vivagraph.selected = null" class="close-button">close</a>
+			<a href="" ng-click="vivagraph.selected = null" class="close-button"></a>
 
 			<h2 ng-bind="vivagraph.selected.info.title">&ndash;</h2>
 
@@ -36,6 +40,32 @@
 				<div ng-switch-when="external">External</div>
 			</div>
 
+		</div>
+	</div>
+</section>
+
+<section class="graph-share-pane" ng-show="shouldShowSharePane" ng-click="shouldShowSharePane = false">
+	<div class="content row">
+		<div class="small-12 large-4 large-centered columns">
+			<div class="panel" ng-click="$event.stopPropagation()">
+				<a href="" ng-click="shouldShowSharePane = false" class="close-button"></a>
+				<h5>Share this Map</h5>
+				<h6 class="title" ng-switch="!!map.title" ng-cloak="">
+					<span ng-switch-when="true" ng-bind="map.title" class="custom-title"></span>
+					<span ng-switch-default="" class="node-title">
+						<span class="sep">from</span>
+						<span ng-bind="map.startNode.title">&ndash;</span>
+						<span class="sep">to</span>
+						<span ng-bind="map.endNode.title">&ndash;</span>
+					</span>
+				</h6>
+				<ul class="inline-list">
+					<li><a ng-href="{% verbatim %}{{map.facebookUrl}}{% endverbatim %}" target="_blank" class="social-button facebook"></a></li>
+					<li><a ng-href="{% verbatim %}{{map.gplusUrl}}{% endverbatim %}" target="_blank" class="social-button google-plus"></a></li>
+					<li><a ng-href="{% verbatim %}{{map.twitterUrl}}{% endverbatim %}" target="_blank" class="social-button twitter"></a></li>
+				</ul>
+				<input type="text" value="{% verbatim %}{{map.url}}{% endverbatim %}" readonly="readonly" onclick="this.select()" style="text-align:center">
+			</div>
 		</div>
 	</div>
 </section>
