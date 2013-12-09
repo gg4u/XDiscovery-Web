@@ -19,7 +19,7 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 		map.gplusUrl = "https://plus.google.com/share?url=#{encodedMapUrl}"
 		map.twitterUrl = "https://twitter.com/share?url=#{encodedMapUrl}"
 		map.getFacebookLikeUrl = (params) ->
-			url = "#{$location.protocol()}://www.facebook.com/plugins/like.php?href=#{encodedMapUrl}"
+			url = "#{$location.protocol()}://www.facebook.com/plugins/like.php?href=#{encodedMapUrl}&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21"
 			url += "&#{p}=v" for p, v of params
 			$sce.trustAsResourceUrl url
 		map
