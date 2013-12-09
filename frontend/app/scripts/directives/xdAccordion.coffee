@@ -29,6 +29,7 @@ app.directive 'xdAccordion', ($location) ->
 	link: (scope, element, attrs, controller) ->
 		element.addClass 'xd-accordion'
 		controller.setActiveSection $location.hash()
+		scope.$on '$destroy', -> $location.hash('')
 
 app.directive 'xdAccordionSection', ->
 	restrict: 'EA'
