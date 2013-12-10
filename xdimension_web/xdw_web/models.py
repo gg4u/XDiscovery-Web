@@ -11,6 +11,10 @@ class BoxPluginModel(CMSPlugin):
     body = HTMLField(blank=True)
     page = models.ForeignKey(Page, blank=True, null=True)
     page_external = models.CharField(max_length=1024, blank=True)
+    style = models.CharField(max_length=10,
+                             choices=(('normal', 'normal'),
+                                      ('callout', 'callout')),
+                             default='normal')
 
     def clean(self):
         if self.page and self.page_external:

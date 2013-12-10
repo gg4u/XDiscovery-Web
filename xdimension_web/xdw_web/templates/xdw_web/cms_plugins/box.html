@@ -1,5 +1,5 @@
 						<div class="small-12 large-4 columns">
-							<div class="radius panel">
+							<div class="radius panel{% if instance.style == 'callout' %} callout{% endif %}">
 								<h4 class="title">{{ instance.title }}</h4>
 								{{ instance.body | safe }}
 								{% if more %}<a href="{{ more }}" class="more">More</a>{% endif %}
