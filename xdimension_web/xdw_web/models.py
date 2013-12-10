@@ -47,7 +47,8 @@ class CarouselPluginModel(CMSPlugin):
 
 
 class CarouselContent(models.Model):
-    background_color = models.CharField(max_length=7, blank=True)
+    background_color = models.CharField(max_length=7, blank=True,
+                                        editable=False)
     carousel = models.ForeignKey(CarouselPluginModel)
     body = HTMLField(blank=True)
     page = models.ForeignKey(Page, blank=True, null=True)
