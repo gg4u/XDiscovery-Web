@@ -46,9 +46,11 @@ class MapSerializer(MapSimpleSerializer):
     def to_native(self, obj):
         ret = super(MapSimpleSerializer, self).to_native(obj)
         data = obj.map_data['map']
-
+        nodes = {item['id']: True for item in data.get('pageRank', ())
+                 if item.get('tapped')}
         ret.update({'graph': data['graph'],
                     'path': data['path'],
+                    'nodes': nodes,
                     'startNode': data['startNode'],
                     'endNode': data['endNode']})
         return ret
