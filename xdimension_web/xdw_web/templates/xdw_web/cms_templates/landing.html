@@ -23,26 +23,14 @@
 </header>
 <div class="row">
 	<div class="small-12 large-12 columns">
-
-		<div id="page-accordion" xd-accordion active-section="activeSect">
-			<section xd-accordion-section="what-we-do">
-                            {% comment %}TODO: add page title in print only{% endcomment %}
-				<div xd-accordion-content>
-
-					<div class="row">
-						<div class="small-12 large-8 large-centered columns">
-							<h2 style="text-align:center">{% placeholder abstract %}</h2>
-						</div>
-					</div>
-
-					<div class="row">
-                                            {% placeholder box %}
-					</div>
-
-				</div>
-			</section>
-
+	    <div class="row">
+		<div class="small-12 large-8 large-centered columns">
+		    <h2 style="text-align:center">{% placeholder abstract %}</h2>
 		</div>
+	    </div>
+	    <div class="row">
+                {% placeholder box %}
+	    </div>
 	</div>
 </div>
 {% endblock %}
