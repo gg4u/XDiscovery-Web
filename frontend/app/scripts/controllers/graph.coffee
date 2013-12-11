@@ -45,13 +45,16 @@ angular.module('xdiscoveryApp')
 					drawNode(ui)
 					# Modify class to indicate interactively revealed nodes
 					isRevealed = no
+					isExpanded = no
 					hasDescendants = no
 					for l in $scope.map.graph
 						isRevealed or= l.class? and l.target is node.id
 						hasDescendants or= l.source is node.id
-						# TODO add `expanded` class if all descendants are already visible
 						break if isRevealed and hasDescendants
-					ui.attr('class', "map-node #{isRevealed&&'revealed'||'initial'}#{hasDescendants&&' has-descendants'||''}")
+					for l in $scope.map.visibleLinks
+						isExpanded or= l.source is node.id
+						break if isExpanded
+					ui.attr('class', "map-node #{isRevealed&&'revealed'||'initial'}#{hasDescendants&&' has-descendants'||''}#{isExpanded&&' expanded'||''}")
 					# Adding hover and click handlers for graph node ui
 					angular.element(ui)
 						.bind('mouseenter', -> $scope.$apply ->
@@ -182,12 +185,14 @@ angular.module('xdiscoveryApp')
 				node.ui.attr('class', klass + ' selected')
 
 		# Load map from server
-		xDiscoveryApi.maps.get {id: $routeParams.id}, (graph) ->
-			$scope.map = graph
-			# DEBUG
-			# TODO use proper logic
-			# $scope.map.visibleLinks = (g for g in $scope.map.graph when g.source is 36896)
-			$scope.map.visibleLinks = $scope.map.graph
+		xDiscoveryApi.maps.get {id: $routeParams.id}, (map) ->
+			$scope.map = map
+			# Add visible links
+			tappedNodes = (parseInt(id) for id, n of map.nodes when n.tapped)
+			if tappedNodes.length
+				$scope.map.visibleLinks = (g for g in map.graph when g.source in tappedNodes)
+			else
+				$scope.map.visibleLinks = $scope.map.graph
 			# Calculate maximum distance for the graph
 			$scope.vivagraph.maxDistance = 0
 			$scope.vivagraph.maxDistance = f for g in $scope.map.graph when (f = parseFloat(g.distance)) > $scope.vivagraph.maxDistance
