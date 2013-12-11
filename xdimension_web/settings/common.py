@@ -263,6 +263,17 @@ CMS_PLACEHOLDER_CONF = {
             'global': 1
         },
     },
+    'accordion_navigation': {
+        'plugins': ['AccordionNavigationPlugin'],
+        'name': 'AccordionNavigation',
+        'limits': {
+            'global': 1
+        },
+    },
+    'accordion': {
+        'plugins': ['AccordionPlugin'],
+        'name': 'Accordion'
+    },
     'box': {
         'plugins': ['BoxPlugin'],
         'name': 'Box',
