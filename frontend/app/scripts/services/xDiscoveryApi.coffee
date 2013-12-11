@@ -31,13 +31,11 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 	mapsApi = $resource mapsApiUrl, { format: 'json' }, {
 		get:
 			method: 'GET',
-			responseType: 'json'
 			transformResponse: (data) ->
 				data = JSON.parse data unless angular.isObject(data)
 				decorateMap data
 		search:
 			method: 'GET'
-			responseType: 'json'
 			transformResponse: (data) ->
 				data = JSON.parse data unless angular.isObject(data)
 				result = data
@@ -55,7 +53,6 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 		vote:
 			url: config.apiUrl + '/map/:id/vote'
 			method: 'POST'
-			responseType: 'json'
 	}
 
 	{
