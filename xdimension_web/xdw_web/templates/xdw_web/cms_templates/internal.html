@@ -1,7 +1,7 @@
-{% extends "xdw_web/base.html" %}
+{% extends "frontend/index.html" %}
 {% load cms_tags menu_tags %}
 {% block content %}
-{# TODO: add header or carousel #}
+{% include "xdw_web/include/carousel_header.html" %}
 <div class="row">
     {% placeholder accordion_navigation %}
 	<div class="small-12 large-9 columns">
