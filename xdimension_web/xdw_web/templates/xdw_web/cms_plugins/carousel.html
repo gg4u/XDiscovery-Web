@@ -1,7 +1,11 @@
-{% if carouselcontent_items %}<div class="xd-carousel-container" ng-init="carouselIndex = 0">
+{% load cms_tags %}{% if carouselcontent_items %}<div class="xd-carousel-container" ng-init="carouselIndex = 0" {% if instance.background_color %}style="background:{{ instance.background_color }}"{% endif %}>
 	<ul {% if carouselcontent_items|length > 1 %}rn-carousel rn-carousel-index="carouselIndex" rn-carousel-indicator{% endif %}>
             {% for item in carouselcontent_items %}
-            <li><div class="slogan">{{ item.body | safe }}</div></li>
+            <li>{% if item.page %}
+            <a href="{% page_url item.page %}" class="slogan">{{ item.body | safe }}</a>
+            {% else %}
+            <div class="slogan">{{ item.body | safe }}</div>
+            {% endif %}</li>
             {% endfor %}
 	</ul>
         {% if carouselcontent_items|length > 1 %}
