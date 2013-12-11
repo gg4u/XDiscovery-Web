@@ -26,7 +26,7 @@
 	on-create="vivagraph.initialize($graph)"
 	pause-render="vivagraph.pauseRender"></div>
 
-<section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node">
+<section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node&&!vivagraph.selected.info.missing">
 	<div class="content row">
 		<div class="small-12 columns">
 
@@ -42,7 +42,10 @@
 			</dl>
 
 			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
-				<div ng-switch-default ng-bind-html="vivagraph.selected.info.extract"></div>
+				<div ng-switch-default>
+					<div ng-bind-html="vivagraph.selected.info.extract"></div>
+					<a ng-href="http://en.wikipedia.org/wiki?curid={{vivagraph.selected.node.id}}" target="_blank" style="display:block; text-align:right;">More on Wikipedia &rarr;</a>
+				</div>
 				<div ng-switch-when="external">External</div>
 			</div>
 
