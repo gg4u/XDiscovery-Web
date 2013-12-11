@@ -7,6 +7,10 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+        ('cms', '0001_initial.py'),
+    )
+
     def forwards(self, orm):
         # Adding model 'Map'
         db.create_table(u'xdw_core_map', (
