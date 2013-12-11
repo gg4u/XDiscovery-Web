@@ -195,13 +195,11 @@ angular.module('xdiscoveryApp')
 
 		$scope.$watchCollection 'map.graph', (graph) ->
 			return unless graph?.length
-			# Build list of nodes from the arc list
-			nodes = {}
+			# Build list of nodes from the arc list if they are not already defined
+			nodes = $scope.map.nodes ?= {}
 			for arc in graph
-				do (arc) ->
-					nodes[arc.source] = {}
-					nodes[arc.target] = {}
-			$scope.map.nodes = nodes
+				nodes[arc.source] ?= {}
+				nodes[arc.target] ?= {}
 			# Fetch thumbnails from wikipedia
 			fetchNodes = (nodes, ids) ->
 				batchIds = ids[..19]
@@ -214,10 +212,11 @@ angular.module('xdiscoveryApp')
 					exlimit: batchIds.length
 					exintro: 1
 				}, (data) ->
-					# Fetch more nodes
-					fetchNodes(nodes, ids) if ids?.length
 					# Assign node decorations
 					for id, n of nodes when data?.query?.pages?[id]?
 						angular.extend n, data.query.pages[id]
 						n.extract = $sce.trustAsHtml(n.extract) if n.extract?
+						n.missing = yes if n.missing?
+					# Fetch more nodes
+					fetchNodes(nodes, ids) if ids?.length
 			fetchNodes(nodes, (key for key of nodes))
