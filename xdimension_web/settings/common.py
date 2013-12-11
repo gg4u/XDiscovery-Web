@@ -105,8 +105,9 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     # custom apps
-    'xdimension_web.xdw_web',
     'xdimension_web.xdw_core',
+    'xdimension_web.xdw_web',
+    # standard stuff
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
