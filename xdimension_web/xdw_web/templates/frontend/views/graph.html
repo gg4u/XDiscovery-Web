@@ -36,7 +36,10 @@
 			</dl>
 
 			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
-				<div ng-switch-default="" ng-bind-html="vivagraph.selected.info.extract"></div>
+				<div ng-switch-default="">
+					<div ng-bind-html="vivagraph.selected.info.extract"></div>
+					<a ng-href="http://en.wikipedia.org/wiki?curid={% verbatim %}{{vivagraph.selected.node.id}}{% endverbatim %}" target="_blank" style="display:block; text-align:right">More on Wikipedia &rarr;</a>
+				</div>
 				<div ng-switch-when="external">External</div>
 			</div>
 
