@@ -4,6 +4,8 @@ from cms.plugin_base import CMSPluginBase
 from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_pool import plugin_pool
 from cms.plugins.utils import get_plugins
+from djangocms_text_ckeditor.widgets import TextEditorWidget
+from django.forms.fields import CharField
 from django.utils.translation import ugettext as _
 
 from .models import (BoxPluginModel, AbstractPluginModel, AccordionPluginModel,
@@ -83,5 +85,26 @@ class AccordionPlugin(CMSPluginBase):
     name = _("Accordion Plugin")
     render_template = "xdw_web/cms_plugins/accordion.html"
     model = AccordionPluginModel
+    allow_children = True
+
+    def get_form(self, request, obj=None, **kwargs):
+        # Augment the form with the plugin info
+        plugins = plugin_pool.get_text_enabled_plugins(
+            self.placeholder,
+            self.page
+        )
+        pk = self.cms_plugin_instance.pk
+        widget = TextEditorWidget(installed_plugins=plugins, pk=pk)
+
+        form_class = super(AccordionPlugin, self).get_form(
+            request, obj=obj, **kwargs)
+        form_class.declared_fields["body"] = CharField(
+            widget=widget, required=False
+        )
+
+        kwargs['form'] = form_class  # override standard form
+        return super(AccordionPlugin, self).get_form(
+            request, obj=obj, **kwargs)
+
 
 plugin_pool.register_plugin(AccordionPlugin)
