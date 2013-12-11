@@ -289,3 +289,8 @@ FB_APP_ID = {
 }
 
 FB_SITE_NAME = 'xDiscovery'
+
+
+# CKeditor
+
+TEXT_HTML_SANITIZE = False

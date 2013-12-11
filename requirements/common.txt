@@ -16,5 +16,5 @@ pytz==2013d
 python-dateutil==2.1
 django-json-field==0.5.5
 django-filter==0.7
-djangocms-text-ckeditor==1.0.10
+git+git://github.com/mpaolini/djangocms-text-ckeditor@1.0.10_credra
 django-jfu==1.0.7
