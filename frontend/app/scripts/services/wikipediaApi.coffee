@@ -8,6 +8,7 @@ app.service 'wikipediaApi', ($resource) ->
 			params:
 				action: 'query'
 				format: 'json'
+				redirects: 1
 
 	{
 		query: api.query

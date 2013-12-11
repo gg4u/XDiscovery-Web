@@ -217,6 +217,14 @@ angular.module('xdiscoveryApp')
 						angular.extend n, data.query.pages[id]
 						n.extract = $sce.trustAsHtml(n.extract) if n.extract?
 						n.missing = yes if n.missing?
+					# Resolve redirects
+					if data?.query?.redirects?.length
+						nameRedirects = {}
+						nameRedirects[i.from] = i.to for i in data.query.redirects
+						for id, n of $scope.map.nodes when (rtitle = nameRedirects[n.title])?
+							for _, page of data.query.pages when page.title is rtitle
+								angular.extend n, page
+								break
 					# Fetch more nodes
 					fetchNodes(nodes, ids) if ids?.length
 			fetchNodes(nodes, (key for key of nodes))
