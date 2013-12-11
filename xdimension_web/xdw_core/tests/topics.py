@@ -21,23 +21,23 @@ class TopicTestCase(TestCase, MapTestCaseMixIn):
 
     def test_topic_create(self):
         mp_1 = self.create_maps(1)[0]
-        self.assertEqual(Topic.objects.count(), 18)
+        self.assertEqual(Topic.objects.count(), 19)
         mp_2 = self.create_maps(1)[0]
-        self.assertEqual(Topic.objects.count(), 18)
+        self.assertEqual(Topic.objects.count(), 19)
         delete_map(mp_1)
-        self.assertEqual(Topic.objects.count(), 18)
+        self.assertEqual(Topic.objects.count(), 19)
         delete_map(mp_2)
         self.assertEqual(Topic.objects.count(), 0)
 
     def test_topic_create_2(self):
         mp_1 = self.create_maps(1)[0]
-        self.assertEqual(Topic.objects.count(), 18)
+        self.assertEqual(Topic.objects.count(), 19)
         mp_1.status = Map.STATUS_DELETED
         save_map(mp_1)
         self.assertEqual(Topic.objects.count(), 0)
 
     def test_list(self):
-        self.create_maps(10)
+        self.create_maps(10, title='titolo')
         resp = self.client.get('/api/topic')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
@@ -47,7 +47,7 @@ class TopicTestCase(TestCase, MapTestCaseMixIn):
             data['topic'],
             [{u'topic': u'Arabian leopard'},
              {u'topic': u'Felis'},
-             {u'topic': u'Indochinese leopard'},
+             {u'topic': u'titolo'},
              {u'topic': u'Lycaon pictus'},
              {u'topic': u'Leopard'},
              {u'topic': u'Asiatic lion'},

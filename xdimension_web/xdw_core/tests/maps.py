@@ -177,7 +177,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
 
     def test_list_search_2_terms(self):
         mp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        topics = [u'African leopard', u'Arabian leopard', u'Asiatic lion', u'Big cat', u'Cheetah', u'Felis', u'Indian leopard', u'Indochinese leopard', u'Javan leopard', u'Leopard', u'Lion', u'Lycaon pictus', u'North China leopard', u'Northwest African cheetah', u'Southwest African lion', u'Sri Lankan leopard', u'Striped hyena', u'Transvaal lion']
+        topics = [u'African leopard', u'Arabian leopard', u'Asiatic lion', u'Big cat', u'Cheetah', u'Felis', u'Indian leopard', u'Indochinese leopard', u'Javan leopard', u'Leopard', u'Lion', u'Lycaon pictus', u'North China leopard', u'Northwest African cheetah', u'Southwest African lion', u'Sri Lankan leopard', u'Striped hyena', u'titolo', u'Transvaal lion']
         # Topics need to be saved in db
         self.assertEqual(
             topics,

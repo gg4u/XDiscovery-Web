@@ -25,6 +25,8 @@ def save_map(obj):
     # Previous published topics
     if obj.pk is not None:
         topics_prev = {o.topic: o for o in obj.maptopic_set.all()}
+        title_prev = obj.__class__.objects.get(pk=obj.pk).title
+        topics_prev[title_prev] = {'relevance': 1}
     else:
         topics_prev = {}
 
@@ -34,6 +36,7 @@ def save_map(obj):
     if obj.status == Map.STATUS_OK:
         topics_next = {pr['title'].strip(): {'relevance': pr['weight']}
                        for pr in data['pagerank']}
+        topics_next[obj.title] = {'relevance': 1}
     else:
         topics_next = {}
 

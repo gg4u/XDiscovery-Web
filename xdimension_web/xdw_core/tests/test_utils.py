@@ -26,7 +26,8 @@ class MapTestCaseMixIn(object):
         for i in range(num):
             mp = Map(**defaults)
             mp.popularity = i
-            mp.title = str(i)
+            if 'title' not in defaults:
+                mp.title = str(i)
             mp.date_created = start - datetime.timedelta(i)
             save_map(mp)
             maps.append(mp)
