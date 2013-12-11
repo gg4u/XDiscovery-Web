@@ -99,6 +99,12 @@ angular.module('xdiscoveryApp')
 					.attr("height", thumbnail.height)
 				img.link thumbnail.source
 				ingId = "nodeImg-#{text.toLowerCase().replace(/\s+/g, '-')}"
+				ui.append("circle")
+					.attr('class', 'map-node-background')
+					.attr("fill", "#ffffff")
+					.attr("r", circleRadius)
+					.attr("cx", nodeSize / 2)
+					.attr("cy", nodeSize / 2)
 				ui.append("defs").append("pattern")
 					.attr("id", ingId)
 					.attr("patternUnits", "userSpaceOnUse")
