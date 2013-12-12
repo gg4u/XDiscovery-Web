@@ -192,7 +192,7 @@ angular.module('xdiscoveryApp')
 			if tappedNodes.length
 				$scope.map.visibleLinks = (g for g in map.graph when g.source in tappedNodes)
 			else
-				$scope.map.visibleLinks = $scope.map.graph[..1]
+				$scope.map.visibleLinks = $scope.map.graph[..0]
 			# Calculate maximum distance for the graph
 			$scope.vivagraph.maxDistance = 0
 			$scope.vivagraph.maxDistance = f for g in $scope.map.graph when (f = parseFloat(g.distance)) > $scope.vivagraph.maxDistance
