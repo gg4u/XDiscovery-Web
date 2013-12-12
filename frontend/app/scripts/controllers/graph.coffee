@@ -216,20 +216,16 @@ angular.module('xdiscoveryApp')
 					pithumbsize: 100
 					exlimit: batchIds.length
 					exintro: 1
+					redirects: ''
 				}, (data) ->
 					# Assign node decorations
 					for id, n of nodes when data?.query?.pages?[id]?
 						angular.extend n, data.query.pages[id]
 						n.extract = $sce.trustAsHtml(n.extract) if n.extract?
 						n.missing = yes if n.missing?
-					# Resolve redirects
-					if data?.query?.redirects?.length
-						nameRedirects = {}
-						nameRedirects[i.from] = i.to for i in data.query.redirects
-						for id, n of $scope.map.nodes when (rtitle = nameRedirects[n.title])?
-							for _, page of data.query.pages when page.title is rtitle
-								angular.extend n, page
-								break
+						# XXX remove this logging
+						if n.missing
+							console.log('missing ' + id)
 					# Fetch more nodes
 					fetchNodes(nodes, ids) if ids?.length
 			fetchNodes(nodes, (key for key of nodes))
