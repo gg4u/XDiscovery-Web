@@ -66,7 +66,7 @@ angular.module('xdiscoveryApp')
 						.bind('click', -> $scope.$apply ->
 							klass = angular.element(node.ui).attr('class').replace(' expanded', '')
 							node.ui.attr('class', klass + ' expanded')
-							for link in $scope.map.graph when link.source is node.id and $scope.map.visibleLinks.indexOf(link) == -1
+							for link in $scope.map.graph when (link.source is node.id or link.target is node.id) and $scope.map.visibleLinks.indexOf(link) == -1
 								link.class = "revealed"
 								$scope.map.visibleLinks.push(link))
 						.bind('dblclick', -> $scope.$apply ->
