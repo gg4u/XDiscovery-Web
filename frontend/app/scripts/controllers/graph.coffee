@@ -51,9 +51,8 @@ angular.module('xdiscoveryApp')
 						isRevealed or= l.class? and l.target is node.id
 						hasDescendants or= l.source is node.id
 						break if isRevealed and hasDescendants
-					for l in $scope.map.visibleLinks
-						isExpanded or= l.source is node.id
-						break if isExpanded
+					# XXX TODO: tapped nodes that already have all their descendants
+					#  visible should not be set as hasDescendants
 					ui.attr('class', "map-node #{isRevealed&&'revealed'||'initial'}#{hasDescendants&&' has-descendants'||''}#{isExpanded&&' expanded'||''}")
 					# Adding hover and click handlers for graph node ui
 					angular.element(ui).hammer()
@@ -188,11 +187,12 @@ angular.module('xdiscoveryApp')
 		xDiscoveryApi.maps.get {id: $routeParams.id}, (map) ->
 			$scope.map = map
 			# Add visible links
-			tappedNodes = (parseInt(id) for id, n of map.nodes when n.tapped)
-			if tappedNodes.length
-				$scope.map.visibleLinks = (g for g in map.graph when g.source in tappedNodes)
+			tappedNodeIds = (parseInt(id) for id, n of map.nodes when n.tapped)
+			if tappedNodeIds.length
+				$scope.map.visibleLinks = (g for g in map.graph when g.source in tappedNodeIds and g.target in tappedNodeIds)
 			else
 				$scope.map.visibleLinks = $scope.map.graph[..0]
+			$scope.map.tappedNodeIds = tappedNodeIds
 			# Calculate maximum distance for the graph
 			$scope.vivagraph.maxDistance = 0
 			$scope.vivagraph.maxDistance = f for g in $scope.map.graph when (f = parseFloat(g.distance)) > $scope.vivagraph.maxDistance
