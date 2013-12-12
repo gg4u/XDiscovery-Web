@@ -11,6 +11,10 @@
 // Site
 //
 
+.xd-site-header .fixed {
+	z-index: 200;
+}
+
 .xd-site-footer {
 	position: relative;
 	background: $footer-bg;
@@ -322,6 +326,7 @@ $graph-page-header-height: 52px;
 	padding: ($graph-page-header-height + 10) 10px ($graph-page-header-height - 20px);
 	position: absolute;
 	top: 0; right: 0; height: 100%;
+	z-index: 1;
 
 	> .content {
 		@include border-radius($global-radius);

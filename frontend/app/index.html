@@ -18,9 +18,9 @@
 	<link rel="stylesheet" href="/bower_components/ngprogress/ngProgress.css">
 	<link rel="stylesheet" href="/styles/main.css">
 	<!-- endbuild -->
-        <!-- @if ENV='dist' -->
+				<!-- @if ENV='dist' -->
 	{% block extrahead %}{% endblock %}
-        <!-- @endif -->
+				<!-- @endif -->
 </head>
 	<body ng-controller="siteCtrl">
 		<!--[if lt IE 7]>
@@ -33,13 +33,20 @@
 		<![endif]-->
 
 		<!-- @if ENV='dist' -->
-                {% include "xdw_web/navbar.html" %}
-                <!-- @endif -->
+		{% include "xdw_web/navbar.html" %}
+		<!-- @endif -->
+
 		<!-- @if ENV!='dist' -->
-		<header role="banner">
+		<header role="banner" class="xd-site-header">
 
 			<div class="fixed">
-				<nav class="top-bar" role="navigation">
+				<nav class="top-bar" role="navigation" ng-class="{ 'expanded':!mainMenu.collapsed }">
+					<ul class="title-area show-for-small">
+						<li class="name">
+							<h1><a href="/">xDiscovery</a></h1>
+						</li>
+						<li class="toggle-topbar menu-icon"><a href="" ng-click="mainMenu.collapsed = !mainMenu.collapsed"><span></span></a></li>
+					</ul>
 					<section class="top-bar-section">
 						<ul class="right">
 							<li ng-class="{'active': mainMenu.isCurrent('/en/blog')}"><a href="/en/blog">home</a></li>
@@ -54,14 +61,14 @@
 
 		<section id="page" role="main" ng-class="pageClass">
 			<div ng-view ng-cloak>
-		            <!-- @if ENV='dist' -->
-                            {% comment %}This condition splits the whole page
-                            in two parts, so that when angular loads it only the
-                            `content` block is rendered{% endcomment %}
-                            {% endif %}
-		            {% block content %}{% endblock %}
-                            {% if not request.GET.angular %}
-                            <!-- @endif -->
+				<!-- @if ENV='dist' -->
+				{% comment %}This condition splits the whole page
+				in two parts, so that when angular loads it only the
+				`content` block is rendered{% endcomment %}
+				{% endif %}
+				{% block content %}{% endblock %}
+				{% if not request.GET.angular %}
+				<!-- @endif -->
 			</div>
 		</section>
 
@@ -123,6 +130,7 @@
 		<script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.0.0/masonry.pkgd.js"></script>
 
 		<!-- build:js /scripts/plugins.js -->
+		<script src="/bower_components/hammerjs/dist/jquery.hammer.js"></script>
 		<script src="/bower_components/select2/select2.js"></script>
 		<script src="/bower_components/vivagraph/dist/vivagraph.js"></script>
 		<!-- endbuild -->

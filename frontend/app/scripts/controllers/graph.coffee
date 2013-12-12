@@ -56,20 +56,20 @@ angular.module('xdiscoveryApp')
 						break if isExpanded
 					ui.attr('class', "map-node #{isRevealed&&'revealed'||'initial'}#{hasDescendants&&' has-descendants'||''}#{isExpanded&&' expanded'||''}")
 					# Adding hover and click handlers for graph node ui
-					angular.element(ui)
-						.bind('mouseenter', -> $scope.$apply ->
+					angular.element(ui).hammer()
+						.on('mouseenter', -> $scope.$apply ->
 							$scope.vivagraph.pauseRender = yes
 							$scope.vivagraph.highlightNode = node)
-						.bind('mouseleave', -> $scope.$apply ->
+						.on('mouseleave', -> $scope.$apply ->
 							$scope.vivagraph.pauseRender = no
 							$scope.vivagraph.highlightNode = null)
-						.bind('click', -> $scope.$apply ->
+						.on('click tap', -> $scope.$apply ->
 							klass = angular.element(node.ui).attr('class').replace(' expanded', '')
 							node.ui.attr('class', klass + ' expanded')
-							for link in $scope.map.graph when link.source is node.id and $scope.map.visibleLinks.indexOf(link) == -1
+							for link in $scope.map.graph when (link.source is node.id or link.target is node.id) and $scope.map.visibleLinks.indexOf(link) == -1
 								link.class = "revealed"
 								$scope.map.visibleLinks.push(link))
-						.bind('dblclick', -> $scope.$apply ->
+						.on('dblclick doubletap', -> $scope.$apply ->
 							$scope.vivagraph.selected = {
 								node: node
 								info: $scope.map.nodes[node.id]})
