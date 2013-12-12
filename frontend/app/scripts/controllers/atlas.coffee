@@ -29,8 +29,8 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 		tags: yes
 		tokenSeparators: ["\t"]
 		multiple: yes
-		placeholder: "Search for a topic",
-		minimumInputLength: 2,
+		placeholder: "Search for a topic"
+		minimumInputLength: 2
 		ajax:
 			url: config.apiUrl + '/topic'
 			dataType: "json"
@@ -53,6 +53,10 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 	# Bind select2 val to search query
 	filterEl.on 'change', (e) -> $scope.$apply ->
 		$scope.search.query = e.val
-	# Preventing tab to change focus so it can be used to add a token
+
 	filterEl.select2('container').find('input').bind 'keydown', (e) ->
+		# Preventing tab to change focus so it can be used to add a token
 		do e.preventDefault if e.keyCode is 9
+		# Perform search on return
+		if e.keyCode is 13 and filterEl.select2('container').hasClass('select2-container-active')
+			$scope.$apply -> $scope.search.search()
