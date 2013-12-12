@@ -69,13 +69,13 @@ class Map(models.Model):
         net = data.get('net')
         try:
             self.net = int(net)
-        except ValueError:
+        except (ValueError, TypeError):
             logger.warning('bad value for \"net\" field: {}'.format(net))
         # XXX FIXME here we should be walking the path from first to last...
         self.node_titles = [n['title'] for n in data['pagerank']\
                                     [:Map.MAX_NODE_TITLES]]
         self.last_node_title = data['pagerank'][-1]['title']
-        self.node_count = len(data['graph'])
+        self.node_count = len(data.get('graph', data.get('atlas')))
         return data
 
 
