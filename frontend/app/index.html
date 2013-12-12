@@ -39,7 +39,13 @@
 		<header role="banner">
 
 			<div class="fixed">
-				<nav class="top-bar" role="navigation">
+				<nav class="top-bar" role="navigation" ng-class="{ 'expanded':!mainMenu.collapsed }">
+					<ul class="title-area show-for-small">
+						<li class="name">
+							<h1><a href="/">xDiscovery</a></h1>
+						</li>
+						<li class="toggle-topbar menu-icon"><a href="" ng-click="mainMenu.collapsed = !mainMenu.collapsed"><span></span></a></li>
+					</ul>
 					<section class="top-bar-section">
 						<ul class="right">
 							<li ng-class="{'active': mainMenu.isCurrent('/en/blog')}"><a href="/en/blog">home</a></li>

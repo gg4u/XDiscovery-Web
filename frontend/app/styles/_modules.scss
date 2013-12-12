@@ -11,6 +11,10 @@
 // Site
 //
 
+.xd-site-header .fixed {
+	z-index: 200;
+}
+
 .xd-site-footer {
 	position: relative;
 	background: $footer-bg;
