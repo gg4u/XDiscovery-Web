@@ -1,8 +1,13 @@
 {% load menu_tags %}
-		<header role="banner">
-
+		<header role="banner" class="xd-site-header">
 			<div class="fixed">
-				<nav class="top-bar" role="navigation">
+				<nav class="top-bar" role="navigation" ng-class="{ 'expanded':!mainMenu.collapsed }">
+					<ul class="title-area show-for-small">
+						<li class="name">
+							<h1><a href="/">xDiscovery</a></h1>
+						</li>
+						<li class="toggle-topbar menu-icon"><a href="" ng-click="mainMenu.collapsed = !mainMenu.collapsed"><span></span></a></li>
+					</ul>
 					<section class="top-bar-section">
 						<ul class="right">
 				                    {% show_menu 0 2 0 3 "xdw_web/menu.html" %}
@@ -10,5 +15,4 @@
 					</section>
 				</nav>
 			</div>
-
 		</header>
