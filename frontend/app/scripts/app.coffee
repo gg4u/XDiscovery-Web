@@ -1,5 +1,5 @@
 "use strict"
-app = angular.module("xdiscoveryApp", ['ngRoute', 'ngAnimate', 'ngResource', 'angular-inview', 'ngProgress', 'angular-carousel', 'ngTouch'])
+app = angular.module("xdiscoveryApp", ['ngRoute', 'ngAnimate', 'ngResource', 'angular-inview', 'ngProgress', 'angular-carousel'])
 
 app.config ($routeProvider, $locationProvider, config) ->
 	# Setup HTML5 push state
