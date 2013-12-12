@@ -25,15 +25,15 @@
 			<script src="{{ STATIC_URL }}frontend/bower_components/json3/lib/json3.min.js"></script>
 		<![endif]-->
 
-                {% include "xdw_web/navbar.html" %}
+		{% include "xdw_web/navbar.html" %}
 		<section id="page" role="main" ng-class="pageClass">
 			<div ng-view="" ng-cloak="">
-                            {% comment %}This condition splits the whole page
-                            in two parts, so that when angular loads it only the
-                            `content` block is rendered{% endcomment %}
-                            {% endif %}
-		            {% block content %}{% endblock %}
-                            {% if not request.GET.angular %}
+				{% comment %}This condition splits the whole page
+				in two parts, so that when angular loads it only the
+				`content` block is rendered{% endcomment %}
+				{% endif %}
+				{% block content %}{% endblock %}
+				{% if not request.GET.angular %}
 			</div>
 		</section>
 
