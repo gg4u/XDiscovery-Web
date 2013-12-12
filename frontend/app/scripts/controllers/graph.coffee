@@ -199,7 +199,7 @@ angular.module('xdiscoveryApp')
 
 
 		$scope.$watchCollection 'map.graph', (graph) ->
-			return unless graph?.length
+			return unless (graph?.length and $scope.map)
 			# Build list of nodes from the arc list if they are not already defined
 			nodes = $scope.map.nodes ?= {}
 			for arc in graph
