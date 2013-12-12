@@ -12,8 +12,9 @@ from .opengraph import get_opengraph_context
 
 class RobotsView(View):
     def get(self, request):
+        # XXX disallow all crawlers
         return HttpResponse('User-agent: *\n'
-                            'Allow: *\n'
+                            'Disallow: /\n'
                             'Disallow: /admin\n\n'
                             'Sitemap: http://{site}{sitemap_url}\n'\
                                 .format(site=Site.objects.get_current(),
