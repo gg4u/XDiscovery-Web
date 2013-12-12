@@ -47,7 +47,6 @@ def build(dest='dist'):
     # Remove useless files
     if dest == 'test':
         for d in ['bootstrap-sass/examples',
-                  'foundation/docs',
                   'json3/vendor']:
             shutil.rmtree(os.path.join('frontend/dist/bower_components', d))
     integrate_assets()
