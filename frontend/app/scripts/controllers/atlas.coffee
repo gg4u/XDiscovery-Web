@@ -45,7 +45,8 @@ app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config
 				text: term
 			} unless data?.length
 		initSelection: (elem, callback) ->
-			callback ({id: tag, text:tag} for tag in elem.val().split(','))
+			tags = if angular.isArray($scope.search.query) then $scope.search.query else [$scope.search.query]
+			callback ({id: tag, text:tag} for tag in tags)
 
 	if $scope.search.query?
 		filterEl.select2 'val', $scope.search.query
