@@ -12,7 +12,7 @@
 
 			<div class="row">
 				<div class="small-12 large-10 columns xd-atlas-col-search-input">
-					<input class="xd-atlas-search-input" type="text" select2 ng-model="search.query" style="width:100%">
+					<input class="xd-atlas-search-input" type="text" tag-list ng-model="search.query" on-submit="search.search()" style="width:100%">
 				</div>
 				<div class="large-2 columns hide-for-small xd-atlas-col-search-button">
 					<button type="button" class="postfix radius button search-button xd-atlas-search-button" ng-click="search.search()">Search</button>
