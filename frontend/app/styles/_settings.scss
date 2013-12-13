@@ -1,3 +1,5 @@
+$ionicons-font-path: "../bower_components/ionicons/fonts";
+
 //
 // Foundation Variables
 //
@@ -89,9 +91,12 @@ $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 
 // Media Queries
 
-// $small-screen: 768px;
-// $medium-screen: 1280px;
-// $large-screen: 1440px;
+// Media Query Ranges
+// $small-range: (0em, 40em);
+// $medium-range: (40.063em, 64em);
+// $large-range: (64.063em, 90em);
+// $xlarge-range: (90.063em, 120em);
+// $xxlarge-range: (120.063em);
 
 // $screen: "only screen";
 // $small: "only screen and (min-width: #{$small-screen})";
@@ -1275,7 +1280,7 @@ $topbar-menu-icon-color: $body-font-color;
 // Transitions and breakpoint styles
 
 // $topbar-transition-speed: 300ms;
-$topbar-breakpoint: 768px; // Change to 9999px for always mobile layout
+$topbar-breakpoint: 640px; // Change to 9999px for always mobile layout
 $topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
 
 // Divider Styles

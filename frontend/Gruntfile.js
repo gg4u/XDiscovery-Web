@@ -277,7 +277,8 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             'images/{,*/}*.{gif,webp,svg}',
-            'styles/fonts/*'
+            'styles/fonts/*',
+            'bower_components/ionicons/fonts/*'
           ]
         }, {
           expand: true,
@@ -314,7 +315,7 @@ module.exports = function (grunt) {
 	        cwd: '<%= yeoman.app %>',
                 src: 'scripts/directives/*.js',
                 dest: '<%= yeoman.dist %>'
-	    },	
+	    },
             {
 	        expand: true,
 	        cwd: '.tmp',

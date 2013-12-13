@@ -226,14 +226,12 @@
 	width: 100%;
 }
 
-@media #{$small} {
-	.xd-atlas-col-search-input {
-		padding-right: 0;
-	}
+.xd-atlas-col-search-input {
+	padding-right: 0;
+}
 
-	.xd-atlas-col-search-button {
-		padding-left: 0;
-	}
+.xd-atlas-col-search-button {
+	padding-left: 0;
 }
 
 .xd-atlas-emotional-bg {
