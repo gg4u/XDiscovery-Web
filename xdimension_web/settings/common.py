@@ -302,7 +302,10 @@ FB_APP_ID = {
 
 FB_SITE_NAME = 'xDiscovery'
 
+SHARING_PROTO = 'http'
+
 
 # CKeditor
 
 TEXT_HTML_SANITIZE = False
+
