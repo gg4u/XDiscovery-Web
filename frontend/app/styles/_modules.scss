@@ -381,6 +381,21 @@ $graph-page-header-height: 52px;
 	}
 }
 
+.xd-graph-tooltip.tooltip {
+	width: 300px;
+
+	.extract {
+		overflow: hidden;
+		max-height: 100px;
+		margin-bottom: 0.5em;
+	}
+
+	.more-message {
+		color: $gray;
+		margin-bottom: 0;
+	}
+}
+
 //
 // Custom pages
 //

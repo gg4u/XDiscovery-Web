@@ -9,7 +9,9 @@ angular.module('xdiscoveryApp')
 			maxDistance: 0
 			pauseRender: no
 			graph: null
-			highlightNode: null
+			highlighted:
+				node: null
+				info: null
 			selected:
 				node: null
 				info: null
@@ -58,10 +60,14 @@ angular.module('xdiscoveryApp')
 					angular.element(ui).hammer()
 						.on('mouseenter', -> $scope.$apply ->
 							$scope.vivagraph.pauseRender = yes
-							$scope.vivagraph.highlightNode = node)
+							$scope.vivagraph.highlighted =
+								node: node
+								boundingRect: node.ui.getBoundingClientRect()
+								info: $scope.map.nodes[node.id]
+							console.log $scope.vivagraph.highlighted.boundingRect)
 						.on('mouseleave', -> $scope.$apply ->
 							$scope.vivagraph.pauseRender = no
-							$scope.vivagraph.highlightNode = null)
+							$scope.vivagraph.highlighted = null)
 						.on('click tap', -> $scope.$apply ->
 							klass = angular.element(node.ui).attr('class').replace(' expanded', '')
 							node.ui.attr('class', klass + ' expanded')
