@@ -32,8 +32,8 @@ urlpatterns += patterns(
     url(r'^upload/', 'xdimension_web.xdw_core.views.upload.upload_multi',
         name='jfu_upload'),
     # REST API
-    url(r'^api/', include('xdimension_web.xdw_core.urls',
-                          namespace='xdw_core')),
+    url(r'^api-atlas/', include('xdimension_web.xdw_core.urls',
+                                namespace='xdw_core')),
     )
 
 if settings.DEBUG:
