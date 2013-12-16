@@ -135,13 +135,14 @@ variables in angular vies, use this supernice syntax: `{dj{ variable_name }dj}`.
 Provision heroku environment:
 
     heroku apps:create xdiscovery-web-staging -s cedar
-    heroku addons:add heroku-postgresql:dev --version=9.4 --app xdiscovery-web-staging
+    heroku addons:add heroku-postgresql:dev --version=9.3 --app xdiscovery-web-staging
     heroku addons:add memcachier:dev -a xdiscovery-web-staging
     heroku addons:add sendgrid:starter -a xdiscovery-web-staging
     heroku addons:add logentries:tryit -a xdiscovery-web-staging
-    # no ssl endpoint needed as we leverage heroku piggyback ssl
-
-
+    # (optional ssl protection)
+    heroku addons:add ssl -a xdiscovery-web-staging
+    heroku certs:add 28056cc8200751.crt gd_bundle-g2.crt host.key -a xdiscovery-web-staging
+    
 Define app-specific environment variables:
 
 	heroku config:add SECRET_KEY=xxxx ADMIN_URL_HASH=secret -a xdiscovery-web_staging
