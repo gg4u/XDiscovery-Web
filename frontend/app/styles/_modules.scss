@@ -66,12 +66,10 @@
 	.back-button {
 		min-width: 32px;
 		min-height: 32px;
-		display: none;
+		margin: 3px 0;
+		display: block;
+		float: left;
 		background: url(../images/header-back-arrow.svg) no-repeat center center;
-
-		@media #{$small} {
-			display: inline-block;
-		}
 	}
 
 	.info-button,
@@ -255,12 +253,16 @@ $graph-page-header-height: 52px;
 	z-index: 1;
 
 	.title {
-		margin: 0 100px 0 0;
-		display: inline-block;
+		margin: 0 40px 0 0;
+		display: block;
 		font-size: 2em;
 		font-weight: 300;
 		position: relative;
 		top: -4px;
+
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 
 		.sep {
 			font-size: 0.5em;
@@ -269,7 +271,7 @@ $graph-page-header-height: 52px;
 }
 
 .xd-graph-tools {
-	margin: 8px;
+	margin: 13px 8px;
 	position: absolute; right: 0; top: 0;
 }
 
