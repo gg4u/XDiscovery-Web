@@ -250,7 +250,7 @@ $graph-page-header-height: 52px;
 	padding: 8px 8px 0;
 	position: relative;
 	vertical-align: middle;
-	z-index: 1;
+	z-index: 100;
 
 	.title {
 		margin: 0 40px 0 0;
@@ -356,12 +356,14 @@ $graph-page-header-height: 52px;
 	position: absolute;
 	width: 100%;
 	height: 100%;
+	top: 0;
+	z-index: 10;
 
 	.panel {
 		@include border-radius($global-radius);
 		background: $body-bg;
 		border-color: $gray-light;
-		margin: $column-gutter 0;
+		margin: ($topbar-height + $graph-page-header-height + $column-gutter) 0 $column-gutter;
 		text-align: center;
 		position: relative;
 	}
