@@ -403,6 +403,27 @@ $graph-page-header-height: 52px;
 	}
 }
 
+.app-banner {
+	background: #0067b4;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	color: white;
+	height: 50px;
+	line-height: 50px;
+	padding: 0 4em 0 1em;
+
+	.viva-graph-detail-pane + & {
+		width: 60%;
+	}
+
+	display: none;
+	@media #{$large} {
+		display: block;
+	}
+}
+
 //
 // Custom pages
 //
