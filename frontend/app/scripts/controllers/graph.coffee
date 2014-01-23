@@ -2,7 +2,8 @@
 
 angular.module('xdiscoveryApp')
 	.controller 'GraphCtrl', ($scope, xDiscoveryApi, wikipediaApi, $routeParams, $sce, $location) ->
-		$scope.pageClass = ['graph']
+		$scope.site.pageClasses = ['graph', 'fill']
+		$scope.site.hideFooter = yes
 
 		# Contains all the properties for the vivaGraph directive
 		$scope.vivagraph =
@@ -63,8 +64,7 @@ angular.module('xdiscoveryApp')
 							$scope.vivagraph.highlighted =
 								node: node
 								boundingRect: node.ui.getBoundingClientRect()
-								info: $scope.map.nodes[node.id]
-							console.log $scope.vivagraph.highlighted.boundingRect)
+								info: $scope.map.nodes[node.id])
 						.on('mouseleave', -> $scope.$apply ->
 							$scope.vivagraph.pauseRender = no
 							$scope.vivagraph.highlighted = null)
@@ -229,9 +229,6 @@ angular.module('xdiscoveryApp')
 						angular.extend n, data.query.pages[id]
 						n.extract = $sce.trustAsHtml(n.extract) if n.extract?
 						n.missing = yes if n.missing?
-						# XXX remove this logging
-						if n.missing
-							console.log('missing ' + id)
 					# Fetch more nodes
 					fetchNodes(nodes, ids) if ids?.length
 			fetchNodes(nodes, (key for key of nodes))

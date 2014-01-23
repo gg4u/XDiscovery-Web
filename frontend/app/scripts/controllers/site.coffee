@@ -1,6 +1,9 @@
 app = angular.module('xdiscoveryApp')
 
 app.controller 'siteCtrl', ($scope, $rootScope, $location, $window, config, ngProgress) ->
+	# Site configuration
+	$scope.site = {}
+
 	# Menu items setup
 	graphUrlRe = /.*\/graph\/.*/
 	atlasUrlRe = /.*\/atlas/

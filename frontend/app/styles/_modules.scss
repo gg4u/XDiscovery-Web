@@ -280,6 +280,9 @@ $graph-page-header-height: 52px;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+	top: 0;
+	left: 0;
+	padding-top: $topbar-height + $graph-page-header-height;
 
 	.map-node {
 		cursor: pointer;
@@ -323,7 +326,7 @@ $graph-page-header-height: 52px;
 }
 
 .viva-graph-detail-pane {
-	padding: ($graph-page-header-height + 10) 10px ($graph-page-header-height - 20px);
+	padding: ($topbar-height + $graph-page-header-height + 10) 10px ($graph-page-header-height - $topbar-height - 20px);
 	position: absolute;
 	top: 0; right: 0; height: 100%;
 	z-index: 1;
@@ -339,7 +342,7 @@ $graph-page-header-height: 52px;
 	}
 
 	@media #{$small} {
-		padding: $graph-page-header-height 0 0;
+		padding: ($topbar-height + $graph-page-header-height) 0 0;
 		width: 40%;
 
 		> .content {
