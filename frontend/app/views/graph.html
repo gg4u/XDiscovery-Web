@@ -33,10 +33,9 @@
 </div>
 
 <section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node&&!vivagraph.selected.info.missing">
+	<a href="" ng-click="vivagraph.selected = null" class="close-button"></a>
 	<div class="content row">
 		<div class="small-12 columns">
-
-			<a href="" ng-click="vivagraph.selected = null" class="close-button"></a>
 
 			<h2 ng-bind="vivagraph.selected.info.title">&ndash;</h2>
 
