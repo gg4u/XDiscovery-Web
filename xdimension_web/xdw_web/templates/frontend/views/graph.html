@@ -27,10 +27,9 @@
 </div>
 
 <section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node&&!vivagraph.selected.info.missing">
+	<a href="" ng-click="vivagraph.selected = null" class="close-button"></a>
 	<div class="content row">
 		<div class="small-12 columns">
-
-			<a href="" ng-click="vivagraph.selected = null" class="close-button"></a>
 
 			<h2 ng-bind="vivagraph.selected.info.title">&ndash;</h2>
 
@@ -51,6 +50,14 @@
 
 		</div>
 	</div>
+</section>
+
+<section class="app-banner" ng-hide="site.hideBanner">
+	<a href="" class="close-button" ng-click="site.hideBanner = true"></a>
+	<a href="" style="color:white" target="_blank">The power of knowledge is portable.</a>
+	<a href="" class="right" target="_blank">
+		<img src="{{ STATIC_URL }}frontend/images/button-app-store.png" width="130" alt="Available on the App Store">
+	</a>
 </section>
 
 <section class="graph-share-pane" ng-show="shouldShowSharePane" ng-click="shouldShowSharePane = false">
