@@ -10,7 +10,7 @@
 	<title></title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<meta name="apple-itunes-app" content="app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL">
 
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400' rel='stylesheet' type='text/css'>
 	<!-- build:css({.tmp,app}) /styles/main.css -->
@@ -59,7 +59,7 @@
 		</header>
 		<!-- @endif -->
 
-		<section id="page" role="main" ng-class="pageClass">
+		<section id="page" role="main" ng-class="site.pageClasses">
 			<div ng-view ng-cloak>
 				<!-- @if ENV='dist' -->
 				{% comment %}This condition splits the whole page
@@ -72,7 +72,7 @@
 			</div>
 		</section>
 
-		<footer class="xd-site-footer" ng-cloak>
+		<footer class="xd-site-footer" ng-cloak ng-hide="site.hideFooter">
 			<div class="row">
 				<div class="small-12 large-3 columns">
 					<h4>Company</h4>
