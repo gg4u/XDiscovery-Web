@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('xdiscoveryApp')
-	.controller 'GraphCtrl', ($scope, xDiscoveryApi, wikipediaApi, $routeParams, $sce, $location) ->
+	.controller 'GraphCtrl', ($scope, xDiscoveryApi, wikipediaApi, $routeParams, $sce, $location, $timeout) ->
 		$scope.site.pageClasses = ['graph', 'fill']
 		$scope.site.hideFooter = yes
 
@@ -9,6 +9,7 @@ angular.module('xdiscoveryApp')
 		$scope.vivagraph =
 			maxDistance: 0
 			pauseRender: no
+			inhibitPauseRender: no
 			graph: null
 			highlighted:
 				node: null
@@ -60,21 +61,29 @@ angular.module('xdiscoveryApp')
 					# Adding hover and click handlers for graph node ui
 					angular.element(ui).hammer()
 						.on('mouseenter', -> $scope.$apply ->
-							$scope.vivagraph.pauseRender = yes
+							# Pause rendering on mouse enter on a node and set highlighted info
+							$scope.vivagraph.pauseRender = not $scope.vivagraph.inhibitPauseRender
 							$scope.vivagraph.highlighted =
 								node: node
 								boundingRect: node.ui.getBoundingClientRect()
 								info: $scope.map.nodes[node.id])
 						.on('mouseleave', -> $scope.$apply ->
+							# Resume graph rendering on mouse leave and remove highlighted node
 							$scope.vivagraph.pauseRender = no
 							$scope.vivagraph.highlighted = null)
 						.on('click tap', -> $scope.$apply ->
+							# Expand node
 							klass = angular.element(node.ui).attr('class').replace(' expanded', '')
 							node.ui.attr('class', klass + ' expanded')
 							for link in $scope.map.graph when (link.source is node.id or link.target is node.id) and $scope.map.visibleLinks.indexOf(link) == -1
 								link.class = "revealed"
-								$scope.map.visibleLinks.push(link))
+								$scope.map.visibleLinks.push(link)
+							# Trigger a timer to inhibit render pausing for a while to let the node expand
+							$scope.vivagraph.pauseRender = no
+							$scope.vivagraph.inhibitPauseRender = yes
+							$timeout (-> $scope.vivagraph.inhibitPauseRender = no), 500)
 						.on('dblclick doubletap', -> $scope.$apply ->
+							# Select a node (will show detail view)
 							$scope.vivagraph.selected = {
 								node: node
 								info: $scope.map.nodes[node.id]})
