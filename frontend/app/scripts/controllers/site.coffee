@@ -1,6 +1,6 @@
 app = angular.module('xdiscoveryApp')
 
-app.controller 'siteCtrl', ($scope, $rootScope, $location, $window, config, ngProgress) ->
+app.controller 'siteCtrl', ($scope, $rootScope, $location, $window, config) ->
 	# Site configuration
 	$scope.site = {}
 
@@ -15,15 +15,5 @@ app.controller 'siteCtrl', ($scope, $rootScope, $location, $window, config, ngPr
 	# History back functionality
 	$scope.goBack = -> do $window.history.back
 
-	# Progress bar control
-	ngProgress.color '#12af83'
-
 	$rootScope.$on '$routeChangeStart', ->
-		do ngProgress.start unless ngProgress.status()
 		$scope.mainMenu.collapsed = yes
-
-	$rootScope.$on '$routeChangeSuccess', ->
-		do ngProgress.complete
-
-	$rootScope.$on '$routeChangeError', ->
-		do ngProgress.complete

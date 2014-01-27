@@ -15,11 +15,11 @@
     "masonry": "latest",
     "angular-inview": "~1.0.2",
     "vivagraph": "latest",
-    "ngprogress": "~1.0.4",
     "foundation": "~5.0.2",
     "hammerjs": "~1.0.5",
     "ionicons": "~1.4.0",
-    "jquery-hammerjs": "*"
+    "jquery-hammerjs": "*",
+    "pace": "~0.4.17"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.10",
