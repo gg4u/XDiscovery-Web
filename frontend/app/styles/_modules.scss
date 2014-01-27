@@ -403,6 +403,42 @@ $graph-page-header-height: 52px;
 	}
 }
 
+.xd-graph-excerpt {
+	background: rgba(black, 0.8);
+	bottom: 0;
+	color: white;
+	left: 0;
+	max-height: 20%;
+	overflow: auto;
+	padding: 10px;
+	position: absolute;
+	width: 100%;
+
+	@media #{$small} {
+		&.has-banner {
+			bottom: 50px;
+		}
+
+		&.has-detail-pane {
+			width: 60%;
+		}
+	}
+
+	.selected-marker {
+		border-radius: 10px;
+		border: 2px solid $primary-color;
+		float: left;
+		height: 20px;
+		margin-right: 0.5em;
+		width: 20px;
+	}
+
+	.more-message {
+		color: $gray;
+		margin-bottom: 0;
+	}
+}
+
 .xd-graph-zoom-tool {
 	position: absolute;
 	bottom: 0;
@@ -414,6 +450,10 @@ $graph-page-header-height: 52px;
 	width: 44px;
 	height: 88px;
 
+	&.has-excerpt {
+		bottom: 20%;
+	}
+
 	@media #{$small} {
 		width: 30px;
 		height: 50px;
@@ -424,6 +464,10 @@ $graph-page-header-height: 52px;
 
 		&.has-banner {
 			bottom: 50px;
+		}
+
+		&.has-excerpt.has-banner {
+			bottom: calc(20% + 50px);
 		}
 	}
 
@@ -449,7 +493,7 @@ $graph-page-header-height: 52px;
 	line-height: 50px;
 	padding: 0 4em 0 1em;
 
-	.viva-graph-detail-pane + & {
+	&.has-detail-pane {
 		width: 60%;
 	}
 
