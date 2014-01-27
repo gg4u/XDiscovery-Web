@@ -29,17 +29,23 @@
 
 <div class="xd-graph-tooltip tooltip" ng-style="{ 'display':(vivagraph.highlighted.node&&'block'||'none'), left:(vivagraph.highlighted.boundingRect.left + vivagraph.highlighted.boundingRect.width / 2 - 10)+'px', top:(vivagraph.highlighted.boundingRect.bottom - 10)+'px' }">
 	<div class="nub"></div>
-	<p class="extract" ng-bind-html="vivagraph.highlighted.info.extract"></p>
+	<div class="extract" ng-bind-html="vivagraph.highlighted.info.extract"></div>
 	<p class="more-message">Double-click for more</p>
 </div>
 
-<div class="xd-graph-zoom-tool" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':!!vivagraph.selected.node }">
+<div class="xd-graph-excerpt" ng-if="vivagraph.selected.node" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':vivagraph.selected.showDetails }">
+	<a href="" class="selected-marker" ng-click="vivagraph.selected.showDetails = true"></a>
+	<div class="extract" ng-bind-html="vivagraph.selected.info.extract"></div>
+	<p class="more-message">Source Wikipedia.org</p>
+</div>
+
+<div class="xd-graph-zoom-tool" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':!!vivagraph.selected.showDetails, 'has-excerpt':!!vivagraph.selected.node }">
 	<button class="button secondary xd-grpah-zoom-button in" ng-click="vivagraph.zoomLevel = vivagraph.zoomLevel + 1">+</button>
 	<button class="button secondary xd-grpah-zoom-button out" ng-click="vivagraph.zoomLevel = vivagraph.zoomLevel - 1">&ndash;</button>
 </div>
 
-<section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node">
-	<a href="" ng-click="vivagraph.selected = null" class="close-button"></a>
+<section class="viva-graph-detail-pane" ng-if="vivagraph.selected.showDetails">
+	<a href="" ng-click="vivagraph.selected.showDetails = no" class="close-button"></a>
 	<div class="content row">
 		<div class="small-12 columns">
 
@@ -64,7 +70,7 @@
 	</div>
 </section>
 
-<section class="app-banner" ng-hide="site.hideBanner">
+<section class="app-banner" ng-if="!site.hideBanner" ng-class="{ 'has-detail-pane':vivagraph.selected.showDetails }">
 	<a href="" class="close-button" ng-click="site.hideBanner = true"></a>
 	<a href="" style="color:white" target="_blank">The power of knowledge is portable.</a>
 	<a href="" class="right" target="_blank">
