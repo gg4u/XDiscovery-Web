@@ -47,6 +47,7 @@ angular.module('xdiscoveryApp')
 				.node((node) ->
 					ui = Viva.Graph.svg("g")
 					drawNode(ui)
+					node.ui = ui
 					# Modify class to indicate interactively revealed nodes
 					isRevealed = no
 					isExpanded = no
