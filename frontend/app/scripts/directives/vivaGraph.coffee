@@ -22,6 +22,7 @@ app.directive 'vivaGraph', ->
 		graphics: '&'
 		onCreate: '&'
 		pauseRender: '='
+		zoom: '='
 	link: (scope, element, attrs) ->
 		graph = Viva.Graph.graph()
 		graph.name = scope.name
@@ -44,6 +45,12 @@ app.directive 'vivaGraph', ->
 			renderLinks: yes
 		# Run the graph
 		renderer.run()
+		# Zoom control
+		scope.$watch 'zoom', (zoom, oldZoom) ->
+			if zoom > oldZoom
+				renderer.zoomIn()
+			else
+				renderer.zoomOut()
 		# Pause/resume policy
 		scope.$watch 'pauseRender', (pause, oldPause) ->
 			do renderer[pause&&'pause'||'resume']

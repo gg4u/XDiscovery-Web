@@ -17,6 +17,7 @@ angular.module('xdiscoveryApp')
 			selected:
 				node: null
 				info: null
+			zoomLevel: 0
 
 			initialize: (graph) ->
 				$scope.vivagraph.graph = graph
