@@ -49,7 +49,7 @@ app.directive 'vivaGraph', ->
 		scope.$watch 'zoom', (zoom, oldZoom) ->
 			if zoom > oldZoom
 				renderer.zoomIn()
-			else
+			else if zoom < oldZoom
 				renderer.zoomOut()
 		# Pause/resume policy
 		scope.$watch 'pauseRender', (pause, oldPause) ->
