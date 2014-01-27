@@ -12,7 +12,7 @@
 		</span>
 	</h1>
 
-	<ul class="right inline-list xd-graph-tools">
+	<ul class="right inline-list xd-graph-buttons">
 		<li><a href="" class="share-button" ng-click="shouldShowSharePane = !shouldShowSharePane"></a></li>
 	</ul>
 
@@ -24,7 +24,8 @@
 	layout="vivagraph.layout($graph)"
 	graphics="vivagraph.graphics()"
 	on-create="vivagraph.initialize($graph)"
-	pause-render="vivagraph.pauseRender"></div>
+	pause-render="vivagraph.pauseRender"
+	zoom="vivagraph.zoomLevel"></div>
 
 <div class="xd-graph-tooltip tooltip" ng-style="{ 'display':(vivagraph.highlighted.node&&'block'||'none'), left:(vivagraph.highlighted.boundingRect.left + vivagraph.highlighted.boundingRect.width / 2 - 10)+'px', top:(vivagraph.highlighted.boundingRect.bottom - 10)+'px' }">
 	<div class="nub"></div>
@@ -32,7 +33,12 @@
 	<p class="more-message">Double-click for more</p>
 </div>
 
-<section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node&&!vivagraph.selected.info.missing">
+<div class="xd-graph-zoom-tool" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':!!vivagraph.selected.node }">
+	<button class="button secondary xd-grpah-zoom-button in" ng-click="vivagraph.zoomLevel = vivagraph.zoomLevel + 1">+</button>
+	<button class="button secondary xd-grpah-zoom-button out" ng-click="vivagraph.zoomLevel = vivagraph.zoomLevel - 1">&ndash;</button>
+</div>
+
+<section class="viva-graph-detail-pane" ng-if="vivagraph.selected.node">
 	<a href="" ng-click="vivagraph.selected = null" class="close-button"></a>
 	<div class="content row">
 		<div class="small-12 columns">
@@ -48,7 +54,7 @@
 
 			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
 				<div ng-switch-default>
-					<div ng-bind-html="vivagraph.selected.info.extract"></div>
+					<section ng-repeat="s in vivagraph.selected.info.getContent().sections" ng-bind-html="s.text"></section>
 					<a ng-href="http://en.wikipedia.org/wiki?curid={{vivagraph.selected.node.id}}" target="_blank" style="display:block; text-align:right;">More on Wikipedia &rarr;</a>
 				</div>
 				<div ng-switch-when="external">External</div>

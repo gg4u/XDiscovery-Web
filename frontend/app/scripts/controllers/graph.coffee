@@ -17,6 +17,7 @@ angular.module('xdiscoveryApp')
 			selected:
 				node: null
 				info: null
+			zoomLevel: 0
 
 			initialize: (graph) ->
 				$scope.vivagraph.graph = graph
@@ -47,6 +48,7 @@ angular.module('xdiscoveryApp')
 				.node((node) ->
 					ui = Viva.Graph.svg("g")
 					drawNode(ui)
+					node.ui = ui
 					# Modify class to indicate interactively revealed nodes
 					isRevealed = no
 					isExpanded = no
@@ -220,6 +222,22 @@ angular.module('xdiscoveryApp')
 			for arc in graph
 				nodes[arc.source] ?= {}
 				nodes[arc.target] ?= {}
+			# Fetch description text from wikipedia uppon request of getContent()
+			getContent = ->
+				return if @missing or not @pageid
+				return @$wikipediaContentNode if @$wikipediaContentNode?
+				@$wikipediaContentNode = { sections: [] }
+				wikipediaApi.query {
+					page: @title
+					action: 'mobileview'
+					sections: 'all'
+					prop: 'text'
+				}, (data) =>
+					data = data.mobileview
+					return unless data?.sections?
+					s.text = $sce.trustAsHtml(s.text) for s in data.sections
+					angular.extend @$wikipediaContentNode, data
+				return @$wikipediaContentNode
 			# Fetch thumbnails from wikipedia
 			fetchNodes = (nodes, ids) ->
 				batchIds = ids[..19]
@@ -238,6 +256,7 @@ angular.module('xdiscoveryApp')
 						angular.extend n, data.query.pages[id]
 						n.extract = $sce.trustAsHtml(n.extract) if n.extract?
 						n.missing = yes if n.missing?
+						n.getContent = getContent
 					# Fetch more nodes
 					fetchNodes(nodes, ids) if ids?.length
 			fetchNodes(nodes, (key for key of nodes))
