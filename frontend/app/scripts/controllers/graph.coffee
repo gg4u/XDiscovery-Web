@@ -209,6 +209,13 @@ angular.module('xdiscoveryApp')
 				klass = angular.element(node.ui).attr('class').replace(' selected', '')
 				node.ui.attr('class', klass + ' selected')
 
+		# Logic to show buy app popup
+		if $scope.site.shouldShowBuyAppPopup
+			showBuyAppPopupWatcher = $scope.$watch (-> $scope.map.graph.length is $scope.map.visibleLinks.length), (completed) ->
+				if completed
+					$scope.site.showBuyAppPopup = yes
+					showBuyAppPopupWatcher() # remove watcher
+
 		# Load map from server
 		xDiscoveryApi.maps.get {id: $routeParams.id}, (map) ->
 			$scope.map = map

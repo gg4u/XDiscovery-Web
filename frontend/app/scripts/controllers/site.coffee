@@ -2,7 +2,8 @@ app = angular.module('xdiscoveryApp')
 
 app.controller 'siteCtrl', ($scope, $rootScope, $location, $window, config) ->
 	# Site configuration
-	$scope.site = {}
+	$scope.site =
+		shouldShowBuyAppPopup: yes
 
 	# Menu items setup
 	graphUrlRe = /.*\/graph\/.*/

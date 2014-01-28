@@ -503,6 +503,47 @@ $graph-page-header-height: 52px;
 	}
 }
 
+.buy-app-popup {
+	background: $body-bg;
+	border-radius: 2px;
+	border: 2px solid gray;
+	height: 100%;
+	left: 0;
+	padding: 2em;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+
+	p {
+		font-weight: 300;
+		font-size: 1.5em;
+	}
+
+	.close-button {
+		top: 0;
+	}
+
+	transition: opacity .5s;
+	-webkit-transition: opacity .5s;
+	&.ng-enter {
+		opacity: 0;
+
+		&.ng-enter-active {
+			opacity: 1;
+		}
+	}
+
+	&.ng-leave {
+		opacity: 1;
+
+		&.ng-leave-active {
+			opacity: 0;
+		}
+	}
+}
+
 //
 // Custom pages
 //
