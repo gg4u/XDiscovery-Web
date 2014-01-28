@@ -75,12 +75,13 @@ angular.module('xdiscoveryApp')
 							$scope.vivagraph.pauseRender = no
 							$scope.vivagraph.highlighted = null)
 						.on('click tap', -> $scope.$apply ->
-							# Select node
-							$scope.vivagraph.selected = {
-								showDetails: no
-								node: node
-								info: $scope.map.nodes[node.id]
-							}
+							# Select node if not already selected by a double click
+							if $scope.vivagraph.selected?.node isnt node
+								$scope.vivagraph.selected = {
+									showDetails: no
+									node: node
+									info: $scope.map.nodes[node.id]
+								}
 							# Expand node
 							klass = angular.element(node.ui).attr('class').replace(' expanded', '')
 							node.ui.attr('class', klass + ' expanded')
@@ -91,7 +92,7 @@ angular.module('xdiscoveryApp')
 							$scope.vivagraph.pauseRender = no
 							$scope.vivagraph.inhibitPauseRender = yes
 							$timeout (-> $scope.vivagraph.inhibitPauseRender = no), 500)
-						.on('dblclick doubletap', -> $scope.$apply ->
+						.on('dblclick doubletap', (e) -> $scope.$apply ->
 							# Select a node and show the detail view
 							$scope.vivagraph.selected = {
 								showDetails: yes
