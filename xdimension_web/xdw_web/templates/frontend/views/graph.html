@@ -96,3 +96,16 @@
 		</div>
 	</div>
 </section>
+
+<section class="buy-app-popup" ng-if="site.shouldShowBuyAppPopup&&site.showBuyAppPopup">
+	<a href="" ng-click="site.shouldShowBuyAppPopup = false" class="close-button"></a>
+	<p class="title">This map was created and shared with the Portable Discovery Engine applied to Wikipedia.</p>
+	<img src="{{ STATIC_URL }}frontend/images/learn-discovery-logo.svg" alt="Learn xDiscovery" width="50%">
+	<p>for iPhone and iPad</p>
+	<a href="" target="_blank">
+		<img src="{{ STATIC_URL }}frontend/images/button-app-store.png" width="130" alt="Available on the App Store">
+	</a>
+	<div style="margin-top:2em">
+		<img src="{{ STATIC_URL }}frontend/images/iPhone-5-white.png" alt="">
+	</div>
+</section>
