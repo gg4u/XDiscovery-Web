@@ -126,7 +126,7 @@ angular.module('xdiscoveryApp')
 					.attr("width", thumbnail.width)
 					.attr("height", thumbnail.height)
 				img.link thumbnail.source
-				ingId = "nodeImg-#{text.toLowerCase().replace(/\s+/g, '-')}"
+				ingId = "nodeImg-#{text.toLowerCase().replace(/[\s\(\)]+/g, '-')}"
 				ui.append("circle")
 					.attr('class', 'map-node-background')
 					.attr("fill", "#ffffff")
