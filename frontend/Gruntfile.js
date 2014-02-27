@@ -357,11 +357,6 @@ module.exports = function (grunt) {
         singleRun: true
       }
     },
-    cdnify: {
-      dist: {
-        html: ['<%= yeoman.dist %>/*.html']
-      }
-    },
     ngmin: {
       dist: {
         files: [{
@@ -443,7 +438,6 @@ module.exports = function (grunt) {
      4) usemin dos his things
     */
     'rename:dist',
-    'cdnify',
     'ngmin',
     'cssmin',
     // XXX Uglify temporarly disabled: it triggers an angular error...
@@ -470,7 +464,6 @@ module.exports = function (grunt) {
      4) usemin dos his things
     */
     'rename:dist',
-    //'cdnify',
     //'ngmin',
     //'cssmin',
     //'uglify',
