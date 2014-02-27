@@ -27,6 +27,11 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 		# Hashtags
 		map.getTags = ->
 			return map.tags if map.tags?
+			if map.nodeTitles?.start?
+				map.tags = []
+				for t in map.nodeTitles.start[..4]
+					map.tags.push t.replace(/\s+/g, '')
+				return map.tags
 			return [] unless map.nodes?
 			map.tags = []
 			count = 4
