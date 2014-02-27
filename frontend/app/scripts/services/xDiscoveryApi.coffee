@@ -15,13 +15,29 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 		# Urls
 		map.url = "#{$location.protocol()}://#{$location.host()}/graph/#{map.id}"
 		encodedMapUrl = encodeURIComponent(map.url)
-		map.facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=#{encodedMapUrl}"
-		map.gplusUrl = "https://plus.google.com/share?url=#{encodedMapUrl}"
-		map.twitterUrl = "https://twitter.com/share?url=#{encodedMapUrl}"
+		map.getFacebookUrl = -> "https://www.facebook.com/sharer/sharer.php?u=#{encodedMapUrl}"
+		map.getGplusUrl = -> "https://plus.google.com/share?url=#{encodedMapUrl}"
+		map.getTwitterUrl = ->
+			tags = map.getTags().join(',')
+			"https://twitter.com/share?url=#{encodedMapUrl}&text=A%20map%20about&hashtags=#{tags}"
 		map.getFacebookLikeUrl = (params) ->
 			url = "#{$location.protocol()}://www.facebook.com/plugins/like.php?href=#{encodedMapUrl}&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21"
 			url += "&#{p}=v" for p, v of params
 			$sce.trustAsResourceUrl url
+		# Hashtags
+		map.getTags = ->
+			return map.tags if map.tags?
+			return [] unless map.nodes?
+			map.tags = []
+			count = 4
+			for _, v of map.nodes
+				unless v.title?
+					map.tags = undefined
+					return []
+				map.tags.push v.title.replace(/\s+/g, '')
+				count -= 1
+				break if count is 0
+			map.tags
 		map
 	decorateMaps = (maps) ->
 		decorateMap(m) for m in maps

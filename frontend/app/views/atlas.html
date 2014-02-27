@@ -82,9 +82,9 @@
 						</div>
 						<div ng-switch-when="share">
 							<ul class="inline-list social-buttons-list">
-								<li><a ng-href="{{map.facebookUrl}}" target="_blank" class="social-button small facebook"></a></li>
-								<li><a ng-href="{{map.gplusUrl}}" target="_blank" class="social-button small google-plus"></a></li>
-								<li><a ng-href="{{map.twitterUrl}}" target="_blank" class="social-button small twitter"></a></li>
+								<li><a ng-href="{{map.getFacebookUrl()}}" target="_blank" class="social-button small facebook"></a></li>
+								<li><a ng-href="{{map.getGplusUrl()}}" target="_blank" class="social-button small google-plus"></a></li>
+								<li><a ng-href="{{map.getTwitterUrl()}}" target="_blank" class="social-button small twitter"></a></li>
 							</ul>
 							<input type="text" value="{{map.url}}" readonly onClick="this.select()" style="text-align:center;">
 						</div>
