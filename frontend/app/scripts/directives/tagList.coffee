@@ -42,4 +42,7 @@ angular.module('xdiscoveryApp').directive 'tagList', (config) ->
 			do e.preventDefault if e.keyCode is 9
 			# Perform search on return
 			if e.keyCode is 13 and element.select2('container').hasClass('select2-container-active')
+				e.preventDefault()
+				e.stopImmediatePropagation()
+				element.select2('close')
 				scope.$apply -> scope.onSubmit()
