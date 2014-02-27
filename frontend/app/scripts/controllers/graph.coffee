@@ -211,7 +211,7 @@ angular.module('xdiscoveryApp')
 
 		# Logic to show buy app popup
 		if $scope.site.shouldShowBuyAppPopup
-			showBuyAppPopupWatcher = $scope.$watch (-> $scope.map.graph.length is $scope.map.visibleLinks.length), (completed) ->
+			showBuyAppPopupWatcher = $scope.$watch (-> $scope.map? and ($scope.map.graph.length is $scope.map.visibleLinks.length)), (completed) ->
 				if completed
 					$scope.site.showBuyAppPopup = yes
 					showBuyAppPopupWatcher() # remove watcher
