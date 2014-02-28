@@ -191,6 +191,12 @@
 .xd-map-wall-nothing-found {
 	text-align: center;
 	padding: 10px;
+	color: #747878;
+
+	.term:before,
+	.term:after {
+		content: '"'
+	}
 }
 
 //
