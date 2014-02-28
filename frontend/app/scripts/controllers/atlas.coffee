@@ -4,10 +4,12 @@ app = angular.module('xdiscoveryApp')
 
 app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config) ->
 	# Search functionality model
+	q = $location.search()['topic']?.split(',')
 	$scope.search =
 		ordering: $location.search()['ordering']
 		featured: parseInt($location.search()['featured']) == 1
-		query: $location.search()['topic']?.split(',')
+		query: q
+		lastQuery: q
 		results: mapSearch or xDiscoveryApi.maps.search($location.search())
 		search: ->
 			query = {}
