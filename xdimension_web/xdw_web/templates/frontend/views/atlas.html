@@ -82,9 +82,9 @@
 						</div>
 						<div ng-switch-when="share">
 							<ul class="inline-list social-buttons-list">
-								<li><a ng-href="{% verbatim %}{{map.facebookUrl}}{% endverbatim %}" target="_blank" class="social-button small facebook"></a></li>
-								<li><a ng-href="{% verbatim %}{{map.gplusUrl}}{% endverbatim %}" target="_blank" class="social-button small google-plus"></a></li>
-								<li><a ng-href="{% verbatim %}{{map.twitterUrl}}{% endverbatim %}" target="_blank" class="social-button small twitter"></a></li>
+								<li><a ng-href="{% verbatim %}{{map.getFacebookUrl()}}{% endverbatim %}" target="_blank" class="social-button small facebook"></a></li>
+								<li><a ng-href="{% verbatim %}{{map.getGplusUrl()}}{% endverbatim %}" target="_blank" class="social-button small google-plus"></a></li>
+								<li><a ng-href="{% verbatim %}{{map.getTwitterUrl()}}{% endverbatim %}" target="_blank" class="social-button small twitter"></a></li>
 							</ul>
 							<input type="text" value="{% verbatim %}{{map.url}}{% endverbatim %}" readonly="readonly" onclick="this.select()" style="text-align:center">
 						</div>
@@ -101,6 +101,7 @@
 
 		</div>
 		<div class="loading" ng-if="search.results.next" in-view="$inview&&search.results.loadMore()"></div>
+		<div class="xd-map-wall-nothing-found xd-map-wall-card" ng-if="!search.results.map.length">Nothing found</div>
 
 	</div><!-- .small-12.columns -->
 	</div><!-- .row -->

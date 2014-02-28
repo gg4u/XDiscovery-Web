@@ -1,6 +1,6 @@
 <header class="xd-page-header xd-graph-page-header">
 
-	<a class="back-button" href="" ng-click="goBack()"></a>
+	<a class="back-button" href="/"></a>
 
 	<h1 class="title" ng-switch="!!map.title" ng-cloak="">
 		<span ng-switch-when="true" ng-bind="map.title" class="custom-title"></span>
@@ -26,8 +26,8 @@
 	<p class="more-message">Double-click for more</p>
 </div>
 
-<div class="xd-graph-excerpt" ng-if="vivagraph.selected.node" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':vivagraph.selected.showDetails }">
-	<a href="" class="selected-marker" ng-click="vivagraph.selected.showDetails = true"></a>
+<div class="xd-graph-excerpt" ng-if="vivagraph.selected.node" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':vivagraph.selected.showDetails }" ng-click="vivagraph.selected.showDetails = true">
+	<span class="selected-marker"></span>
 	<div class="extract" ng-bind-html="vivagraph.selected.info.extract"></div>
 	<p class="more-message">Source Wikipedia.org</p>
 </div>
@@ -87,9 +87,9 @@
 					</span>
 				</h6>
 				<ul class="inline-list">
-					<li><a ng-href="{% verbatim %}{{map.facebookUrl}}{% endverbatim %}" target="_blank" class="social-button facebook"></a></li>
-					<li><a ng-href="{% verbatim %}{{map.gplusUrl}}{% endverbatim %}" target="_blank" class="social-button google-plus"></a></li>
-					<li><a ng-href="{% verbatim %}{{map.twitterUrl}}{% endverbatim %}" target="_blank" class="social-button twitter"></a></li>
+					<li><a ng-href="{% verbatim %}{{map.getFacebookUrl()}}{% endverbatim %}" target="_blank" class="social-button facebook"></a></li>
+					<li><a ng-href="{% verbatim %}{{map.getGplusUrl()}}{% endverbatim %}" target="_blank" class="social-button google-plus"></a></li>
+					<li><a ng-href="{% verbatim %}{{map.getTwitterUrl()}}{% endverbatim %}" target="_blank" class="social-button twitter"></a></li>
 				</ul>
 				<input type="text" value="{% verbatim %}{{map.url}}{% endverbatim %}" readonly="readonly" onclick="this.select()" style="text-align:center">
 			</div>
