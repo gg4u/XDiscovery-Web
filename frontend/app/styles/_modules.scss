@@ -188,6 +188,11 @@
 	}
 }
 
+.xd-map-wall-nothing-found {
+	text-align: center;
+	padding: 10px;
+}
+
 //
 // Atlas
 //
@@ -330,6 +335,7 @@ $graph-page-header-height: 52px;
 	position: absolute;
 	top: 0; right: 0; height: 100%;
 	z-index: 1;
+	max-width: 100%;
 
 	> .content {
 		@include border-radius($global-radius);
@@ -408,11 +414,12 @@ $graph-page-header-height: 52px;
 	bottom: 0;
 	color: white;
 	left: 0;
-	max-height: 20%;
+	height: 16%;
 	overflow: auto;
 	padding: 10px;
 	position: absolute;
 	width: 100%;
+	cursor: pointer;
 
 	@media #{$small} {
 		&.has-banner {
@@ -451,7 +458,7 @@ $graph-page-header-height: 52px;
 	height: 88px;
 
 	&.has-excerpt {
-		bottom: 20%;
+		bottom: 16%;
 	}
 
 	@media #{$small} {

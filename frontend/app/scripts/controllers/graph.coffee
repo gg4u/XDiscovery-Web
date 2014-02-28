@@ -265,6 +265,7 @@ angular.module('xdiscoveryApp')
 					pithumbsize: 100
 					exlimit: batchIds.length
 					exintro: 1
+					exsentences: 1
 					redirects: ''
 				}, (data) ->
 					# Assign node decorations

@@ -24,6 +24,10 @@ svg {
 }
 
 // Buttons
+.button, button {
+	outline: none;
+}
+
 .button.invisible,
 button.invisible {
 	@include box-shadow(none);

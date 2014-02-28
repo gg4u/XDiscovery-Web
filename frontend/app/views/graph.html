@@ -33,8 +33,8 @@
 	<p class="more-message">Double-click for more</p>
 </div>
 
-<div class="xd-graph-excerpt" ng-if="vivagraph.selected.node" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':vivagraph.selected.showDetails }">
-	<a href="" class="selected-marker" ng-click="vivagraph.selected.showDetails = true"></a>
+<div class="xd-graph-excerpt" ng-if="vivagraph.selected.node" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':vivagraph.selected.showDetails }" ng-click="vivagraph.selected.showDetails = true">
+	<span class="selected-marker"></span>
 	<div class="extract" ng-bind-html="vivagraph.selected.info.extract"></div>
 	<p class="more-message">Source Wikipedia.org</p>
 </div>
