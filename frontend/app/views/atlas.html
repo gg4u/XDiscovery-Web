@@ -63,6 +63,7 @@
 					<dl class="centered sub-nav" masonry-layout-on="contentTab">
 						<dd ng-class="{ 'active':!contentTab }"><a href="" ng-click="contentTab=null">About</a></dd>
 						<dd ng-class="{ 'active':contentTab=='share' }"><a href="" ng-click="contentTab='share'">Share</a></dd>
+						<dd ng-class="{ 'active':contentTab=='description' }"><a href="" ng-click="contentTab='description'" ng-show="!!map.description">Description</a></dd>
 					</dl>
 
 					<div class="tabbed content" ng-switch="contentTab">
@@ -83,6 +84,9 @@
 								<li><a ng-href="{{map.getTwitterUrl()}}" target="_blank" class="social-button small twitter"></a></li>
 							</ul>
 							<input type="text" value="{{map.url}}" readonly onClick="this.select()" style="text-align:center;">
+						</div>
+						<div ng-switch-when="description">
+							<p ng-bind="map.description"></p>
 						</div>
 					</div>
 
