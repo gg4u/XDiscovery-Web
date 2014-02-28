@@ -193,8 +193,12 @@
 	padding: 10px;
 	color: #747878;
 
-	.term:before,
 	.term:after {
+		content: '", '
+	}
+
+	.term:before,
+	.term:last-child:after {
 		content: '"'
 	}
 }

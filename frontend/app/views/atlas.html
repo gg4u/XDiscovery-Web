@@ -102,7 +102,7 @@
 		</div>
 		<div class="loading" ng-if="search.results.next" in-view="$inview&&search.results.loadMore()"></div>
 		<div class="xd-map-wall-nothing-found" ng-if="!search.results.map.length">
-			<p>
+			<p style="font-size:1.3em">
 				No restuls for
 				<span ng-repeat="q in search.query" ng-bind="q" class="term"></span>
 			</p>
