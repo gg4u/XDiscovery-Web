@@ -53,7 +53,7 @@
 
 			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
 				<div ng-switch-default="">
-					<section ng-repeat="s in vivagraph.selected.info.getContent().sections" ng-bind-html="s.text"></section>
+					<section ng-repeat="s in vivagraph.selected.info.getContent().sections" ng-bind-html="s.text" rewrite-relative-links="http://www.wikipedia.org/wiki/{% verbatim %}{{vivagraph.selected.info.title}}{% endverbatim %}"></section>
 					<a ng-href="http://en.wikipedia.org/wiki?curid={% verbatim %}{{vivagraph.selected.node.id}}{% endverbatim %}" target="_blank" style="display:block; text-align:right">More on Wikipedia &rarr;</a>
 				</div>
 				<div ng-switch-when="external">External</div>
