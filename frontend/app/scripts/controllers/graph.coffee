@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('xdiscoveryApp')
-	.controller 'GraphCtrl', ($scope, xDiscoveryApi, wikipediaApi, $routeParams, $sce, $location, $timeout) ->
+	.controller 'GraphCtrl', ($scope, $rootScope, xDiscoveryApi, wikipediaApi, $routeParams, $sce, $location, $timeout) ->
 		$scope.site.pageClasses = ['graph', 'fill']
 		$scope.site.hideFooter = yes
 
@@ -219,6 +219,11 @@ angular.module('xdiscoveryApp')
 		# Load map from server
 		xDiscoveryApi.maps.get {id: $routeParams.id}, (map) ->
 			$scope.map = map
+			# Set page title
+			if map.title
+				$rootScope.documentTitle = map.title
+			else
+				$rootScope.documentTitle = "from #{map.startNode.title} to #{map.endNode.title}"
 			# Add visible links
 			tappedNodeIds = (parseInt(id) for id, n of map.nodes when n.tapped)
 			if tappedNodeIds.length

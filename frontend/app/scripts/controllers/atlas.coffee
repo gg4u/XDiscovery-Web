@@ -2,7 +2,9 @@
 
 app = angular.module('xdiscoveryApp')
 
-app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config) ->
+app.controller 'AtlasCtrl', ($scope, $rootScope, $location, xDiscoveryApi, mapSearch, config) ->
+	$rootScope.documentTitle = "Atlas"
+
 	# Search functionality model
 	q = $location.search()['topic']
 	q = q.split(',') if angular.isString(q)
