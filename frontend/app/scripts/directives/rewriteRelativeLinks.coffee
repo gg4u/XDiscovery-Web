@@ -2,6 +2,16 @@ app = angular.module('xdiscoveryApp')
 app.directive 'rewriteRelativeLinks', ->
 	restrict: 'A'
 	link: (scope, element, attrs) ->
+		# Set links target
+		if attrs.linksTarget
+			setTimeout ->
+				element.find('a').attr('target', attrs.linksTarget)
+		# Gather relative links in a strucure like:
+		# {
+		# 	full: [{ el:<element>, href:"original href" }, ...] // links requiring the full rewrite url
+		# 	host: [{ el:<element>, href:"original href" }, ...] // link only needing the host part of the rewrite url
+		# }
+		# The method will cache this search in `relativeLinks`
 		relativeLinks = undefined
 		gatherRelavieLinks = ->
 			return relativeLinks if relativeLinks?
@@ -14,6 +24,7 @@ app.directive 'rewriteRelativeLinks', ->
 						href: href
 					}
 			relativeLinks
+		# When the rewrite url change, apply a new composed href to saved links
 		attrs.$observe 'rewriteRelativeLinks', (url) ->
 			return unless attrs.rewriteRelativeLinks?
 			tempLink = document.createElement('a')
