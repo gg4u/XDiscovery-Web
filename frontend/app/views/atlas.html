@@ -61,12 +61,9 @@
 					</header>
 
 					<dl class="centered sub-nav" masonry-layout-on="contentTab">
-						<dd>
-							<a href="" ng-click="map.voteUp()" class="vote-button vote-up" ng-class="{ selected:map.myVote == 1 }">up</a>
-							<a href="" ng-click="map.voteDown()" class="vote-button vote-down" ng-class="{ selected:map.myVote == -1 }">down</a>
-						</dd>
 						<dd ng-class="{ 'active':!contentTab }"><a href="" ng-click="contentTab=null">About</a></dd>
 						<dd ng-class="{ 'active':contentTab=='share' }"><a href="" ng-click="contentTab='share'">Share</a></dd>
+						<dd ng-class="{ 'active':contentTab=='description' }"><a href="" ng-click="contentTab='description'" ng-show="!!map.description">Description</a></dd>
 					</dl>
 
 					<div class="tabbed content" ng-switch="contentTab">
@@ -88,6 +85,9 @@
 							</ul>
 							<input type="text" value="{{map.url}}" readonly onClick="this.select()" style="text-align:center;">
 						</div>
+						<div ng-switch-when="description">
+							<p ng-bind="map.description"></p>
+						</div>
 					</div>
 
 					<div class="flipside content" ng-bind="map.description">
@@ -101,7 +101,14 @@
 
 		</div>
 		<div class="loading" ng-if="search.results.next" in-view="$inview&&search.results.loadMore()"></div>
-		<div class="xd-map-wall-nothing-found xd-map-wall-card" ng-if="!search.results.map.length">Nothing found</div>
+		<div class="xd-map-wall-nothing-found" ng-if="!search.results.map.length">
+			<p style="font-size:1.3em">
+				No restuls for
+				<span ng-repeat="q in search.lastQuery" ng-bind="q" class="term"></span>
+			</p>
+			<p>You may want to Make &amp; Share your maps with LearnDiscovery mobile.</p>
+			<img src="/images/nothing-found.png" alt="" width="320">
+		</div>
 
 	</div><!-- .small-12.columns -->
 	</div><!-- .row -->

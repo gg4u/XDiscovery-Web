@@ -191,6 +191,16 @@
 .xd-map-wall-nothing-found {
 	text-align: center;
 	padding: 10px;
+	color: #747878;
+
+	.term:after {
+		content: '", '
+	}
+
+	.term:before,
+	.term:last-child:after {
+		content: '"'
+	}
 }
 
 //
@@ -474,7 +484,7 @@ $graph-page-header-height: 52px;
 		}
 
 		&.has-excerpt.has-banner {
-			bottom: calc(20% + 50px);
+			bottom: calc(16% + 50px);
 		}
 	}
 
