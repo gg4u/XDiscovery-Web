@@ -66,7 +66,8 @@ def save_map(obj):
     for topic in set(topics_next).intersection(topics_prev):
         relevance_next = topics_next[topic]['relevance']
         map_topic = topics_prev[topic]
-        if relevance_next != map_topic.relevance:
+        if (isinstance(map_topic, MapTopic) and
+            relevance_next != map_topic.relevance):
             map_topic.relevance = relevance_next
             map_topic.save(update_fields=['relevance'])
 
