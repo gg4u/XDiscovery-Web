@@ -24,6 +24,10 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 			url = "#{$location.protocol()}://www.facebook.com/plugins/like.php?href=#{encodedMapUrl}&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21"
 			url += "&#{p}=v" for p, v of params
 			$sce.trustAsResourceUrl url
+		map.getYoutubeSearchUrl = (title) ->
+			title = map.title unless title?
+			url = "https://www.youtube.com/embed/?listType=search&list=#{title}"
+			$sce.trustAsResourceUrl url
 		# Hashtags
 		map.getTags = ->
 			return map.tags if map.tags?
