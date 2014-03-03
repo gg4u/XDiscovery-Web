@@ -75,7 +75,7 @@ class TopicSearchFilter(filters.BaseFilterBackend):
         topics = [t.strip().lower() for t in request.QUERY_PARAMS.getlist('topic')]
         if topics:
             # XXX TODO: escape the regexp contents for safety
-            regex = '({})'.format('|'.join(topics))
+            regex = u'({})'.format(u'|'.join(topics))
             return queryset.filter(maptopic__topic__iregex=regex).distinct()
         return queryset
 
