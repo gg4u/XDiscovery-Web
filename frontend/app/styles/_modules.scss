@@ -341,10 +341,10 @@ $graph-page-header-height: 52px;
 }
 
 .viva-graph-detail-pane {
-	padding: ($topbar-height + $graph-page-header-height + 10) 10px ($graph-page-header-height - $topbar-height - 20px);
+	padding: 10px 10px ($graph-page-header-height - $topbar-height - 20px);
 	position: absolute;
 	top: 0; right: 0; height: 100%;
-	z-index: 1;
+	z-index: 1000;
 	max-width: 100%;
 
 	> .content {
@@ -360,6 +360,7 @@ $graph-page-header-height: 52px;
 	@media #{$small} {
 		padding: ($topbar-height + $graph-page-header-height) 0 0;
 		width: 40%;
+		z-index: 1;
 
 		> .content {
 			@include border-radius(0);
