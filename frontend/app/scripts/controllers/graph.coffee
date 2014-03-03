@@ -22,6 +22,7 @@ angular.module('xdiscoveryApp')
 
 			initialize: (graph) ->
 				$scope.vivagraph.graph = graph
+				$timeout (-> $scope.vivagraph.pauseRender = yes), 5000
 				graph.addEventListener 'changed', (changes) ->
 					for c in changes when c.node?
 						node = c.node
@@ -73,7 +74,8 @@ angular.module('xdiscoveryApp')
 						.on('mouseleave', -> $scope.$apply ->
 							# Resume graph rendering on mouse leave and remove highlighted node
 							$scope.vivagraph.pauseRender = no
-							$scope.vivagraph.highlighted = null)
+							$scope.vivagraph.highlighted = null
+							$timeout (-> $scope.vivagraph.pauseRender = yes), 3000)
 						.on('click tap', -> $scope.$apply ->
 							# Select node if not already selected by a double click
 							if $scope.vivagraph.selected?.node isnt node
