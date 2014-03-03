@@ -12,9 +12,9 @@ from .maps import save_map, delete_map
 class MapAdmin(ModelAdmin):
 
     date_hierarchy = 'date_created'
-    list_display = ['title', 'date_created', 'show_node_titles', 'node_count',
-                    'popularity', 'featured', 'status']
-    list_display_links = ['title', 'date_created']
+    list_display = ['id', 'title', 'date_created', 'show_node_titles',
+                    'node_count', 'popularity', 'featured', 'status']
+    list_display_links = ['id']
     list_filter = ['status', 'featured']
 
     actions = ['delete_action', 'publish_action']
