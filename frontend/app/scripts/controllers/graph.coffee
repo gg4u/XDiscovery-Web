@@ -93,7 +93,8 @@ angular.module('xdiscoveryApp')
 							# Trigger a timer to inhibit render pausing for a while to let the node expand
 							$scope.vivagraph.pauseRender = no
 							$scope.vivagraph.inhibitPauseRender = yes
-							$timeout (-> $scope.vivagraph.inhibitPauseRender = no), 500)
+							$timeout (-> $scope.vivagraph.inhibitPauseRender = no), 500
+							$timeout (-> $scope.vivagraph.pauseRender = yes), 5000)
 						.on('dblclick doubletap', (e) -> $scope.$apply ->
 							# Select a node and show the detail view
 							$scope.vivagraph.selected = {
