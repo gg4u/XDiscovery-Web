@@ -4,7 +4,8 @@ app = angular.module('xdiscoveryApp')
 
 app.controller 'AtlasCtrl', ($scope, $location, xDiscoveryApi, mapSearch, config) ->
 	# Search functionality model
-	q = $location.search()['topic']?.split(',')
+	q = $location.search()['topic']
+	q = q.split(',') if angular.isString(q)
 	$scope.search =
 		ordering: $location.search()['ordering']
 		featured: parseInt($location.search()['featured']) == 1
