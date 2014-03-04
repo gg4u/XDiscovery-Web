@@ -53,10 +53,12 @@
 
 			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
 				<div ng-switch-default="">
-					<section ng-repeat="s in vivagraph.selected.info.getContent().sections" ng-bind-html="s.text" rewrite-relative-links="http://www.wikipedia.org/wiki/{% verbatim %}{{vivagraph.selected.info.title}}{% endverbatim %}"></section>
+					<section ng-repeat="s in vivagraph.selected.info.getContent().sections" ng-bind-html="s.text" rewrite-relative-links="http://www.wikipedia.org/wiki/{% verbatim %}{{vivagraph.selected.info.title}}{% endverbatim %}" links-target="_blank"></section>
 					<a ng-href="http://en.wikipedia.org/wiki?curid={% verbatim %}{{vivagraph.selected.node.id}}{% endverbatim %}" target="_blank" style="display:block; text-align:right">More on Wikipedia &rarr;</a>
 				</div>
-				<div ng-switch-when="external">External</div>
+				<div ng-switch-when="external">
+					<iframe id="ytplayer" type="text/html" width="100%" height="360" src="{% verbatim %}{{map.getYoutubeSearchUrl(vivagraph.selected.info.title)}}{% endverbatim %}" frameborder="0" allowfullscreen=""></iframe>
+				</div>
 			</div>
 
 		</div>
@@ -103,7 +105,7 @@
 	<img src="{{ STATIC_URL }}frontend/images/learn-discovery-logo.svg" alt="Learn xDiscovery" width="50%">
 	<p>for iPhone and iPad</p>
 	<a href="" target="_blank">
-		<img src="{{ STATIC_URL }}frontend/images/button-app-store.png" width="130" alt="Available on the App Store">
+		<img src="{{ STATIC_URL }}frontend/images/button-app-store.svg" width="130" alt="Available on the App Store">
 	</a>
 	<div style="margin-top:2em">
 		<img src="{{ STATIC_URL }}frontend/images/iPhone-5-white.png" alt="">
