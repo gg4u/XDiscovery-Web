@@ -3,7 +3,7 @@ from __future__ import absolute_import
 from cms.plugin_base import CMSPluginBase
 from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_pool import plugin_pool
-from cms.plugins.utils import get_plugins
+from cms.utils.plugins import get_plugins
 from djangocms_text_ckeditor.widgets import TextEditorWidget
 from django.forms.fields import CharField
 from django.utils.translation import ugettext as _
@@ -75,7 +75,8 @@ class AccordionNavigationPlugin(CMSPluginBase):
             context['accordion_items'] = [
                 p.get_plugin_instance()[0]
                 for p in get_plugins(context['request'],
-                                     target_placeholder)]
+                                     target_placeholder,
+                                     self.render_template)]
         return context
 
 plugin_pool.register_plugin(AccordionNavigationPlugin)
