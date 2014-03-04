@@ -212,7 +212,8 @@ def integrate_assets():
     if not os.path.exists(os.path.join(dst_dir, 'views')):
         os.makedirs(os.path.join(dst_dir, 'views'))
     # Store source_file, dest_file in this list
-    files = [('index.html', os.path.join(dst_dir, 'index.html'))]
+    files = [('index.html', os.path.join(dst_dir, 'index.html')),
+             ('404.html', os.path.join(dst_dir, '404.html'))]
     prev_cwd = os.getcwd()
     try:
         os.chdir(src_dir)
