@@ -18,7 +18,7 @@ app.directive 'rewriteRelativeLinks', ->
 			relativeLinks = { full:[], host:[] }
 			element.find('a').each ->
 				href = angular.element(@).attr('href')
-				if href.length < 2 or href[0] isnt '//'
+				if href.length < 2 or (href[0:1] isnt '//' and  href.search(':') < 0)
 					relativeLinks[if href[0] is '/' then 'host' else 'full'].push {
 						el: @
 						href: href
