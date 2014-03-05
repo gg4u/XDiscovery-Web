@@ -434,12 +434,14 @@ $graph-page-header-height: 52px;
 	cursor: pointer;
 
 	@media #{$small} {
-		&.has-banner {
-			bottom: 50px;
-		}
-
 		&.has-detail-pane {
 			width: 60%;
+		}
+	}
+
+	@media #{$large} {
+		&.has-banner {
+			bottom: 50px;
 		}
 	}
 
@@ -474,11 +476,12 @@ $graph-page-header-height: 52px;
 	}
 
 	@media #{$small} {
-
 		&.has-detail-pane {
 			right: 40%;
 		}
+	}
 
+	@media #{$large} {
 		&.has-banner {
 			bottom: 50px;
 		}
