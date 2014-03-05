@@ -4,9 +4,10 @@ from django.contrib.admin import site, ModelAdmin
 from django.conf.urls import patterns, url
 from django.shortcuts import render
 from django.utils.html import format_html
+from django.db import transaction
 
 from .models import Map
-from .maps import save_map, delete_map
+from .maps import save_map, delete_map, _save_map
 
 
 class MapAdmin(ModelAdmin):
@@ -60,9 +61,11 @@ class MapAdmin(ModelAdmin):
 
     def publish_action(self, request, queryset):
         i = 0
-        for i, obj in enumerate(queryset):
-            obj.status = Map.STATUS_OK
-            save_map(obj)
+        with transaction.commit_on_success():
+            for i, obj in enumerate(queryset):
+                if obj.status != Map.STATUS_OK:
+                    obj.status = Map.STATUS_OK
+                    _save_map(obj)
         self.message_user(request, '{} maps published'.format(i))
     publish_action.short_description = 'Publish selected maps'
 

@@ -14,6 +14,10 @@ logger = logging.getLogger(__name__)
 
 @transaction.commit_on_success
 def save_map(obj):
+    return _save_map(obj)
+
+
+def _save_map(obj):
     ''' Save a map, the right way. Mantaining all other ancillary models.
     '''
 
