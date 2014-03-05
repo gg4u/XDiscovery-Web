@@ -341,7 +341,7 @@ $graph-page-header-height: 52px;
 }
 
 .viva-graph-detail-pane {
-	padding: 10px 10px ($graph-page-header-height - $topbar-height - 20px);
+	padding: 0;
 	position: absolute;
 	top: 0; right: 0; height: 100%;
 	z-index: 1000;
