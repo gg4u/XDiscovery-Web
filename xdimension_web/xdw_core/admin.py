@@ -61,7 +61,7 @@ class MapAdmin(ModelAdmin):
     def publish_action(self, request, queryset):
         i = 0
         for i, obj in enumerate(queryset):
-            obj.status = Map.STATUS_PUBLISHED
+            obj.status = Map.STATUS_OK
             save_map(obj)
         self.message_user(request, '{} maps published'.format(i))
     publish_action.short_description = 'Publish selected maps'
