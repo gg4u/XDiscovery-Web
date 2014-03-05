@@ -326,16 +326,16 @@ $graph-page-header-height: 52px;
 	}
 
 	.map-link {
-		&.map-link-group-0 { stroke: #ed13d1 }
-		&.map-link-group-1 { stroke:#ed1393 }
-		&.map-link-group-2 { stroke:#f30b6d }
-		&.map-link-group-3 { stroke:#ff0b6d }
-		&.map-link-group-4 { stroke:#f20bdd }
-		&.map-link-group-5 { stroke:#cc0000 }
-		&.map-link-group-6 { stroke:#cccccc }
-		&.map-link-group-7 { stroke:#f20b6d }
-		&.map-link-group-8 { stroke:#f20b6d }
-		&.map-link-group-9 { stroke:#f20b6d }
+		&.map-link-group-0 { stroke:#518ab4 }
+		&.map-link-group-1 { stroke:#4886b4 }
+		&.map-link-group-2 { stroke:#3e82b4 }
+		&.map-link-group-3 { stroke:#347db4 }
+		&.map-link-group-4 { stroke:#2c7ab4 }
+		&.map-link-group-5 { stroke:#2376b4 }
+		&.map-link-group-6 { stroke:#1a72b4 }
+		&.map-link-group-7 { stroke:#126fb4 }
+		&.map-link-group-8 { stroke:#086bb4 }
+		&.map-link-group-9 { stroke:#0067b4 }
 		&.highlighted { stroke: $primary-color; }
 	}
 }

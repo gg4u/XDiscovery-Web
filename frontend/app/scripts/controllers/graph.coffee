@@ -103,8 +103,9 @@ angular.module('xdiscoveryApp')
 								info: $scope.map.nodes[node.id]})
 					ui)
 				.link (link) ->
-					groupId = Math.round(link.data.distance / 10)
-					groupId = if groupId then groupId - 1 else 0
+					groupId = Math.round(link.data.distance / 100)
+					groupId = 10 unless groupId
+					groupId -= 1
 
 					weight = Math.round(link.data.distance / $scope.vivagraph.maxDistance * 5)
 					weight = 1 if weight < 1
