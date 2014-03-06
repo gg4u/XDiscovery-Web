@@ -35,6 +35,11 @@
 		<div id="page" class="off-canvas-wrap" ng-class="site.pageClasses">
 			<div class="inner-wrap">
 
+				<!-- @if ENV='dist' -->
+				{% include "xdw_web/navbar.html" %}
+				<!-- @endif -->
+
+				<!-- @if ENV!='dist' -->
 				<aside class="left-off-canvas-menu">
 					<ul>
 						<li class="separator">Section title</li>
@@ -44,11 +49,6 @@
 		    </aside>
 		    <a id="off-canvas-button" href="" ng-click="site.toggleOffCanvas()" class="menu-icon show-for-small"><span></span></a>
 
-				<!-- @if ENV='dist' -->
-				{% include "xdw_web/navbar.html" %}
-				<!-- @endif -->
-
-				<!-- @if ENV!='dist' -->
 				<header role="banner" class="xd-site-header hide-for-small">
 
 					<div class="fixed">

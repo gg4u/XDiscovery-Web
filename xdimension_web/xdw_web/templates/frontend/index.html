@@ -8,7 +8,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title ng-bind-template="xDiscovery &ndash; {% verbatim %}{{documentTitle}}{% endverbatim %}"></title>
 	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="apple-itunes-app" content="app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL">
 
 	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet" type="text/css">
@@ -25,56 +25,62 @@
 			<script src="{{ STATIC_URL }}frontend/bower_components/json3/lib/json3.min.js"></script>
 		<![endif]-->
 
-		{% include "xdw_web/navbar.html" %}
-		<section id="page" role="main" ng-class="site.pageClasses">
-			<div ng-view="" ng-cloak="">
-				{% comment %}This condition splits the whole page
-				in two parts, so that when angular loads it only the
-				`content` block is rendered{% endcomment %}
-				{% endif %}
-				{% block content %}{% endblock %}
-				{% if not request.GET.angular %}
-			</div>
-		</section>
+		<div id="page" class="off-canvas-wrap" ng-class="site.pageClasses">
+			<div class="inner-wrap">
 
-		<footer class="xd-site-footer" ng-cloak="" ng-hide="site.hideFooter">
-			<div class="row">
-				<div class="small-12 large-3 columns">
-					<h4>Company</h4>
-					<p><a href="">Who we are</a></p>
-					<p><a href="">What we do</a></p>
-					<p><a href="">Why we do it</a></p>
-				</div>
-				<div class="small-12 large-3 columns">
-					<h4>Services</h4>
-					<p><a href="">Discovery vs Search</a></p>
-					<p><a href="">Discovery Engine for Business</a></p>
-					<p><a href="">Portable Discovery Engine</a></p>
-					<p><a href="">The Atlas Project</a></p>
-				</div>
-				<div class="small-12 large-3 columns">
-					<h4>Atlas</h4>
-					<p><a href="">Learn Discovery Atlas</a></p>
-				</div>
-				<div class="small-12 large-3 columns">
-					<h4>Contacts</h4>
-					<p><a href="">Contact Us</a></p>
-					<p><a href="">Facebook</a></p>
-					<p><a href="">Twitter</a></p>
-				</div>
-			</div>
-
-			<div class="legals">
-				<div class="row">
-					<div class="small-12 columns">
-						<ul class="right inline-list">
-							<li><a href="">Term of Service</a></li>
-							<li><a href="">Patent Pending</a></li>
-						</ul>
+				{% include "xdw_web/navbar.html" %}
+				<section id="page-content" role="main">
+					<div ng-view="" ng-cloak="">
+						{% comment %}This condition splits the whole page
+						in two parts, so that when angular loads it only the
+						`content` block is rendered{% endcomment %}
+						{% endif %}
+						{% block content %}{% endblock %}
+						{% if not request.GET.angular %}
 					</div>
-				</div>
-			</div>
-		</footer>
+				</section>
+
+				<footer class="xd-site-footer" ng-cloak="" ng-hide="site.hideFooter">
+					<div class="row">
+						<div class="small-12 large-3 columns">
+							<h4>Company</h4>
+							<p><a href="">Who we are</a></p>
+							<p><a href="">What we do</a></p>
+							<p><a href="">Why we do it</a></p>
+						</div>
+						<div class="small-12 large-3 columns">
+							<h4>Services</h4>
+							<p><a href="">Discovery vs Search</a></p>
+							<p><a href="">Discovery Engine for Business</a></p>
+							<p><a href="">Portable Discovery Engine</a></p>
+							<p><a href="">The Atlas Project</a></p>
+						</div>
+						<div class="small-12 large-3 columns">
+							<h4>Atlas</h4>
+							<p><a href="">Learn Discovery Atlas</a></p>
+						</div>
+						<div class="small-12 large-3 columns">
+							<h4>Contacts</h4>
+							<p><a href="">Contact Us</a></p>
+							<p><a href="">Facebook</a></p>
+							<p><a href="">Twitter</a></p>
+						</div>
+					</div>
+
+					<div class="legals">
+						<div class="row">
+							<div class="small-12 columns">
+								<ul class="right inline-list">
+									<li><a href="">Term of Service</a></li>
+									<li><a href="">Patent Pending</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</footer>
+
+			</div><!-- .inner-wrap -->
+		</div><!-- .off-canvas-wrap -->
 
 		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 		 <script>

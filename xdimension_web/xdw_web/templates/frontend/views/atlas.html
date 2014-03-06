@@ -3,12 +3,12 @@
 <header class="xd-page-header xd-atlas-header">
 
 	<div class="row">
-		<div class="medium-4 large-4 columns hide-for-small">
+		<div class="small-1 medium-4 large-4 columns">
 
-			<img retina-src="{{ STATIC_URL }}frontend/images/atlas-learn.png" alt="learnDiscovery">
+			<img src="{{ STATIC_URL }}frontend/images/atlas-learn.svg" alt="learnDiscovery" class="hide-for-small">
 
 		</div>
-		<div class="small-12 medium-8 large-8 columns">
+		<div class="small-11 medium-8 large-8 columns">
 
 			<div class="row">
 				<div class="small-10 columns xd-atlas-col-search-input">
@@ -53,6 +53,7 @@
 							<a ng-href="/graph/{% verbatim %}{{map.id}}{% endverbatim %}" ng-switch-default="" class="node-title" target="_self">
 								<span class="sep">from</span>
 								<span ng-bind="map.nodeTitles.start[0]">&ndash;</span>
+								<br>
 								<span class="sep">to</span>
 								<span ng-bind="map.nodeTitles.last">&ndash;</span>
 							</a>
@@ -107,7 +108,7 @@
 				<span ng-repeat="q in search.lastQuery" ng-bind="q" class="term"></span>
 			</p>
 			<p>You may want to Make &amp; Share your maps with LearnDiscovery mobile.</p>
-			<img src="{{ STATIC_URL }}frontend/images/nothing-found.png" alt="" width="320">
+			<img src="{{ STATIC_URL }}frontend/images/nothing-found.svg" alt="" width="320">
 		</div>
 
 	</div><!-- .small-12.columns -->
