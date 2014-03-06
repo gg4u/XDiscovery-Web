@@ -21,7 +21,7 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 			tags = map.getTags().join(',')
 			"https://twitter.com/share?url=#{encodedMapUrl}&text=A%20map%20about&hashtags=#{tags}"
 		map.getFacebookLikeUrl = (params) ->
-			url = "#{$location.protocol()}://www.facebook.com/plugins/like.php?href=#{encodedMapUrl}&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=35&amp;width=50"
+			url = "#{$location.protocol()}://www.facebook.com/plugins/like.php?href=#{encodedMapUrl}&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=21&amp;width=55"
 			url += "&#{p}=v" for p, v of params
 			$sce.trustAsResourceUrl url
 		map.getYoutubeSearchUrl = (title) ->
