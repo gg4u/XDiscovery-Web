@@ -272,7 +272,7 @@ $graph-page-header-height: 52px;
 .xd-graph-page-header {
 	min-height: $graph-page-header-height;
 	margin-bottom: 0;
-	overflow: auto;
+	overflow: hidden;
 	position: relative;
 	vertical-align: middle;
 	z-index: 100;
