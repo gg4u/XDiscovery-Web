@@ -80,7 +80,7 @@ angular.module('xdiscoveryApp')
 							# Select node if not already selected by a double click
 							if $scope.vivagraph.selected?.node isnt node
 								$scope.vivagraph.selected = {
-									showDetails: no
+									showDetails: !!$scope.vivagraph.selected.showDetails
 									node: node
 									info: $scope.map.nodes[node.id]
 								}
