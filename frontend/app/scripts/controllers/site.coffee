@@ -4,6 +4,12 @@ app.controller 'siteCtrl', ($scope, $rootScope, $location, $window, config) ->
 	# Site configuration
 	$scope.site =
 		shouldShowBuyAppPopup: yes
+		toggleOffCanvas: ->
+			return @pageClasses = ['move-right'] unless @pageClasses?
+			if @pageClasses.indexOf('move-right') is -1
+				@pageClasses.push 'move-right'
+			else
+				@pageClasses = (s for s in @pageClasses when s isnt 'move-right')
 
 	# Menu items setup
 	graphUrlRe = /.*\/graph\/.*/
@@ -17,4 +23,5 @@ app.controller 'siteCtrl', ($scope, $rootScope, $location, $window, config) ->
 	$scope.goBack = -> do $window.history.back
 
 	$rootScope.$on '$routeChangeStart', ->
+		$scope.site.pageClasses = []
 		$scope.mainMenu.collapsed = yes

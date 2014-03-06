@@ -45,8 +45,12 @@
 
 .xd-page-header {
 	background: $gray-lighter;
-	padding: 1em 0;
 	margin-bottom: $column-gutter;
+	padding: 10px 0;
+
+	@media #{$small} {
+		padding: 1em 0;
+	}
 
 	input {
 		height: auto;
@@ -209,11 +213,18 @@
 
 .xd-atlas-header {
 	@extend .fixed;
-	margin-top: $topbar-height;
+
+	@media #{$small} {
+		margin-top: $topbar-height;
+	}
 }
 
 .xd-atlas > .sub-nav {
-	margin-top: 115px;
+	margin-top: 80px;
+
+	@media #{$small} {
+		margin-top: 115px;
+	}
 }
 
 .xd-atlas-content {
@@ -262,10 +273,14 @@ $graph-page-header-height: 52px;
 	min-height: $graph-page-header-height;
 	margin-bottom: 0;
 	overflow: auto;
-	padding: 8px 8px 0;
 	position: relative;
 	vertical-align: middle;
 	z-index: 100;
+	padding: 8px 8px 0 50px;
+
+	@media #{$small} {
+		padding: 8px 8px 0;
+	}
 
 	.title {
 		margin: 0 40px 0 0;
@@ -297,7 +312,11 @@ $graph-page-header-height: 52px;
 	overflow: hidden;
 	top: 0;
 	left: 0;
-	padding-top: $topbar-height + $graph-page-header-height;
+	padding-top: $graph-page-header-height;
+
+	@media #{$small} {
+		padding-top: $topbar-height + $graph-page-header-height;
+	}
 
 	.map-node {
 		cursor: pointer;
