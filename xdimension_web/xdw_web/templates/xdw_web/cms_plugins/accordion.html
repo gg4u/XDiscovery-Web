@@ -3,7 +3,7 @@
 				<div xd-accordion-content>
 				    {% if instance.subtitle %}<h3>{{ instance.subtitle }}</h3>{% endif %}
 				    {% if instance.subheader %}<h5 class="subheader">{{ instance.subheader }}</h5>{% endif %}
-                                    {{ instance.body | safe }}
+                                    {{ body | safe }}
 				    {% if instance.show_back_to_top %}<a href="" class="xd-back-to-top">Back to top</a>{% endif %}
 				</div>
 			</section>

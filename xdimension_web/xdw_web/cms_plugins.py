@@ -5,6 +5,7 @@ from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_pool import plugin_pool
 from cms.plugins.utils import get_plugins
 from djangocms_text_ckeditor.widgets import TextEditorWidget
+from djangocms_text_ckeditor.utils import plugin_tags_to_user_html
 from django.forms.fields import CharField
 from django.utils.translation import ugettext as _
 
@@ -106,5 +107,14 @@ class AccordionPlugin(CMSPluginBase):
         return super(AccordionPlugin, self).get_form(
             request, obj=obj, **kwargs)
 
+    def render(self, context, instance, placeholder):
+        context = super(AccordionPlugin, self).render(context, instance,
+                                                      placeholder)
+        context['body'] = plugin_tags_to_user_html(
+                instance.body,
+                context,
+                placeholder
+        )
+        return context
 
 plugin_pool.register_plugin(AccordionPlugin)
