@@ -2,7 +2,7 @@
 
 angular.module('xdiscoveryApp')
 	.controller 'GraphCtrl', ($scope, $rootScope, xDiscoveryApi, wikipediaApi, $routeParams, $sce, $location, $timeout) ->
-		$scope.site.pageClasses = ['graph', 'fill']
+		$scope.site.pageClasses = ['graph', 'fill', 'fixed-mobile-menu']
 		$scope.site.hideFooter = yes
 
 		# Contains all the properties for the vivaGraph directive
