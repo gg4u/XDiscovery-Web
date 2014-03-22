@@ -13,8 +13,8 @@
 	</h1>
 
 	<ul class="right inline-list xd-graph-buttons">
-		<li style="width:55px">
-			<iframe ng-src="{% verbatim %}{{map.getFacebookLikeUrl()}}{% endverbatim %}" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px; width:100%" allowtransparency="true"></iframe>
+		<li>
+			<div class="fb-share-button" data-href="{% verbatim %}{{map.url()}}{% endverbatim %}" data-type="button"></div>
 		</li>
 		<li><a href="" class="share-button" ng-click="shouldShowSharePane = !shouldShowSharePane"></a></li>
 	</ul>

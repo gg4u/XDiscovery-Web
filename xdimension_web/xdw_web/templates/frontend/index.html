@@ -25,6 +25,15 @@
 			<script src="{{ STATIC_URL }}frontend/bower_components/json3/lib/json3.min.js"></script>
 		<![endif]-->
 
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+
 		<div id="page" class="off-canvas-wrap" ng-class="site.pageClasses">
 			<div class="inner-wrap">
 
