@@ -52,6 +52,15 @@ class Map(models.Model):
                               default=STATUS_OK,
                               db_index=True)
 
+    def get_title(self):
+        if self.title:
+            return self.title
+        if self.node_titles and self.last_node_title:
+            return u'from {start} to {end}'.format(start=self.node_titles[0],
+                                                   end=self.last_node_title)
+        logger.warning('no title found for map {}'.format(self.pk))
+        return 'xDiscovery graph'
+
     def update_from_map_data(self):
         if not self.map_data:
             return

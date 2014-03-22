@@ -1,3 +1,4 @@
 {% extends "frontend/index.html" %}
 {% load cms_tags %}
+{% block title %}{% page_attribute "title" %}{% endblock %}
 {% block content %}{% placeholder "main" %}{% endblock content %}

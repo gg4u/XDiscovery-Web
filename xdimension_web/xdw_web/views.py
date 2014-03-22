@@ -42,4 +42,5 @@ class GraphDetailView(View):
             #'og:image': map_.get_image(),
         })
         return render(request, 'xdw_web/graph.html',
-                      {'meta_items': og_context.items()})
+                      {'meta_items': og_context.items(),
+                       'title': map_.get_title()})

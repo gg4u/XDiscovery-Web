@@ -7,7 +7,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title ng-bind-template="xDiscovery &ndash; {{documentTitle}}"><!-- @if ENV='dist' -->{% page_attribute "title" %}<!-- @endif --></title>
+	<title ng-bind-template="xDiscovery &ndash; {{documentTitle}}"><!-- @if ENV='dist' -->{% block title %}{dj{ title|default:"XDiscovery" }dj}{% endblock %}<!-- @endif --></title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="apple-itunes-app" content="app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL">
