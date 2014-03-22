@@ -70,7 +70,7 @@
 					<div class="tabbed content" ng-switch="contentTab">
 						<div ng-switch-default="" ng-init="nodes = (map.nodeTitles.start|limitTo:6)">
 							<p>
-								<span ng-repeat="node in nodes track by $index" ng-bind-template="{% verbatim %}{{node}}{% endverbatim %}{% verbatim %}{{$middle&&' | '||' '}}{% endverbatim %}"></span>
+								<span ng-repeat="node in nodes track by $index" ng-bind-template="{% verbatim %}{{node}}{% endverbatim %}{% verbatim %}{{($middle||$first)&&' | '||' '}}{% endverbatim %}"></span>
 								<span ng-if="nodes.length < map.node_count">
 									<span class="sep">and other</span>
 									<span ng-bind-template="#{% verbatim %}{{map.node_count - nodes.length}}{% endverbatim %}"></span>
