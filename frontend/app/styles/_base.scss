@@ -44,7 +44,7 @@ svg {
 #off-canvas-button {
 	background: $primary-color;
 	z-index: 1000;
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	height: 52px;
@@ -52,6 +52,10 @@ svg {
 
 	> span {
 		box-shadow: 0 10px 0 1px $topbar-menu-link-color, 0 16px 0 1px $topbar-menu-link-color, 0 22px 0 1px $topbar-menu-link-color;
+	}
+
+	.fixed-mobile-menu & {
+		position: fixed;
 	}
 }
 

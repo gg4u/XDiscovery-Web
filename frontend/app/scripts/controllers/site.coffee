@@ -25,3 +25,5 @@ app.controller 'siteCtrl', ($scope, $rootScope, $location, $window, config) ->
 	$rootScope.$on '$routeChangeStart', ->
 		$scope.site.pageClasses = []
 		$scope.mainMenu.collapsed = yes
+
+	$rootScope.$on '$routeChangeSuccess', -> setTimeout -> FB?.XFBML?.parse?(document.getElementById('page-content'))

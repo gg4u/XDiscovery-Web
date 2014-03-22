@@ -13,8 +13,8 @@
 	</h1>
 
 	<ul class="right inline-list xd-graph-buttons">
-		<li style="width:55px">
-			<iframe ng-src="{{map.getFacebookLikeUrl()}}" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px; width:100%;" allowTransparency="true"></iframe>
+		<li>
+			<div class="fb-share-button" data-href="{{map.url()}}" data-type="button"></div>
 		</li>
 		<li><a href="" class="share-button" ng-click="shouldShowSharePane = !shouldShowSharePane"></a></li>
 	</ul>
