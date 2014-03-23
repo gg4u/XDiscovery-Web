@@ -52,27 +52,29 @@ def build(dest='dist'):
     integrate_assets()
 
 
+def validate_environment(env):
+    if env not in ('staging', 'production'):
+        abort('bad environment param')
+    return env
+
+
 @task
-def deploy(env='staging', frontend='True', backend='True'):
-    if env == 'local':
-        pass
-    elif env == 'staging':
-        if frontend.lower() in YES_VALUES:
-            local('{}/run_in_env.sh .env-staging python manage.py '
-                  'collectstatic --noinput '
-                  '--settings=xdimension_web.settings.local_s3'
-                  .format(os.getcwd()))
-        if backend.lower() in YES_VALUES:
-            # XXX this is not good for production:
-            #  - Push of backend code into production API host should happen
-            #  *after* db migration.
-            #  - Db migration should happen in a separate utility heroku app
-            app = get_app_name(env)
-            local('git push {} master'.format(app))
-            local('heroku run python manage.py migrate --all --noinput --app {}'
-                  .format(app))
-    else:
-        assert False
+def deploy(env, frontend='True', backend='True'):
+    env = validate_environment(env)
+    if frontend.lower() in YES_VALUES:
+        local('./run_in_env.sh .env-{env} python manage.py '
+              'collectstatic --noinput '
+              '--settings=xdimension_web.settings.local_s3'
+              .format(env=env))
+    if backend.lower() in YES_VALUES:
+        # XXX this is not good for production:
+        #  - Push of backend code into production API host should happen
+        #  *after* db migration.
+        #  - Db migration should happen in a separate utility heroku app
+        app = get_app_name(env)
+        local('git push {} master'.format(app))
+        local('heroku run python manage.py migrate --all --noinput --app {}'
+              .format(app))
 
 
 @task
@@ -81,7 +83,8 @@ def test():
 
 
 @task
-def backup(env='staging'):
+def backup(env):
+    env = validate_environment(env)
     app = get_app_name(env)
     if not os.path.exists(BACKUP_DIR):
         puts('Creating default backup dir {}'.format(BACKUP_DIR))
@@ -159,7 +162,8 @@ def restore_local():
 
 
 @task
-def restore(env='staging'):
+def restore(env):
+    env = validate_environment(env)
     app = get_app_name(env)
     '''Tested on an ubuntu machine.'''
     puts('To restore the heroku db:')
