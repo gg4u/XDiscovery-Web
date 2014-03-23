@@ -13,6 +13,9 @@
 	</h1>
 
 	<ul class="right inline-list xd-graph-buttons">
+		<li>
+			<div class="fb-like" data-href="{{map.url()}}" data-layout="button" data-action="like" data-show-faces="true" data-share="false"></div>
+		</li>
 		<li><a href="" class="share-button" ng-click="shouldShowSharePane = !shouldShowSharePane"></a></li>
 	</ul>
 
@@ -33,13 +36,13 @@
 	<p class="more-message">Double-click for more</p>
 </div>
 
-<div class="xd-graph-excerpt" ng-if="vivagraph.selected.node" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':vivagraph.selected.showDetails }" ng-click="vivagraph.selected.showDetails = true">
+<div class="xd-graph-excerpt" ng-if="vivagraph.spotted.node" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':vivagraph.spotted.showDetails }" ng-click="vivagraph.selected = vivagraph.spotted; vivagraph.selected.showDetails = true">
 	<span class="selected-marker"></span>
-	<div class="extract" ng-bind-html="vivagraph.selected.info.extract"></div>
+	<div class="extract" ng-bind-html="vivagraph.spotted.info.extract"></div>
 	<p class="more-message">Source Wikipedia.org</p>
 </div>
 
-<div class="xd-graph-zoom-tool" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':!!vivagraph.selected.showDetails, 'has-excerpt':!!vivagraph.selected.node }">
+<div class="xd-graph-zoom-tool" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':!!vivagraph.selected.showDetails, 'has-excerpt':!!vivagraph.spotted.node }">
 	<button class="button secondary xd-grpah-zoom-button in" ng-click="vivagraph.zoomLevel = vivagraph.zoomLevel + 1">+</button>
 	<button class="button secondary xd-grpah-zoom-button out" ng-click="vivagraph.zoomLevel = vivagraph.zoomLevel - 1">&ndash;</button>
 </div>

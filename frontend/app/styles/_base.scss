@@ -3,14 +3,21 @@ html, body {
 	height: 100%;
 }
 
-#page {
-	position: relative;
+#page,
+#page > .inner-wrap,
+#page-content {
 	min-height: 100%;
-	margin-top: $topbar-height;
+}
 
-	&.fill {
+#page.fill {
+	height: 100%;
+
+	> .inner-wrap {
+		height: 100%;
+	}
+
+	#page-content {
 		margin-top: 0;
-		padding-top: $topbar-height;
 		position: absolute;
 		width: 100%;
 		top: 0;
@@ -18,9 +25,73 @@ html, body {
 	}
 }
 
+@media #{$small} {
+	#page-content {
+		margin-top: $topbar-height;
+
+		#page.fill & {
+			padding-top: $topbar-height;
+		}
+	}
+}
+
 svg {
 	// Firefox fix for vivagraph
   overflow: visible !important;
+}
+
+// Off canvas
+#off-canvas-button {
+	background: $primary-color;
+	z-index: 1000;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 52px;
+	width: 44px;
+
+	> span {
+		box-shadow: 0 10px 0 1px $topbar-menu-link-color, 0 16px 0 1px $topbar-menu-link-color, 0 22px 0 1px $topbar-menu-link-color;
+	}
+
+	.fixed-mobile-menu & {
+		position: fixed;
+	}
+}
+
+.left-off-canvas-menu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	> li {
+		&.separator {
+			background: black;
+			color: white;
+			text-transform: uppercase;
+			font-size: 0.7em;
+			padding: 0 10px;
+			border-bottom: 1px solid $gray;
+		}
+
+		&.active {
+			border-left: 4px solid $primary-color;
+		}
+
+		a {
+			display: block;
+			color: white;
+			padding: 10px 20px;
+			border-bottom: 1px solid $gray;
+		}
+	}
+}
+
+// Disable off canvas menu for non-small screens
+@media #{$small} {
+	.move-right > .inner-wrap {
+		@include transform(none);
+	}
 }
 
 // Buttons

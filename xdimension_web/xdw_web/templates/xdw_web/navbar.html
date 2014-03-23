@@ -1,18 +1,28 @@
 {% load menu_tags cms_tags %}
-		<header role="banner" class="xd-site-header">
-			<div class="fixed">
-				<nav class="top-bar" role="navigation" ng-class="{ 'expanded':!mainMenu.collapsed }">
-					<ul class="title-area show-for-small">
-						<li class="name">
-							<h1><a href="/">xDiscovery</a></h1>
-						</li>
-						<li class="toggle-topbar menu-icon"><a href="" ng-click="mainMenu.collapsed = !mainMenu.collapsed"><span></span></a></li>
-					</ul>
-					<section class="top-bar-section">
-						<ul class="right">
+				<aside class="left-off-canvas-menu">
+					<ul>
+						<li class="separator">Section title</li>
 				                    {% show_menu 0 2 0 3 "xdw_web/menu.html" %}
-						</ul>
-					</section>
-				</nav>
-			</div>
-		</header>
+					</ul>
+		    </aside>
+		    <a id="off-canvas-button" href="" ng-click="site.toggleOffCanvas()" class="menu-icon show-for-small"><span></span></a>
+
+				<header role="banner" class="xd-site-header hide-for-small">
+
+					<div class="fixed">
+						<nav class="top-bar" role="navigation" ng-class="{ 'expanded':!mainMenu.collapsed }">
+							<ul class="title-area show-for-small">
+								<li class="name">
+									<h1><a href="/">xDiscovery</a></h1>
+								</li>
+								<li class="toggle-topbar menu-icon"><a href="" ng-click="mainMenu.collapsed = !mainMenu.collapsed"><span></span></a></li>
+							</ul>
+							<section class="top-bar-section">
+								<ul class="right">
+				                    {% show_menu 0 2 0 3 "xdw_web/menu.html" %}
+								</ul>
+							</section>
+						</nav>
+					</div>
+
+				</header>

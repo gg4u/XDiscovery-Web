@@ -83,6 +83,7 @@ MIDDLEWARE_CLASSES += (
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -191,7 +192,8 @@ APPEND_SLASH = False  # Otherwise AngularJS complains
 
 ALLOWED_HOSTS = ['xdiscovery.com', 'www.xdiscovery.com',
                  'api-app.xdiscovery.com', 'www-staging.xdiscovery.com',
-                 'api-app-staging.xdiscovery.com']
+                 'api-app-staging.xdiscovery.com',
+                 'xdiscovery-web.herokuapp.com']
 
 if DEPLOY_MODE == 'staging':
     ALLOWED_HOSTS += ['xdiscovery-web-staging.herokuapp.com']

@@ -45,8 +45,12 @@
 
 .xd-page-header {
 	background: $gray-lighter;
-	padding: 1em 0;
 	margin-bottom: $column-gutter;
+	padding: 10px 0;
+
+	@media #{$small} {
+		padding: 1em 0;
+	}
 
 	input {
 		height: auto;
@@ -209,11 +213,18 @@
 
 .xd-atlas-header {
 	@extend .fixed;
-	margin-top: $topbar-height;
+
+	@media #{$small} {
+		margin-top: $topbar-height;
+	}
 }
 
 .xd-atlas > .sub-nav {
-	margin-top: 115px;
+	margin-top: 80px;
+
+	@media #{$small} {
+		margin-top: 115px;
+	}
 }
 
 .xd-atlas-content {
@@ -261,14 +272,18 @@ $graph-page-header-height: 52px;
 .xd-graph-page-header {
 	min-height: $graph-page-header-height;
 	margin-bottom: 0;
-	overflow: auto;
-	padding: 8px 8px 0;
+	overflow: hidden;
 	position: relative;
 	vertical-align: middle;
 	z-index: 100;
+	padding: 8px 8px 0 50px;
+
+	@media #{$small} {
+		padding: 8px 8px 0;
+	}
 
 	.title {
-		margin: 0 40px 0 0;
+		margin: 0 90px 0 0;
 		display: block;
 		font-size: 2em;
 		font-weight: 300;
@@ -288,6 +303,10 @@ $graph-page-header-height: 52px;
 .xd-graph-buttons {
 	margin: 13px 8px;
 	position: absolute; right: 0; top: 0;
+
+	> li {
+		margin-left: 8px;
+	}
 }
 
 .viva-graph {
@@ -297,7 +316,11 @@ $graph-page-header-height: 52px;
 	overflow: hidden;
 	top: 0;
 	left: 0;
-	padding-top: $topbar-height + $graph-page-header-height;
+	padding-top: $graph-page-header-height;
+
+	@media #{$small} {
+		padding-top: $topbar-height + $graph-page-header-height;
+	}
 
 	.map-node {
 		cursor: pointer;
@@ -326,26 +349,26 @@ $graph-page-header-height: 52px;
 	}
 
 	.map-link {
-		&.map-link-group-0 { stroke: #ed13d1 }
-		&.map-link-group-1 { stroke:#ed1393 }
-		&.map-link-group-2 { stroke:#f30b6d }
-		&.map-link-group-3 { stroke:#ff0b6d }
-		&.map-link-group-4 { stroke:#f20bdd }
-		&.map-link-group-5 { stroke:#cc0000 }
-		&.map-link-group-6 { stroke:#cccccc }
-		&.map-link-group-7 { stroke:#f20b6d }
-		&.map-link-group-8 { stroke:#f20b6d }
-		&.map-link-group-9 { stroke:#f20b6d }
+		&.map-link-group-0 { stroke:#518ab4 }
+		&.map-link-group-1 { stroke:#4886b4 }
+		&.map-link-group-2 { stroke:#3e82b4 }
+		&.map-link-group-3 { stroke:#347db4 }
+		&.map-link-group-4 { stroke:#2c7ab4 }
+		&.map-link-group-5 { stroke:#2376b4 }
+		&.map-link-group-6 { stroke:#1a72b4 }
+		&.map-link-group-7 { stroke:#126fb4 }
+		&.map-link-group-8 { stroke:#086bb4 }
+		&.map-link-group-9 { stroke:#0067b4 }
 		&.highlighted { stroke: $primary-color; }
 	}
 }
 
 .viva-graph-detail-pane {
-	padding: 10px 10px ($graph-page-header-height - $topbar-height - 20px);
+	padding: 0;
 	position: absolute;
 	top: 0; right: 0; height: 100%;
 	z-index: 1000;
-	max-width: 100%;
+	width: 100%;
 
 	> .content {
 		@include border-radius($global-radius);
@@ -434,12 +457,14 @@ $graph-page-header-height: 52px;
 	cursor: pointer;
 
 	@media #{$small} {
-		&.has-banner {
-			bottom: 50px;
-		}
-
 		&.has-detail-pane {
 			width: 60%;
+		}
+	}
+
+	@media #{$large} {
+		&.has-banner {
+			bottom: 50px;
 		}
 	}
 
@@ -466,21 +491,20 @@ $graph-page-header-height: 52px;
 	box-shadow: 0px 1px 4px rgba(0,0,0,0.3);
 	border-radius: 2px;
 	overflow: hidden;
-	width: 44px;
-	height: 88px;
+	width: 30px;
+	height: 50px;
 
 	&.has-excerpt {
 		bottom: 16%;
 	}
 
 	@media #{$small} {
-		width: 30px;
-		height: 50px;
-
 		&.has-detail-pane {
 			right: 40%;
 		}
+	}
 
+	@media #{$large} {
 		&.has-banner {
 			bottom: 50px;
 		}

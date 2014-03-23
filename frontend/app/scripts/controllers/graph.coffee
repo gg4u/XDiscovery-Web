@@ -2,7 +2,7 @@
 
 angular.module('xdiscoveryApp')
 	.controller 'GraphCtrl', ($scope, $rootScope, xDiscoveryApi, wikipediaApi, $routeParams, $sce, $location, $timeout) ->
-		$scope.site.pageClasses = ['graph', 'fill']
+		$scope.site.pageClasses = ['graph', 'fill', 'fixed-mobile-menu']
 		$scope.site.hideFooter = yes
 
 		# Contains all the properties for the vivaGraph directive
@@ -12,6 +12,9 @@ angular.module('xdiscoveryApp')
 			inhibitPauseRender: no
 			graph: null
 			highlighted:
+				node: null
+				info: null
+			spotted:
 				node: null
 				info: null
 			selected:
@@ -77,13 +80,11 @@ angular.module('xdiscoveryApp')
 							$scope.vivagraph.highlighted = null
 							$timeout (-> $scope.vivagraph.pauseRender = yes), 5000)
 						.on('click tap', -> $scope.$apply ->
-							# Select node if not already selected by a double click
-							if $scope.vivagraph.selected?.node isnt node
-								$scope.vivagraph.selected = {
-									showDetails: no
-									node: node
-									info: $scope.map.nodes[node.id]
-								}
+							# Spot a node to show it's excerpt
+							$scope.vivagraph.spotted = {
+								node: node
+								info: $scope.map.nodes[node.id]
+							}
 							# Expand node
 							klass = angular.element(node.ui).attr('class').replace(' expanded', '')
 							node.ui.attr('class', klass + ' expanded')
@@ -103,8 +104,9 @@ angular.module('xdiscoveryApp')
 								info: $scope.map.nodes[node.id]})
 					ui)
 				.link (link) ->
-					groupId = Math.round(link.data.distance / 10)
-					groupId = if groupId then groupId - 1 else 0
+					groupId = Math.round(link.data.distance / 100)
+					groupId = 10 unless groupId
+					groupId -= 1
 
 					weight = Math.round(link.data.distance / $scope.vivagraph.maxDistance * 5)
 					weight = 1 if weight < 1
@@ -204,7 +206,7 @@ angular.module('xdiscoveryApp')
 						angular.element(link.ui).attr 'class', klass
 
 		# Adding selected class to node ui
-		$scope.$watch 'vivagraph.selected.node', (node, lastNode) ->
+		$scope.$watch 'vivagraph.spotted.node', (node, lastNode) ->
 			if lastNode?
 				klass = angular.element(lastNode.ui).attr('class').replace(' selected', '')
 				lastNode.ui.attr('class', klass)
