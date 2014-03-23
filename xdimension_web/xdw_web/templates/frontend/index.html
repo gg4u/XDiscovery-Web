@@ -1,4 +1,4 @@
-{% load cms_tags %}{% if not request.GET.angular %}<!doctype html>
+{% load cms_tags sekizai_tags %}<!doctype html>
 <!--[if lt IE 7]>      <html ng-app="xdiscoveryApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html ng-app="xdiscoveryApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html ng-app="xdiscoveryApp" class="no-js lt-ie9"> <![endif]-->
@@ -14,8 +14,10 @@
 	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}frontend/styles/main.css">
 	{% block extrahead %}{% endblock %}
+	{% render_block "css" %}
 </head>
 	<body ng-controller="siteCtrl">
+	  {% cms_toolbar %}
 		<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
@@ -40,12 +42,7 @@
 				{% include "xdw_web/navbar.html" %}
 				<section id="page-content" role="main">
 					<div ng-view="" ng-cloak="">
-						{% comment %}This condition splits the whole page
-						in two parts, so that when angular loads it only the
-						`content` block is rendered{% endcomment %}
-						{% endif %}
 						{% block content %}{% endblock %}
-						{% if not request.GET.angular %}
 					</div>
 				</section>
 
@@ -102,6 +99,7 @@
 			 ga('send', 'pageview');
 		</script>
 
+		 {% if not 'edit' in request.GET %}
 		<script src="{{ STATIC_URL }}frontend/scripts/vendor.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/2.1.0/jquery.imagesloaded.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.0.0/masonry.pkgd.js"></script>
@@ -120,5 +118,7 @@
 			}
 		});
 		</script>
+		 {% endif %}
+	{% render_block "js" %}
 </body>
-</html>{% endif %}
+</html>

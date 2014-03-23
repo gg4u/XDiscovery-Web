@@ -87,6 +87,7 @@ class AccordionPlugin(CMSPluginBase):
     name = _("Accordion Plugin")
     render_template = "xdw_web/cms_plugins/accordion.html"
     model = AccordionPluginModel
+    change_form_template = "cms/plugins/text_plugin_change_form.html"
     allow_children = True
 
     def get_form(self, request, obj=None, **kwargs):
@@ -96,7 +97,11 @@ class AccordionPlugin(CMSPluginBase):
             self.page
         )
         pk = self.cms_plugin_instance.pk
-        widget = TextEditorWidget(installed_plugins=plugins, pk=pk)
+        widget = TextEditorWidget(
+            installed_plugins=plugins, pk=pk,
+            placeholder=self.placeholder,
+            plugin_language=self.cms_plugin_instance.language
+        )
 
         form_class = super(AccordionPlugin, self).get_form(
             request, obj=obj, **kwargs)

@@ -83,6 +83,7 @@ MIDDLEWARE_CLASSES += (
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'xdimension_web.xdw_web.middleware.PartialResponseMiddleware',
     'django.middleware.gzip.GZipMiddleware',
 )
 
