@@ -91,7 +91,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.media',
     'django.core.context_processors.static',
-    'cms.context_processors.media',
+    'cms.context_processors.cms_settings',
     'sekizai.context_processors.sekizai',
 )
 
@@ -124,7 +124,7 @@ INSTALLED_APPS = (
     'mptt',
     'menus',
     'sekizai',
-    #'djangocms_file',
+    'djangocms_file',
     'djangocms_picture',
     'djangocms_video',
     'django.contrib.redirects',

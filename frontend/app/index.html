@@ -1,4 +1,4 @@
-<!-- @if ENV='dist' -->{% load cms_tags %}{% if not request.GET.angular %}<!-- @endif -->
+<!-- @if ENV='dist' -->{% load cms_tags sekizai_tags %}<!-- @endif -->
 <!doctype html>
 <!--[if lt IE 7]>      <html ng-app="xdiscoveryApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html ng-app="xdiscoveryApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -18,11 +18,15 @@
 	<link rel="stylesheet" href="/bower_components/pace/themes/pace-theme-minimal.css">
 	<link rel="stylesheet" href="/styles/main.css">
 	<!-- endbuild -->
-				<!-- @if ENV='dist' -->
+	<!-- @if ENV='dist' -->
 	{% block extrahead %}{% endblock %}
-				<!-- @endif -->
+	{% render_block "css" %}
+	<!-- @endif -->
 </head>
 	<body ng-controller="siteCtrl">
+	  <!-- @if ENV='dist' -->
+	  {% cms_toolbar %}
+	  <!-- @endif -->
 		<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
@@ -65,9 +69,7 @@
 				{% comment %}This condition splits the whole page
 				in two parts, so that when angular loads it only the
 				`content` block is rendered{% endcomment %}
-				{% endif %}
 				{% block content %}{% endblock %}
-				{% if not request.GET.angular %}
 				<!-- @endif -->
 			</div>
 		</section>
@@ -122,6 +124,9 @@
 			 ga('send', 'pageview');
 		</script>
 
+		 <!-- @if ENV='dist' -->
+		 {% if not 'edit' in request.GET %}
+		 <!-- @endif -->
 		<!-- build:js /scripts/vendor.js -->
 		<script src="/bower_components/jquery/jquery.js"></script>
 		<script src="/bower_components/angular/angular.js"></script>
@@ -188,5 +193,9 @@
 			}
 		});
 		</script>
+		 <!-- @if ENV='dist' -->
+		 {% endif %}
+	{% render_block "js" %}
+		 <!-- @endif -->
 </body>
-</html><!-- @if ENV='dist' -->{% endif %}<!-- @endif -->
+</html>
