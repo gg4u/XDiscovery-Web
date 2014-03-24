@@ -4,6 +4,7 @@ app = angular.module('xdiscoveryApp')
 
 app.controller 'AtlasCtrl', ($scope, $rootScope, $location, xDiscoveryApi, mapSearch, config) ->
 	$rootScope.documentTitle = "Atlas"
+	$rootScope.site.pageClasses = ['fixed-mobile-menu']
 
 	# Search functionality model
 	q = $location.search()['topic']
