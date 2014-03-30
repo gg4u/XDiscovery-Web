@@ -59,7 +59,7 @@ def validate_environment(env):
 
 
 @task
-def deploy(env, frontend='True', backend='True'):
+def deploy(env, frontend='True', backend='True', branch=''):
     env = validate_environment(env)
     if frontend.lower() in YES_VALUES:
         local('./run_in_env.sh .env-{env} python manage.py '
@@ -72,7 +72,9 @@ def deploy(env, frontend='True', backend='True'):
         #  *after* db migration.
         #  - Db migration should happen in a separate utility heroku app
         app = get_app_name(env)
-        local('git push {} master'.format(app))
+        if not branch:
+            branch = 'master' if env == 'production' else 'develop'
+        local('git push {app} {branch} master'.format(app=app, branch=branch))
         local('heroku run python manage.py migrate --all --noinput --app {}'
               .format(app))
 
