@@ -74,7 +74,7 @@ def deploy(env, frontend='True', backend='True', branch=''):
         app = get_app_name(env)
         if not branch:
             branch = 'master' if env == 'production' else 'develop'
-        local('git push {app} {branch} master'.format(app=app, branch=branch))
+        local('git push {app} {branch}:master'.format(app=app, branch=branch))
         local('heroku run python manage.py migrate --all --noinput --app {}'
               .format(app))
 
