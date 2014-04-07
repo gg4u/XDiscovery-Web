@@ -5,7 +5,7 @@ django==1.5.5
 djangorestframework==2.3.8
 django-rest-swagger==0.1.8
 Markdown==2.3.1
-git+git://github.com/divio/django-cms@master
+git+git://github.com/divio/django-cms@3.0c2
 Pillow==2.0.0
 django-cors-headers==0.11
 boto==2.13.3
@@ -16,7 +16,7 @@ pytz==2013d
 python-dateutil==2.1
 django-json-field==0.5.5
 django-filter==0.7
-djangocms-text-ckeditor>=2.0
+djangocms-text-ckeditor==2.1.4
 djangocms-picture==0.0.2
 djangocms-file==0.0.1
 djangocms-video==0.0.1
