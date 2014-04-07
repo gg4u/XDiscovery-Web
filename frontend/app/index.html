@@ -12,12 +12,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="apple-itunes-app" content="app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL">
 
-	<!--[if lt IE 9]>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.3.0/es5-shim.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.0/json3.min.js"></script>
-	<![endif]-->
-
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400' rel='stylesheet' type='text/css'>
 	<!-- build:css({.tmp,app}) /styles/main.css -->
 	<link rel="stylesheet" href="/bower_components/select2/select2.css">
@@ -35,6 +29,12 @@
 	  <!-- @endif -->
 		<!--[if lt IE 7]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+
+		<!--[if lte IE 9]>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.3.0/es5-shim.min.js"></script>
+			<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"></script>
 		<![endif]-->
 
 		<div id="fb-root"></div>
@@ -139,7 +139,7 @@
 		 {% if not 'edit' in request.GET %}
 		 <!-- @endif -->
 		<!-- build:js /scripts/vendor.js -->
-		<script src="/bower_components/jquery/jquery.js"></script>
+		<script src="/bower_components/jquery/dist/jquery.js"></script>
 		<script src="/bower_components/angular/angular.js"></script>
 		<!-- endbuild -->
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/2.1.0/jquery.imagesloaded.min.js"></script>
