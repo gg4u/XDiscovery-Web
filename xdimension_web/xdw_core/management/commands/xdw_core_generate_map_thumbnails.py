@@ -46,37 +46,41 @@ class Command(NoArgsCommand):
 
         print('going through {} maps'.format(maps.count()))
 
-        n_skip, n_errs, n_ok = 0, 0, 0
+        counters = {'n_ok': 0, 'n_errs': 0, 'n_skip': 0}
 
         def log_stuff(force=False):
-            n = n_skip + n_errs + n_ok
+            n = sum(counters.values())
             if (n and not n % 10) or force:
-                print('\rOK: {} skipped: {} errs: {}'.format(
-                    n_ok, n_skip, n_errs))
+                print('\rOK: {n_ok} skipped: {n_skip} errs: {n_errs}'.format(
+                    **counters))
 
         results = []
 
+        def drain_results():
+            for mp, result in results:
+                ok = result.get()
+                log_stuff()
+                if not ok:
+                    print 'no thumbnail for map {}'.format(mp.pk)
+                    counters['n_errs'] += 1
+                    continue
+                counters['n_ok'] += 1
+            del results[:]
 
         for mp in maps.only('pk', 'thumbnail'):
-            if not force and mp.thumbnail:
-                n_skip += 1
-                continue
-            results.append((mp, pool.apply_async(generate_and_save, [mp.pk])))
-            if STOP or len(results) >= BATCH_SIZE:
-                if STOP:
-                    print 'waiting for all processes to terminate...'
-                for mp, result in results:
-                    ok = result.get()
-                    log_stuff()
-                    if not ok:
-                        print 'no thumbnail for map {}'.format(mp.pk)
-                        n_errs += 1
-                        continue
-                    n_ok += 1
-                results = []
-
             if STOP:
                 break
+            if not force and mp.thumbnail:
+                counters['n_skip'] += 1
+                continue
+
+            results.append((mp, pool.apply_async(generate_and_save, [mp.pk])))
+
+            if len(results) >= BATCH_SIZE:
+                drain_results()
+
+        drain_results()
+
         pool.close()
         pool.join()
         log_stuff(force=True)
