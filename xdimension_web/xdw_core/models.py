@@ -32,7 +32,10 @@ class Map(models.Model):
     author_name = models.CharField(max_length=500, blank=True)
     author_surname = models.CharField(max_length=500, blank=True)
     description = models.TextField(blank=True)
-    picture_url = models.CharField(max_length=1000, blank=True)
+    picture_url = models.CharField(max_length=1000, blank=True,
+                                   help_text='custom thumbnail')
+    thumbnail = models.ImageField(upload_to='map_thumbnail', max_length=1000,
+                                  blank=True, null=True)
     net = models.IntegerField(db_index=True, blank=True, null=True)
     # Non-editable fields calculated from map_data
     node_count = models.IntegerField(editable=False)
