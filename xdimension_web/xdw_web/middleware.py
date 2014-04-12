@@ -9,8 +9,7 @@ class PartialResponseMiddleware(object):
             response.template_name = 'xdw_web/cms_templates/angular.html'
         return response
 
-
-OK_URLS = ['/en/atlas', '/api', '/views', '/map', '/graph']
+OK_URLS = ['/en/atlas', '/api', '/views', '/map', '/graph', '/media']
 
 
 class WIPMiddleware(object):

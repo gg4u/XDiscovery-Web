@@ -20,7 +20,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         self.assertContains(resp, '/frontend/styles/')
 
     def test_empty(self):
-        resp = self.client.get('/api/map', content_type='application/json')
+        resp = self.client.get('/api-atlas/map', content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertEqual(len(data['map']), 0)
@@ -36,7 +36,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
 
     def test_list(self):
         save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        resp = self.client.get('/api/map', content_type='application/json')
+        resp = self.client.get('/api-atlas/map', content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertEqual(len(data['map']), 1)
@@ -46,7 +46,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
 
     def test_list_sort_popular(self):
         self.create_maps(10)
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'ordering': 'popularity'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -55,7 +55,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         self.assertEqual([str(i) for i in range(10)],
                          [obj['title'] for obj in data['map']])
         # reverse
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'ordering': '-popularity'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -66,7 +66,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
 
     def test_list_sort_date_created(self):
         self.create_maps(10)
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'ordering': 'date_created'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -75,7 +75,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         self.assertEqual([str(i) for i in range(9, -1, -1)],
                          [obj['title'] for obj in data['map']])
         # reverse
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'ordering': '-date_created'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -86,14 +86,14 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
 
     def test_list_filter_featured(self):
         self.create_maps(10, featured=False)
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'featured': '1'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertEqual(len(data['map']), 0)
         # not featured
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'featured': '0'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -102,7 +102,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
 
     def test_list_search_empty(self):
         save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'topic': 'xxxxxxxxxxx'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -111,14 +111,14 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
 
     def test_list_search(self):
         save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'topic': 'lion'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertEqual(len(data['map']), 1)
         # case-insensitive
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'topic': 'liON'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -129,7 +129,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         mapp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
         mapp.status = Map.STATUS_UNPUBLISHED
         save_map(mapp)
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
@@ -139,7 +139,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         mapp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
         mapp.status = Map.STATUS_DELETED
         save_map(mapp)
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
@@ -148,7 +148,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
     def test_list_search_comma(self):
         save_map(Map(map_data=get_test_data('sharing_2.json')))
         save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'topic': ['camillo borghese, 6th']},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -158,7 +158,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
     def test_list_search_comma_2(self):
         save_map(Map(map_data=get_test_data('sharing_2.json')))
         save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'topic': ['camillo borghese, 7th']},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -168,7 +168,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
     def test_list_search_comma_3(self):
         save_map(Map(map_data=get_test_data('sharing_2.json')))
         save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'topic': ['camillo borghese, lion']},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -185,14 +185,14 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         self.assertEqual(
             topics,
             list(mp.maptopic_set.order_by('topic').values_list('topic', flat=True)))
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'topic': ['lion', 'felis']},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertEqual(len(data['map']), 1)
         # case-insensitive
-        resp = self.client.get('/api/map',
+        resp = self.client.get('/api-atlas/map',
                                {'topic': 'liON'},
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
@@ -201,7 +201,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
 
     def test_detail(self):
         mp = save_map(Map(map_data=get_test_data('sharingAppWeb.json')))
-        resp = self.client.get('/api/map/{}'.format(mp.pk),
+        resp = self.client.get('/api-atlas/map/{}'.format(mp.pk),
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
@@ -210,7 +210,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         self.assertIn('graph', data)
         self.assertEqual(data['popularity'], 0)
         # popularity is increased
-        resp = self.client.get('/api/map/{}'.format(mp.pk),
+        resp = self.client.get('/api-atlas/map/{}'.format(mp.pk),
                                content_type='application/json')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
@@ -219,7 +219,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
 class MapUploadTestCase(LiveServerTestCase, MapTestCaseMixIn):
 
     def test_no_auth(self):
-        resp = self.client.post('/api/map',
+        resp = self.client.post('/api-atlas/map',
                                 get_test_data('sharingAppWeb.json'),
                                 content_type='application/json')
         self.assertEqual(resp.status_code, 401)
@@ -230,7 +230,7 @@ class MapUploadTestCase(LiveServerTestCase, MapTestCaseMixIn):
         user.set_password('pass')
         user.save()
         resp = self.client.post(
-            '/api/map',
+            '/api-atlas/map',
             get_test_data('sharingAppWeb.json'),
             content_type='application/json',
             HTTP_AUTHORIZATION='Basic {}'.format(base64.b64encode('test:pass')))
