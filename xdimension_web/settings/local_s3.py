@@ -13,6 +13,13 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_STORAGE_DOMAIN = os.environ.get('AWS_STORAGE_DOMAIN')
 # allows conditional upload (needs dateutil)
 AWS_PRELOAD_METADATA = True
+AWS_IS_GZIPPED = True
+GZIP_CONTENT_TYPES = (
+    'text/css',
+    'application/javascript',
+    'application/x-javascript',
+    'image/svg+xml',
+)
 
 # media files (images uploaded by users)
 AWS_LOCATION = 'media' # this only impacts unversioned storage
