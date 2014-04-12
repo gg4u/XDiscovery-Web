@@ -98,7 +98,7 @@ def make_thumbnail(images):
                    for image, s1 in zip(images, scaling1)[n1:]]
     if dimensions2:
         # fix height of right bottom tile
-        dimensions2[-1] = (dimensions1[-1][0],
+        dimensions2[-1] = (dimensions2[-1][0],
                            H - sum(dim[1] for dim in dimensions2[:-1]))
     dimensions = itertools.chain(dimensions1, dimensions2)
     if DEBUG:
