@@ -56,27 +56,34 @@ class Command(NoArgsCommand):
 
         results = []
 
+        def drain_results():
+            n_errs_, n_ok_ = 0, 0
+            for mp, result in results:
+                ok = result.get()
+                log_stuff()
+                if not ok:
+                    print 'no thumbnail for map {}'.format(mp.pk)
+                    n_errs_ += 1
+                    continue
+                n_ok_ += 1
+            del results[:]
+            return n_ok_ + n_ok, n_errs + n_errs_
 
         for mp in maps.only('pk', 'thumbnail'):
-            if not force and mp.thumbnail:
-                n_skip += 1
-                continue
-            results.append((mp, pool.apply_async(generate_and_save, [mp.pk])))
-            if STOP or len(results) >= BATCH_SIZE:
-                if STOP:
-                    print 'waiting for all processes to terminate...'
-                for mp, result in results:
-                    ok = result.get()
-                    log_stuff()
-                    if not ok:
-                        print 'no thumbnail for map {}'.format(mp.pk)
-                        n_errs += 1
-                        continue
-                    n_ok += 1
-                results = []
-
             if STOP:
                 break
+            if not force and mp.thumbnail:
+                print mp.pk, mp.thumbnail.file
+                n_skip += 1
+                continue
+
+            results.append((mp, pool.apply_async(generate_and_save, [mp.pk])))
+
+            if len(results) >= BATCH_SIZE:
+                n_ok, n_errs = drain_results()
+
+        n_ok, n_errs = drain_results()
+
         pool.close()
         pool.join()
         log_stuff(force=True)
