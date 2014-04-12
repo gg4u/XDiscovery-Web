@@ -10,6 +10,8 @@ from django.core.files import File
 # Images in a thumbnail
 MAX_IMAGES = 5
 
+IMAGE_WIDTH = 300
+
 DEBUG = False
 
 
@@ -44,10 +46,11 @@ def download_images(urls):
         yield Image.open(StringIO(resp.content))
 
 
-def make_thumbnail(images, L=400):
+def make_thumbnail(images):
     n1 = 2
     n2 = 3
     n = n1 + n2
+    L = IMAGE_WIDTH
     images = [image for image in itertools.islice(images, n1 + n2)]
     if len(images) < n:
         return
