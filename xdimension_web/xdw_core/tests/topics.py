@@ -13,7 +13,7 @@ __all__ = ['TopicTestCase']
 class TopicTestCase(TestCase, MapTestCaseMixIn):
 
     def test_list_empty(self):
-        resp = self.client.get('/api/topic')
+        resp = self.client.get('/api-atlas/topic')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertIn('topic', data)
@@ -38,7 +38,7 @@ class TopicTestCase(TestCase, MapTestCaseMixIn):
 
     def test_list(self):
         self.create_maps(10, title='titolo')
-        resp = self.client.get('/api/topic')
+        resp = self.client.get('/api-atlas/topic')
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertIn('topic', data)
@@ -58,7 +58,7 @@ class TopicTestCase(TestCase, MapTestCaseMixIn):
 
     def test_list_filter(self):
         self.create_maps(10)
-        resp = self.client.get('/api/topic', {'q': 'lio'})
+        resp = self.client.get('/api-atlas/topic', {'q': 'lio'})
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertIn('topic', data)
@@ -72,7 +72,7 @@ class TopicTestCase(TestCase, MapTestCaseMixIn):
 
     def test_unpublished(self):
         self.create_maps(10, status=Map.STATUS_UNPUBLISHED)
-        resp = self.client.get('/api/topic', {'q': 'lio'})
+        resp = self.client.get('/api-atlas/topic', {'q': 'lio'})
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertIn('topic', data)
