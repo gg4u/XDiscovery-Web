@@ -4,42 +4,59 @@ import requests
 from PIL import Image
 from StringIO import StringIO
 import itertools
-import math
 from django.core.files import File
 
-# Images in a thumbnail
-MAX_IMAGES = 5
+# Tiles in a thumbnail
+MAX_TILES = 5
 
 IMAGE_WIDTH = 300
+
+FETCH_BATCH_SIZE = 50
 
 DEBUG = False
 
 
-def fetch_page_images(page_ids):
-    ids = page_ids[:MAX_IMAGES]
-    if len(ids) < MAX_IMAGES:
-        return
-    resp = requests.get(
-        'http://en.wikipedia.org/w/api.php',
-        params={'pageids': '|'.join(str(i) for i in ids),
-                'action': 'query',
-                'format': 'json',
-                'prop': 'pageimages|extracts',
-                'pilimit': len(ids),
-                'pithumbsize': 400,
-                'exlimit': len(ids),
-                'exintro': 1,
-                'exsentences': 1,
-                'redirects': ''}
-    )
-    for _, page_info in resp.json()['query']['pages'].items():
-        try:
-            yield page_info['thumbnail']['source']
-        except KeyError:
-            pass
+def left_column_n_tiles(images):
+    '''How many tiles in the left column?
 
+    Params:
+        tiles as Image instances.
+
+    Returns:
+        an integer representing how many tiles to put in the first column.
+    '''
+    return 1 if len(images) == 3 else 2
+
+
+def fetch_page_images(page_ids):
+    '''Get image urls from wikipedia. '''
+    while True:
+        ids = [id_ for id_ in itertools.islice(page_ids, 0, FETCH_BATCH_SIZE)]
+        if not ids:
+            break
+        resp = requests.get(
+            'http://en.wikipedia.org/w/api.php',
+            params={'pageids': '|'.join(str(i) for i in ids),
+                    'action': 'query',
+                    'format': 'json',
+                    'prop': 'pageimages|extracts',
+                    'pilimit': len(ids),
+                    'pithumbsize': 400,
+                    'exlimit': len(ids),
+                    'exintro': 1,
+                    'exsentences': 1,
+                    'redirects': ''}
+        )
+        resp.raise_for_status()
+        for _, page_info in resp.json()['query']['pages'].items():
+            try:
+                yield page_info['thumbnail']['source']
+            except KeyError:
+                pass
+            
 
 def download_images(urls):
+    '''Download images and turn them into an Image.'''
     for url in urls:
         resp = requests.get(url)
         resp.raise_for_status()
@@ -47,13 +64,21 @@ def download_images(urls):
 
 
 def make_thumbnail(images):
-    n1 = 2
-    n2 = 3
-    n = n1 + n2
+    '''Build the thumbnail tiling the images.
+
+    Arranges the tiles in two columns.
+
+    Params:
+        an iterable of Image tiles.
+
+    Returns:
+        an in-memory Image with the thumbnail or None if not enough tiles
+    '''
     L = IMAGE_WIDTH
-    images = [image for image in itertools.islice(images, n1 + n2)]
-    if len(images) < n:
+    images = [image for image in itertools.islice(images, MAX_TILES)]
+    if not images:
         return
+    n1 = left_column_n_tiles(images)
     if DEBUG:
         print('original size: {}'.format([image.size for image in images]))
     # Calculate first scaling factor
@@ -61,7 +86,7 @@ def make_thumbnail(images):
     # Calculate H1 and H2
     H1 = sum(image.size[1] * s for image, s in itertools.islice(zip(images, scaling1), n1))
     H2 = sum(image.size[1] * s for image, s in itertools.islice(zip(images, scaling1), n1, None))
-    alpha = H2 / (H1 + H2)
+    alpha = H2 / (H1 + H2) if H2 else 1
 
     # Calculate tiles dimensions
     L1 = int(round(alpha * L))
@@ -71,16 +96,17 @@ def make_thumbnail(images):
     H = sum(dim[1] for dim in dimensions1)
     dimensions2 = [(L2, int(round(image.size[1] * (1 - alpha) * s1)))
                    for image, s1 in zip(images, scaling1)[n1:]]
-    # fix height of right bottom tile
-    dimensions2[-1] = (dimensions1[-1][0],
-                       H - sum(dim[1] for dim in dimensions2[:-1]))
+    if dimensions2:
+        # fix height of right bottom tile
+        dimensions2[-1] = (dimensions1[-1][0],
+                           H - sum(dim[1] for dim in dimensions2[:-1]))
     dimensions = itertools.chain(dimensions1, dimensions2)
     if DEBUG:
         print('tile size: {}'.format([dimensions1 + dimensions2]))
     del image
 
     # Combine all tiles in a single image
-    thumbnail = Image.new(images[0].mode, (L, H))
+    thumbnail = Image.new('RGBA', (L, H))
     if DEBUG:
         print('thumbnail size: {}'.format(thumbnail.size))
     x, y = 0, 0
@@ -97,9 +123,46 @@ def make_thumbnail(images):
     return thumbnail
 
 
-def generate_map_thumbnail(map_instance):
+def get_map_page_ids(map_instance):
+    '''Wikipedia page ids in a map.
+
+    Returns:
+        a generator yielding page ids as strings.
+    '''
+    so_far = set()
     data = map_instance.map_data['map']
+    # Tapped
     ids = data.get('tappedNodes', [])
+    for id_ in ids:
+        if id_ not in so_far:
+            id_ = str(id_)
+            yield id_
+            so_far.add(id_)
+    # Pagerank
+    for node in data.get('pagerank', []):
+        id_ = str(node['id'])
+        if id_ not in so_far:
+            so_far.add(id_)
+            yield id_
+    # All nodes
+    for node in data.get('graph', []):
+        for id_ in (node['source'], node['target']):
+            id_ = str(id_)
+            if id_ not in so_far:
+                so_far.add(id_)
+                yield id_
+
+
+def generate_map_thumbnail(map_instance):
+    '''Build a thumbnail for a map.
+
+    Params:
+        a map instance
+
+    Returns:
+        an in-memory Image.
+    '''
+    ids = get_map_page_ids(map_instance)
     urls = fetch_page_images(ids)
     images = download_images(urls)
     # XXX For testing
@@ -109,6 +172,12 @@ def generate_map_thumbnail(map_instance):
 
 
 def save_map_thumbnail(map_instance, thumb, commit=True):
+    '''Persist the thumbnail in a map instance.
+
+    Params:
+        - a map instance,
+        - the thumbnail
+    '''
     thumb_file = File(StringIO())
     thumb.save(thumb_file, 'JPEG')
     map_instance.thumbnail.save('{}.jpg'.format(map_instance.pk), thumb_file)
