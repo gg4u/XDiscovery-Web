@@ -20,7 +20,7 @@ class Command(NoArgsCommand):
 
     @transaction.autocommit
     def handle_noargs(self, **opts):
-        map_ids = opts.get('id')
+        map_ids = opts.get('ids')
         force = opts.get('force')
 
         maps = Map.objects.all()
