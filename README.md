@@ -1,10 +1,20 @@
 # xdiscovery_web
 
+## Tools
+
+Generate thumbnails:
+
+	python manage.py xdw_core_generate_map_thumbnails
+
+Rebuild seach engine:
+
+	python manage.py xdw_core_restore_topics
+
 
 ## Development environment
 
-Requirements:
-	``pyenv``
+Requirements: `pyenv`
+
 
 ### Python
 
@@ -66,23 +76,23 @@ A stripped-down version of the backend environment, using sqlite.
 
 Bootstrapping:
 
- pip install -r requirements/test.txt
- python manage.py syncdb --settings=xdimension_web.settings.test --noinput
- python manage.py migrate --all --settings=xdimension_web.settings.test --noinput
+    pip install -r requirements/test.txt
+    python manage.py syncdb --settings=xdimension_web.settings.test --noinput
+    python manage.py migrate --all --settings=xdimension_web.settings.test --noinput
 
 Load initial data
 
- python manage.py loaddata xdimension_web/fixtures/test_data.json --settings=xdimension_web.settings.test
+    python manage.py loaddata xdimension_web/fixtures/test_data.json --settings=xdimension_web.settings.test
 
 Build the app:
 
- fab build:test
+    fab build:test
 
 Now the views are in ``xdimension_web/xdw_web/templates/frontend``
 
 Run the app:
 
- python manage.py runserver --settings=xdimension_web.settings.test
+    python manage.py runserver --settings=xdimension_web.settings.test
 
 
 For the admin go to ``http://localhost:8000/en/admin/`` (username: admin, password: admin)
@@ -104,8 +114,8 @@ Bootstrapping:
 
 Run the app:
 
- fab build
- python manage.py runserver
+    fab build
+    python manage.py runserver
 
 
 
@@ -199,4 +209,5 @@ Frontend is contained in the ``frontend`` directory.
 
 ## Front End Notes
 
-To run the frontend, execute `grunt server` in the `frontend` directory
+To run the frontend standalone, execute `grunt server` in the `frontend`
+directory
