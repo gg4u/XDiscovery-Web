@@ -40,7 +40,7 @@ class Command(NoArgsCommand):
 
         for mp in maps:
             log_stuff()
-            if not force and mp.thumbnail is not None:
+            if not force and mp.thumbnail:
                 n_skip += 1
                 continue
             thumb = generate_map_thumbnail(mp)
