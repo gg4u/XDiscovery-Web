@@ -50,7 +50,7 @@ class Command(NoArgsCommand):
 
         def log_stuff(force=False):
             n = n_skip + n_errs + n_ok
-            if (n or force) and not n % 10:
+            if (n and not n % 10) or force:
                 print('\rOK: {} skipped: {} errs: {}'.format(
                     n_ok, n_skip, n_errs))
 
