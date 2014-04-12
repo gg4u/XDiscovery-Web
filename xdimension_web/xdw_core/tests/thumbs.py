@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 from ..models import Map, MapTopic
 from ..maps import save_map
-from ..thumbs import generate_map_thumbnail
+from ..thumbs import generate_map_thumbnail, save_map_thumbnail
 from .test_utils import MapTestCaseMixIn, get_test_data
 
 
@@ -22,5 +22,5 @@ class ThumbTestCase(LiveServerTestCase, MapTestCaseMixIn):
         thumb = generate_map_thumbnail(mp)
         self.assertTrue(thumb)
         thumb.show()
-        self.assertEqual(thumb.size, (400, 298))
-
+        self.assertEqual(thumb.size, (300, 233))
+        save_map_thumbnail(mp, thumb)
