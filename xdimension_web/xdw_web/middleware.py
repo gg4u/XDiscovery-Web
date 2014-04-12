@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 
 
-OK_URLS = ['/en/atlas', '/api', '/views', '/map', '/graph']
+OK_URLS = ['/en/atlas', '/api', '/views', '/map', '/graph', '/media']
 
 
 class WIPMiddleware(object):
