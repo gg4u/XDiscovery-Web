@@ -46,43 +46,40 @@ class Command(NoArgsCommand):
 
         print('going through {} maps'.format(maps.count()))
 
-        n_skip, n_errs, n_ok = 0, 0, 0
+        counters = {'n_ok': 0, 'n_errs': 0, 'n_skip': 0}
 
         def log_stuff(force=False):
-            n = n_skip + n_errs + n_ok
+            n = sum(counters.values())
             if (n and not n % 10) or force:
-                print('\rOK: {} skipped: {} errs: {}'.format(
-                    n_ok, n_skip, n_errs))
+                print('\rOK: {n_ok} skipped: {n_skip} errs: {n_errs}'.format(
+                    **counters))
 
         results = []
 
         def drain_results():
-            n_errs_, n_ok_ = 0, 0
             for mp, result in results:
                 ok = result.get()
                 log_stuff()
                 if not ok:
                     print 'no thumbnail for map {}'.format(mp.pk)
-                    n_errs_ += 1
+                    counters['n_errs'] += 1
                     continue
-                n_ok_ += 1
+                counters['n_ok'] += 1
             del results[:]
-            return n_ok_ + n_ok, n_errs + n_errs_
 
         for mp in maps.only('pk', 'thumbnail'):
             if STOP:
                 break
             if not force and mp.thumbnail:
-                print mp.pk, mp.thumbnail.file
-                n_skip += 1
+                counters['n_skip'] += 1
                 continue
 
             results.append((mp, pool.apply_async(generate_and_save, [mp.pk])))
 
             if len(results) >= BATCH_SIZE:
-                n_ok, n_errs = drain_results()
+                drain_results()
 
-        n_ok, n_errs = drain_results()
+        drain_results()
 
         pool.close()
         pool.join()
