@@ -12,4 +12,9 @@ $learn-theme-color: #428bca;
 	.sub-nav dd.active a {
 		background: $learn-theme-color;
 	}
+
+	.xd-map-wall-card.featured {
+		@include box-shadow($learn-theme-color 0px 0px 5px);
+		border-color: $learn-theme-color;
+	}
 }
