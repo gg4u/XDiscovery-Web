@@ -84,6 +84,7 @@ MIDDLEWARE_CLASSES += (
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'xdimension_web.xdw_web.middleware.PartialResponseMiddleware',
     'django.middleware.gzip.GZipMiddleware',
 )
 
@@ -93,7 +94,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.media',
     'django.core.context_processors.static',
-    'cms.context_processors.media',
+    'cms.context_processors.cms_settings',
     'sekizai.context_processors.sekizai',
 )
 
@@ -126,13 +127,9 @@ INSTALLED_APPS = (
     'mptt',
     'menus',
     'sekizai',
-    'cms.plugins.file',
-    'cms.plugins.picture',
-    'cms.plugins.video',
-    'cms.plugins.link',
-    'cms.plugins.googlemap',
-    'cms.plugins.twitter',
-    'cms.plugins.inherit',
+    'djangocms_file',
+    'djangocms_picture',
+    'djangocms_video',
     'django.contrib.redirects',
     # rest API
     'rest_framework',

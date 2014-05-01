@@ -3,7 +3,7 @@ from __future__ import absolute_import
 from cms.plugin_base import CMSPluginBase
 from cms.models.pluginmodel import CMSPlugin
 from cms.plugin_pool import plugin_pool
-from cms.plugins.utils import get_plugins
+from cms.utils.plugins import get_plugins
 from djangocms_text_ckeditor.widgets import TextEditorWidget
 from djangocms_text_ckeditor.utils import plugin_tags_to_user_html
 from django.forms.fields import CharField
@@ -76,7 +76,8 @@ class AccordionNavigationPlugin(CMSPluginBase):
             context['accordion_items'] = [
                 p.get_plugin_instance()[0]
                 for p in get_plugins(context['request'],
-                                     target_placeholder)]
+                                     target_placeholder,
+                                     self.render_template)]
         return context
 
 plugin_pool.register_plugin(AccordionNavigationPlugin)
@@ -86,6 +87,7 @@ class AccordionPlugin(CMSPluginBase):
     name = _("Accordion Plugin")
     render_template = "xdw_web/cms_plugins/accordion.html"
     model = AccordionPluginModel
+    change_form_template = "cms/plugins/text_plugin_change_form.html"
     allow_children = True
 
     def get_form(self, request, obj=None, **kwargs):
@@ -95,7 +97,11 @@ class AccordionPlugin(CMSPluginBase):
             self.page
         )
         pk = self.cms_plugin_instance.pk
-        widget = TextEditorWidget(installed_plugins=plugins, pk=pk)
+        widget = TextEditorWidget(
+            installed_plugins=plugins, pk=pk,
+            placeholder=self.placeholder,
+            plugin_language=self.cms_plugin_instance.language
+        )
 
         form_class = super(AccordionPlugin, self).get_form(
             request, obj=obj, **kwargs)
