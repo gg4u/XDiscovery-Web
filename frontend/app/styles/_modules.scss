@@ -127,6 +127,11 @@
 	overflow: hidden;
 	position: relative;
 
+	&.featured {
+		@include box-shadow($primary-color 0px 0px 5px);
+		border-color: $primary-color;
+	}
+
 	.image {
 		display: block;
 		width: 100%;
@@ -595,7 +600,7 @@ $graph-page-header-height: 52px;
 	padding-bottom: 0;
 
 	.header-content {
-		margin-bottom: 1em;
+		margin-bottom: .3em;
 	}
 
 	.header-secondary {
@@ -604,6 +609,12 @@ $graph-page-header-height: 52px;
 
 	.breadcrumbs {
 		margin-bottom: 0;
+	}
+
+	@media #{$small} {
+		.header-content {
+			margin-bottom: 1em;
+		}
 	}
 }
 
