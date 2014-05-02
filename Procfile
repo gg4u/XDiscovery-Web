@@ -1,1 +1,1 @@
-web: circus circus.ini
+web: circusd circus.ini
