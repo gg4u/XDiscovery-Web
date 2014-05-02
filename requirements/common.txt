@@ -1,11 +1,11 @@
 gunicorn==18.0
 gevent==0.13.8
 psycopg2==2.5.1
-django==1.5.5
+django==1.5.6
 djangorestframework==2.3.8
 django-rest-swagger==0.1.8
 Markdown==2.3.1
-django-cms==3.0
+django-cms==3.0.1
 Pillow==2.4.0
 django-cors-headers==0.11
 boto==2.13.3
