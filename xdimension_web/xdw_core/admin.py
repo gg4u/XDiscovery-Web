@@ -5,9 +5,16 @@ from django.conf.urls import patterns, url
 from django.shortcuts import render
 from django.utils.html import format_html
 from django.db import transaction
+from django.conf import settings
+import zmq
 
 from .models import Map
 from .maps import save_map, delete_map, _save_map
+
+# For talking to worker
+context = zmq.Context()
+zmq_socket = context.socket(zmq.PUB)
+zmq_socket.connect("tcp://127.0.0.1:{}".format(settings.ZMQ_WORKER_PORT))
 
 
 class MapAdmin(ModelAdmin):
@@ -24,7 +31,10 @@ class MapAdmin(ModelAdmin):
         model = Map
 
     def save_model(self, request, obj, form, change):
+        if obj.status in (Map.STATUS_OK, Map.STATUS_PUBLISHING):
+            obj.thumbnail_status = Map.THUMBNAIL_STATUS_DIRTY
         save_map(obj)
+        zmq_socket.send('wake up {}'.format(obj.pk))
 
     def delete_model(self, request, obj):
         delete_map(obj)
@@ -64,9 +74,11 @@ class MapAdmin(ModelAdmin):
         with transaction.commit_on_success():
             for i, obj in enumerate(queryset):
                 if obj.status != Map.STATUS_OK:
-                    obj.status = Map.STATUS_OK
+                    obj.status = Map.STATUS_PUBLISHING
+                    obj.thumnail_status = Map.TUMBNAIL_STATUS_DIRTY
                     _save_map(obj)
         self.message_user(request, '{} maps published'.format(i))
+        zmq_socket.send('wake up')
     publish_action.short_description = 'Publish selected maps'
 
 
