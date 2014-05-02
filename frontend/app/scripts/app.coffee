@@ -10,6 +10,8 @@ app.config ($routeProvider, $locationProvider, config) ->
 		do (customPageSettings) ->
 			if angular.isString(customPageSettings)
 				customPageSettings = contentUrl: customPageSettings
+			if not angular.isDefined(customPageSettings.showHeader)
+				customPageSettings.showHeader = !customPageSettings.hideHeader
 			$routeProvider.when route,
 				templateUrl: '/views/custompage.html'
 				controller: 'custompageCtrl'

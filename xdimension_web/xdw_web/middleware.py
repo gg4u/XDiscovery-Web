@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 
 class PartialResponseMiddleware(object):
@@ -15,7 +16,8 @@ OK_URLS = ['/en/atlas', '/api', '/views', '/map', '/graph', '/media']
 class WIPMiddleware(object):
 
     def process_request(self, request):
-        if (not request.user.is_authenticated() and
+        if (settings.HIDE_CONTENT and
+                not request.user.is_authenticated() and
                 not request.path.startswith(reverse('admin:index')) and
                 not [None for x in OK_URLS if request.path.startswith(x)] and
                 not request.GET.get('angular') and

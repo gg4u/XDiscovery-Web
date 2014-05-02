@@ -44,7 +44,7 @@
 			<div class="grid-sizer"></div>
 
 			<div masonry-brick="" ng-repeat="map in search.results.map track by map.id">
-				<article class="xd-map-wall-card">
+				<article class="xd-map-wall-card" ng-class="{ 'featured':map.featured }">
 					<a ng-href="/graph/{% verbatim %}{{map.id}}{% endverbatim %}" target="_self"><img ng-src="{% verbatim %}{{map.thumbnail.url}}{% endverbatim %}" masonry-layout-on="map.thumbnail.url" class="image" alt=""></a>
 
 					<header class="content">
