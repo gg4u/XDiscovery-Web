@@ -18,10 +18,19 @@ class Map(models.Model):
     STATUS_OK = 'O'
     STATUS_DELETED = 'D'
     STATUS_UNPUBLISHED = 'U'
+    STATUS_PUBLISHING = 'i'  # request to publish but thumbnail is dirty
 
     FEATURED_NOT = 0
     FEATURED_YES = 1
 
+    THUMBNAIL_STATUS_OFF = 'x'
+    THUMBNAIL_STATUS_DIRTY = 'd'
+    THUMBNAIL_STATUS_OK = 'O'
+    THUMBNAIL_STATUS_CHOICES = [
+        (THUMBNAIL_STATUS_OFF, 'not present'),
+        (THUMBNAIL_STATUS_DIRTY, 'in progress'),
+        (THUMBNAIL_STATUS_OK, 'ok')
+    ]
     # To be stored inside the grouped title list
     MAX_NODE_TITLES = 20
 
@@ -54,6 +63,10 @@ class Map(models.Model):
                                        (STATUS_UNPUBLISHED, 'Unpublished')],
                               default=STATUS_OK,
                               db_index=True)
+    thumbnail_status = models.CharField(max_length=1,
+                                        choices=THUMBNAIL_STATUS_CHOICES,
+                                        default=THUMBNAIL_STATUS_OFF,
+                                        db_index=True)
 
     def get_title(self):
         if self.title:

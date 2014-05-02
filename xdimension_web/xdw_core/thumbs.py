@@ -181,5 +181,6 @@ def save_map_thumbnail(map_instance, thumb, commit=True):
     thumb_file = File(StringIO())
     thumb.save(thumb_file, 'JPEG')
     map_instance.thumbnail.save('{}.jpg'.format(map_instance.pk), thumb_file)
+    map_instance.thumbnail_status = map_instance.THUMBNAIL_STATUS_OK
     if commit:
-        map_instance.save(update_fields=['thumbnail'])
+        map_instance.save(update_fields=['thumbnail', 'thumbnail_status'])

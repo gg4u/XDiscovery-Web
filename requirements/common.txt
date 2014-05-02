@@ -22,3 +22,7 @@ djangocms-file==0.0.1
 djangocms-video==0.0.1
 django-jfu==1.0.7
 requests==2.2.1
+chaussette==1.1
+circus==0.10
+pyzmq==14.2.0
+
