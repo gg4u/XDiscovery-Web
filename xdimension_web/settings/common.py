@@ -8,6 +8,8 @@ assert DEPLOY_MODE in ('local', 'staging', 'production')
 
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('1', 'yes', 'true')
 
+HIDE_CONTENT = os.environ.get('HIDE_CONTENT') in ('1', 'yes', 'true')
+
 TEMPLATE_DEBUG = DEBUG
 
 # Local time zone for this installation. Choices can be found here:
