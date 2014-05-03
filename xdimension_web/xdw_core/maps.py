@@ -49,7 +49,7 @@ def _save_map(obj):
         try:
             topic = Topic.objects.get(pk=topic)
         except Topic.DoesNotExist:
-            logger.warning('failed to delete topic {}'.format(topic))
+            logger.warning(u'failed to delete topic {}'.format(topic))
         else:
             topic.count -= 1
             if topic.count <= 0:
