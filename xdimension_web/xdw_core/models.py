@@ -19,6 +19,12 @@ class Map(models.Model):
     STATUS_DELETED = 'D'
     STATUS_UNPUBLISHED = 'U'
     STATUS_PUBLISHING = 'i'  # request to publish but thumbnail is dirty
+    STATUS_CHOICES = [
+        (STATUS_OK, 'Ok'),
+        (STATUS_DELETED, 'Deleted'),
+        (STATUS_UNPUBLISHED, 'Unpublished'),
+        (STATUS_PUBLISHING, 'Publishing...')
+    ]
 
     FEATURED_NOT = 0
     FEATURED_YES = 1
@@ -58,9 +64,7 @@ class Map(models.Model):
                                             (FEATURED_YES, 'yes')])
     # generic
     status = models.CharField(max_length=1,
-                              choices=[(STATUS_OK, 'Ok'),
-                                       (STATUS_DELETED, 'Deleted'),
-                                       (STATUS_UNPUBLISHED, 'Unpublished')],
+                              choices=STATUS_CHOICES,
                               default=STATUS_OK,
                               db_index=True)
     thumbnail_status = models.CharField(max_length=1,
