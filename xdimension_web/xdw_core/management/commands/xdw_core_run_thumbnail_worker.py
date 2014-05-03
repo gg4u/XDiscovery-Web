@@ -37,7 +37,7 @@ class Command(NoArgsCommand):
         while True:
             # do the work
             for mp in Map.objects.filter(thumbnail_status=Map.THUMBNAIL_STATUS_DIRTY).only('pk', 'thumbnail', 'status', 'thumbnail_status'):
-                try:
+                with transaction.commit_on_success():
                     logger.info('generating thumbnail for map {}...'.format(mp.pk))
                     start = time.time()
                     thumb = generate_map_thumbnail(mp)
@@ -46,13 +46,9 @@ class Command(NoArgsCommand):
                     mp.thumbnail_status = Map.THUMBNAIL_STATUS_OK
                     if mp.status == Map.STATUS_PUBLISHING:
                         mp.status = Map.STATUS_OK
-                        update_fields.append(['status'])
+                        update_fields.append('status')
                     logger.info('done generating thumbnail in {} s'.format(time.time() - start))
                     mp.save(update_fields=update_fields)
-                    transaction.commit()
-                except:
-                    transaction.rollback()
-                    raise
             if sock.poll(POLL_TIMEOUT):
                 try:
                     mesg = sock.recv(flags=zmq.NOBLOCK)

@@ -75,7 +75,7 @@ class MapAdmin(ModelAdmin):
             for i, obj in enumerate(queryset):
                 if obj.status != Map.STATUS_OK:
                     obj.status = Map.STATUS_PUBLISHING
-                    obj.thumnail_status = Map.THUMBNAIL_STATUS_DIRTY
+                    obj.thumbnail_status = Map.THUMBNAIL_STATUS_DIRTY
                     _save_map(obj)
         self.message_user(request, '{} maps published'.format(i))
         zmq_socket.send('wake up')
