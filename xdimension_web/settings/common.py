@@ -311,3 +311,6 @@ SHARING_PROTO = 'http'
 
 TEXT_HTML_SANITIZE = False
 
+# Thumbnail production
+
+ZMQ_WORKER_PORT = 9999

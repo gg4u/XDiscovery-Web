@@ -1,1 +1,1 @@
-web: gunicorn -b 0.0.0.0:$PORT -w 4 -k sync -c gunicorn_conf_heroku.py xdimension_web.wsgi:application
+web: circusd circus.ini
