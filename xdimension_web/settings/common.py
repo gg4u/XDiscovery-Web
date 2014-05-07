@@ -309,7 +309,8 @@ SHARING_PROTO = 'http'
 
 # CKeditor
 
-TEXT_HTML_SANITIZE = False
+TEXT_ADDITIONAL_TAGS = ('iframe', 'script')
+TEXT_ADDITIONAL_ATTRIBUTES = ('scrolling', 'allowfullscreen', 'frameborder')
 
 # Thumbnail production
 
