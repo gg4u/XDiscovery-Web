@@ -7,6 +7,23 @@ html, body {
 #page > .inner-wrap,
 #page-content {
 	min-height: 100%;
+	height: 100%;
+}
+
+#page-content > div {
+	height: 100%;
+	overflow: auto;
+}
+
+@media #{$small} {
+	#page,
+	#page > .inner-wrap,
+	#page-content {
+		height: auto;
+	}
+	#page-content > div {
+		height: auto;
+	}
 }
 
 #page.fill {
