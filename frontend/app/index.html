@@ -1,9 +1,6 @@
 <!-- @if ENV='dist' -->{% load cms_tags sekizai_tags %}<!-- @endif -->
-<!doctype html>
-<!--[if lt IE 7]>      <html ng-app="xdiscoveryApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html ng-app="xdiscoveryApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html ng-app="xdiscoveryApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html ng-app="xdiscoveryApp" class="no-js"> <!--<![endif]-->
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="xdiscoveryApp">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,19 +19,18 @@
 	{% block extrahead %}{% endblock %}
 	{% render_block "css" %}
 	<!-- @endif -->
+	<!--[if lte IE 9]>
+	<style>
+		.left-off-canvas-menu { display:none; }
+	</style>
+	<![endif]-->
 </head>
 	<body ng-controller="siteCtrl">
 	  <!-- @if ENV='dist' -->
 	  {% cms_toolbar %}
 	  <!-- @endif -->
-		<!--[if lt IE 7]>
+		<!--[if lt IE 9]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-		<![endif]-->
-
-		<!--[if lte IE 9]>
-			<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
-			<script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.3.0/es5-shim.min.js"></script>
-			<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js"></script>
 		<![endif]-->
 
 		<div id="fb-root"></div>
