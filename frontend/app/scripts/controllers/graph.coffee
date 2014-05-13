@@ -148,7 +148,7 @@ angular.module('xdiscoveryApp')
 					.append img
 				ui.append("circle")
 					.attr('class', 'map-node-circle thumbnail')
-					.attr("fill", "url(##{ingId})")
+					.attr("fill", "url(#{document.location.href}##{ingId})")
 					.attr("stroke", "#e7e7e7")
 					.attr("stroke-width", "3px")
 					.attr("r", circleRadius)
