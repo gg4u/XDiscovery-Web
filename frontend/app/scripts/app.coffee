@@ -22,7 +22,7 @@ app.config ($routeProvider, $locationProvider, config) ->
 	# Setup routes
 	$routeProvider
 
-	.when '/en/atlas',
+	.when '/atlas',
 		templateUrl: '/views/atlas.html',
 		controller: 'AtlasCtrl'
 		resolve:
@@ -33,4 +33,4 @@ app.config ($routeProvider, $locationProvider, config) ->
 		templateUrl: '/views/graph.html',
 		controller: 'GraphCtrl'
 
-	.otherwise redirectTo: '/en/atlas'
+	.otherwise redirectTo: '/atlas'
