@@ -309,8 +309,8 @@ SHARING_PROTO = 'http'
 
 # CKeditor
 
-TEXT_ADDITIONAL_TAGS = ('iframe', 'script')
-TEXT_ADDITIONAL_ATTRIBUTES = ('scrolling', 'allowfullscreen', 'frameborder')
+TEXT_ADDITIONAL_TAGS = ('iframe', 'script', 'image', 'svg')
+TEXT_ADDITIONAL_ATTRIBUTES = ('scrolling', 'allowfullscreen', 'frameborder', 'xlink:href')
 
 # Thumbnail production
 

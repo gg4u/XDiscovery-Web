@@ -57,14 +57,16 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 		get:
 			method: 'GET',
 			transformResponse: (data) ->
+				data = {} unless data
 				data = JSON.parse data unless angular.isObject(data)
 				decorateMap data
 		search:
 			method: 'GET'
 			transformResponse: (data) ->
+				data = {} unless data
 				data = JSON.parse data unless angular.isObject(data)
 				result = data
-				decorateMaps result.map
+				decorateMaps result.map if result.map?
 				result.isLoadingMore = no
 				result.loadMore = ->
 					return if @isLoadingMore or not @next
