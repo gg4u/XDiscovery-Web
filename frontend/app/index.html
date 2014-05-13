@@ -88,8 +88,11 @@
 						<!-- @endif -->
 					</div>
 				</section>
-
 				<footer class="xd-site-footer" ng-cloak ng-hide="site.hideFooter">
+				<!-- @if ENV='dist' -->
+				  {% static_placeholder "footer" %}
+				<!-- @endif -->
+				<!-- @if ENV!='dist' -->
 					<div class="row">
 						<div class="small-12 large-3 columns">
 							<h4>Company</h4>
@@ -126,6 +129,7 @@
 							</div>
 						</div>
 					</div>
+				<!-- @endif -->
 				</footer>
 
 			</div><!-- .inner-wrap -->
