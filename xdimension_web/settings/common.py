@@ -283,7 +283,11 @@ CMS_PLACEHOLDER_CONF = {
         'limits': {
             'global': 3
         },
-    }
+    },
+    'footer': {
+        'plugins': ['TextPlugin'],
+        'name': 'Footer'
+    },
 }
 
 CMS_CACHE_DURATIONS = {
