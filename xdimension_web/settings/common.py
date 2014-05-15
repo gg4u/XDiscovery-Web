@@ -280,9 +280,6 @@ CMS_PLACEHOLDER_CONF = {
     'box': {
         'plugins': ['BoxPlugin'],
         'name': 'Box',
-        'limits': {
-            'global': 3
-        },
     },
     'footer': {
         'plugins': ['TextPlugin'],
