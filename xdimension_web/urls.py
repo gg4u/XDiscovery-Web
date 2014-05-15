@@ -7,22 +7,15 @@ from xdw_web.views import RobotsView, AtlasView, GraphDetailView
 
 admin.autodiscover()
 
-# i18n patterns
-urlpatterns = i18n_patterns(
-    '',
-    # Backoffice
-    url(r'^admin{}/'.format(settings.ADMIN_URL_HASH), include(admin.site.urls)),
-    # CMS
-    url(r'^', include('cms.urls')),
-)
 
 # non-i18n patterns
-urlpatterns += patterns(
+urlpatterns = patterns(
     '',
     # Atlas app
     # XXX the SPA uris should all live under the /atlas/ uri
-    url(r'^atlas/', AtlasView.as_view(), name='atlas'),
-    url(r'^graph/(?P<pk>\d+)', GraphDetailView.as_view(), name='graph_detail'),
+    url(r'^atlas/$', AtlasView.as_view(), name='atlas'),
+    url(r'^\w{2}/graph/(?P<pk>\d+)$', GraphDetailView.as_view(),
+        name='graph_detail'),
     url(r'^(views/.*)', AtlasView.as_view()),
     # SEO stuff
     url(r'^robots.txt$', RobotsView.as_view()),
@@ -35,6 +28,15 @@ urlpatterns += patterns(
     url(r'^api-atlas/', include('xdimension_web.xdw_core.urls',
                                 namespace='xdw_core')),
     )
+
+# i18n patterns
+urlpatterns += i18n_patterns(
+    '',
+    # Backoffice
+    url(r'^admin{}/'.format(settings.ADMIN_URL_HASH), include(admin.site.urls)),
+    # CMS
+    url(r'^', include('cms.urls')),
+)
 
 if settings.DEBUG:
     # Asset serving

@@ -9,6 +9,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="apple-itunes-app" content="app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL">
 
+	<base href="/en/">
+
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400' rel='stylesheet' type='text/css'>
 	<!-- build:css({.tmp,app}) /styles/main.css -->
 	<link rel="stylesheet" href="/bower_components/select2/select2.css">
@@ -186,10 +188,10 @@
 				 {% include "xdw_web/routes.html" %}
 			<!-- @endif -->
 			<!-- @if ENV!='dist' -->
-				'/en/blog': '/en/blog?angular=1',
-				'/en/mobile': '/en/mobile?angular=1',
-				'/en/': '/en/?angular=1',
-				'/en/static': {
+				'/blog': '/en/blog?angular=1',
+				'/mobile': '/en/mobile?angular=1',
+				'/': '/en/?angular=1',
+				'/static': {
 					contentUrl: '/internal.html',
 					showHeader: true,
 					breadcrumbs: [

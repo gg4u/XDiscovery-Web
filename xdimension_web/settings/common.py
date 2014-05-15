@@ -283,7 +283,11 @@ CMS_PLACEHOLDER_CONF = {
         'limits': {
             'global': 3
         },
-    }
+    },
+    'footer': {
+        'plugins': ['TextPlugin'],
+        'name': 'Footer'
+    },
 }
 
 CMS_CACHE_DURATIONS = {
@@ -310,7 +314,9 @@ SHARING_PROTO = 'http'
 # CKeditor
 
 TEXT_ADDITIONAL_TAGS = ('iframe', 'script', 'image', 'svg')
-TEXT_ADDITIONAL_ATTRIBUTES = ('scrolling', 'allowfullscreen', 'frameborder', 'xlink:href')
+TEXT_ADDITIONAL_ATTRIBUTES = ('scrolling', 'allowfullscreen', 'frameborder', 'xlink:href', 'style')
+TEXT_SAVE_IMAGE_FUNCTION = None
+TEXT_HTML_SANITIZE = False
 
 # Thumbnail production
 
