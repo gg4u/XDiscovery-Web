@@ -33,13 +33,53 @@ class CarouselPlugin(CMSPluginBase):
 plugin_pool.register_plugin(CarouselPlugin)
 
 
-class BoxPlugin(CMSPluginBase):
+class TextMixin(object):
+    change_form_template = "cms/plugins/text_plugin_change_form.html"
+
+    def get_form(self, request, obj=None, **kwargs):
+        # Augment the form with the plugin info
+        plugins = plugin_pool.get_text_enabled_plugins(
+            self.placeholder,
+            self.page
+        )
+        pk = self.cms_plugin_instance.pk
+        widget = TextEditorWidget(
+            installed_plugins=plugins, pk=pk,
+            placeholder=self.placeholder,
+            plugin_language=self.cms_plugin_instance.language
+        )
+
+        form_class = super(TextMixin, self).get_form(
+            request, obj=obj, **kwargs)
+        form_class.declared_fields["body"] = CharField(
+            widget=widget, required=False
+        )
+
+        kwargs['form'] = form_class  # override standard form
+        return super(TextMixin, self).get_form(
+            request, obj=obj, **kwargs)
+
+    def render(self, context, instance, placeholder):
+        context = super(TextMixin, self).render(context, instance,
+                                                      placeholder)
+        context['body'] = plugin_tags_to_user_html(
+                instance.body,
+                context,
+                placeholder
+        )
+        return context
+
+
+class BoxPlugin(TextMixin, CMSPluginBase):
     name = _("Box Plugin")
     render_template = "xdw_web/cms_plugins/box.html"
     model = BoxPluginModel
     form = BoxForm
+    allow_children = True
 
     def render(self, context, instance, placeholder):
+        context = super(BoxPlugin, self).render(context, instance, placeholder)
+        instance.body = context['body']
         context.update({
             'more': instance.page_external or instance.page,
             'instance': instance,
@@ -83,44 +123,11 @@ class AccordionNavigationPlugin(CMSPluginBase):
 plugin_pool.register_plugin(AccordionNavigationPlugin)
 
 
-class AccordionPlugin(CMSPluginBase):
+class AccordionPlugin(TextMixin, CMSPluginBase):
     name = _("Accordion Plugin")
     render_template = "xdw_web/cms_plugins/accordion.html"
     model = AccordionPluginModel
-    change_form_template = "cms/plugins/text_plugin_change_form.html"
     allow_children = True
 
-    def get_form(self, request, obj=None, **kwargs):
-        # Augment the form with the plugin info
-        plugins = plugin_pool.get_text_enabled_plugins(
-            self.placeholder,
-            self.page
-        )
-        pk = self.cms_plugin_instance.pk
-        widget = TextEditorWidget(
-            installed_plugins=plugins, pk=pk,
-            placeholder=self.placeholder,
-            plugin_language=self.cms_plugin_instance.language
-        )
-
-        form_class = super(AccordionPlugin, self).get_form(
-            request, obj=obj, **kwargs)
-        form_class.declared_fields["body"] = CharField(
-            widget=widget, required=False
-        )
-
-        kwargs['form'] = form_class  # override standard form
-        return super(AccordionPlugin, self).get_form(
-            request, obj=obj, **kwargs)
-
-    def render(self, context, instance, placeholder):
-        context = super(AccordionPlugin, self).render(context, instance,
-                                                      placeholder)
-        context['body'] = plugin_tags_to_user_html(
-                instance.body,
-                context,
-                placeholder
-        )
-        return context
 
 plugin_pool.register_plugin(AccordionPlugin)

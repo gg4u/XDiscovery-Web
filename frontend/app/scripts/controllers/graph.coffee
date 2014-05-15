@@ -1,5 +1,10 @@
 'use strict'
 
+isIE = do ->
+  myNav = navigator.userAgent.toLowerCase()
+  if myNav.indexOf('msie') != -1 then parseInt(myNav.split('msie')[1]) else false
+idPrefix = if 0 < isIE < 10 then '' else document.location.href
+
 angular.module('xdiscoveryApp')
 	.controller 'GraphCtrl', ($scope, $rootScope, xDiscoveryApi, wikipediaApi, $routeParams, $sce, $location, $timeout) ->
 		$scope.site.pageClasses = ['graph', 'fill', 'fixed-mobile-menu']
@@ -148,7 +153,7 @@ angular.module('xdiscoveryApp')
 					.append img
 				ui.append("circle")
 					.attr('class', 'map-node-circle thumbnail')
-					.attr("fill", "url(#{document.location.href}##{ingId})")
+					.attr("fill", "url(#{idPrefix}##{ingId})")
 					.attr("stroke", "#e7e7e7")
 					.attr("stroke-width", "3px")
 					.attr("r", circleRadius)
