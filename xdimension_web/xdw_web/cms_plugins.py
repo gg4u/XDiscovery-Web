@@ -21,8 +21,18 @@ class CarouselPlugin(CMSPluginBase):
     inlines = [CarouselContentInline]
 
     def render(self, context, instance, placeholder):
+        items = []
+        current_page = context['current_page']
+        active_item_idx = 0
+        for i, c in enumerate(instance.carouselcontent_set.all()):
+            if (c.page is not None and 
+                (c.page == current_page or
+                 c.page.publisher_public_id == current_page.pk)):
+                active_item_idx = i
+            items.append(c)
         context.update({
-            'carouselcontent_items': [c for c in instance.carouselcontent_set.all()],
+            'carouselcontent_items': items,
+            'carouselcontent_active_item_idx': active_item_idx,
             'instance': instance,
             'placeholder': placeholder
         })

@@ -1,4 +1,4 @@
-{% load cms_tags %}{% if carouselcontent_items %}<div class="xd-carousel-container" ng-init="carouselIndex = 0" {% if instance.background_color %}style="background:{{ instance.background_color }}"{% endif %}>
+{% load cms_tags %}{% if carouselcontent_items %}<div class="xd-carousel-container" ng-init="carouselIndex = {{ carouselcontent_active_item_idx }}"{% if instance.background_color %}style="background:{{ instance.background_color }}"{% endif %}>
 	<ul rn-carousel rn-carousel-index="carouselIndex"{% if carouselcontent_items|length > 1 %} rn-carousel-indicator{% endif %}>
             {% for item in carouselcontent_items %}
             <li>{% if item.page %}
