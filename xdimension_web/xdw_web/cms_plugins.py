@@ -88,8 +88,11 @@ class BoxPlugin(TextMixin, CMSPluginBase):
     def render(self, context, instance, placeholder):
         context = super(BoxPlugin, self).render(context, instance, placeholder)
         instance.body = context['body']
+        more = instance.page_external
+        if not more and instance.page is not None:
+            more = instance.page.get_absolute_url()
         context.update({
-            'more': instance.page_external or instance.page,
+            'more': more,
             'instance': instance,
             'placeholder': placeholder
         })
