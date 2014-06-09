@@ -12,7 +12,6 @@ from django.utils.translation import ugettext as _
 from .models import (BoxPluginModel, AbstractPluginModel, AccordionPluginModel,
                      CarouselPluginModel)
 from .admin import CarouselContentInline
-from .admin_forms import BoxForm
 
 
 class CarouselPlugin(CMSPluginBase):
@@ -74,7 +73,6 @@ class BoxPlugin(TextMixin, CMSPluginBase):
     name = _("Box Plugin")
     render_template = "xdw_web/cms_plugins/box.html"
     model = BoxPluginModel
-    form = BoxForm
     allow_children = True
 
     def render(self, context, instance, placeholder):

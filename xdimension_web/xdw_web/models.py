@@ -2,6 +2,7 @@ from cms.models.pluginmodel import CMSPlugin
 from cms.models.pagemodel import Page
 
 from djangocms_text_ckeditor.fields import HTMLField
+from cms.models.fields import PageField
 from django.db import models
 from django.core.exceptions import ValidationError
 
@@ -9,7 +10,7 @@ from django.core.exceptions import ValidationError
 class BoxPluginModel(CMSPlugin):
     title = models.TextField(blank=True)
     body = HTMLField(blank=True)
-    page = models.ForeignKey(Page, blank=True, null=True)
+    page = PageField(blank=True, null=True)
     page_external = models.CharField(max_length=1024, blank=True)
     style = models.CharField(max_length=10,
                              choices=(('normal', 'normal'),
@@ -51,7 +52,7 @@ class CarouselContent(models.Model):
                                         editable=False)
     carousel = models.ForeignKey(CarouselPluginModel)
     body = HTMLField(blank=True)
-    page = models.ForeignKey(Page, blank=True, null=True)
+    page = PageField(blank=True, null=True)
     sorting = models.IntegerField(default=0, db_index=True)
 
     class Meta:
