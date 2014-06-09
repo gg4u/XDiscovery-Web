@@ -1,5 +1,5 @@
 {% load cms_tags %}{% if carouselcontent_items %}<div class="xd-carousel-container" ng-init="carouselIndex = 0" {% if instance.background_color %}style="background:{{ instance.background_color }}"{% endif %}>
-	<ul {% if carouselcontent_items|length > 1 %}rn-carousel rn-carousel-index="carouselIndex" rn-carousel-indicator{% endif %}>
+	<ul rn-carousel rn-carousel-index="carouselIndex"{% if carouselcontent_items|length > 1 %} rn-carousel-indicator rn-carousel-control{% else %} rn-carousel-indicator="false" rn-carousel-control="false"{% endif %}>
             {% for item in carouselcontent_items %}
             <li>{% if item.page %}
             <a href="{% page_url item.page %}" class="slogan">{{ item.body | safe }}</a>
@@ -17,4 +17,5 @@
 		class="xd-carousel-nav next hide-for-small"
 		ng-click="carouselIndex = carouselIndex + 1"
 		ng-disabled="carouselIndex == 2"></button>
-</div>{% endif %}{% endif %}
+        {% endif %}
+</div>{% endif %}
