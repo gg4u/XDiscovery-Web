@@ -718,10 +718,7 @@ a.xd-back-to-top {
 	position: relative;
 	margin-bottom: $column-gutter;
 	background: $primary-color;
-
-	.xd-custom-page-content > &:first-child {
-		margin-top: (-$column-gutter);
-	}
+	margin-top: (-$column-gutter);
 
 	.xd-carousel-nav {
 		@include box-shadow(none);
