@@ -7,5 +7,6 @@
 #   - `contentUrl`: a URL specifying the HTML content for the page
 #   - `title`: title for the page
 angular.module('xdiscoveryApp').controller 'custompageCtrl', ($scope, $rootScope, pageSettings) ->
+	$rootScope.site.pageClasses = ['xd-custom-page']
 	$scope.settings = pageSettings
 	$rootScope.documentTitle = pageSettings.title
