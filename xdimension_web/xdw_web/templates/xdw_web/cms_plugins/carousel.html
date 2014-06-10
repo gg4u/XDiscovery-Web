@@ -1,5 +1,5 @@
-{% load cms_tags %}{% if carouselcontent_items %}<div class="xd-carousel-container" ng-init="carouselIndex = {{ carouselcontent_active_item_idx }}"{% if instance.background_color %}style="background:{{ instance.background_color }}"{% endif %}>
-	<ul rn-carousel rn-carousel-index="carouselIndex"{% if carouselcontent_items|length > 1 %} rn-carousel-indicator{% endif %}>
+{% load cms_tags %}{% if carouselcontent_items %}<div class="xd-carousel-container" ng-init="carousel.index = {{ carouselcontent_active_item_idx }}"{% if instance.background_color %}style="background:{{ instance.background_color }}"{% endif %}>
+	<ul rn-carousel rn-carousel-index="carousel.index"{% if carouselcontent_items|length > 1 %} rn-carousel-indicator{% endif %}>
             {% for item in carouselcontent_items %}
             <li>{% if item.page %}
             <a href="{% page_url item.page %}" class="slogan">{{ item.body | safe }}</a>
@@ -11,11 +11,11 @@
         {% if carouselcontent_items|length > 1 %}
 	<button
 		class="xd-carousel-nav prev hide-for-small"
-		ng-click="carouselIndex = carouselIndex - 1"
-		ng-disabled="carouselIndex == 0"></button>
+		ng-click="carousel.index = carousel.index - 1"
+		ng-disabled="carousel.index == 0"></button>
 	<button
 		class="xd-carousel-nav next hide-for-small"
-		ng-click="carouselIndex = carouselIndex + 1"
-		ng-disabled="carouselIndex == {{ carouselcontent_items|length}} - 1"></button>
+		ng-click="carousel.index = carousel.index + 1"
+		ng-disabled="carousel.index == {{ carouselcontent_items|length}} - 1"></button>
         {% endif %}
 </div>{% endif %}
