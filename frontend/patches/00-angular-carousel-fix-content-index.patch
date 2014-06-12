@@ -1,0 +1,13 @@
+Fix for textual content not switching correctly when carousel.index is set
+on template load.
++++ a/app/bower_components/angular-carousel/dist/angular-carousel.js	2
++++ b/app/bower_components/angular-carousel/dist/angular-carousel.js	2014-06-12 21:42:18.786620970 +0200
+@@ -189,7 +189,7 @@
+                                         newValue = 0;
+                                         updateParentIndex(newValue);
+                                     }
+-                                    goToSlide(newValue, true);
++                                    goToSlide(newValue, false);
+                                 }
+                             });
+                             isIndexBound = true;
