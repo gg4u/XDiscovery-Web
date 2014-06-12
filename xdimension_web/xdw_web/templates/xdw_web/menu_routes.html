@@ -1,5 +1,5 @@
 		     {% for child in children %}
 		     {% with child.attr.redirect_url|default:child.get_absolute_url as child_url %}
-		       '{{ child_url|slice:"3:" }}': { contentUrl: '{{ child_url }}?angular=1', title: '{{child.title}}', showHeader: false }{% if not forloop.last %},{% endif %}{# TODO: breadcrumbs #}
+		       '{{ child_url|slice:"3:" }}': { contentUrl: '{{ child_url }}?angular=1', title: '{{ child.title }}', showHeader: true, breadcrumbs: [{title: '{{ child.title }}', href: '#'}]}{% if not forloop.last %},{% endif %}{# TODO: breadcrumbs #}
 		     {% endwith %}
 		     {% endfor %}

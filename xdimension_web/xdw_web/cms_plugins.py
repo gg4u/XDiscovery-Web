@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+import logging
 
 from cms.plugin_base import CMSPluginBase
 from cms.models.pluginmodel import CMSPlugin
@@ -12,7 +13,9 @@ from django.utils.translation import ugettext as _
 from .models import (BoxPluginModel, AbstractPluginModel, AccordionPluginModel,
                      CarouselPluginModel)
 from .admin import CarouselContentInline
-from .admin_forms import BoxForm
+
+
+logger = logging.getLogger(__name__)
 
 
 class CarouselPlugin(CMSPluginBase):
@@ -20,10 +23,22 @@ class CarouselPlugin(CMSPluginBase):
     render_template = "xdw_web/cms_plugins/carousel.html"
     model = CarouselPluginModel
     inlines = [CarouselContentInline]
+    cache = False  # XXX caching breaks static_placeholder
 
     def render(self, context, instance, placeholder):
+        items = []
+        current_page = context['current_page']
+        active_item_idx = 0
+        for i, c in enumerate(instance.carouselcontent_set.all()):
+            if (c.page is not None and 
+                (c.page == current_page or
+                 c.page.publisher_public_id == current_page.pk)):
+                active_item_idx = i
+            items.append(c)
+        logger.debug('selected carousel item {}'.format(active_item_idx))
         context.update({
-            'carouselcontent_items': [c for c in instance.carouselcontent_set.all()],
+            'carouselcontent_items': items,
+            'carouselcontent_active_item_idx': active_item_idx,
             'instance': instance,
             'placeholder': placeholder
         })
@@ -74,14 +89,16 @@ class BoxPlugin(TextMixin, CMSPluginBase):
     name = _("Box Plugin")
     render_template = "xdw_web/cms_plugins/box.html"
     model = BoxPluginModel
-    form = BoxForm
     allow_children = True
 
     def render(self, context, instance, placeholder):
         context = super(BoxPlugin, self).render(context, instance, placeholder)
         instance.body = context['body']
+        more = instance.page_external
+        if not more and instance.page is not None:
+            more = instance.page.get_absolute_url()
         context.update({
-            'more': instance.page_external or instance.page,
+            'more': more,
             'instance': instance,
             'placeholder': placeholder
         })

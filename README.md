@@ -84,6 +84,11 @@ Load initial data
 
     python manage.py loaddata xdimension_web/fixtures/test_data.json --settings=xdimension_web.settings.test
 
+Download bower dependencies and apply local patches (must be run only once):
+
+    fab dep
+
+
 Build the app:
 
     fab build:test
@@ -111,6 +116,7 @@ Bootstrapping:
     pip install -r requirements/dev.txt
     python manage.py syncdb
     python manage.py migrate --all
+    fab dep
 
 Run the app:
 

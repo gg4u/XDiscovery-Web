@@ -40,6 +40,17 @@ def get_app_name(environment):
     return '{}-{}'.format(APP_NAME, environment) if environment != 'production' \
         else APP_NAME
 
+
+@task
+def dep():
+    with lcd('frontend'):
+        local('bower install')
+    retval = subprocess.call(
+        ['bash', '-c', 'patch -N -p1 < patches/*.patch'],
+        cwd='frontend'
+    )
+
+
 @task
 def build(dest='dist'):
     with lcd('frontend'):

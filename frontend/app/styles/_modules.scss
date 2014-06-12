@@ -595,6 +595,12 @@ $graph-page-header-height: 52px;
 //
 // Custom pages
 //
+.xd-custom-page {
+	#page-content > div {
+		overflow: hidden;
+	}
+}
+
 .xd-custom-page-header {
 	background: $body-bg;
 	padding-bottom: 0;
@@ -627,9 +633,12 @@ $graph-page-header-height: 52px;
 }
 
 .xd-custom-page-content {
-	margin-top: 130px;
+	padding-top: 130px;
+	height: 100%;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 	@media #{$small} {
-		margin-top: 0;
+		padding-top: 0;
 	}
 }
 
@@ -718,10 +727,7 @@ a.xd-back-to-top {
 	position: relative;
 	margin-bottom: $column-gutter;
 	background: $primary-color;
-
-	.xd-custom-page-content > &:first-child {
-		margin-top: (-$column-gutter);
-	}
+	margin-top: (-$column-gutter);
 
 	.xd-carousel-nav {
 		@include box-shadow(none);
