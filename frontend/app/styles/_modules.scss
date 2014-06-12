@@ -635,6 +635,7 @@ $graph-page-header-height: 52px;
 .xd-custom-page-content {
 	padding-top: 130px;
 	height: 100%;
+	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 	@media #{$small} {
 		padding-top: 0;
