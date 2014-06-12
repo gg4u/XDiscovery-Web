@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+import logging
 
 from cms.plugin_base import CMSPluginBase
 from cms.models.pluginmodel import CMSPlugin
@@ -14,11 +15,15 @@ from .models import (BoxPluginModel, AbstractPluginModel, AccordionPluginModel,
 from .admin import CarouselContentInline
 
 
+logger = logging.getLogger(__name__)
+
+
 class CarouselPlugin(CMSPluginBase):
     name = _("Carousel Plugin")
     render_template = "xdw_web/cms_plugins/carousel.html"
     model = CarouselPluginModel
     inlines = [CarouselContentInline]
+    cache = False  # XXX caching breaks static_placeholder
 
     def render(self, context, instance, placeholder):
         items = []
@@ -30,6 +35,7 @@ class CarouselPlugin(CMSPluginBase):
                  c.page.publisher_public_id == current_page.pk)):
                 active_item_idx = i
             items.append(c)
+        logger.debug('selected carousel item {}'.format(active_item_idx))
         context.update({
             'carouselcontent_items': items,
             'carouselcontent_active_item_idx': active_item_idx,
