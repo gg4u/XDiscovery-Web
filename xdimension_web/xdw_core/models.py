@@ -55,6 +55,7 @@ class Map(models.Model):
     # Non-editable fields calculated from map_data
     node_count = models.IntegerField(editable=False)
     node_titles = JSONField(editable=False)
+    first_node_title = models.CharField(max_length=500, editable=False)
     last_node_title = models.CharField(max_length=500, editable=False)
     # for sorting
     date_created = models.DateField(db_index=True, default=now_tz)
@@ -100,10 +101,17 @@ class Map(models.Model):
             self.net = int(net)
         except (ValueError, TypeError):
             logger.warning('bad value for \"net\" field: {}'.format(net))
-        # XXX FIXME here we should be walking the path from first to last...
+        node_titles = []
+        if 'startNode' in data:
+            self.first_node_title = data['start_node']['title']
+        else:
+            self.first_node_title = data['pagerank'][0]['title']
         self.node_titles = [n['title'] for n in data['pagerank']\
                                     [:Map.MAX_NODE_TITLES]]
-        self.last_node_title = data['pagerank'][-1]['title']
+        if 'endNode' in data:
+            self.last_node_title = data['endNode']['title']
+        else:
+            self.last_node_title = data['pagerank'][-1]['title']
         self.node_count = len(data.get('graph', data.get('atlas')))
         return data
 

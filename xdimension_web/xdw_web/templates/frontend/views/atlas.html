@@ -52,7 +52,7 @@
 							<a ng-href="/en/graph/{% verbatim %}{{map.id}}{% endverbatim %}" ng-switch-when="true" ng-bind="map.title" class="custom-title" target="_self"></a>
 							<a ng-href="/en/graph/{% verbatim %}{{map.id}}{% endverbatim %}" ng-switch-default="" class="node-title" target="_self">
 								<span class="sep">from</span>
-								<span ng-bind="map.nodeTitles.start[0]">&ndash;</span>
+								<span ng-bind="map.nodeTitles.first">&ndash;</span>
 								<br>
 								<span class="sep">to</span>
 								<span ng-bind="map.nodeTitles.last">&ndash;</span>

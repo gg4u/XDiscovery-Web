@@ -20,6 +20,7 @@ class MapSimpleSerializer(ModelSerializer):
                                'surname': obj.author_surname},
                     'thumbnail': {'url': obj.thumbnail.url if obj.thumbnail else obj.picture_url},
                     'nodeTitles': {
+                        'first': obj.first_node_title,
                         'start': obj.node_titles,
                         'last': obj.last_node_title
                         }
