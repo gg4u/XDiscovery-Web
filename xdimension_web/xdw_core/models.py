@@ -103,7 +103,7 @@ class Map(models.Model):
             logger.warning('bad value for \"net\" field: {}'.format(net))
         node_titles = []
         if 'startNode' in data:
-            self.first_node_title = data['start_node']['title']
+            self.first_node_title = data['startNode']['title']
         else:
             self.first_node_title = data['pagerank'][0]['title']
         self.node_titles = [n['title'] for n in data['pagerank']\
