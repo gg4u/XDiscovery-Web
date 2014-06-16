@@ -191,11 +191,15 @@ def make_thumbnail(images):
     del image
 
     # Combine all tiles in a single image
-    thumbnail = Image.new('RGBA', (L, H))
+    thumbnail = Image.new('RGB', (L, H), BG_COLOR)
     logger.debug('thumbnail size: {}'.format(thumbnail.size))
     x, y = 0, 0
     i = 0
     for dim, image in itertools.izip(dimensions, images):
+        if image.mode == 'RGBA':
+            bg = Image.new('RGBA', image.size, BG_COLOR)
+            image = Image.composite(image, bg, image)
+            image = image.convert('RGB')
         image = image.resize(dim, resample=Image.ANTIALIAS)
         thumbnail.paste(image, (x, y))
         i += 1
