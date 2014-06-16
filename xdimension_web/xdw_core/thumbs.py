@@ -1,9 +1,11 @@
 from __future__ import division
 
-import requests
-from PIL import Image
+import os
 from StringIO import StringIO
 import itertools
+
+import requests
+from PIL import Image, ImageFont, ImageDraw
 from django.core.files import File
 
 # Tiles in a thumbnail
@@ -63,7 +65,21 @@ def download_images(urls):
         yield Image.open(StringIO(resp.content))
 
 
-def make_thumbnail(images):
+TEXT_MARGIN = 10
+FONT_FNAME = os.path.join(os.path.dirname(__file__), 'fonts', 'sans.ttf')
+
+def make_text_images(map_instance):
+    titles = ['One', 'Two oo']
+    font = ImageFont.truetype(FONT_FNAME, 100)
+    for title in titles:
+        size = [x + TEXT_MARGIN for x in font.getsize(title)]
+        image = Image.new('RGB', size, '#1c1e1f')
+        draw = ImageDraw.Draw(image)
+        draw.text((TEXT_MARGIN/2, TEXT_MARGIN*-2), title, font=font)
+        yield image
+
+
+def make_thumbnail(images, map_instance):
     '''Build the thumbnail tiling the images.
 
     Arranges the tiles in two columns.
@@ -75,6 +91,7 @@ def make_thumbnail(images):
         an in-memory Image with the thumbnail or None if not enough tiles
     '''
     L = IMAGE_WIDTH
+    images = itertools.chain(images, make_text_images(map_instance))
     images = [image for image in itertools.islice(images, MAX_TILES)]
     if not images:
         return
@@ -167,7 +184,7 @@ def generate_map_thumbnail(map_instance):
     images = download_images(urls)
     # XXX For testing
     # images = [Image.open('{}.jpg'.format(i)) for i in range(5)]
-    thumbnail = make_thumbnail(images)
+    thumbnail = make_thumbnail(images, map_instance)
     return thumbnail
 
 
