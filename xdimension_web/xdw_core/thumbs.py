@@ -215,6 +215,12 @@ def get_map_page_ids(map_instance):
     '''
     so_far = set()
     data = map_instance.map_data['map']
+    # Pagerank
+    for node in data.get('pagerank', []):
+        id_ = str(node['id'])
+        if id_ not in so_far:
+            so_far.add(id_)
+            yield id_
     # Tapped
     ids = data.get('tappedNodes', [])
     for id_ in ids:
@@ -222,12 +228,6 @@ def get_map_page_ids(map_instance):
             id_ = str(id_)
             yield id_
             so_far.add(id_)
-    # Pagerank
-    for node in data.get('pagerank', []):
-        id_ = str(node['id'])
-        if id_ not in so_far:
-            so_far.add(id_)
-            yield id_
     # All nodes
     for node in data.get('graph', []):
         for id_ in (node['source'], node['target']):
