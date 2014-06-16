@@ -29,7 +29,8 @@ class Command(NoArgsCommand):
 
     option_list = NoArgsCommand.option_list + (
         make_option('--force', action='store_true'),
-        make_option('--ids')
+        make_option('--ids'),
+        make_option('--single-thread', action='store_true'),
     )
 
     @transaction.autocommit
@@ -74,7 +75,11 @@ class Command(NoArgsCommand):
                 counters['n_skip'] += 1
                 continue
 
-            results.append((mp, pool.apply_async(generate_and_save, [mp.pk])))
+            if opts['single_thread']:
+                generate_and_save(mp.pk)
+                counters['n_ok'] += 1
+            else:
+                results.append((mp, pool.apply_async(generate_and_save, [mp.pk])))
 
             if len(results) >= BATCH_SIZE:
                 drain_results()
