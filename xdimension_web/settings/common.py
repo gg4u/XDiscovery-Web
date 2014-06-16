@@ -240,9 +240,9 @@ if DEPLOY_MODE in ('staging', 'local'):
 
 # CMS
 CMS_TEMPLATES = (
+    ('xdw_web/cms_templates/internal.html', 'Internal page'),
     ('xdw_web/base.html', 'Empty page'),  # TODO: remove this one
     ('xdw_web/cms_templates/landing.html', 'Landing page'),
-    ('xdw_web/cms_templates/internal.html', 'Internal page'),
     ('xdw_web/cms_templates/wip.html', 'WIP page')
 )
 
@@ -295,6 +295,7 @@ CMS_CACHE_DURATIONS = {
 
 CMS_SEO_FIELDS = True
 
+CMS_TEMPLATE_INHERITANCE = False
 
 # Facebook
 FB_APP_ID = {
