@@ -76,11 +76,14 @@ class Map(models.Model):
     def get_title(self):
         if self.title:
             return self.title
-        if self.node_titles and self.last_node_title:
-            return u'from {start} to {end}'.format(start=self.node_titles[0],
+        if self.first_node_title and self.last_node_title:
+            return u'from {start} to {end}'.format(start=self.first_node_title,
                                                    end=self.last_node_title)
         logger.warning('no title found for map {}'.format(self.pk))
         return 'xDiscovery graph'
+
+    def get_thumbnail_url(self):
+        return obj.thumbnail.url if obj.thumbnail else obj.picture_url
 
     def update_from_map_data(self):
         if not self.map_data:

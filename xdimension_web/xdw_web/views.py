@@ -33,13 +33,11 @@ class GraphDetailView(View):
         map_ = get_object_or_404(Map, pk=pk, status=Map.STATUS_OK)
         site = get_current_site(request)
         og_context.update({
-            # TODO: complete opengraph stuff
-            #'og:title': map_.show_title(),
+            'og:title': map_.get_title(),
             'og:url': '{}://{}{}'.format(settings.SHARING_PROTO,
                                          site.domain,
-                                         reverse('graph_detail', args=[pk]))
-            #'og:description': map_.show_title(),
-            #'og:image': map_.get_image(),
+                                         reverse('graph_detail', args=[pk])),
+            'og:image': map_.get_thumbnail_url()
         })
         return render(request, 'xdw_web/graph.html',
                       {'meta_items': og_context.items(),

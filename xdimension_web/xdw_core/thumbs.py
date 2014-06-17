@@ -61,10 +61,6 @@ def fetch_page_images(page_ids):
                 yield pages[page_id]['thumbnail']['source']
             except KeyError:
                 yield None
-            # try:
-            #     yield (page_info['page_id'], page_info['thumbnail']['source'])
-            # except KeyError:
-            #     pass
             
 
 def download_images(urls):
