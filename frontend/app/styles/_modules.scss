@@ -684,10 +684,16 @@ a.xd-back-to-top {
 .xd-accordion-section {
 	> .title {
 		cursor: pointer;
-		background: $secondary-color;
-		padding: 0 ($column-gutter / 2);
+		background: $secondary-color url(../images/accordion-title-arrow.svg) no-repeat 10px center;
+		padding: 0 ($column-gutter / 2) 0 50px;
 		color: $primary-color;
 		margin: 0;
+		border-bottom: 1px solid white;
+	}
+
+	&.active > .title {
+		background-image: none;
+		padding: 0 ($column-gutter / 2);
 	}
 
 	@media #{$small} {
@@ -695,6 +701,7 @@ a.xd-back-to-top {
 			padding: 0;
 			background: transparent;
 			display: none;
+			border: none;
 		}
 
 		&.active {
