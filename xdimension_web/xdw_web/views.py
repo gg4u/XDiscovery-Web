@@ -28,15 +28,16 @@ class AtlasView(View):
 
 
 class GraphDetailView(View):
-    def get(self, request, pk):
+    def get(self, request, pk, language=None):
         og_context = get_opengraph_context()
         map_ = get_object_or_404(Map, pk=pk, status=Map.STATUS_OK)
         site = get_current_site(request)
         og_context.update({
             'og:title': map_.get_title(),
-            'og:url': '{}://{}{}'.format(settings.SHARING_PROTO,
-                                         site.domain,
-                                         reverse('graph_detail', args=[pk])),
+            'og:url': '{}://{}{}'.format(
+                settings.SHARING_PROTO,
+                site.domain,
+                reverse('graph_detail', args=[settings.LANGUAGE_CODE, pk])),
             'og:image': map_.get_thumbnail_url()
         })
         return render(request, 'xdw_web/graph.html',
