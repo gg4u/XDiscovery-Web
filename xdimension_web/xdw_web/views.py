@@ -35,6 +35,17 @@ class AtlasView(View):
         return render(request, 'frontend/{}'.format(path))
 
 
+DESC_FMT_LONG = (
+    u'Learn in seconds: about {{topics}} and other {{more_topics}} topics! '
+    u'{url} | Made with #LearnDiscovery app >  Get the Human'
+    u'Knowledge in your hands > {app_url}'
+)
+
+DESC_FMT_SHORT = (
+    u'Learn in seconds: about {{topics}} and other {{more_topics}} topics! '
+    u'{url} | Get your maps > {app_url}'
+)
+
 
 class GraphDetailView(View):
 
@@ -46,17 +57,8 @@ class GraphDetailView(View):
                 settings.SHARING_PROTO,
                 site.domain,
                 reverse('graph_detail', args=[settings.LANGUAGE_CODE, pk]))
-        desc_fmt_1 = (
-            u'A map about: {{topics}} and other #{{more_topics}} topics! '
-            u'{url} |'
-            u'Get Human Knowledge in your hands > '
-            u'#LearnDiscovery app {app_url}')
-        # TODO: confirm app url
-        desc_fmt = desc_fmt_1.format(url=map_url,
-                                     app_url='http://bit.ly/1pcHMZ3'
-        )
 
-        def possible_descriptions(max_length, hashtags=True):
+        def get_topics(hashtags=True):
             desc = []
             sep = u' · '
             for title in map_.node_titles[:3]:
@@ -64,26 +66,35 @@ class GraphDetailView(View):
                     title = title.replace(' ', '')
                     title = u'#{}'.format(title)
                 desc.append(title)
-            yield desc_fmt.format(
-                topics=sep.join(desc),
-                more_topics=len(map_.node_titles) - len(desc)
-            )
-            yield sep.join(desc)
-            yield desc[0]
+            return sep.join(desc), len(map_.node_titles) - len(desc)
 
-        def get_description(max_length, **kwargs):
-            for description in possible_descriptions(max_length, **kwargs):
-                if len(description) <= max_length:
-                    return description
+        def get_long_description(**kwargs):
+            desc_fmt = DESC_FMT_LONG.format(
+                url=map_url,
+                app_url='http://tiny.cc/LearnDiscoveryApp'
+            )
+            topics, more_topics = get_topics()
+            return desc_fmt.format(topics=topics, more_topics=more_topics)
+
+        def get_short_description(max_length=140, **kwargs):
+            desc_fmt = DESC_FMT_SHORT.format(
+                url=map_url,
+                app_url='http://tiny.cc/LearnDiscoveryApp'
+            )
+            for topic in map_.node_titles:
+                desc = desc_fmt.format(topics=topic,
+                                       more_topics=len(map_.node_titles) - 1)
+                if len(desc) <= max_length:
+                    return desc
                 logger.warning('description too long for map {}'.format(map_.pk))
             logger.error('can\'t set description for map {}'.format(map_.pk))
-
+    
         # Facebook
         og_context.update({
             'og:title': map_.get_title(),
             'og:url': map_url,
             'og:image': map_.get_thumbnail_url(),
-            'og:description': get_description(500),
+            'og:description': get_long_description(),
         })
 
         # Twitter
@@ -91,7 +102,7 @@ class GraphDetailView(View):
             'twitter:card': 'summary_large_image',
             #'twitter:site': xxx
             'twitter:title': map_.get_title(),
-            'twitter:description': get_description(200),
+            'twitter:description': get_short_description(200),
             #'twitter:creator': xxx
             'twitter:image:src': map_.get_thumbnail_url(),
             #'twitter:domain': XXX
