@@ -29,8 +29,10 @@ class Command(NoArgsCommand):
 
     option_list = NoArgsCommand.option_list + (
         make_option('--force', action='store_true'),
+        make_option('--unublished', action='store_true'),
         make_option('--ids'),
         make_option('--single-thread', action='store_true'),
+        make_option('--from', help='from pk')
     )
 
     @transaction.autocommit
@@ -41,9 +43,14 @@ class Command(NoArgsCommand):
         pool = Pool(processes=4)
 
         maps = Map.objects.all()
+        if not opts.get('unpublished'):
+            maps = maps.filter(status=Map.STATUS_OK)
+        maps = maps.order_by('pk')
         if map_ids:
             map_ids = map_ids.split(',')
             maps = maps.filter(pk__in=map_ids)
+        if opts['from']:
+            maps = maps.filter(pk__gte=opts['from'])
 
         print('going through {} maps'.format(maps.count()))
 
