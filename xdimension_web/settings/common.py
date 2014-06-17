@@ -299,9 +299,9 @@ CMS_TEMPLATE_INHERITANCE = False
 
 # Facebook
 FB_APP_ID = {
-    'staging': 186960618160957,
-    'production': '',
-    'local': 186960618160957,
+    'staging': '186960618160957',
+    'production': '350526161751989',
+    'local': '186960618160957',
 }
 
 FB_SITE_NAME = 'xDiscovery'
