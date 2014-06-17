@@ -83,7 +83,7 @@ class Map(models.Model):
         return 'xDiscovery graph'
 
     def get_thumbnail_url(self):
-        return obj.thumbnail.url if obj.thumbnail else obj.picture_url
+        return self.thumbnail.url if self.thumbnail else self.picture_url
 
     def update_from_map_data(self):
         if not self.map_data:
