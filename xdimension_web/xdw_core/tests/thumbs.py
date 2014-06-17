@@ -22,7 +22,7 @@ class ThumbTestCase(TestCase, MapTestCaseMixIn):
         thumb = generate_map_thumbnail(mp)
         self.assertTrue(thumb)
         thumb.show()
-        self.assertEqual(thumb.size, (300, 233))
+        self.assertEqual(thumb.size, (300, 261))
         save_map_thumbnail(mp, thumb)
 
     def test_create_thumbs_no_img(self):
@@ -31,5 +31,5 @@ class ThumbTestCase(TestCase, MapTestCaseMixIn):
         thumb = generate_map_thumbnail(mp)
         self.assertTrue(thumb)
         thumb.show()
-        self.assertEqual(thumb.size, (300, 233))
+        self.assertEqual(thumb.size, (300, 118))
         save_map_thumbnail(mp, thumb)
