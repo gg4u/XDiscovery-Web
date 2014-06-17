@@ -55,6 +55,7 @@ class Map(models.Model):
     # Non-editable fields calculated from map_data
     node_count = models.IntegerField(editable=False)
     node_titles = JSONField(editable=False)
+    first_node_title = models.CharField(max_length=500, editable=False)
     last_node_title = models.CharField(max_length=500, editable=False)
     # for sorting
     date_created = models.DateField(db_index=True, default=now_tz)
@@ -75,11 +76,14 @@ class Map(models.Model):
     def get_title(self):
         if self.title:
             return self.title
-        if self.node_titles and self.last_node_title:
-            return u'from {start} to {end}'.format(start=self.node_titles[0],
+        if self.first_node_title and self.last_node_title:
+            return u'from {start} to {end}'.format(start=self.first_node_title,
                                                    end=self.last_node_title)
         logger.warning('no title found for map {}'.format(self.pk))
         return 'xDiscovery graph'
+
+    def get_thumbnail_url(self):
+        return self.thumbnail.url if self.thumbnail else self.picture_url
 
     def update_from_map_data(self):
         if not self.map_data:
@@ -100,10 +104,17 @@ class Map(models.Model):
             self.net = int(net)
         except (ValueError, TypeError):
             logger.warning('bad value for \"net\" field: {}'.format(net))
-        # XXX FIXME here we should be walking the path from first to last...
+        node_titles = []
+        if 'startNode' in data:
+            self.first_node_title = data['startNode']['title']
+        else:
+            self.first_node_title = data['pagerank'][0]['title']
         self.node_titles = [n['title'] for n in data['pagerank']\
                                     [:Map.MAX_NODE_TITLES]]
-        self.last_node_title = data['pagerank'][-1]['title']
+        if 'endNode' in data:
+            self.last_node_title = data['endNode']['title']
+        else:
+            self.last_node_title = data['pagerank'][-1]['title']
         self.node_count = len(data.get('graph', data.get('atlas')))
         return data
 

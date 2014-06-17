@@ -18,8 +18,9 @@ class MapSimpleSerializer(ModelSerializer):
         ret = super(MapSimpleSerializer, self).to_native(obj)
         ret.update({'author': {'name': obj.author_name,
                                'surname': obj.author_surname},
-                    'thumbnail': {'url': obj.thumbnail.url if obj.thumbnail else obj.picture_url},
+                    'thumbnail': {'url': obj.get_thumbnail_url()},
                     'nodeTitles': {
+                        'first': obj.first_node_title,
                         'start': obj.node_titles,
                         'last': obj.last_node_title
                         }

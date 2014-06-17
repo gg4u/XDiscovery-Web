@@ -44,6 +44,7 @@ AWS_STORAGE_DOMAIN = os.environ.get('AWS_STORAGE_DOMAIN')
 # allows conditional upload (needs dateutil)
 AWS_PRELOAD_METADATA = True
 AWS_QUERYSTRING_AUTH = False  # Or else CORS will break
+AWS_S3_FILE_OVERWRITE = False
 
 # media files (images uploaded by users)
 AWS_LOCATION = 'media'  # this only impacts unversioned storage

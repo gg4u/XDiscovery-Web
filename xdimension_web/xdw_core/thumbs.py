@@ -1,9 +1,12 @@
 from __future__ import division
 
-import requests
-from PIL import Image
+import os
 from StringIO import StringIO
 import itertools
+import logging
+
+import requests
+from PIL import Image, ImageFont, ImageDraw
 from django.core.files import File
 
 # Tiles in a thumbnail
@@ -13,7 +16,7 @@ IMAGE_WIDTH = 300
 
 FETCH_BATCH_SIZE = 50
 
-DEBUG = False
+logger = logging.getLogger(__name__)
 
 
 def left_column_n_tiles(images):
@@ -29,7 +32,11 @@ def left_column_n_tiles(images):
 
 
 def fetch_page_images(page_ids):
-    '''Get image urls from wikipedia. '''
+    '''Get image urls from wikipedia.
+
+    Returns:
+       a generatorn yield the image URL or None if it can't be found.
+    '''
     while True:
         ids = [id_ for id_ in itertools.islice(page_ids, 0, FETCH_BATCH_SIZE)]
         if not ids:
@@ -48,19 +55,93 @@ def fetch_page_images(page_ids):
                     'redirects': ''}
         )
         resp.raise_for_status()
-        for _, page_info in resp.json()['query']['pages'].items():
+        pages = resp.json()['query']['pages']
+        for page_id in ids:
             try:
-                yield page_info['thumbnail']['source']
+                yield pages[page_id]['thumbnail']['source']
             except KeyError:
-                pass
+                yield None
             
 
 def download_images(urls):
     '''Download images and turn them into an Image.'''
     for url in urls:
-        resp = requests.get(url)
-        resp.raise_for_status()
-        yield Image.open(StringIO(resp.content))
+        if url is None:
+            yield None
+        else:
+            resp = requests.get(url)
+            resp.raise_for_status()
+            yield Image.open(StringIO(resp.content))
+
+
+TEXT_MARGIN = 10
+FONT_FNAME = os.path.join(os.path.dirname(__file__), 'fonts', 'sans.ttf')
+BG_COLOR = '#1c1e1f'
+MAX_LINES = 3
+
+
+def title_to_lines(title):
+    return title.upper().split()
+
+
+def get_rotations():
+    return itertools.cycle((-10, 0, 10))
+
+
+def make_text_image(text, rotation):
+    '''Create an image representing text.
+
+    Returns:
+        an Image instance.
+    '''
+    font = ImageFont.truetype(FONT_FNAME, 100)
+    # Tiles one per text line
+    tiles = []
+    width, height = 0, 0
+    for line in itertools.islice(title_to_lines(text), MAX_LINES):
+        size = [x + TEXT_MARGIN for x in font.getsize(line)]
+        tile = Image.new('RGB', size, BG_COLOR)
+        draw = ImageDraw.Draw(tile)
+        draw.text((TEXT_MARGIN/2, TEXT_MARGIN*-2), line, font=font)
+        tiles.append(tile)
+        if tile.size[0] > width:
+            width = tile.size[0]
+        height += tile.size[1] + TEXT_MARGIN
+    # Image containg all the lines (tiles)
+    image = Image.new('RGB', (width, height), BG_COLOR)
+    x, y = 0, 0
+    for tile in tiles:
+        image.paste(tile, ((image.size[0] - tile.size[0]) // 2, y))
+        y += tile.size[1] + TEXT_MARGIN
+    # Rotate the image, with a nice hack to set background
+    image = image.convert('RGBA').rotate(rotation, resample=Image.BICUBIC,
+                                         expand=1)
+    bg = Image.new('RGBA', image.size, BG_COLOR)
+    final = Image.composite(image, bg, image)
+    final = final.convert('RGB')
+    return final
+
+
+def images_or_text(images, map_instance):
+    '''Fill in missing images with text.
+
+    Returns:
+        a generator yielding images.
+    '''
+    rotations = get_rotations()
+    for i, image in enumerate(images):
+        if image is None:
+            try:
+                text = map_instance.node_titles[i]
+            except IndexError:
+                logger.warning('could not generate text image for topic {}'
+                               .format(i))
+                return
+            else:
+                rotation = next(rotations)
+                yield make_text_image(text, rotation)
+        else:
+            yield image
 
 
 def make_thumbnail(images):
@@ -79,8 +160,8 @@ def make_thumbnail(images):
     if not images:
         return
     n1 = left_column_n_tiles(images)
-    if DEBUG:
-        print('original size: {}'.format([image.size for image in images]))
+    if logger.isEnabledFor(logging.DEBUG):
+        ('original size: {}'.format([image.size for image in images]))
     # Calculate first scaling factor
     scaling1 = [L / image.size[0] for image in images]
     # Calculate H1 and H2
@@ -101,17 +182,20 @@ def make_thumbnail(images):
         dimensions2[-1] = (dimensions2[-1][0],
                            H - sum(dim[1] for dim in dimensions2[:-1]))
     dimensions = itertools.chain(dimensions1, dimensions2)
-    if DEBUG:
-        print('tile size: {}'.format([dimensions1 + dimensions2]))
+    if logger.isEnabledFor(logging.DEBUG):
+        logger.debug('tile size: {}'.format([dimensions1 + dimensions2]))
     del image
 
     # Combine all tiles in a single image
-    thumbnail = Image.new('RGBA', (L, H))
-    if DEBUG:
-        print('thumbnail size: {}'.format(thumbnail.size))
+    thumbnail = Image.new('RGB', (L, H), BG_COLOR)
+    logger.debug('thumbnail size: {}'.format(thumbnail.size))
     x, y = 0, 0
     i = 0
     for dim, image in itertools.izip(dimensions, images):
+        if image.mode == 'RGBA':
+            bg = Image.new('RGBA', image.size, BG_COLOR)
+            image = Image.composite(image, bg, image)
+            image = image.convert('RGB')
         image = image.resize(dim, resample=Image.ANTIALIAS)
         thumbnail.paste(image, (x, y))
         i += 1
@@ -131,6 +215,12 @@ def get_map_page_ids(map_instance):
     '''
     so_far = set()
     data = map_instance.map_data['map']
+    # Pagerank
+    for node in data.get('pagerank', []):
+        id_ = str(node['id'])
+        if id_ not in so_far:
+            so_far.add(id_)
+            yield id_
     # Tapped
     ids = data.get('tappedNodes', [])
     for id_ in ids:
@@ -138,12 +228,6 @@ def get_map_page_ids(map_instance):
             id_ = str(id_)
             yield id_
             so_far.add(id_)
-    # Pagerank
-    for node in data.get('pagerank', []):
-        id_ = str(node['id'])
-        if id_ not in so_far:
-            so_far.add(id_)
-            yield id_
     # All nodes
     for node in data.get('graph', []):
         for id_ in (node['source'], node['target']):
@@ -165,8 +249,12 @@ def generate_map_thumbnail(map_instance):
     ids = get_map_page_ids(map_instance)
     urls = fetch_page_images(ids)
     images = download_images(urls)
-    # XXX For testing
-    # images = [Image.open('{}.jpg'.format(i)) for i in range(5)]
+
+    # Thumbnail should only contain images from the first 5 topics.
+    images = images_or_text(images, map_instance)
+    # Alternatively, thumbnail contains images from *all* topics
+    #images = itertools.ifilter(lambda x: x is not None, images)
+
     thumbnail = make_thumbnail(images)
     return thumbnail
 

@@ -30,7 +30,6 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         mp = Map.objects.get()
         self.assertEqual(mp.title, 'titolo')
         self.assertEqual(mp.node_count, 18)
-        self.assertTrue(False, 'walk the nodes in the right direction')
         self.assertEqual(mp.node_titles, [u'Leopard', u'Lion', u'Cheetah', u'Asiatic lion', u'Transvaal lion', u'Southwest African lion', u'Indochinese leopard', u'African leopard', u'North China leopard', u'Felis', u'Big cat', u'Arabian leopard', u'Striped hyena', u'Indian leopard', u'Sri Lankan leopard', u'Javan leopard', u'Lycaon pictus', u'Northwest African cheetah'])
         self.assertEqual(mp.last_node_title, 'Cheetah')
 
@@ -206,7 +205,7 @@ class MapTestCase(LiveServerTestCase, MapTestCaseMixIn):
         self.assertEqual(resp.status_code, 200)
         data = json.loads(resp.content)
         self.assertNotIn('map_data', data)
-        self.assertIn('path', data)
+        self.assertIn('nodes', data)
         self.assertIn('graph', data)
         self.assertEqual(data['popularity'], 0)
         # popularity is increased

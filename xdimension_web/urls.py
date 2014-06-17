@@ -14,7 +14,7 @@ urlpatterns = patterns(
     # Atlas app
     # XXX the SPA uris should all live under the /atlas/ uri
     url(r'^atlas/$', AtlasView.as_view(), name='atlas'),
-    url(r'^\w{2}/graph/(?P<pk>\d+)$', GraphDetailView.as_view(),
+    url(r'^(?P<language>\w{2})/graph/(?P<pk>\d+)$', GraphDetailView.as_view(),
         name='graph_detail'),
     url(r'^(views/.*)', AtlasView.as_view()),
     # SEO stuff
