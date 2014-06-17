@@ -99,7 +99,7 @@ class GraphDetailView(View):
 
         # Twitter
         og_context.update({
-            'twitter:card': 'summary_large_image',
+            'twitter:card': 'summary',
             #'twitter:site': xxx
             'twitter:title': map_.get_title(),
             'twitter:description': get_short_description(200),
