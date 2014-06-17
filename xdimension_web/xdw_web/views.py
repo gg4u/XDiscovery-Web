@@ -27,18 +27,44 @@ class AtlasView(View):
         return render(request, 'frontend/{}'.format(path))
 
 
+
 class GraphDetailView(View):
     def get(self, request, pk, language=None):
         og_context = get_opengraph_context()
         map_ = get_object_or_404(Map, pk=pk, status=Map.STATUS_OK)
         site = get_current_site(request)
+        
+        def get_description(max_length, hashtags=False):
+            desc, desc_len = [], 0
+            for title in map_.node_titles:
+                if hashtags and ' ' not in title:
+                    title = u'#{}'.format(title)
+                desc_len += len(title)
+                if desc_len > 200 and desc:
+                    break
+                desc.append(title)
+            return u' '.join(desc)
+
+        # Facebook
         og_context.update({
             'og:title': map_.get_title(),
             'og:url': '{}://{}{}'.format(
                 settings.SHARING_PROTO,
                 site.domain,
                 reverse('graph_detail', args=[settings.LANGUAGE_CODE, pk])),
-            'og:image': map_.get_thumbnail_url()
+            'og:image': map_.get_thumbnail_url(),
+            'og:description': get_description(200),
+        })
+
+        # Twitter
+        og_context.update({
+            'twitter:card': 'summary_large_image',
+            #'twitter:site': xxx
+            'twitter:title': map_.get_title(),
+            'twitter:description':  get_description(200, hashtags=True),
+            #'twitter:creator': xxx
+            'twitter:image:src': map_.get_thumbnail_url(),
+            #'twitter:domain': XXX
         })
         return render(request, 'xdw_web/graph.html',
                       {'meta_items': og_context.items(),
