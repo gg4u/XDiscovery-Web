@@ -53,7 +53,7 @@ STATICFILES_DIRS = (
 
 # version of static assets. Incrementing this value forces static asset
 # cache clear in devices
-STATIC_VERSION = 1
+STATIC_VERSION = 2
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ.get('SECRET_KEY', 'phah6izoo3ahtiPh1zeighae%th4Yei0toh8ol,o')
@@ -64,6 +64,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 )
 
@@ -84,10 +85,11 @@ MIDDLEWARE_CLASSES += (
     'cms.middleware.page.CurrentPageMiddleware',
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware',
+    #'cms.middleware.language.LanguageCookieMiddleware',  # Breaks caching
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'xdimension_web.xdw_web.middleware.PartialResponseMiddleware',
     'django.middleware.gzip.GZipMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -238,6 +240,8 @@ if DEPLOY_MODE in ('staging', 'local'):
                           'authorization',
                           'x-csrftoken')
 
+CACHE_MIDDLEWARE_SECONDS = 60
+
 # CMS
 CMS_TEMPLATES = (
     ('xdw_web/cms_templates/internal.html', 'Internal page'),
@@ -288,9 +292,9 @@ CMS_PLACEHOLDER_CONF = {
 }
 
 CMS_CACHE_DURATIONS = {
-    'content': 1,
-    'menus': 1,
-    'permissions': 3600
+    'content': 60,
+    'menus': 60,
+    'permissions': 600
 }
 
 CMS_SEO_FIELDS = True
