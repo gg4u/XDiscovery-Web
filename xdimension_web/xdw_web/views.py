@@ -29,21 +29,31 @@ class RobotsView(View):
                                 .format(site=Site.objects.get_current(),
                                         sitemap_url=reverse('sitemap')))
 
+ATLAS_DESCRIPTION = u'The Atlas of Human Knowledge is a collection of visual maps for learning and reference. Maps display knowledge correlations between topics, to quickly overview a knowledge area. Maps are obtained with LearnDiscovery mobile app, the portable discovery engine applied to factual knowledge.'
 
 class AtlasView(View):
     def get(self, request, path='index.html'):
-        return render(request, 'frontend/{}'.format(path))
+        return render(request,
+                      'frontend/{}'.format(path),
+                      {'meta_items': {'description': ATLAS_DESCRIPTION},
+                       # title is set by angular anyways
+                       'title': 'Atlas'}
+        )
 
-
-DESC_FMT_LONG = (
+SHARING_FMT_LONG = (
     u'Learn in seconds: about {{topics}} and other {{more_topics}} topics! '
     u'{url} | Made with #LearnDiscovery app >  Get the Human'
     u'Knowledge in your hands > {app_url}'
 )
 
-DESC_FMT_SHORT = (
+SHARING_FMT_SHORT = (
     u'Learn in seconds: about {{topics}} and other {{more_topics}} topics! '
     u'{url} | Get your maps > {app_url}'
+)
+
+GRAPH_DESCRIPTION_FMT = (
+    u'A knowledge map of correlations about: {topics} '
+    u'and other {more_topics} topics | visual learning and discovery{more}'
 )
 
 
@@ -68,16 +78,17 @@ class GraphDetailView(View):
                 desc.append(title)
             return sep.join(desc), len(map_.node_titles) - len(desc)
 
+        topics, more_topics = get_topics()
+
         def get_long_description(**kwargs):
-            desc_fmt = DESC_FMT_LONG.format(
+            desc_fmt = SHARING_FMT_LONG.format(
                 url=map_url,
                 app_url='http://tiny.cc/LearnDiscoveryApp'
             )
-            topics, more_topics = get_topics()
             return desc_fmt.format(topics=topics, more_topics=more_topics)
 
         def get_short_description(max_length=140, **kwargs):
-            desc_fmt = DESC_FMT_SHORT.format(
+            desc_fmt = SHARING_FMT_SHORT.format(
                 url=map_url,
                 app_url='http://tiny.cc/LearnDiscoveryApp'
             )
@@ -89,12 +100,27 @@ class GraphDetailView(View):
                 logger.warning('description too long for map {}'.format(map_.pk))
             logger.error('can\'t set description for map {}'.format(map_.pk))
     
+        long_description = get_long_description()
+
+        # Google crawler
+        if map_.description:
+            more = '| {description}'.format(map_.description)
+        else:
+            more = ''
+        og_context.update({
+            'description': GRAPH_DESCRIPTION_FMT.format(
+                topics=topics,
+                more_topics=more_topics,
+                more=more),
+            'title': map_.get_title(),  # Also set by angular
+        })
+
         # Facebook
         og_context.update({
             'og:title': map_.get_title(),
             'og:url': map_url,
             'og:image': map_.get_thumbnail_url(),
-            'og:description': get_long_description(),
+            'og:description': long_description,
         })
 
         # Twitter
@@ -107,6 +133,6 @@ class GraphDetailView(View):
             'twitter:image:src': map_.get_thumbnail_url(),
             #'twitter:domain': XXX
         })
-        return render(request, 'xdw_web/graph.html',
+        return render(request, 'frontend/index.html',
                       {'meta_items': og_context.items(),
                        'title': map_.get_title()})
