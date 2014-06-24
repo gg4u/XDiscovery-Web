@@ -26,11 +26,17 @@ class CarouselPlugin(CMSPluginBase):
     cache = False  # XXX caching breaks static_placeholder
 
     def render(self, context, instance, placeholder):
+        context.update({'instance': instance, 'placeholder': placeholder})
+        try:
+            current_page = context['current_page']
+        except KeyError:
+            logger.error('can\'t find current page...')
+            return context
         items = []
         current_page = context['current_page']
         active_item_idx = 0
         for i, c in enumerate(instance.carouselcontent_set.all()):
-            if (c.page is not None and 
+            if (c.page is not None and
                 (c.page == current_page or
                  c.page.publisher_public_id == current_page.pk)):
                 active_item_idx = i
@@ -38,9 +44,7 @@ class CarouselPlugin(CMSPluginBase):
         logger.debug('selected carousel item {}'.format(active_item_idx))
         context.update({
             'carouselcontent_items': items,
-            'carouselcontent_active_item_idx': active_item_idx,
-            'instance': instance,
-            'placeholder': placeholder
+            'carouselcontent_active_item_idx': active_item_idx
         })
         return context
 
