@@ -30,7 +30,7 @@
 </head>
 	<body ng-controller="siteCtrl">
 	  <!-- @if ENV='dist' -->
-	  {% cms_toolbar %}
+	  {% if request.user.is_authenticated %}{% cms_toolbar %}{% endif %}
 	  <!-- @endif -->
 		<!--[if lt IE 9]>
 			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -139,7 +139,7 @@
 		</div><!-- .off-canvas-wrap -->
 
 		 <!-- @if ENV='dist' -->
-		 {% if not 'edit' in request.GET %}
+		 {% if 'edit' not in request.GET or not request.user.is_authenticated %}
 		 <!-- @endif -->
 		<!-- build:js /scripts/vendor.js -->
 		<script src="/bower_components/jquery/dist/jquery.js"></script>
