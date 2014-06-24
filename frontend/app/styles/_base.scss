@@ -212,3 +212,13 @@ button.invisible {
 		margin-right: .6em;
 	}
 }
+
+// Foundation collapse addition
+@media #{$small-only} {
+	.row.small-collapse > .columns {
+		position: relative;
+		padding-left: 0;
+		padding-right: 0;
+		float: left;
+	}
+}
