@@ -16,7 +16,7 @@ pytz==2013d
 python-dateutil==2.1
 django-json-field==0.5.5
 django-filter==0.7
-git+git://github.com/mpaolini/djangocms-text-ckeditor@2.1.4_credra
+djangocms-text-ckeditor==2.1.6
 djangocms-picture==0.0.2
 djangocms-file==0.0.1
 djangocms-video==0.0.1
@@ -25,4 +25,3 @@ requests==2.2.1
 chaussette==1.1
 circus==0.10
 pyzmq==14.2.0
-
