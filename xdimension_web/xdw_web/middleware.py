@@ -1,3 +1,5 @@
+import os.path
+
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -6,8 +8,11 @@ from django.conf import settings
 class PartialResponseMiddleware(object):
 
     def process_template_response(self, request, response):
-        if request.GET.get('angular') or request.is_ajax():
-            response.template_name = 'xdw_web/cms_templates/angular.html'
+        if request.GET.get('angular'):
+            template_name = '{0}_angular{1}'.format(
+                *os.path.splitext(response.template_name)
+            )
+            response.template_name = template_name
         return response
 
 OK_URLS = ['/en/atlas', '/api', '/views', '/map', '/en/graph', '/media']
