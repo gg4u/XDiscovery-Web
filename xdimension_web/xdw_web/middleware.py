@@ -1,8 +1,11 @@
 import os.path
+import logging
 
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.conf import settings
+
+logger = logging.getLogger(__name__)
 
 
 class PartialResponseMiddleware(object):
