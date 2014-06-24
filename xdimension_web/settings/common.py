@@ -287,8 +287,8 @@ CMS_PLACEHOLDER_CONF = {
         'name': 'Accordion Items'
     },
     'box': {
-        'plugins': ['BoxPlugin'],
-        'name': 'Box',
+        'plugins': ['BoxPlugin', 'TextPlugin'],
+        'name': 'Main content',
     },
     'footer': {
         'plugins': ['TextPlugin'],
