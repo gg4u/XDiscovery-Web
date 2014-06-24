@@ -1,16 +1,4 @@
 {% extends "frontend/index.html" %}
-{% load cms_tags %}
 {% block content %}
-<div class="row">
-	<div class="small-12 large-12 columns">
-	    <div class="row">
-		<div class="small-12 large-8 large-centered columns">
-		    <h2 style="text-align:center">{% placeholder abstract %}</h2>
-		</div>
-	    </div>
-	    <div class="row">
-                {% placeholder box %}
-	    </div>
-	</div>
-</div>
+{% include "xdw_web/cms_templates/landing_angular.html" %}
 {% endblock %}

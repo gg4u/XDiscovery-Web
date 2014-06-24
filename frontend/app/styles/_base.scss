@@ -12,8 +12,7 @@ html, body {
 
 #page-content > div {
 	height: 100%;
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
+	overflow: hidden;
 }
 
 @media #{$small} {
@@ -211,5 +210,15 @@ button.invisible {
 		float: none;
 		margin-left: .6em;
 		margin-right: .6em;
+	}
+}
+
+// Foundation collapse addition
+@media #{$small-only} {
+	.row.small-collapse > .columns {
+		position: relative;
+		padding-left: 0;
+		padding-right: 0;
+		float: left;
 	}
 }

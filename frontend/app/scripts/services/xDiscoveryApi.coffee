@@ -18,8 +18,10 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 		map.getFacebookUrl = -> "https://www.facebook.com/sharer/sharer.php?u=#{encodedMapUrl}"
 		map.getGplusUrl = -> "https://plus.google.com/share?url=#{encodedMapUrl}"
 		map.getTwitterUrl = ->
-			tags = map.getTags().join(',')
-			"https://twitter.com/share?url=#{encodedMapUrl}&text=A%20map%20about&hashtags=#{tags}"
+			tags = map.getTags()
+			topic = tags[0]
+			more_topics = tags.length - 1
+			"https://twitter.com/share?url=#{encodedMapUrl}&text=Learn%20in%20seconds%3A%20about%20%23#{topic}%20and%20other%20#{more_topics}%20topics%21%20Get%20your%20maps%20http%3A//tiny.cc/LearnDiscoveryApp"
 		map.getFacebookLikeUrl = (params) ->
 			url = "#{$location.protocol()}://www.facebook.com/plugins/like.php?href=#{encodedMapUrl}&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=21&amp;width=55"
 			url += "&#{p}=v" for p, v of params

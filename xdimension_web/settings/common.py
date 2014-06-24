@@ -245,9 +245,8 @@ CACHE_MIDDLEWARE_SECONDS = 60
 # CMS
 CMS_TEMPLATES = (
     ('xdw_web/cms_templates/internal.html', 'Internal page'),
-    ('xdw_web/base.html', 'Empty page'),  # TODO: remove this one
     ('xdw_web/cms_templates/landing.html', 'Landing page'),
-    ('xdw_web/cms_templates/wip.html', 'WIP page')
+    ('xdw_web/cms_templates/free.html', 'Free page (no fixed carousel)'),
 )
 
 CMS_PLACEHOLDER_CONF = {
@@ -272,18 +271,24 @@ CMS_PLACEHOLDER_CONF = {
     },
     'accordion_navigation': {
         'plugins': ['AccordionNavigationPlugin'],
-        'name': 'AccordionNavigation',
+        'name': 'Accordion Navigation (content is in Accordion Items)',
         'limits': {
             'global': 1
         },
+        'default_plugins': [
+            {
+                'plugin_type': 'AccordionNavigationPlugin',
+                'values': {}
+            }
+        ]
     },
     'accordion': {
         'plugins': ['AccordionPlugin'],
-        'name': 'Accordion'
+        'name': 'Accordion Items'
     },
     'box': {
-        'plugins': ['BoxPlugin'],
-        'name': 'Box',
+        'plugins': ['BoxPlugin', 'TextPlugin'],
+        'name': 'Main content',
     },
     'footer': {
         'plugins': ['TextPlugin'],
