@@ -646,11 +646,12 @@ $graph-page-header-height: 52px;
 }
 
 .xd-custom-page-content {
-	padding-top: 130px;
+	padding-top: 82px;
 	height: 100%;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 	@media #{$small} {
+		overflow: visible;
 		padding-top: 0;
 	}
 }
