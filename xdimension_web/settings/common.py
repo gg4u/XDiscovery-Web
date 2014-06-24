@@ -246,6 +246,7 @@ CACHE_MIDDLEWARE_SECONDS = 60
 CMS_TEMPLATES = (
     ('xdw_web/cms_templates/internal.html', 'Internal page'),
     ('xdw_web/cms_templates/landing.html', 'Landing page'),
+    ('xdw_web/cms_templates/free.html', 'Free page (no fixed carousel)'),
 )
 
 CMS_PLACEHOLDER_CONF = {
