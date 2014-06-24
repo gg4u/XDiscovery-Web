@@ -12,8 +12,7 @@ html, body {
 
 #page-content > div {
 	height: 100%;
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
+	overflow: hidden;
 }
 
 @media #{$small} {
