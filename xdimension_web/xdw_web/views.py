@@ -99,14 +99,12 @@ class GraphDetailView(View):
                     return desc
                 logger.warning('description too long for map {}'.format(map_.pk))
             logger.error('can\'t set description for map {}'.format(map_.pk))
-    
+
         long_description = get_long_description()
 
         # Google crawler
-        if map_.description:
-            more = '| {description}'.format(map_.description)
-        else:
-            more = ''
+        more = '| {}'.format(map_.description) if map_.description else ''
+
         og_context.update({
             'description': GRAPH_DESCRIPTION_FMT.format(
                 topics=topics,
