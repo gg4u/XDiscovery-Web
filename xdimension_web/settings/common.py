@@ -271,14 +271,20 @@ CMS_PLACEHOLDER_CONF = {
     },
     'accordion_navigation': {
         'plugins': ['AccordionNavigationPlugin'],
-        'name': 'AccordionNavigation',
+        'name': 'Accordion Navigation (content is in Accordion Items)',
         'limits': {
             'global': 1
         },
+        'default_plugins': [
+            {
+                'plugin_type': 'AccordionNavigationPlugin',
+                'values': {}
+            }
+        ]
     },
     'accordion': {
         'plugins': ['AccordionPlugin'],
-        'name': 'Accordion'
+        'name': 'Accordion Items'
     },
     'box': {
         'plugins': ['BoxPlugin'],
