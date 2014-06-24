@@ -132,5 +132,5 @@ class GraphDetailView(View):
             #'twitter:domain': XXX
         })
         return render(request, 'frontend/index.html',
-                      {'meta_items': og_context.items(),
+                      {'meta': og_context,
                        'title': map_.get_title()})

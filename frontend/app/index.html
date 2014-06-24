@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title ng-bind-template="xDiscovery &ndash; {{documentTitle}}"><!-- @if ENV='dist' -->{% block title %}{dj{ title|default:"XDiscovery" }dj}{% endblock %}<!-- @endif --></title>
+	<title ng-bind-template="xDiscovery &ndash; {{documentTitle}}"><!-- @if ENV='dist' -->{% block title %}{% page_attribute "page_title" as page_title %}{% if page_title %}{dj{ page_title }dj}{% else %}{dj{ title|default:"XDiscovery" }dj}{% endif %}{% endblock %}<!-- @endif --></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="apple-itunes-app" content="app-id=859954749">
 
@@ -19,7 +19,10 @@
 	<!-- endbuild -->
 	<!-- @if ENV='dist' -->
 	{% block extrahead %}{% endblock %}
-        {% for property, content in meta_items %}<meta property="{{ property }}" content="{{ content }}">{% endfor %}
+        {% page_attribute "meta_description" as page_meta_description %}
+        <meta proprety="description" content="{dj{ meta.description|default:page_meta_description }dj}">
+        {% for property, content in meta.items %}{% if property != "description" %}<meta property="{dj{ property }dj}" content="{dj{ content }dj}">{% endif %}
+        {% endfor %}
 	{% render_block "css" %}
 	<!-- @endif -->
 	<!--[if lte IE 9]>
