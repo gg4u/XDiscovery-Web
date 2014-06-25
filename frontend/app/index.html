@@ -1,6 +1,6 @@
 <!-- @if ENV='dist' -->{% load cms_tags sekizai_tags %}<!-- @endif -->
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="xdiscoveryApp">
+<html xmlns:ng="http://angularjs.org" id="ng-app">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -214,6 +214,8 @@
 			<!-- @endif -->
 			}
 		});
+		// Bootstrapping
+		angular.bootstrap(document, ['xdiscoveryApp']);
 		</script>
 		 <!-- @if ENV='dist' -->
 		 {% endif %}
