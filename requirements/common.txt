@@ -25,4 +25,3 @@ requests==2.2.1
 chaussette==1.1
 circus==0.10
 pyzmq==14.2.0
-

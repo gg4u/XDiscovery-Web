@@ -1,5 +1,5 @@
 {% load cms_tags sekizai_tags %}<!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="xdiscoveryApp">
+<html xmlns:ng="http://angularjs.org" id="ng-app">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -77,6 +77,8 @@
 				 {% include "xdw_web/routes.html" %}
 			}
 		});
+		// Bootstrapping
+		angular.bootstrap(document, ['xdiscoveryApp']);
 		</script>
 		 {% endif %}
 	{% render_block "js" %}
