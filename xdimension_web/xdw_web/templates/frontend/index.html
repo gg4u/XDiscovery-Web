@@ -17,7 +17,7 @@
         {% for property, content in meta.items %}{% if property != "description" %}<meta property="{{ property }}" content="{{ content }}">{% endif %}
         {% endfor %}
 	{% render_block "css" %}
-	<link rel="stylesheet" href="{{ STATIC_URL }}custom.css">{% comment %}XXX for Luigi in order to bypass the build system{% endcomment %}
+	<link rel="stylesheet" href="{{ MEDIA_URL }}custom.css">{% comment %}XXX for Luigi in order to bypass the build system{% endcomment %}
 	<!--[if lte IE 9]>
 	<style>
 		.left-off-canvas-menu { display:none; }
