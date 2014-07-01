@@ -58,15 +58,15 @@
 				<dd ng-class="{ 'active':!vivagraph.selected.tab }">
 					<a href="" ng-click="vivagraph.selected.tab = null">Topic</a></dd>
 				<dd ng-class="{ 'active':vivagraph.selected.tab=='external' }">
-					<a href="" ng-click="vivagraph.selected.tab = 'external'">External Sources</a></dd>
+					<a href="" ng-click="vivagraph.selected.tab = 'external'">Video</a></dd>
 			</dl>
 
 			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
-				<div ng-switch-default>
+				<div ng-switch-default ng-class="'topic'">
 					<section ng-repeat="s in vivagraph.selected.info.getContent().sections" ng-bind-html="s.text" rewrite-relative-links="http://www.wikipedia.org/wiki/{{vivagraph.selected.info.title}}" links-target="_blank"></section>
 					<a ng-href="http://en.wikipedia.org/wiki?curid={{vivagraph.selected.node.id}}" target="_blank" style="display:block; text-align:right;">More on Wikipedia &rarr;</a>
 				</div>
-				<div ng-switch-when="external">
+				<div ng-switch-when="external" ng-class="'video'">
 					<iframe id="ytplayer" type="text/html" width="100%" height="360"
 					src="{{map.getYoutubeSearchUrl(vivagraph.selected.info.title)}}"
 					frameborder="0" allowfullscreen></iframe>
@@ -79,7 +79,7 @@
 
 <section class="app-banner" ng-if="!site.hideBanner" ng-class="{ 'has-detail-pane':vivagraph.selected.showDetails }">
 	<a href="" class="close-button" ng-click="site.hideBanner = true"></a>
-	<a href="https://itunes.apple.com/us/app/learndiscovery-discover-map/id859954749?mt=8" style="color:white" target="_blank">The power of knowledge is portable.</a>
+	<a href="https://itunes.apple.com/us/app/learndiscovery-discover-map/id859954749?mt=8" style="color:white" target="_blank">The power of knowledge is Portable <span style="color: #00B481;">X</span>D</a>
 	<a href="https://itunes.apple.com/us/app/learndiscovery-discover-map/id859954749?mt=8" class="right" target="_blank">
 		<img src="/images/button-app-store.svg" width="130" alt="Available on the App Store">
 	</a>
