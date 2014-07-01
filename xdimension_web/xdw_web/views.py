@@ -76,7 +76,7 @@ class GraphDetailView(View):
                     title = title.replace(' ', '')
                     title = u'#{}'.format(title)
                 desc.append(title)
-            return sep.join(desc), len(map_.node_titles) - len(desc)
+            return sep.join(desc), map_.node_count - len(desc)
 
         topics, more_topics = get_topics()
 
@@ -94,7 +94,7 @@ class GraphDetailView(View):
             )
             for topic in map_.node_titles:
                 desc = desc_fmt.format(topics=topic,
-                                       more_topics=len(map_.node_titles) - 1)
+                                       more_topics=map_.node_count - 1)
                 if len(desc) <= max_length:
                     return desc
                 logger.warning('description too long for map {}'.format(map_.pk))
