@@ -17,4 +17,7 @@ $learn-theme-color: #428bca;
 		@include box-shadow($learn-theme-color 0px 0px 5px);
 		border-color: $learn-theme-color;
 	}
+        .sub-nav dd.active.filter a {
+          background: #0067b4;
+        }
 }
