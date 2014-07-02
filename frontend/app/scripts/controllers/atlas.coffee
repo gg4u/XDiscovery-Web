@@ -10,7 +10,7 @@ app.controller 'AtlasCtrl', ($scope, $rootScope, $location, xDiscoveryApi, mapSe
 	q = $location.search()['topic']
 	q = q.split(',') if angular.isString(q)
 	$scope.search =
-		ordering: $location.search()['ordering']
+		ordering: $location.search()['ordering'] or '-popular'
 		featured: parseInt($location.search()['featured']) == 1
 		query: q
 		lastQuery: q
@@ -22,8 +22,9 @@ app.controller 'AtlasCtrl', ($scope, $rootScope, $location, xDiscoveryApi, mapSe
 			query.ordering = $scope.search.ordering if $scope.search.ordering
 			$location.search query
 		toggleOrdering: (ordering) ->
-			$scope.search.ordering = if $scope.search.ordering is ordering then null else ordering
-			do $scope.search.search
+			if $scope.search.ordering != ordering
+				$scope.search.ordering = ordering
+				do $scope.search.search
 		toggleFeatured: ->
 			$scope.search.featured = !$scope.search.featured
 			do $scope.search.search
