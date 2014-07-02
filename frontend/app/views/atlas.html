@@ -29,7 +29,7 @@
 		<a href="" ng-click="search.toggleOrdering('-date_created')">Recent</a></dd>
 	<dd ng-class="{ 'active':search.ordering=='-popular' }">
 		<a href="" ng-click="search.toggleOrdering('-popular')">Popular</a></dd>
-	<dd ng-class="{ 'active':search.featured, 'featured': true }">
+	<dd ng-class="{ 'active':search.featured, 'filter': true }">
 		<a href="" ng-click="search.toggleFeatured()">Featured</a></dd>
 </dl>
 
