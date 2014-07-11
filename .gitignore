@@ -10,3 +10,4 @@ virtualnode/
 .env-staging
 .env
 db.sqlite
+/.vagrant/
