@@ -11,3 +11,4 @@ virtualnode/
 .env
 db.sqlite
 /.vagrant/
+/package.box
