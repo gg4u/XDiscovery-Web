@@ -543,6 +543,29 @@ $graph-page-header-height: 52px;
 	}
 }
 
+.xd-like-tool {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	margin: 0;
+        overflow: visible;
+        width: 200px;
+        height: 25px;
+	&.has-excerpt {
+		bottom: 16%;
+	}
+
+	@media #{$large} {
+		&.has-banner {
+			bottom: 50px;
+		}
+
+		&.has-excerpt.has-banner {
+			bottom: calc(16% + 50px);
+		}
+	}
+}
+
 .app-banner {
 	background: #0067b4;
 	position: absolute;

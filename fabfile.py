@@ -149,9 +149,9 @@ def create_db_local(drop=False, create_role=False, test=False):
         run_sql("drop database {NAME};".format(**db_config))
     if create_role:
         puts('Creating role...')
-        run_sql("create role {USER} {createdb};".format(
-                createdb='with createdb' if test else '',
-                **db_config))
+        run_sql("create role {USER} with login password '{PASSWORD}' {createdb};"
+                .format(createdb='createdb' if test else '',
+                        **db_config))
     # If this fails try
     #    sudo locale-gen it_IT.UTF-8
     # ... and restart db server
