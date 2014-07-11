@@ -48,21 +48,20 @@ Setup ruby environment:
 	rvm use 1.9.3
 	rvm gemset create xdiscovery_web
 	rvm gemset use xdiscovery_web
+    gem install compass
 
 
 ### NodeJS
 
-Nodeenv:
 
-    # nodeenv is already installed by pip (python)
-    # install nodejs
-	nodeenv -n 0.10.20 virtualnode
-	# activate local npm repo
-	cd frontend
-	export PATH=$(pwd)/node_modules/.bin:$PATH
-	npm install
+Nvm:
 
-
+    curl https://raw.githubusercontent.com/creationix/nvm/v0.10.0/install.sh | bash
+    nvm install 1.10.20
+    cd frontend
+    npm install -g grunt-cli
+    npm install -g bower
+    npm install
 
 When all the above is done, to start developing, activate the local develpment
 environment:
@@ -158,7 +157,7 @@ Provision heroku environment:
     # (optional ssl protection)
     heroku addons:add ssl -a xdiscovery-web-staging
     heroku certs:add 28056cc8200751.crt gd_bundle-g2.crt host.key -a xdiscovery-web-staging
-    
+
 Define app-specific environment variables:
 
 	heroku config:add SECRET_KEY=xxxx ADMIN_URL_HASH=secret -a xdiscovery-web_staging
