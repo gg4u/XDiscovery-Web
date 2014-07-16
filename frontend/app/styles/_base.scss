@@ -65,10 +65,11 @@ svg {
 	top: 0;
 	left: 0;
 	height: 52px;
-	width: 44px;
+	width: 34px;
 
 	> span {
 		box-shadow: 0 10px 0 1px $topbar-menu-link-color, 0 16px 0 1px $topbar-menu-link-color, 0 22px 0 1px $topbar-menu-link-color;
+		left: 8px;
 	}
 
 	.fixed-mobile-menu & {
