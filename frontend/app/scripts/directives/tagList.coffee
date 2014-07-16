@@ -20,11 +20,6 @@ angular.module('xdiscoveryApp').directive 'tagList', (config) ->
 				results: (data, page) ->
 					return results: [] unless data?.topic?.length
 					return results: ({ id: t.topic, text: t.topic} for t in data.topic)
-			createSearchChoice: (term, data) ->
-				{
-					id: term
-					text: term
-				} unless data?.length
 			initSelection: (elem, callback) ->
 				tags = scope.ngModel
 				tags = tags.split(',') if angular.isString(tags)
