@@ -735,7 +735,7 @@ a.xd-back-to-top {
 	@media #{$small} {
 		> .title {
 			padding: 0;
-			background: transparent;
+			background: transparent !important;
 			display: none;
 			border: none;
 		}
