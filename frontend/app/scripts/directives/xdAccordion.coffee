@@ -15,9 +15,9 @@ app.directive 'xdAccordion', ($location) ->
 		@removeSection = (name) ->
 			delete @sections[name]
 		@setActiveSection = (name) ->
+			s.removeClass 'active' for _, s of @sections
 			section = @sections[name]
-			return if not section? or section.hasClass 'active'
-			s.removeClass 'active' for _, s of @sections when s isnt section
+			return unless section?
 			section.addClass 'active'
 			$location.hash(name)
 			$scope.activeSection = name

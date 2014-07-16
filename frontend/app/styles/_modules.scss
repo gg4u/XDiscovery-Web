@@ -729,8 +729,7 @@ a.xd-back-to-top {
 	}
 
 	&.active > .title {
-		background-image: none;
-		padding: 0 ($column-gutter / 2);
+		background-image: url(../images/accordion-title-arrow-close.svg);
 	}
 
 	@media #{$small} {
