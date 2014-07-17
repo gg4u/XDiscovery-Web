@@ -2,6 +2,7 @@ from django.conf.urls import patterns, url, include
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.conf import settings
+from django.views.generic.base import RedirectView
 
 from xdw_web.views import RobotsView, AtlasView, GraphDetailView
 
@@ -27,7 +28,10 @@ urlpatterns = patterns(
     # REST API
     url(r'^api-atlas/', include('xdimension_web.xdw_core.urls',
                                 namespace='xdw_core')),
-    )
+    url(r'^favicon\.ico$', RedirectView.as_view(
+        url='{}frontend/favicon.ico'.format(settings.STATIC_URL)
+    ))
+)
 
 # i18n patterns
 urlpatterns += i18n_patterns(
