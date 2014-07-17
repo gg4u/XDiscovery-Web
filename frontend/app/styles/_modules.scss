@@ -670,8 +670,6 @@ $graph-page-header-height: 52px;
 	}
 
 	@media #{$small} {
-		position: relative;
-		z-index: 0;
 		.header-content {
 			margin-bottom: 1em;
 		}
@@ -685,7 +683,7 @@ $graph-page-header-height: 52px;
 	-webkit-overflow-scrolling: touch;
 	@media #{$small} {
 		overflow: visible;
-		padding-top: 0;
+		padding-top: 118px;
 	}
 }
 
