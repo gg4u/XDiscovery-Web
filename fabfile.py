@@ -46,7 +46,7 @@ def dep():
     with lcd('frontend'):
         local('bower install')
     retval = subprocess.call(
-        ['bash', '-c', 'patch -N -p1 < patches/*.patch'],
+        ['bash', '-c', 'cat patches/*.patch | patch -N -p1'],
         cwd='frontend'
     )
 
