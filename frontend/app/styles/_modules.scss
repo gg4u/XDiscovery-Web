@@ -667,17 +667,19 @@ $graph-page-header-height: 52px;
 
 	.breadcrumbs {
 		margin-bottom: 0;
+		width: 1024px;
 	}
 
 	@media #{$small} {
 		.header-content {
 			margin-bottom: 1em;
+			width: auto;
 		}
 	}
 }
 
 .xd-custom-page-content {
-	padding-top: 82px;
+	padding-top: 121px;
 	height: 100%;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;

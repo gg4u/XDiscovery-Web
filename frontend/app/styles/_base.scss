@@ -68,8 +68,13 @@ svg {
 	width: 34px;
 
 	> span {
-		box-shadow: 0 10px 0 1px $topbar-menu-link-color, 0 16px 0 1px $topbar-menu-link-color, 0 22px 0 1px $topbar-menu-link-color;
+		position: absolute;
+		display: block;
+		width: 18px;
+		height: 0;
 		left: 8px;
+		top: .3125rem;
+		box-shadow: 0 10px 0 1px white,0 16px 0 1px white,0 22px 0 1px white;
 	}
 
 	.fixed-mobile-menu & {
