@@ -469,10 +469,20 @@ $graph-page-header-height: 52px;
 	left: 0;
 	height: 16%;
 	overflow: auto;
-	padding: 10px;
+	padding: 10px 30px 10px 10px;
 	position: absolute;
 	width: 100%;
 	cursor: pointer;
+
+	&:after {
+		background: $primary-color url(../images/excerpt-arrow.svg) no-repeat center center;
+		content: '';
+		height: 100%;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 20px;
+	}
 
 	@media #{$small} {
 		&.has-detail-pane {
