@@ -52,7 +52,8 @@ class MapSerializer(MapSimpleSerializer):
         ret.update({'graph': data.get('graph', data.get('atlas')),
                     'nodes': nodes,
                     'startNode': data['startNode'],
-                    'endNode': data['endNode']})
+                    'endNode': data['endNode'],
+                    'nodeTitles': obj.node_titles})
         return ret
 
     class Meta(MapSimpleSerializer.Meta):
