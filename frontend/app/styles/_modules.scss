@@ -469,10 +469,20 @@ $graph-page-header-height: 52px;
 	left: 0;
 	height: 16%;
 	overflow: auto;
-	padding: 10px;
+	padding: 10px 30px 10px 10px;
 	position: absolute;
 	width: 100%;
 	cursor: pointer;
+
+	&:after {
+		background: $primary-color url(../images/excerpt-arrow.svg) no-repeat center center;
+		content: '';
+		height: 100%;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 20px;
+	}
 
 	@media #{$small} {
 		&.has-detail-pane {
@@ -657,25 +667,25 @@ $graph-page-header-height: 52px;
 
 	.breadcrumbs {
 		margin-bottom: 0;
+		width: 1024px;
 	}
 
 	@media #{$small} {
-		position: relative;
-		z-index: 0;
 		.header-content {
 			margin-bottom: 1em;
+			width: auto;
 		}
 	}
 }
 
 .xd-custom-page-content {
-	padding-top: 82px;
+	padding-top: 121px;
 	height: 100%;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 	@media #{$small} {
 		overflow: visible;
-		padding-top: 0;
+		padding-top: 118px;
 	}
 }
 
@@ -729,14 +739,13 @@ a.xd-back-to-top {
 	}
 
 	&.active > .title {
-		background-image: none;
-		padding: 0 ($column-gutter / 2);
+		background-image: url(../images/accordion-title-arrow-close.svg);
 	}
 
 	@media #{$small} {
 		> .title {
 			padding: 0;
-			background: transparent;
+			background: transparent !important;
 			display: none;
 			border: none;
 		}

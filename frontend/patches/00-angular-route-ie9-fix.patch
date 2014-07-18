@@ -1,0 +1,18 @@
+Fix for textual content not switching correctly when carousel.index is set
+on template load.
++++ a/app/bower_components/angular/angular.js	2
++++ b/app/bower_components/angular/angular.js	2014-06-12 21:42:18.786620970 +0200
+@@ -9716,6 +9716,13 @@
+         if (href.indexOf('://') < 0) {         // Ignore absolute URLs
+           var prefix = '#' + hashPrefix;
+           if (href[0] == '/') {
++             // Account for base href already present in appBase
++             if ($browser.baseHref() != '' && href.indexOf($browser.baseHref()) === 0) {
++                  href = href.substr($browser.baseHref().length);
++                  if (href == '' || href[0] != '/') {
++                      href = '/' + href;
++                 }
++              }
+              // absolute path - replace old path
+             absHref = appBase + prefix + href;
+           } else if (href[0] == '#') {

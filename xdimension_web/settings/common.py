@@ -134,6 +134,7 @@ INSTALLED_APPS = (
     'djangocms_file',
     'djangocms_picture',
     'djangocms_video',
+    'djangocms_link',
     'django.contrib.redirects',
     # rest API
     'rest_framework',
@@ -250,6 +251,10 @@ CMS_TEMPLATES = (
 )
 
 CMS_PLACEHOLDER_CONF = {
+    'head': {
+        'plugins': ['HiddenTextPlugin'],
+        'name': 'Headers, meta and friends',
+    },
     'content': {
         'plugins': ['TextPlugin'],
         'text_only_plugins': ['LinkPlugin'],

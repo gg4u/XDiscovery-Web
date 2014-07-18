@@ -152,3 +152,13 @@ class AccordionPlugin(TextMixin, CMSPluginBase):
 
 
 plugin_pool.register_plugin(AccordionPlugin)
+
+
+class HiddenTextPlugin(CMSPluginBase):
+    name = _("Plugin that can be hidden on request")
+    render_template = "xdw_web/cms_plugins/hidden.html"
+    model = AbstractPluginModel
+    allow_children = False
+
+
+plugin_pool.register_plugin(HiddenTextPlugin)

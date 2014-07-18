@@ -10,6 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site, get_current_site
 from django.conf import settings
+from django.views.decorators.cache import cache_page
 
 from xdimension_web.xdw_core.models import Map
 from .opengraph import get_opengraph_context
@@ -19,11 +20,8 @@ logger = logging.getLogger(__name__)
 
 class RobotsView(View):
     def get(self, request):
-        # XXX disallow all crawlers
         return HttpResponse('User-agent: *\n'
-                            'Allow: /en/graph\n'
-                            'Allow: /en/atlas\n'
-                            'Disallow: /\n'
+                            'Allow: *\n'
                             'Disallow: /admin\n\n'
                             'Sitemap: http://{site}{sitemap_url}\n'\
                                 .format(site=Site.objects.get_current(),
@@ -51,10 +49,20 @@ SHARING_FMT_SHORT = (
     u'{url} | Get your maps > {app_url}'
 )
 
+SHARING_FMT_TWITTER_CARD = (
+    u'A visual #knowledgeMap about {{topics}} and other {{more_topics}} topics! '
+    u'Get yours with LearnDiscovery app {app_url}'
+)
+
 GRAPH_DESCRIPTION_FMT = (
     u'A knowledge map of correlations about: {topics} '
     u'and other {more_topics} topics | visual learning and discovery{more}'
 )
+
+
+def topic_to_hashtag(topic):
+    '''Turn a multi-word topic into an hastag.'''
+    return '#{}'.format(topic.title().replace(' ', ''))
 
 
 class GraphDetailView(View):
@@ -100,6 +108,20 @@ class GraphDetailView(View):
                 logger.warning('description too long for map {}'.format(map_.pk))
             logger.error('can\'t set description for map {}'.format(map_.pk))
 
+        def get_twitter_card_description(max_length=200, **kwargs):
+            desc_fmt = SHARING_FMT_TWITTER_CARD.format(
+                url=map_url,
+                app_url='http://tiny.cc/LearnDiscoveryApp'
+            )
+            for topic in map_.node_titles:
+                topic_hashtag = topic_to_hashtag(topic)
+                desc = desc_fmt.format(topics=topic_hashtag,
+                                       more_topics=map_.node_count - 1)
+                if len(desc) <= max_length:
+                    return desc
+                logger.warning('description too long for map {}'.format(map_.pk))
+            logger.error('can\'t set description for map {}'.format(map_.pk))
+
         long_description = get_long_description()
 
         # Google crawler
@@ -126,7 +148,7 @@ class GraphDetailView(View):
             'twitter:card': 'summary_large_image',
             #'twitter:site': xxx
             'twitter:title': map_.get_title(),
-            'twitter:description': get_short_description(200),
+            'twitter:description': get_twitter_card_description(),
             #'twitter:creator': xxx
             'twitter:image:src': map_.get_thumbnail_url(),
             #'twitter:domain': XXX
@@ -134,3 +156,10 @@ class GraphDetailView(View):
         return render(request, 'frontend/index.html',
                       {'meta': og_context,
                        'title': map_.get_title()})
+
+
+@cache_page
+def wip_page(request):
+    '''Work in Progress.
+    '''
+    return render(request, 'xdw_web/wip.html')

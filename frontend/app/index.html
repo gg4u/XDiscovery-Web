@@ -1,10 +1,11 @@
-<!-- @if ENV='dist' -->{% load cms_tags sekizai_tags %}<!-- @endif -->
+<!-- @if ENV='dist' -->{% load cms_tags sekizai_tags xdw_web_tags %}<!-- @endif -->
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" id="ng-app">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title ng-bind-template="xDiscovery &ndash; {{documentTitle}}"><!-- @if ENV='dist' -->{% block title %}{% page_attribute "page_title" as page_title %}{% if page_title %}{dj{ page_title }dj}{% else %}{dj{ title|default:"XDiscovery" }dj}{% endif %}{% endblock %}<!-- @endif --></title>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="apple-itunes-app" content="app-id=859954749">
 
@@ -35,6 +36,7 @@
 		.left-off-canvas-menu { display:none; }
 	</style>
 	<![endif]-->
+        {% render_hidden_placeholder "head"  %}
 </head>
 	<body ng-controller="siteCtrl">
 	  <!-- @if ENV='dist' -->
@@ -95,6 +97,7 @@
 				<section id="page-content" role="main">
 					<div ng-view ng-cloak>
 						<!-- @if ENV='dist' -->
+	                                        {% placeholder "head" %}
 						{% block content %}{% endblock %}
 						<!-- @endif -->
 					</div>

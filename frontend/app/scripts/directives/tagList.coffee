@@ -6,6 +6,7 @@ angular.module('xdiscoveryApp').directive 'tagList', (config) ->
 		ngModel: '='
 		onSubmit: '&'
 	link: (scope, element, attrs) ->
+		canSubmitWithReturn = yes
 		element.select2
 			tags: yes
 			tokenSeparators: ["\t"]
@@ -18,13 +19,9 @@ angular.module('xdiscoveryApp').directive 'tagList', (config) ->
 				data: (term, page) ->
 					return q: term
 				results: (data, page) ->
+					canSubmitWithReturn = yes
 					return results: [] unless data?.topic?.length
 					return results: ({ id: t.topic, text: t.topic} for t in data.topic)
-			createSearchChoice: (term, data) ->
-				{
-					id: term
-					text: term
-				} unless data?.length
 			initSelection: (elem, callback) ->
 				tags = scope.ngModel
 				tags = tags.split(',') if angular.isString(tags)
@@ -41,8 +38,12 @@ angular.module('xdiscoveryApp').directive 'tagList', (config) ->
 			# Preventing tab to change focus so it can be used to add a token
 			do e.preventDefault if e.keyCode is 9
 			# Perform search on return
-			if e.keyCode is 13 and element.select2('container').hasClass('select2-container-active')
-				e.preventDefault()
-				e.stopImmediatePropagation()
-				element.select2('close')
-				scope.$apply -> scope.onSubmit()
+			if canSubmitWithReturn and e.keyCode is 13
+				if element.select2('container').hasClass('select2-container-active')
+					e.preventDefault()
+					e.stopImmediatePropagation()
+					element.select2('close')
+					scope.$apply -> scope.onSubmit()
+			else
+				canSubmitWithReturn = no
+			yes

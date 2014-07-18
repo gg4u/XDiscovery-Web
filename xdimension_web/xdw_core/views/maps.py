@@ -14,6 +14,7 @@ from ..maps import save_map
 
 
 class MapSimpleSerializer(ModelSerializer):
+
     def to_native(self, obj):
         ret = super(MapSimpleSerializer, self).to_native(obj)
         ret.update({'author': {'name': obj.author_name,
@@ -21,8 +22,9 @@ class MapSimpleSerializer(ModelSerializer):
                     'thumbnail': {'url': obj.get_thumbnail_url()},
                     'nodeTitles': {
                         'first': obj.first_node_title,
-                        'start': obj.node_titles,
-                        'last': obj.last_node_title
+                        'start': obj.node_titles[:10],
+                        'last': obj.last_node_title,
+                        'count': len(obj.node_titles),
                         }
                     })
         return ret
@@ -45,7 +47,7 @@ class MapSerializer(MapSimpleSerializer):
         save_map(obj)
 
     def to_native(self, obj):
-        ret = super(MapSimpleSerializer, self).to_native(obj)
+        ret = super(MapSerializer, self).to_native(obj)
         data = obj.map_data['map']
         nodes = {id_: {'tapped': True}
                  for id_ in data.get('tappedNodes', ())}

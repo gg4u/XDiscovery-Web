@@ -26,7 +26,7 @@
 
 		<div id="page-accordion" xd-accordion active-section="activeSect">
 			<section xd-accordion-section="who-we-are">
-				<h1 class="title" ng-click="activeSect = 'who-we-are'">Who we are</h1>
+				<h1 class="title" ng-click="activeSect=activeSect!='who-we-are'&&'who-we-are'||''">Who we are</h1>
 				<div xd-accordion-content>
 
 					<h3>A title</h3>
@@ -49,7 +49,7 @@
 			</section>
 
 			<section xd-accordion-section="what-we-do">
-				<h1 class="title" ng-click="activeSect = 'what-we-do'">What we do</h1>
+				<h1 class="title" ng-click="activeSect=activeSect!='what-we-do'&&'what-we-do'||''">What we do</h1>
 				<div xd-accordion-content>
 
 					<div class="row">
@@ -101,7 +101,7 @@
 			</section>
 
 			<section xd-accordion-section="why-we-do-it">
-				<h1 class="title" ng-click="activeSect = 'why-we-do-it'">Why we do it</h1>
+				<h1 class="title" ng-click="activeSect=activeSect!='why-we-do-it'&&'why-we-do-it'||''">Why we do it</h1>
 				<div xd-accordion-content>
 					content 3
 				</div>
