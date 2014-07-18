@@ -19,11 +19,8 @@ logger = logging.getLogger(__name__)
 
 class RobotsView(View):
     def get(self, request):
-        # XXX disallow all crawlers
         return HttpResponse('User-agent: *\n'
-                            'Allow: /en/graph\n'
-                            'Allow: /en/atlas\n'
-                            'Disallow: /\n'
+                            'Allow: *\n'
                             'Disallow: /admin\n\n'
                             'Sitemap: http://{site}{sitemap_url}\n'\
                                 .format(site=Site.objects.get_current(),
