@@ -24,7 +24,8 @@ class PartialResponseMiddleware(object):
                                .format(request.path))
         return response
 
-OK_URLS = ['/en/atlas', '/api', '/views', '/map', '/en/graph', '/media']
+OK_URLS = ['/en/atlas', '/api', '/views', '/map', '/en/graph', '/media',
+           '/graph', '/atlas']
 
 
 class WIPMiddleware(object):
