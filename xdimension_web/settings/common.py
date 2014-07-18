@@ -134,6 +134,7 @@ INSTALLED_APPS = (
     'djangocms_file',
     'djangocms_picture',
     'djangocms_video',
+    'djangocms_link',
     'django.contrib.redirects',
     # rest API
     'rest_framework',
