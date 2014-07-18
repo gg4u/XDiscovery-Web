@@ -13,7 +13,39 @@ Rebuild seach engine:
 
 ## Development environment
 
-Requirements: `pyenv`
+
+### setup virtualbox and vagrant
+
+
+- install virtualbox
+- install vagrant
+- install sourcetree
+- clone repo
+- copy `package.box` into local directory (the one with Vagrantfile)
+- cd `dir_with_Vagrantfile`
+- vagrant up
+- `vagrant ssh` to enter the vagrant machine
+- copy `.env-staging` and `.env-production`
+
+inside the vagrant machine do:
+ - `cd /vagarant`
+ - `npm install -g grunt-cli`
+ - `npm install -g bower`
+ - `cd frontend && npm install`
+ - `gem install compass`
+ - `cd frontend && bower install`
+
+### working on the vm
+- cd `dir_with_Vagrantfile`
+- `vagrant up`
+- `vagrant ssh` to login
+- `cd /vagrant`
+- to build the app: `fab build`
+- to run the app `python manage.py runserver 0.0.0.0:8000` (also in other terminal)
+- to deploy: `fab deploy:staging,backend=0`
+- control-d do exit the machine
+- `vagrant halt` to stop the machine
+
 
 
 ### Python
