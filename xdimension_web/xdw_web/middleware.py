@@ -1,9 +1,10 @@
 import os.path
 import logging
 
-from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.conf import settings
+
+from .views import wip_page
 
 logger = logging.getLogger(__name__)
 
@@ -35,4 +36,4 @@ class WIPMiddleware(object):
                 not [None for x in OK_URLS if request.path.startswith(x)] and
                 not request.GET.get('angular') and
                 not request.is_ajax()):
-            return render(request, 'xdw_web/wip.html')
+            return wip_page(request)

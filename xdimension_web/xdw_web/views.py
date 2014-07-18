@@ -10,6 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.sites.models import Site, get_current_site
 from django.conf import settings
+from django.views.decorators.cache import cache_page
 
 from xdimension_web.xdw_core.models import Map
 from .opengraph import get_opengraph_context
@@ -155,3 +156,10 @@ class GraphDetailView(View):
         return render(request, 'frontend/index.html',
                       {'meta': og_context,
                        'title': map_.get_title()})
+
+
+@cache_page
+def wip_page(request):
+    '''Work in Progress.
+    '''
+    return render(request, 'xdw_web/wip.html')
