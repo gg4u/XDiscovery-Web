@@ -1,4 +1,4 @@
-{% load cms_tags sekizai_tags %}<!DOCTYPE html>
+{% load cms_tags sekizai_tags xdw_web_tags %}<!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" id="ng-app">
 <head>
 	<meta charset="utf-8">
@@ -28,6 +28,7 @@
 		.left-off-canvas-menu { display:none; }
 	</style>
 	<![endif]-->
+        {% render_hidden_placeholder "head"  %}
 </head>
 	<body ng-controller="siteCtrl">
 	  {% cms_toolbar %}
@@ -50,6 +51,7 @@
 				{% include "xdw_web/navbar.html" %}
 				<section id="page-content" role="main">
 					<div ng-view="" ng-cloak="">
+	                                        {% placeholder "head" %}
 						{% block content %}{% endblock %}
 					</div>
 				</section>

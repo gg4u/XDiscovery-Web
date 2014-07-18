@@ -250,6 +250,10 @@ CMS_TEMPLATES = (
 )
 
 CMS_PLACEHOLDER_CONF = {
+    'head': {
+        'plugins': ['HiddenTextPlugin'],
+        'name': 'Headers, meta and friends',
+    },
     'content': {
         'plugins': ['TextPlugin'],
         'text_only_plugins': ['LinkPlugin'],

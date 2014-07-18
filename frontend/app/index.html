@@ -1,4 +1,4 @@
-<!-- @if ENV='dist' -->{% load cms_tags sekizai_tags %}<!-- @endif -->
+<!-- @if ENV='dist' -->{% load cms_tags sekizai_tags xdw_web_tags %}<!-- @endif -->
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" id="ng-app">
 <head>
@@ -36,6 +36,7 @@
 		.left-off-canvas-menu { display:none; }
 	</style>
 	<![endif]-->
+        {% render_hidden_placeholder "head"  %}
 </head>
 	<body ng-controller="siteCtrl">
 	  <!-- @if ENV='dist' -->
@@ -96,6 +97,7 @@
 				<section id="page-content" role="main">
 					<div ng-view ng-cloak>
 						<!-- @if ENV='dist' -->
+	                                        {% placeholder "head" %}
 						{% block content %}{% endblock %}
 						<!-- @endif -->
 					</div>
