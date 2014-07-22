@@ -146,12 +146,12 @@ class GraphDetailView(View):
         # Twitter
         og_context.update({
             'twitter:card': 'summary_large_image',
-            #'twitter:site': xxx
+            'twitter:site': '@XDiscovery',
             'twitter:title': map_.get_title(),
             'twitter:description': get_twitter_card_description(),
-            #'twitter:creator': xxx
+            'twitter:creator': '@XDiscoveryWorld',
             'twitter:image:src': map_.get_thumbnail_url(),
-            #'twitter:domain': XXX
+            'twitter:domain': Site.objects.get_current()
         })
         return render(request, 'frontend/index.html',
                       {'meta': og_context,
