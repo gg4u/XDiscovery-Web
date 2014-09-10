@@ -1,5 +1,5 @@
 			<section xd-accordion-section="{{ instance.tag_id }}">
-				<h1 class="title" ng-click="activeSect = '{{ instance.tag_id }}'">{{ instance.title }}</h1>
+				<h1 class="title" ng-click="activeSect=activeSect!='{{ instance.title }}'&&'{{ instance.title }}'||''">{{ instance.title }}</h1>
 				<div xd-accordion-content>
 				    {% if instance.subtitle %}<h3>{{ instance.subtitle }}</h3>{% endif %}
 				    {% if instance.subheader %}<h5 class="subheader">{{ instance.subheader }}</h5>{% endif %}
