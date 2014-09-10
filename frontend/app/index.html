@@ -26,10 +26,12 @@
         {% endfor %}
 	{% render_block "css" %}
         {% comment %}XXX for Luigi in order to bypass the build system{% endcomment %}
+        {% comment %}
 	<link rel="stylesheet" href="{dj{ MEDIA_URL }dj}topicView.css">
 	<link rel="stylesheet" href="{dj{ MEDIA_URL }dj}videoView.css">
 	<link rel="stylesheet" href="{dj{ MEDIA_URL }dj}added.css">
 	<link rel="stylesheet" href="{dj{ MEDIA_URL }dj}custom.css">
+        {% endcomment %}
 	<!-- @endif -->
 	<!--[if lte IE 9]>
 	<style>
