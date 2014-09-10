@@ -62,7 +62,7 @@ GRAPH_DESCRIPTION_FMT = (
 
 def topic_to_hashtag(topic):
     '''Turn a multi-word topic into an hastag.'''
-    return '#{}'.format(topic.title().replace(' ', ''))
+    return u'#{}'.format(topic.title().replace(u' ', u''))
 
 
 class GraphDetailView(View):
@@ -125,7 +125,7 @@ class GraphDetailView(View):
         long_description = get_long_description()
 
         # Google crawler
-        more = '| {}'.format(map_.description) if map_.description else ''
+        more = u'| {}'.format(map_.description) if map_.description else u''
 
         og_context.update({
             'description': GRAPH_DESCRIPTION_FMT.format(
