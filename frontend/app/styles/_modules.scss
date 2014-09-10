@@ -340,6 +340,11 @@ $graph-page-header-height: 52px;
 		padding-top: $topbar-height + $graph-page-header-height;
 	}
 
+	> svg {
+		width: 100%;
+		height: 100%;
+	}
+
 	.map-node {
 		cursor: pointer;
 
