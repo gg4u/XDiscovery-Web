@@ -48,7 +48,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    config.vm.provider "virtualbox" do |vb|
      # Don't boot with headless mode
      #vb.gui = true
-  
+
      # Use VBoxManage to customize the VM. For example to change memory:
      vb.customize ["modifyvm", :id, "--memory", "1024"]
      vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
@@ -120,4 +120,80 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
+  config.vm.provision :shell, inline: <<SCRIPT
+   sudo locale-gen en_US
+   sudo apt-get install git python
+   sudo apt-get install python-virtualenv
+   virtualenv virtual
+   source virtual/bin/activate
+   #sudo apt-get install nvm
+   curl https://raw.githubusercontent.com/creationix/nvm/v0.10.0/install.sh | bash
+   sudo apt-get install postgresql-9.1
+   sudo apt-get update
+   sudo apt-get install lib
+   sudo apt-get install postgresql-server-dev-9.1
+   sudo apt-get install libjpeg-dev
+   sudo apt-get install python2.7-dev
+   sudo apt-get install libevent-dev
+   sudo apt-get install libzmq-d
+   sudo apt-get install libzmq-dev
+   sudo apt-get install g++
+   pip install -r /vagrant/requirements/dev.txt
+   sudo apt-get install curl
+   curl -L get.rvm.io | bash -s stable
+   source /home/vagrant/.rvm/scripts/rvm
+   rvm install 1.9.3
+   rvm gemset create xdiscovery_web
+   rvm gemset use xdiscovery_web
+   cp /vagrant/scripts/.bash_profile ~
+   source ~/.bash_profile
+   nvm use 0.10.20
+   gem install compass
+   cd /vagrant/
+   fab build
+   sudo locale-gen it
+   sudo service postgresql restart
+   fab create_db_local:create_role=1
+   59  fab restore
+   60  fab restore_local
+   63  fab restore_local
+   64  PGPASSWORD=django pg_restore -n public --cluster 9.1/main -d xdimension_web -O -x -U django -h localhost -p 5432 ./backups/pgdump.db
+   65  PGPASSWORD=django pg_restore -n public --cluster 9.1/main -O -x -U django -h localhost -p 5432 ./backups/pgdump.db
+   66  python manage.py runserver
+   67  nvm install 0.10.20
+   68  cd /vagrant/frontend/
+   69  npm install -g grunt
+   70  npm install -g bower
+   71  npm install -g grunt-cli
+   72  nvm install
+   73  npm install
+   74  bower update
+   75  sudo dpkg-reconfigure locales
+   76  cd /vagrant/
+   77  python manage.py runserver
+   78  python manage.py runserver 0.0.0.0:8000
+   79  python manage.py restore_local
+   80  fab  restore_local
+   81  python manage.py create_db_local
+   82  fab create_db_local
+   83  psql -u django
+   84  psql -d xdimension_web
+   85  psql -u django -d xdimension_web
+   86  psql -U django -d xdimension_web
+   87  PGPASSWORD=django psql -U django -d xdimension_web
+   88  fab create_db_local:create_role=1
+   89  PGPASSWORD=django psql -U django -d xdimension_web -h localhost
+   90  sudo -u postgres psql
+   91  PGPASSWORD=django psql -U django -d xdimension_web -h localhost
+   92  fab create_db_local
+   93  fab  restore_local
+   94  sudo -u postgres psql
+   95  fab create_db_local:create_role=1
+   96  fab  restore_local
+   97  sudo -u postgres psql
+   98  fab create_db_local:create_role=1
+   99  fab  restore_local
+  100  python manage.py runserver 0.0.0.0:8000
+  101  fab deploy:staging
+
 end
