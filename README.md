@@ -14,146 +14,56 @@ Rebuild seach engine:
 ## Development environment
 
 
-### setup virtualbox and vagrant
-
+### Setup virtualbox+vagrant developer environment
 
 - install virtualbox
 - install vagrant
 - install sourcetree
 - clone repo
-- copy `package.box` into local directory (the one with Vagrantfile)
 - cd `dir_with_Vagrantfile`
+- copy `.env-staging` and `.env-production` secret files to this folder
 - vagrant up
-- `vagrant ssh` to enter the vagrant machine
-- copy `.env-staging` and `.env-production`
 
-inside the vagrant machine do:
- - `cd /vagarant`
- - `npm install -g grunt-cli`
- - `npm install -g bower`
- - `cd frontend && npm install`
- - `gem install compass`
- - `cd frontend && bower install`
+Now access the vagrant machine:
 
-### working on the vm
-- cd `dir_with_Vagrantfile`
-- `vagrant up`
-- `vagrant ssh` to login
-- `cd /vagrant`
-- to build the app: `fab build`
-- to run the app `python manage.py runserver 0.0.0.0:8000` (also in other terminal)
-- to deploy: `fab deploy:staging,backend=0`
-- control-d do exit the machine
-- `vagrant halt` to stop the machine
+    vagrant ssh
 
 
+And configure heroku client:
 
-### Python
-
-Pyenv (optional):
-
-	# install pyenv
-	# (see https://github.com/yyuu/pyenv#installation)
-	# install python 2.7.5
-	pyenv install 2.7.5
-	# activate local pyenv
-	pyenv local 2.7.5 && pyenv rehash
-	# install old virtualenv & setuptools
-
-Virtualenv setup:
-
-	# create virtual environment
-	virtualenv --distribute virtual
-	# activate virtualenv
-	source virtual/bin/activate
-	# install python packages
-	pip install -r requirements/dev.txt
+    heroku login
 
 
-Setup ruby environment:
+## Common operations:
 
-    # install rvm
-	curl -L get.rvm.io | bash -s stable
-	# install ruby 1.9
-	rvm install 1.9.3
-	# select ruby package
-	rvm use 1.9.3
-	rvm gemset create xdiscovery_web
-	rvm gemset use xdiscovery_web
-    gem install compass
+- make sure vagrant is up and you are in the dir with the Vagrantfile (see above)
+- `vagrant ssh` to enter the Vagrant mahine
 
+To build the frontend app: `fab build`
 
-### NodeJS
+To backup and restore db from heroku:
 
+    fab backup
+    fab restore_local
 
-Nvm:
+To run the backend and the frontend do:
 
-    curl https://raw.githubusercontent.com/creationix/nvm/v0.10.0/install.sh | bash
-    nvm install 1.10.20
-    cd frontend
-    npm install -g grunt-cli
-    npm install -g bower
-    npm install
+    python manage.py runserver 0.0.0.0:8000
 
-When all the above is done, to start developing, activate the local develpment
-environment:
-
-	source ./activate.sh
+Then access it from a browser pointing to `http://127.0.0.1:8000
 
 
-### Local develpment environment for frontend testing
+To deploy the frontend do:
 
-A stripped-down version of the backend environment, using sqlite.
+    fab deploy:staging,backend=0
 
-Bootstrapping:
+To deploy the frontend and backend do:
 
-    pip install -r requirements/test.txt
-    python manage.py syncdb --settings=xdimension_web.settings.test --noinput
-    python manage.py migrate --all --settings=xdimension_web.settings.test --noinput
+    fab deploy:staging
 
-Load initial data
+Hit control-d do exit the machine
 
-    python manage.py loaddata xdimension_web/fixtures/test_data.json --settings=xdimension_web.settings.test
-
-Download bower dependencies and apply local patches (must be run only once):
-
-    fab dep
-
-
-Build the app:
-
-    fab build:test
-
-Now the views are in ``xdimension_web/xdw_web/templates/frontend``
-
-Run the app:
-
-    python manage.py runserver --settings=xdimension_web.settings.test
-
-
-For the admin go to ``http://localhost:8000/en/admin/`` (username: admin, password: admin)
-
-
-### Local full development environment
-
-Install other services and libraries: ``postgresql``, ``memcache``, ``libmemcached-dev``, ``libevent``, ...
-
-Create postgres db and user account:
-
-    fab create_db_local
-
-Bootstrapping:
-
-    pip install -r requirements/dev.txt
-    python manage.py syncdb
-    python manage.py migrate --all
-    fab dep
-
-Run the app:
-
-    fab build
-    python manage.py runserver
-
+Type `vagrant halt` to stop the machine
 
 
 ## Random notes
@@ -166,7 +76,7 @@ build sstem using `{% verbatim %}`; if you really want to use django template
 variables in angular vies, use this supernice syntax: `{dj{ variable_name }dj}`.
 
 
-## Staging environment setup
+## Staging environment setup (only ever needed once)
 
 
 ### Setup S3 environment:
