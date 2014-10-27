@@ -38,6 +38,7 @@ And configure heroku client:
 
 - make sure vagrant is up and you are in the dir with the Vagrantfile (see above)
 - `vagrant ssh` to enter the Vagrant mahine
+- make sure you are in the `/vagrant` dir (use `pwd` to find out)
 
 To build the frontend app: `fab build`
 

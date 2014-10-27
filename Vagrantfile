@@ -135,10 +135,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    apt-get install -y build-essential
    apt-get install -y g++
    apt-get install -y curl
+   wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
    service postgresql restart
    cp /vagrant/scripts/.bash_profile /home/vagrant
    chown vagrant:vagrant /home/vagrant/.bash_profile
-   sudo -u vagrant bash /vagrant/scripts/provision.sh
+   sudo -u vagrant -H bash /vagrant/scripts/provision.sh
 SCRIPT
 
 end
