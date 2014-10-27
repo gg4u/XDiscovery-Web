@@ -1,4 +1,5 @@
 # To be run by the developer's own user
+set -e
 FRONTEND_DIR=/vagrant/frontend
 BASE_DIR=/vagrant
 
@@ -8,7 +9,10 @@ cd $HOME
 export PYTHONUNBUFFERED="Y"
 virtualenv $HOME/virtual
 source $HOME/virtual/bin/activate
-pip install -r $BASE_DIR/requirements/dev.txt
+until pip install -r $BASE_DIR/requirements/dev.txt; do
+    sleep 10
+    echo Retrying...
+done
 
 # ruby
 curl -L get.rvm.io | bash -s stable
@@ -17,7 +21,10 @@ rvm install 1.9.3
 rvm use 1.9.3
 rvm gemset create xdiscovery_web
 rvm gemset use xdiscovery_web
-gem install compass --version=0.12.7
+until gem install compass --version=0.12.7; do
+    sleep 10
+    echo Retrying...
+done;
 
 # node
 curl https://raw.githubusercontent.com/creationix/nvm/v0.10.0/install.sh | bash
@@ -26,8 +33,14 @@ nvm install 0.10.20
 nvm use 0.10.20
 # Dance to install node modules out of the shared directory
 cp $FRONTEND_DIR/package.json $HOME
-npm install -g grunt-cli bower
-npm install
+until npm install -g grunt-cli bower; do
+    sleep 10
+    echo Retrying...
+done;
+until npm install; do
+    sleep 10
+    echo Retrying...
+done;
 [ -d $FRONTEND_DIR/node_modules ] && mv $FRONTEND_DIR/node_modules $FRONTEND_DIR/node_modules_bak  # Just in case someone created it outside the VM
 ln -s $HOME/node_modules $FRONTEND_DIR/node_modules
 
@@ -39,6 +52,9 @@ cd /vagrant
 EOF
 
 # First build (includes a bower update run)
-fab create_db_local:create_role=1 &&
-fab dep
+fab create_db_local:create_role=1
+until fab dep; do
+    sleep 10
+    echo Retrying...
+done;
 fab build
