@@ -142,3 +142,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    sudo -u vagrant /vagrant/scripts/provision.sh
    sudo service postgresql restart
 SCRIPT
+
+end
