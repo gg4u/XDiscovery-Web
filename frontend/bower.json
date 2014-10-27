@@ -27,6 +27,6 @@
     "angular-scenario": "~1.2.20"
   },
   "resolutions": {
-    "hammerjs": "1.1.x"
+    "hammerjs": "2.0.x"
   }
 }
