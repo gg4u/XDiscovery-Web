@@ -28,7 +28,7 @@ nvm use 0.10.20
 cp $FRONTEND_DIR/package.json $HOME
 npm install -g grunt-cli bower
 npm install
-[ -f $FRONTEND_DIR/node_modules ] && mv $FRONTEND_DIR/node_modules $FRONTEND_DIR/node_modules_bak  # Just in case someone created it outside the VM
+[ -d $FRONTEND_DIR/node_modules ] && mv $FRONTEND_DIR/node_modules $FRONTEND_DIR/node_modules_bak  # Just in case someone created it outside the VM
 ln -s $HOME/node_modules $FRONTEND_DIR/node_modules
 
 cd $BASE_DIR
