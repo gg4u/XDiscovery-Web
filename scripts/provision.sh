@@ -20,17 +20,10 @@ curl https://raw.githubusercontent.com/creationix/nvm/v0.10.0/install.sh | bash
 source /home/vagrant/.nvm/nvm.sh
 nvm install 0.10.20
 nvm use 0.10.20
-cd /vagrant
-cat > .bowerrc <<EOF
-{
-    "analytics": false
-}
-EOF
 pushd /vagrant/frontend
 rm -rf node_modules  # Just in case someone created it outside the VM
 npm install -g grunt-cli bower
 npm install  # Installing into current folder is the only way to please grunt...
-bower update --config.interactive=false
 popd
 
 # Init db and rcfiles
@@ -38,3 +31,6 @@ fab create_db_local:create_role=1 &&
 cat >> /home/vagrant/.bash_profile <<EOF
 cd /vagrant
 EOF
+
+# First build (includes a bower update run)
+fab dep
