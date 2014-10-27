@@ -17,7 +17,7 @@ rvm install 1.9.3
 rvm use 1.9.3
 rvm gemset create xdiscovery_web
 rvm gemset use xdiscovery_web
-gem install compass --version=0.12.2
+gem install compass --version=0.12.7
 
 # node
 curl https://raw.githubusercontent.com/creationix/nvm/v0.10.0/install.sh | bash
