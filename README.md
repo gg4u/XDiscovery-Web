@@ -44,7 +44,7 @@ To build the frontend app: `fab build`
 
 To backup and restore db from heroku:
 
-    fab backup
+    fab backup:production
     fab restore_local
 
 To run the backend and the frontend do:
@@ -65,6 +65,20 @@ To deploy the frontend and backend do:
 Hit control-d do exit the machine
 
 Type `vagrant halt` to stop the machine
+
+
+## Special management operations
+
+To Rebuild the topic search tables do:
+
+    python manage.py xdw_core_restore_topics
+
+To generate (or ri-generate) map thumbnails run:
+
+    python manage.py xdw_core_generate_map_thumbnails
+
+Prefix the commands with `heroku run -a xdiscovery_web` to run on heroku.
+Use `--help` flag for more details.
 
 
 ## Random notes
