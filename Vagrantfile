@@ -122,25 +122,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   #   chef.validation_client_name = "ORGNAME-validator"
   config.vm.provision :shell, inline: <<SCRIPT
-   sudo locale-gen en_US
-   sudo locale-gen it
-   sudo apt-get update
-   sudo apt-get install -y git python python-virtualenv
-   sudo apt-get install -y postgresql-9.1
-   sudo apt-get install -y lib
-   sudo apt-get install -y postgresql-server-dev-9.1
-   sudo apt-get install -y libjpeg-dev
-   sudo apt-get install -y python2.7-dev
-   sudo apt-get install -y libevent-dev
-   sudo apt-get install -y libzmq-d
-   sudo apt-get install -y libzmq-dev
-   sudo apt-get install -y g++
-   sudo apt-get install -y curl
-   sudo apt-get install -y build-base
+   locale-gen en_US
+   locale-gen it
+   apt-get update
+   apt-get install -y git python python-virtualenv
+   apt-get install -y postgresql-9.1
+   apt-get install -y postgresql-server-dev-9.1
+   apt-get install -y libjpeg-dev
+   apt-get install -y python2.7-dev
+   apt-get install -y libevent-dev
+   apt-get install -y libzmq-dev
+   apt-get install -y build-essential
+   apt-get install -y g++
+   apt-get install -y curl
+   service postgresql restart
    cp /vagrant/scripts/.bash_profile /home/vagrant
    chown vagrant:vagrant /home/vagrant/.bash_profile
-   sudo -u vagrant /vagrant/scripts/provision.sh
-   sudo service postgresql restart
+   sudo -u vagrant bash /vagrant/scripts/provision.sh
 SCRIPT
 
 end

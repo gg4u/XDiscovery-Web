@@ -1,4 +1,5 @@
 # To be run by the developer's own user
+export PYTHONUNBUFFERED="Y"
 virtualenv virtual
 source virtual/bin/activate
 pip install -r /vagrant/requirements/dev.txt
@@ -15,7 +16,7 @@ nvm install 0.10.20
 nvm use 0.10.20
 wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 cd /vagrant
-.bowerrc <<EOF
+cat > .bowerrc <<EOF
 {
     "analytics": false
 }
