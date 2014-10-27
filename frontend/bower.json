@@ -15,7 +15,7 @@
     "masonry": "latest",
     "angular-inview": "latest",
     "vivagraph": "latest",
-    "foundation": "~5.0.2",
+    "foundation": "5.0.2",
     "hammerjs": "~1.0.5",
     "ionicons": "~1.4.0",
     "jquery-hammerjs": "*",
