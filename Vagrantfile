@@ -10,7 +10,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "file://./package.box"
+  config.vm.box = "hashicorp/precise32"
+  #config.vm.box = "file://./package.box"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -48,7 +49,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    config.vm.provider "virtualbox" do |vb|
      # Don't boot with headless mode
      #vb.gui = true
-  
+
      # Use VBoxManage to customize the VM. For example to change memory:
      vb.customize ["modifyvm", :id, "--memory", "1024"]
      vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
@@ -120,4 +121,25 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
+  config.vm.provision :shell, inline: <<SCRIPT
+   locale-gen en_US
+   locale-gen it
+   apt-get update
+   apt-get install -y git python python-virtualenv
+   apt-get install -y postgresql-9.1
+   apt-get install -y postgresql-server-dev-9.1
+   apt-get install -y libjpeg-dev
+   apt-get install -y python2.7-dev
+   apt-get install -y libevent-dev
+   apt-get install -y libzmq-dev
+   apt-get install -y build-essential
+   apt-get install -y g++
+   apt-get install -y curl
+   wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+   service postgresql restart
+   cp /vagrant/scripts/.bash_profile /home/vagrant
+   chown vagrant:vagrant /home/vagrant/.bash_profile
+   sudo -u vagrant -H bash /vagrant/scripts/provision.sh
+SCRIPT
+
 end
