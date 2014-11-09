@@ -23,10 +23,9 @@ BACKUP_DIR = './backups'
 BACKUP_PATH = os.path.join(BACKUP_DIR, 'pgdump.db')
 
 
-
 def run_sql(sql):
     '''Used for admin commands locally.'''
-    return subprocess.check_call(
+    return subprocess.check_output(
         ['bash', '-c', 'sudo -u postgres psql --cluster {cluster} -c '
          '"{sql}"'.format(cluster=DB_CLUSTER, sql=sql)])
 
@@ -141,23 +140,32 @@ def backup_local():
 def create_db_local(drop=False, create_role=False, test=False):
     db_config = get_db_config()
     if drop:
-        answer = raw_input('Dropping db. Are you sure? (yes/no) ')
-        if answer.lower() != 'yes':
-            puts('Abandoning')
-            return
-        puts('Dropping database...')
-        run_sql("drop database {NAME};".format(**db_config))
+        if db_config['NAME'] in run_sql("\l".format(**db_config)):
+            answer = raw_input('Dropping db. Are you sure? (yes/no) ')
+            if answer.lower() != 'yes':
+                puts('Abandoning')
+                return
+            puts('Dropping database...')
+            run_sql("drop database {NAME};".format(**db_config))
+        else:
+            puts('Not dropping: db is not found')
     if create_role:
-        puts('Creating role...')
-        run_sql("create role {USER} with login password '{PASSWORD}' {createdb};"
-                .format(createdb='createdb' if test else '',
-                        **db_config))
+        if db_config['USER'] not in run_sql("\dg {USER}".format(**db_config)):
+            puts('Creating role...')
+            run_sql(
+                "create role {USER} with login password '{PASSWORD}' {createdb};"
+                .format(createdb='createdb' if test else '', **db_config))
+        else:
+            puts('User already existent')
     # If this fails try
     #    sudo locale-gen it_IT.UTF-8
     # ... and restart db server
-    run_sql("create database {NAME} with ENCODING 'UTF-8' "
-            "LC_COLLATE='it_IT.UTF-8' LC_CTYPE='it_IT.UTF-8' "
-            "template=template0 owner={USER};".format(**db_config))
+    if db_config['NAME'] not in run_sql("\l".format(**db_config)):
+        run_sql("create database {NAME} with ENCODING 'UTF-8' "
+                "LC_COLLATE='it_IT.UTF-8' LC_CTYPE='it_IT.UTF-8' "
+                "template=template0 owner={USER};".format(**db_config))
+    else:
+        puts('Database already existent')
 
 
 @task
