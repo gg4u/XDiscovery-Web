@@ -15,7 +15,8 @@ until pip install -r $BASE_DIR/requirements/dev.txt; do
 done
 
 # ruby
-curl -L get.rvm.io | bash -s stable
+gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+curl -L get.rvm.io | bash -s 1.25.34
 source $HOME/.rvm/scripts/rvm
 rvm install 1.9.3
 rvm use 1.9.3
