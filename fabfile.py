@@ -36,7 +36,7 @@ def get_db_config():
 
 
 def get_app_name(environment):
-    return '{}-web-{}'.format(APP_NAME, environment) if environment != 'production' \
+    return '{}-env-{}'.format(APP_NAME, environment) if environment != 'production' \
         else APP_NAME
 
 
