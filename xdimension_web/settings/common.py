@@ -203,7 +203,7 @@ ALLOWED_HOSTS = ['xdiscovery.com', 'www.xdiscovery.com',
                  'xdiscovery-web.herokuapp.com']
 
 if DEPLOY_MODE == 'staging':
-    ALLOWED_HOSTS += ['xdiscovery-web-staging.herokuapp.com']
+    ALLOWED_HOSTS += ['xdiscovery-web-env-staging.herokuapp.com']
 elif DEPLOY_MODE == 'local':
     ALLOWED_HOSTS += ['localhost', '127.0.0.1']
 
