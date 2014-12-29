@@ -10,13 +10,15 @@ Pillow==2.4.0
 django-cors-headers==0.11
 boto==2.13.3
 django-storages==1.1.8
-git+git://github.com/mpaolini/django-versioned-storages@v0.1
+#git+git://github.com/mpaolini/django-versioned-storages@v0.1
+git+git://github.com/gg4u/django-versioned-storages@v0.1
 # needed by django-storages boto backend
 pytz==2013d
 python-dateutil==2.1
 django-json-field==0.5.5
 django-filter==0.7
-git+git://github.com/mpaolini/djangocms-text-ckeditor@2.1.4_credra
+#git+git://github.com/mpaolini/djangocms-text-ckeditor@2.1.4_credra
+git+git://github.com/gg4u/djangocms-text-ckeditor@2.1.4_credra
 djangocms-picture==0.0.2
 djangocms-file==0.0.1
 djangocms-video==0.0.1
