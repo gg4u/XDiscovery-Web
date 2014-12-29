@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # xdiscovery_web
 
 ## Tools
@@ -177,4 +176,3 @@ directory
 =======
 XDiscovery-Web
 ==============
->>>>>>> 3cf7465ab300e9f52105b6b90445dfc20418f725
