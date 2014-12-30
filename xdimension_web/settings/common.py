@@ -53,7 +53,7 @@ STATICFILES_DIRS = (
 
 # version of static assets. Incrementing this value forces static asset
 # cache clear in devices
-STATIC_VERSION = 4
+STATIC_VERSION = 5
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ.get('SECRET_KEY', 'phah6izoo3ahtiPh1zeighae%th4Yei0toh8ol,o')
