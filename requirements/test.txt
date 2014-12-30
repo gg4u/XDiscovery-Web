@@ -7,7 +7,8 @@ Pillow==2.0.0
 django-cors-headers==0.11
 boto==2.13.3
 django-storages==1.1.8
-git+git://github.com/mpaolini/django-versioned-storages@v0.1
+#git+git://github.com/mpaolini/django-versioned-storages@v0.1
+git+git://github.com/gg4u/django-versioned-storages@v0.1
 # needed by django-storages boto backend
 pytz==2013d
 python-dateutil==2.1

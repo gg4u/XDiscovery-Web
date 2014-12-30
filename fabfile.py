@@ -36,7 +36,8 @@ def get_db_config():
 
 
 def get_app_name(environment):
-    return '{}-{}'.format(APP_NAME, environment) if environment != 'production' \
+    #return '{}-{}'.format(APP_NAME, environment) if environment != 'production' \
+    return '{}-{}'.format(APP_NAME, 'fork') if environment != 'production' \
         else APP_NAME
 
 
@@ -83,7 +84,7 @@ def deploy(env, frontend='True', backend='True', branch=''):
         #  - Db migration should happen in a separate utility heroku app
         app = get_app_name(env)
         if not branch:
-            branch = 'master' if env == 'production' else 'develop'
+            branch = 'master' if env == 'production' else 'fork'
         local('git push {app} {branch}:master'.format(app=app, branch=branch))
         local('heroku run python manage.py migrate --all --noinput --app {}'
               .format(app))

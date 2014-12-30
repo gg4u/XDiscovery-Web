@@ -118,6 +118,9 @@ class Map(models.Model):
         self.node_count = len(data.get('graph', data.get('atlas')))
         return data
 
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Map._meta.fields]
+
 
 class MapTopic(models.Model):
     ''' For searching. '''
@@ -129,6 +132,12 @@ class MapTopic(models.Model):
         index_together = [
             ['topic', 'relevance']
         ]
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in MapTopic._meta.fields]
+
+
+
 
 
 class Topic(models.Model):

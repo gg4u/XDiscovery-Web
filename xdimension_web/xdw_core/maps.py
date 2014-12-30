@@ -31,6 +31,7 @@ def _save_map(obj):
         topics_prev = {o.topic: o for o in obj.maptopic_set.all()}
         title_prev = obj.__class__.objects.get(pk=obj.pk).title
         topics_prev[title_prev] = {'relevance': 1}
+        # DEBUG : Errore Marco Paolini?  obj.maptopic_set.all() è vuoto, fallisce cancellare un topic. relazione map.maptopic è definita?
     else:
         topics_prev = {}
 

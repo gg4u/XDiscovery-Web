@@ -17,3 +17,6 @@ class Command(NoArgsCommand):
         MapTopic.objects.all().delete()
         for mp in Map.objects.all():
             save_map(mp)
+            # debug
+            #print mp
+            #print mp.properties

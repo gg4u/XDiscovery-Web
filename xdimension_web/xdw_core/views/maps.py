@@ -12,6 +12,10 @@ from rest_framework import authentication
 from ..models import Map
 from ..maps import save_map
 
+# fix Agliottone : TODO CHECK REGEX
+from django.db.models import Q
+
+
 
 class MapSimpleSerializer(ModelSerializer):
 
@@ -72,7 +76,8 @@ class MapPaginationSerializer(PaginationSerializer):
     class Meta:
         object_serializer_class = MapSimpleSerializer
 
-
+# edit Marco Paolini
+'''
 class TopicSearchFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         topics = [t.strip().lower() for t in request.QUERY_PARAMS.getlist('topic')]
@@ -80,6 +85,35 @@ class TopicSearchFilter(filters.BaseFilterBackend):
             # XXX TODO: escape the regexp contents for safety
             regex = u'({})'.format(u'|'.join([t.replace('(', '\(').replace(')', '\)')]))
             return queryset.filter(maptopic__topic__iregex=regex).distinct()
+        return queryset
+'''
+
+#agliottone fix
+class TopicSearchFilter(filters.BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        #cicla sugli argomenti della request per prendere i topics cercati
+        topics = []
+        if request.QUERY_PARAMS.getlist('topic'):
+            topics = set([t.strip().lower() for t in request.QUERY_PARAMS.getlist('topic')])
+        if "," in request.GET.get('topic',""):
+            topics = set([t.strip().lower() for t in request.GET.get('topic').split(",")])
+        #per ogni topic cercato filtra la query in AND cercando su topic e sul titolo, prima i titoli
+
+        for topic in topics:
+            # update Luigi (from Marco) for safety
+            regex = u'({})'.format(u'|'.join([topic.replace('(', '\(').replace(')', '\)')]))
+            #regex x le singole parole
+            #regex = r"\y{0}\y".format(topic)
+            regex = r"\y{0}\y".format(regex)
+            #estrapola le mappe con nel titolo e nel topic la key
+            q1 = queryset.filter(title__iregex=regex).distinct().order_by('-title').values('id','title')
+            q2 = queryset.filter(maptopic__topic__iregex=regex).distinct().order_by('-title').values('id','title')
+            #merge
+            ids = [x['id'] for x in q1]+[x['id'] for x in q2]
+            #query  preservando l ordinamento
+            clauses = ' '.join(['WHEN id=%s THEN %s' % (pk, i) for i, pk in enumerate(ids)])
+            ordering = 'CASE %s END' % clauses
+            queryset = queryset.filter(pk__in=ids).extra(select={'ordering': ordering}, order_by=('ordering',))
         return queryset
 
 
