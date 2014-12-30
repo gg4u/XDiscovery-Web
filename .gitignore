@@ -12,3 +12,4 @@ virtualnode/
 db.sqlite
 /.vagrant/
 /package.box
+/.idea/
