@@ -48,7 +48,7 @@ angular.module('xdiscoveryApp')
 
 			onAddLink: (link) -> link.show
 
-			#dynamic Spring Length
+			# dynamic Spring Length
 			elasticSpring = (link, spring) ->
 				spring.length = idealLength * (1 - link.data.proximity)
 				return
