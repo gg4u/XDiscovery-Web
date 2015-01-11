@@ -30,7 +30,7 @@ angular.module('xdiscoveryApp')
 
 			initialize: (graph) ->
 				$scope.vivagraph.graph = graph
-				$timeout (-> $scope.vivagraph.pauseRender = yes), 5000
+				$timeout (-> $scope.vivagraph.pauseRender = yes), 2000
 				graph.addEventListener 'changed', (changes) ->
 					for c in changes when c.node?
 						node = c.node
@@ -48,20 +48,14 @@ angular.module('xdiscoveryApp')
 
 			onAddLink: (link) -> link.show
 
-			# dynamic Spring Length
-			elasticSpring = (link, spring) ->
-				spring.length = idealLength * (1 - link.data.proximity)
-				return
-
-			idealLength = 10
 			layout: (graph) -> Viva.Graph.Layout.forceDirected graph,
-				springLength : idealLength
+				springLength : (link, spring) ->
+					spring.length = 10 * (1 - link.data.proximity)
+					return
 				springCoeff : 0.0008
-				dragCoeff : 0.005
-				gravity : -1000,
-				theta : 0,
-				springTransform : elasticSpring
-
+				dragCoeff : 0.01
+				gravity : -1000
+				theta : 0
 
 			graphics: (graph) -> Viva.Graph.View.svgGraphics()
 				.node((node) ->
@@ -81,7 +75,7 @@ angular.module('xdiscoveryApp')
 					ui.attr('class', "map-node #{isRevealed&&'revealed'||'initial'}#{hasDescendants&&' has-descendants'||''}#{isExpanded&&' expanded'||''}")
 					# Adding hover and click handlers for graph node ui
 					angular.element(ui).hammer()
-						# Remove UX for hover : TODO > add pinNode()
+						# Removing hover UX
 						#.on('mouseenter', -> $scope.$apply ->
 						#	# Pause rendering on mouse enter on a node and set highlighted info
 						#	$scope.vivagraph.pauseRender = not $scope.vivagraph.inhibitPauseRender
@@ -110,7 +104,7 @@ angular.module('xdiscoveryApp')
 							$scope.vivagraph.pauseRender = no
 							$scope.vivagraph.inhibitPauseRender = yes
 							$timeout (-> $scope.vivagraph.inhibitPauseRender = no), 500
-							$timeout (-> $scope.vivagraph.pauseRender = yes), 5000)
+							$timeout (-> $scope.vivagraph.pauseRender = yes), 3000)
 						.on('dblclick doubletap', (e) -> $scope.$apply ->
 							# Select a node and show the detail view
 							$scope.vivagraph.selected = {
@@ -123,9 +117,13 @@ angular.module('xdiscoveryApp')
 					groupId = 10 unless groupId
 					groupId -= 1
 
-					weight = Math.round(link.data.distance / $scope.vivagraph.maxDistance * 5)
-					weight = 1 if weight < 1
-					weight = 5 if weight > 5
+					# Dynamic weight
+					weight = Math.pow(parseInt(link.data.distance), 2) / 50000
+					weight = 0.5  if weight < 0.5
+
+					# weight = Math.round(link.data.distance / $scope.vivagraph.maxDistance * 5)
+					# weight = 1 if weight < 1
+					# weight = 5 if weight > 5
 
 					Viva.Graph.svg("line")
 						.attr('class', "map-link map-link-group-#{groupId} #{link.data.class||''}")
@@ -135,7 +133,7 @@ angular.module('xdiscoveryApp')
 					nodeUI.attr "transform", "translate(#{(pos.x - nodeSize / 2)}, #{(pos.y - nodeSize / 2)})"
 
 		# Method to draw a node, this will be used when the node decorations are updated
-		nodeSize = 100
+		nodeSize = 84
 		drawNode = (ui, text, thumbnail) ->
 			return unless ui?
 			while ui.firstChild
@@ -170,7 +168,7 @@ angular.module('xdiscoveryApp')
 					.attr("cx", nodeSize / 2)
 					.attr("cy", nodeSize / 2)
 			else
-				circleRadius = nodeSize / 4
+				circleRadius = nodeSize / 6
 				ui.append("circle")
 					.attr('class', 'map-node-circle no-thumbnail')
 					.attr("r", circleRadius)
@@ -181,12 +179,20 @@ angular.module('xdiscoveryApp')
 					.attr("fill", "#f5f5f5")
 				circleRadius = nodeSize * 3 / 2
 			if text?
-				ui.append("text")
-					.attr('class', 'map-node-title')
-					.attr("y", "-10")
-					.attr("text-anchor", "middle")
-					.attr("x", nodeSize / 2)
-					.text(text)
+				if thumbnail?.source?
+					ui.append("text")
+						.attr('class', 'map-node-title')
+						.attr("y", "-10")
+						.attr("text-anchor", "middle")
+						.attr("x", nodeSize / 2)
+						.text(text)
+				else
+					ui.append("text")
+						.attr('class', 'map-node-title')
+						.attr("y", "20")
+						.attr("text-anchor", "middle")
+						.attr("x", nodeSize / 2)
+						.text(text)
 			# Expand icon
 			expand = ui.append('g')
 				.attr('class', 'map-node-expand')
