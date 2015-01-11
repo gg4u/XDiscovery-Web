@@ -89,5 +89,23 @@
 		</script>
 		 {% endif %}
 	{% render_block "js" %}
+
+
+		<script>
+//funzione per il search al clik dell invio
+// TODO > move into angualar controller for consistency
+	if (window.jQuery) {
+
+    $( document ).ready(function() {
+    $( document ).on( "keyup", ".select2-search-field input", function(event) {
+      if(event.keyCode == 13){
+        angular.element(".xd-atlas-search-button").trigger("ng-click").click()
+      }
+  });
+
+
+      });
+   }
+	</script>
 </body>
 </html>

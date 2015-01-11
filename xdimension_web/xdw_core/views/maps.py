@@ -13,6 +13,11 @@ from ..models import Map
 from ..maps import save_map
 
 
+# fix per ricerca:
+# see: https://docs.djangoproject.com/en/1.7/topics/db/queries/
+from django.db.models import Q
+
+
 class MapSimpleSerializer(ModelSerializer):
 
     def to_native(self, obj):
@@ -72,6 +77,8 @@ class MapPaginationSerializer(PaginationSerializer):
     class Meta:
         object_serializer_class = MapSimpleSerializer
 
+'''
+# old search against exact titles and topics
 
 class TopicSearchFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
@@ -81,7 +88,35 @@ class TopicSearchFilter(filters.BaseFilterBackend):
             regex = u'({})'.format(u'|'.join([t.replace('(', '\(').replace(')', '\)')]))
             return queryset.filter(maptopic__topic__iregex=regex).distinct()
         return queryset
+'''
 
+'''
+new search against keywords in topics and titles
+'''
+
+class TopicSearchFilter(filters.BaseFilterBackend):
+    def filter_queryset(self, request, queryset, view):
+        #cicla sugli argomenti della request per prendere i topics cercati
+        topics = []
+        if request.QUERY_PARAMS.getlist('topic'):
+            topics = set([t.strip().lower() for t in request.QUERY_PARAMS.getlist('topic')])
+        if "," in request.GET.get('topic',""):
+            topics = set([t.strip().lower() for t in request.GET.get('topic').split(",")])
+        #per ogni topic cercato filtra la query in AND cercando su topic e sul titolo, prima i titoli
+
+        for topic in topics:
+            #regex x le singole parole
+            regex = r"\y{0}\y".format(topic)
+            #estrapola le mappe con nel titolo e nel topic la key
+            q1 = queryset.filter(title__iregex=regex).distinct().order_by('-title').values('id','title')
+            q2 = queryset.filter(maptopic__topic__iregex=regex).distinct().order_by('-title').values('id','title')
+            #merge
+            ids = [x['id'] for x in q1]+[x['id'] for x in q2]
+            #query  preservando l ordinamento
+            clauses = ' '.join(['WHEN id=%s THEN %s' % (pk, i) for i, pk in enumerate(ids)])
+            ordering = 'CASE %s END' % clauses
+            queryset = queryset.filter(pk__in=ids).extra(select={'ordering': ordering}, order_by=('ordering',))
+        return queryset
 
 class MapList(ListCreateAPIView):
     queryset = Map.objects.filter(status=Map.STATUS_OK)
