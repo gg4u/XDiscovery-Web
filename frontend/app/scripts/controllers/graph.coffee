@@ -48,11 +48,20 @@ angular.module('xdiscoveryApp')
 
 			onAddLink: (link) -> link.show
 
+			#dynamic Spring Length
+			elasticSpring = (link, spring) ->
+				spring.length = idealLength * (1 - link.data.proximity)
+				return
+
+			idealLength = 10
 			layout: (graph) -> Viva.Graph.Layout.forceDirected graph,
-				springLength : 50
-				springCoeff : 0.0000055
-				dragCoeff : 0.01
-				gravity : -2.5
+				springLength : idealLength
+				springCoeff : 0.0008
+				dragCoeff : 0.005
+				gravity : -1000,
+				theta : 0,
+				springTransform : elasticSpring
+
 
 			graphics: (graph) -> Viva.Graph.View.svgGraphics()
 				.node((node) ->
@@ -72,18 +81,19 @@ angular.module('xdiscoveryApp')
 					ui.attr('class', "map-node #{isRevealed&&'revealed'||'initial'}#{hasDescendants&&' has-descendants'||''}#{isExpanded&&' expanded'||''}")
 					# Adding hover and click handlers for graph node ui
 					angular.element(ui).hammer()
-						.on('mouseenter', -> $scope.$apply ->
-							# Pause rendering on mouse enter on a node and set highlighted info
-							$scope.vivagraph.pauseRender = not $scope.vivagraph.inhibitPauseRender
-							$scope.vivagraph.highlighted =
-								node: node
-								boundingRect: node.ui.getBoundingClientRect()
-								info: $scope.map.nodes[node.id])
-						.on('mouseleave', -> $scope.$apply ->
-							# Resume graph rendering on mouse leave and remove highlighted node
-							$scope.vivagraph.pauseRender = no
-							$scope.vivagraph.highlighted = null
-							$timeout (-> $scope.vivagraph.pauseRender = yes), 5000)
+						# Remove UX for hover : TODO > add pinNode()
+						#.on('mouseenter', -> $scope.$apply ->
+						#	# Pause rendering on mouse enter on a node and set highlighted info
+						#	$scope.vivagraph.pauseRender = not $scope.vivagraph.inhibitPauseRender
+						#	$scope.vivagraph.highlighted =
+						#		node: node
+						#		boundingRect: node.ui.getBoundingClientRect()
+						#		info: $scope.map.nodes[node.id])
+						#.on('mouseleave', -> $scope.$apply ->
+						#	# Resume graph rendering on mouse leave and remove highlighted node
+						#	$scope.vivagraph.pauseRender = no
+						#	$scope.vivagraph.highlighted = null
+						#	$timeout (-> $scope.vivagraph.pauseRender = yes), 5000)
 						.on('click tap', -> $scope.$apply ->
 							# Spot a node to show it's excerpt
 							$scope.vivagraph.spotted = {
@@ -125,7 +135,7 @@ angular.module('xdiscoveryApp')
 					nodeUI.attr "transform", "translate(#{(pos.x - nodeSize / 2)}, #{(pos.y - nodeSize / 2)})"
 
 		# Method to draw a node, this will be used when the node decorations are updated
-		nodeSize = 80
+		nodeSize = 100
 		drawNode = (ui, text, thumbnail) ->
 			return unless ui?
 			while ui.firstChild
@@ -184,7 +194,7 @@ angular.module('xdiscoveryApp')
 				.attr('r', 10)
 				.attr('cx', circleRadius / 3)
 				.attr('cy', circleRadius / 3)
-				.attr('fill', '#ffffff')
+				.attr('fill', '#ccff00')
 				.attr("stroke", "#e7e7e7")
 				.attr("stroke-width", "1")
 			expand.append("text")
