@@ -13,6 +13,8 @@ from ..models import Map
 from ..maps import save_map
 
 
+# maps.py
+
 # fix per ricerca:
 # see: https://docs.djangoproject.com/en/1.7/topics/db/queries/
 from django.db.models import Q

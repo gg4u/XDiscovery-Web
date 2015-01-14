@@ -12,7 +12,7 @@ from ..models import Topic
 from ..models import Map
 from itertools import chain
 
-
+# topic.py
 
 class TopicSerializer(ModelSerializer):
     result_field = 'topic'
@@ -51,6 +51,8 @@ class TopicSearchFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         #prende le keywords
         q = request.QUERY_PARAMS.get('q')
+        # ESCAPE
+        q = q.replace('\\','')
         original = queryset
         if q:
             q = q.lower()
