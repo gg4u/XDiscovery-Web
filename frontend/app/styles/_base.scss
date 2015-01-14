@@ -3,6 +3,49 @@ html, body {
 	height: 100%;
 }
 
+
+// FIX Luigi : cut logos, overlaps
+
+.logo-xd-offset {
+// fix floating logo XD & overlap on atlas... oh mine so messy has been delivered this code!
+// if you ever read this, remember: do respect the layout of designer, and fucking add comments on your code!
+// don't be an asshole
+	margin-left: 1rem;
+}
+
+.logo-xd {
+	position: relative;
+	height: 40px;
+	margin-top: 0rem;
+}
+
+.logo-atlas {
+	position: relative;
+	height: 44px;
+	margin-top: 0rem;
+	left: 20px;
+}
+
+@media #{$small} {
+	.logo-xd {
+		position: relative;
+		height: 40px;
+		margin-top: 1.4rem;
+		left: -1rem;
+		position: relative;
+	}
+
+	.logo-atlas {
+		position: relative;
+		height: 44px;
+		margin-top: 0rem;
+		left: 4px;
+	}
+}
+
+
+
+
 #page,
 #page > .inner-wrap,
 #page-content {
@@ -68,16 +111,16 @@ svg {
 	top: 0;
 	left: 0;
 	height: 52px;
-	width: 34px;
+	width: 22px;
 
 	> span {
 		position: absolute;
 		display: block;
-		width: 18px;
+		width: 11px;
 		height: 0;
-		left: 8px;
+		left: 5px;
 		top: .3125rem;
-		box-shadow: 0 10px 0 1px white,0 16px 0 1px white,0 22px 0 1px white;
+		box-shadow: 0 12px 0 1px white,0 17px 0 1px white,0 22px 0 1px white;
 	}
 
 	.fixed-mobile-menu & {
@@ -166,15 +209,15 @@ button.invisible {
 }
 
 .social-button {
-	width: 75px;
-	height: 75px;
+	width: 60px;
+	height: 60px;
 	background-size: cover;
 	display: block;
 	overflow: hidden;
 
 	&.small {
-		width: 40px;
-		height: 40px;
+		width: 44px;
+		height: 44px;
 	}
 
 	&.facebook {
@@ -191,6 +234,10 @@ button.invisible {
 
 	&.linkedin {
 		background-image: url(../images/social-icon-linkedin.png);
+	}
+
+	&.reddit {
+		background-image: url(../images/social-icon-reddit.png);
 	}
 }
 

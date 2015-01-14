@@ -22,6 +22,9 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 			topic = tags[0]
 			more_topics = map.nodeTitles.count - 1
 			"https://twitter.com/share?url=#{encodedMapUrl}&text=Learn%20in%20seconds%3A%20about%20%23#{topic}%20and%20other%20#{more_topics}%20topics%21%20Get%20your%20maps%20http%3A//tiny.cc/LearnDiscoveryApp"
+		map.getRedditUrl = (title) ->
+			title = map.title unless title?
+			"http://www.reddit.com/submit?url=#{encodedMapUrl}&title=#{title}"
 		map.getFacebookLikeUrl = (params) ->
 			url = "#{$location.protocol()}://www.facebook.com/plugins/like.php?href=#{encodedMapUrl}&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=21&amp;width=55"
 			url += "&#{p}=v" for p, v of params

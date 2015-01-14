@@ -296,8 +296,9 @@ angular.module('xdiscoveryApp')
 					pithumbsize: 100
 					exlimit: batchIds.length
 					exintro: 1
-					exsentences: 1
+					exsentences: 4
 					redirects: ''
+					rawcontinue: ''
 				}, (data) ->
 					# Assign node decorations
 					for id, n of nodes when data?.query?.pages?[id]?

@@ -36,7 +36,7 @@
 <div class="xd-graph-excerpt" ng-if="vivagraph.spotted.node" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':vivagraph.selected.showDetails }" ng-click="vivagraph.selected = vivagraph.spotted; vivagraph.selected.showDetails = true">
 	<span class="selected-marker"></span>
 	<div class="extract" ng-bind-html="vivagraph.spotted.info.extract"></div>
-	<p class="more-message">Source Wikipedia.org</p>
+	<p class="more-message">Source Wikipedia.org | click to access Article, Media and Websources about this topic</p>
 </div>
 
 <div class="xd-like-tool" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':!!vivagraph.selected.showDetails, 'has-excerpt':!!vivagraph.spotted.node}">
@@ -44,8 +44,12 @@
 </div>
 
 <div class="xd-graph-zoom-tool" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':!!vivagraph.selected.showDetails, 'has-excerpt':!!vivagraph.spotted.node }">
-	<button class="button secondary xd-grpah-zoom-button in" ng-click="vivagraph.zoomLevel = vivagraph.zoomLevel + 1">+</button>
-	<button class="button secondary xd-grpah-zoom-button out" ng-click="vivagraph.zoomLevel = vivagraph.zoomLevel - 1">&ndash;</button>
+	<button class="button secondary xd-graph-zoom-button in" ng-click="vivagraph.zoomLevel = vivagraph.zoomLevel + 2">+</button>
+	<button class="button secondary xd-graph-zoom-button out" ng-click="vivagraph.zoomLevel = vivagraph.zoomLevel - 2">&ndash;</button>
+</div>
+
+<div class="xd-graph-credit-tool" ng-class="{ 'has-banner':!site.hideBanner, 'has-detail-pane':!!vivagraph.selected.showDetails, 'has-excerpt':!!vivagraph.spotted.node }">
+	<button class="xd-graph-credit-button" ng-click="shouldShowCreditPane = !shouldShowCreditPane">credits</button>
 </div>
 
 <section class="viva-graph-detail-pane" ng-if="vivagraph.selected.showDetails">
@@ -58,8 +62,10 @@
 			<dl class="sub-nav">
 				<dd ng-class="{ 'active':!vivagraph.selected.tab }">
 					<a href="" ng-click="vivagraph.selected.tab = null">Topic</a></dd>
-				<dd ng-class="{ 'active':vivagraph.selected.tab=='external' }">
-					<a href="" ng-click="vivagraph.selected.tab = 'external'">Video</a></dd>
+				<dd ng-class="{ 'active':vivagraph.selected.tab=='video' }">
+					<a href="" ng-click="vivagraph.selected.tab = 'video'">Video</a></dd>
+				<dd ng-class="{ 'active':vivagraph.selected.tab=='sources' }">
+					<a href="" ng-click="vivagraph.selected.tab = 'sources'">Other Sources</a></dd>
 			</dl>
 
 			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
@@ -67,11 +73,30 @@
 					<section ng-repeat="s in vivagraph.selected.info.getContent().sections" ng-bind-html="s.text" rewrite-relative-links="http://www.wikipedia.org/wiki/{{vivagraph.selected.info.title}}" links-target="_blank"></section>
 					<a ng-href="http://en.wikipedia.org/wiki?curid={{vivagraph.selected.node.id}}" target="_blank" style="display:block; text-align:right;">More on Wikipedia &rarr;</a>
 				</div>
-				<div ng-switch-when="external" ng-class="'video'">
+				<div ng-switch-when="video" ng-class="'video'">
 					<iframe id="ytplayer" type="text/html" width="100%" height="360"
 					src="{{map.getYoutubeSearchUrl(vivagraph.selected.info.title)}}"
 					frameborder="0" allowfullscreen></iframe>
 				</div>
+				<div ng-switch-when="sources" ng-class="'sources'">
+				<p>Webpages and resources about "{{vivagraph.selected.info.title}}" topic, aggregated from search engines.
+				</p>
+						<dl>
+							<dd>
+								<strong>Google</strong> - Search for: <a href="http://www.google.com/?#q={{vivagraph.selected.info.title}}" target="_blank" ng-bind="vivagraph.selected.info.title">&ndash;</a>
+							</dd>
+							<dd>
+								<strong>Yahoo!</strong> - Search for: <a href="http://search.yahoo.com/search?n=10&p={{vivagraph.selected.info.title}}" target="_blank" ng-bind="vivagraph.selected.info.title">&ndash;</a>
+							</dd>
+							<dd>
+								<strong>Bing</strong> - Search for: <a href="http://www.bing.com/search?q={{vivagraph.selected.info.title}}" target="_blank" ng-bind="vivagraph.selected.info.title">&ndash;</a>
+							</dd>
+							<dd>
+								<strong>DuckDuckGo</strong> - Search for: <a href="http://duckduckgo.com/?q={{vivagraph.selected.info.title}}" target="_blank" ng-bind="vivagraph.selected.info.title">&ndash;</a>
+							</dd>
+						</dl>
+					</div>
+
 			</div>
 
 		</div>
@@ -86,13 +111,13 @@
 	</a>
 </section>
 
-<section class="graph-share-pane" ng-show="shouldShowSharePane" ng-click="shouldShowSharePane = false">
+<section class="graph-share-pane" ng-show="shouldShowSharePane" ng-click="shouldShowSharePane = false" ng-click="shouldShowCreditPane = false">
 	<div class="content row">
 		<div class="small-12 large-4 large-centered columns">
 			<div class="panel" ng-click="$event.stopPropagation()">
 				<a href="" ng-click="shouldShowSharePane = false" class="close-button"></a>
-				<h5>Share this Map</h5>
-				<h6 class="title" ng-switch="!!map.title" ng-cloak>
+				<h4>Share this Map</h4>
+				<h5 class="title" ng-switch="!!map.title" ng-cloak>
 					<span ng-switch-when="true" ng-bind="map.title" class="custom-title"></span>
 					<span ng-switch-default class="node-title">
 						<span class="sep">from</span>
@@ -100,11 +125,12 @@
 						<span class="sep">to</span>
 						<span ng-bind="map.endNode.title">&ndash;</span>
 					</span>
-				</h6>
+				</h5>
 				<ul class="inline-list">
 					<li><a ng-href="{{map.getFacebookUrl()}}" target="_blank" class="social-button facebook"></a></li>
 					<li><a ng-href="{{map.getGplusUrl()}}" target="_blank" class="social-button google-plus"></a></li>
 					<li><a ng-href="{{map.getTwitterUrl()}}" target="_blank" class="social-button twitter"></a></li>
+					<li><a ng-href="{{map.getRedditUrl()}}" target="_blank" class="social-button reddit"></a></li>
 				</ul>
 				<input type="text" value="{{map.url}}" readonly onClick="this.select()" style="text-align:center;">
 			</div>
@@ -112,9 +138,45 @@
 	</div>
 </section>
 
+<section class="graph-credit-pane" ng-show="shouldShowCreditPane" ng-click="shouldShowCreditPane = false" ng-click="shouldShowSharePane = false">
+	<div class="content row">
+		<div class="small-12 large-4 large-centered columns">
+			<div class="panel" ng-click="$event.stopPropagation()">
+				<a href="" ng-click="shouldShowCreditPane = false" class="close-button"></a>
+				<h4>Credits</h4>
+				<div class="credit-list">
+				<ul>
+					<li>
+						To access the connectome of knowledge via <strong>API REST</strong>
+					</li>
+					<li>
+						<strong>Map bibliographic contents</strong>, archives and other media
+					</li>
+					<li>
+						<strong>ICT4D</strong> applicability and no-internet areas
+					</li>
+				</ul>
+				<h6>Please write to:<br>
+					<a href="mailto:info@xdiscovery.com?Subject=Visualizing%20Connectome%20of%20of%20knowledge" target="_top">info@xdiscovery.com</a>
+					<br> or say me a personal hello: <br>
+					<a href="mailto:luigi.assom@gmail.com?Subject=Hi%20Luigi!!!%20What%20about%20Visualizing%20Connectome%20of%20of%20knowledge" target="_top">Hi Luigi XD!</a>
+				</h6>
+				<p>Maps' topology:<br> created with <strong>LearnDiscovery app</strong> for iOS.</p>
+				<p>Quality of correlations:<br></bt> thank you  <strong>Wikimedia Foundations</strong> and <strong>YOU, People </strong> - I think Jimmy Wales deserves a Nobel Prize for Peace.</p>
+				<p>The mind-map of English Wikipedia:<br> <strong>XDiscovery</strong> technology (no need to process your behavioral data!) - I hope this project contributes to give back to individuals the power of knowledge amassed by mankind.</p>
+				<p>Experiencing graphs:<br> my personal thank you, <strong>Andrei "Anvaka"</strong>! Your enthusiasm, commitment and help were so meaningful to me, far beyond "development skills". - Folks, get the hands dirty and eyes clean with VivaGraph LOL</p>
+				<p>You are FREE to disseminate, shape, edit, discuss knowledge maps.<br> Hint: use them to RAISE QUESTIONS!!</p>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</section>
+
 <section class="buy-app-popup" ng-if="site.shouldShowBuyAppPopup&&site.showBuyAppPopup">
 	<a href="" ng-click="site.shouldShowBuyAppPopup = false" class="close-button"></a>
-	<p class="title">This map was created and shared with the Portable Discovery Engine applied to Wikipedia.</p>
+	<p class="title">Create and Save your own visual references with the Portable Discovery Engine applied to Wikipedia.</p>
 	<img src="/images/learn-discovery-logo.svg" alt="Learn xDiscovery" width="50%">
 	<p>for iPhone and iPad</p>
 	<a href="" target="_blank">

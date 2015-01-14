@@ -27,37 +27,53 @@ class RobotsView(View):
                                 .format(site=Site.objects.get_current(),
                                         sitemap_url=reverse('sitemap')))
 
-ATLAS_DESCRIPTION = u'The Atlas of Human Knowledge is a collection of visual maps for learning and reference. Maps display knowledge correlations between topics, to quickly overview a knowledge area. Maps are obtained with LearnDiscovery mobile app, the portable discovery engine applied to factual knowledge.'
+ATLAS_DESCRIPTION = u'The Atlas of Human Knowledge is a collection of visual maps for learning and reference. Maps display semantic trees of correlations between topics, to quickly overview a knowledge area. Disclosure: LearnDiscovery mobile app is the tool adopted to create and collect knowledge maps within the Atlas.'
+
+ATLAS_KEYWORDS = u'semantic, tree, trees, visual, learning, map, knowledge, mapping, connected, graph, graphs, education, discovery, ict4d, ict for development, share knowledge, learndiscovery, app'
+
 
 class AtlasView(View):
     def get(self, request, path='index.html'):
         return render(request,
                       'frontend/{}'.format(path),
-                      {'meta_items': {'description': ATLAS_DESCRIPTION},
+                      {'meta_items':
+                           {'description': ATLAS_DESCRIPTION, 'keywords' : ATLAS_KEYWORDS},
                        # title is set by angular anyways
-                       'title': 'Atlas'}
+                       'title': 'Atlas of Human Knowledge - Visual maps, visualizing Wikipedia'}
         )
 
+
+
 SHARING_FMT_LONG = (
-    u'Learn in seconds: about {{topics}} and other {{more_topics}} topics! '
-    u'{url} | Made with #LearnDiscovery app >  Get the Human'
-    u'Knowledge in your hands > {app_url}'
+    u'A visual map about {{topics}} and {{more_topics}} topics. '
+    u'Make sense of semantic trees about: "{title}"! '
+    u'This map visualizes a portion of the mind-map of the English Wikipedia - mapped at XDiscovery. '
+    u'Correlations between topics are organized, so to effortlessly visualize and learn about a subject. '
+    u'To map and save your own visual reference: LearnDiscovery mobile app (iOS). '
+    #u'{url} | Made with #LearnDiscovery app >  Get the Human'
+    #u'Knowledge in your hands > {app_url}'
 )
 
 SHARING_FMT_SHORT = (
-    u'Learn in seconds: about {{topics}} and other {{more_topics}} topics! '
-    u'{url} | Get your maps > {app_url}'
+    u'Learn in seconds: about {{topics}} and {{more_topics}} topics! '
+    #u'{url} | Get your maps > {app_url}'
+    u'Save your own visual references: LearnDiscovery mobile app (iOS)'
 )
 
 SHARING_FMT_TWITTER_CARD = (
-    u'A visual #knowledgeMap about {{topics}} and other {{more_topics}} topics! '
-    u'Get yours with LearnDiscovery app {app_url}'
+    u'#VisualMap #SemanticTree {{topics}} + {{more_topics}} #wikipedia topics! '
+    u'Save your own visual references: {app_url}'
 )
 
 GRAPH_DESCRIPTION_FMT = (
-    u'A knowledge map of correlations about: {topics} '
-    u'and other {more_topics} topics | visual learning and discovery{more}'
+    u'A visual map about: {topics} '
+    u'and other {more_topics} topics. Semantic trees for visual learning, created with LearnDiscovery mobile app. {more}'
 )
+
+
+GRAPH_KEYWORDS_FMT = (
+    u'{keywords}, semantic tree, visual, learning, map, knowledge, mapping, connected, graph, graphs, education, discovery, learndiscovery, app '
+  )
 
 
 def topic_to_hashtag(topic):
@@ -71,6 +87,7 @@ class GraphDetailView(View):
         og_context = get_opengraph_context()
         map_ = get_object_or_404(Map, pk=pk, status=Map.STATUS_OK)
         site = get_current_site(request)
+        map_title = map_.get_title()
         map_url = '{}://{}{}'.format(
                 settings.SHARING_PROTO,
                 site.domain,
@@ -86,10 +103,20 @@ class GraphDetailView(View):
                 desc.append(title)
             return sep.join(desc), map_.node_count - len(desc)
 
-        topics, more_topics = get_topics()
+        topics, more_topics = get_topics(hashtags=False)
+
+        def get_keywords():
+            desc = []
+            sep = u', '
+            for title in map_.node_titles[:10]:
+                desc.append(title)
+            return sep.join(desc)
+
+        keywords = get_keywords()
 
         def get_long_description(**kwargs):
             desc_fmt = SHARING_FMT_LONG.format(
+                title=map_title,
                 url=map_url,
                 app_url='http://tiny.cc/LearnDiscoveryApp'
             )
@@ -132,6 +159,9 @@ class GraphDetailView(View):
                 topics=topics,
                 more_topics=more_topics,
                 more=more),
+            'keywords' : GRAPH_KEYWORDS_FMT.format(
+                keywords=keywords
+            ),
             'title': map_.get_title(),  # Also set by angular
         })
 
