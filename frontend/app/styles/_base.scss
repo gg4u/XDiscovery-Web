@@ -50,7 +50,9 @@ html, body {
 #page > .inner-wrap,
 #page-content {
 	min-height: 100%;
-	height: 100%;
+	// Fix Luigi: scroll sui mobile con 100% nasconde il fondo della pagina > fixa il bottone menu (perché non è stato fatto a righe... :( ?) )
+	// height: 100%;
+	height: auto;
 }
 
 #page-content > div {
@@ -107,7 +109,7 @@ svg {
 #off-canvas-button {
 	background: $primary-color;
 	z-index: 1000;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	height: 52px;
