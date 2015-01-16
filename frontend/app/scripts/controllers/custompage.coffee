@@ -10,3 +10,5 @@ angular.module('xdiscoveryApp').controller 'custompageCtrl', ($scope, $rootScope
 	$rootScope.site.pageClasses = ['xd-custom-page']
 	$scope.settings = pageSettings
 	$rootScope.documentTitle = pageSettings.title
+	# fix hidden footer ?
+	$rootScope.site.hideFooter = no

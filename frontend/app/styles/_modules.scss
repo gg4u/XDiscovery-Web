@@ -813,15 +813,15 @@ $graph-page-header-height: 52px;
 	}
 }
 
-// fix Luigi : header scroll tagliato padding> margin
+// fix Luigi : header scroll tagliato padding
 .xd-custom-page-content {
-	margin-top: 95px;
+	padding-top: 95px;
 	height: 100%;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 	@media #{$small} {
 		overflow: visible;
-		margin-top: 95px;
+		padding-top: 95px;
 	}
 }
 

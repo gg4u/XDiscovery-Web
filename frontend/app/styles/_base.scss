@@ -51,8 +51,9 @@ html, body {
 #page-content {
 	min-height: 100%;
 	// Fix Luigi: scroll sui mobile con 100% nasconde il fondo della pagina > fixa il bottone menu (perché non è stato fatto a righe... :( ?) )
-	// height: 100%;
-	height: auto;
+	// colonna aside scrolla... fix on .move-right ? > problema con page in atlas!! > padding-top.. .xd-custom-page-content
+	height: 100%;
+	//height: auto;
 }
 
 #page-content > div {

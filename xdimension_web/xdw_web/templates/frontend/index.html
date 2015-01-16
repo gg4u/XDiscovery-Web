@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="apple-itunes-app" content="app-id=859954749">
 
-	
+	<base href="/en/">
 
 	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}frontend/styles/main.css">
@@ -56,7 +56,8 @@
 					</div>
 				</section>
 				<footer class="xd-site-footer" ng-cloak="" ng-hide="site.hideFooter">
-							</footer>
+				  {% static_placeholder "footer" %}
+				</footer>
 
 			</div><!-- .inner-wrap -->
 		</div><!-- .off-canvas-wrap -->
@@ -88,19 +89,5 @@
 		</script>
 		 {% endif %}
 	{% render_block "js" %}
-	<script>
-	if (window.jQuery) { 
-	//funzione per il search al clik dell invio
-    $( document ).ready(function() {
-    $( document ).on( "keyup", ".select2-search-field input", function(event) {
-      if(event.keyCode == 13){
-        angular.element(".xd-atlas-search-button").trigger("ng-click").click()
-      }
-  });
-
-
-      });
-   }
-	</script>
 </body>
 </html>
