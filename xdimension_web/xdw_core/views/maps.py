@@ -106,14 +106,17 @@ class TopicSearchFilter(filters.BaseFilterBackend):
             topics = set([t.strip().lower() for t in request.GET.get('topic').split(",")])
 
         #Inizio una regex con una OR
-        regex = "(?:"; 
+        regex = "";
+        if len(topics) != 0:
+            regex += "(?:"; 
 
         for topic in topics:
             #concatenazione di regex x le singole parole 
             regex += r"\y{0}\y|".format(topic)
 
-        regex = regex[:-1]
-        regex += ")"
+        if len(topics) != 0:
+            regex = regex[:-1]
+            regex += ")"
         
         #estrapola le mappe con nel titolo e nel topic le key prescelte
         q1 = queryset.filter(title__iregex=regex).distinct().order_by('-title').values('id','title')
