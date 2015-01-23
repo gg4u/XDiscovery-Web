@@ -104,20 +104,28 @@ class TopicSearchFilter(filters.BaseFilterBackend):
             topics = set([t.strip().lower() for t in request.QUERY_PARAMS.getlist('topic')])
         if "," in request.GET.get('topic',""):
             topics = set([t.strip().lower() for t in request.GET.get('topic').split(",")])
-        #per ogni topic cercato filtra la query in AND cercando su topic e sul titolo, prima i titoli
+
+        #Inizio una regex con una OR
+        regex = "(?:"; 
 
         for topic in topics:
-            #regex x le singole parole
-            regex = r"\y{0}\y".format(topic)
-            #estrapola le mappe con nel titolo e nel topic la key
-            q1 = queryset.filter(title__iregex=regex).distinct().order_by('-title').values('id','title')
-            q2 = queryset.filter(maptopic__topic__iregex=regex).distinct().order_by('-title').values('id','title')
-            #merge
-            ids = [x['id'] for x in q1]+[x['id'] for x in q2]
-            #query  preservando l ordinamento
-            clauses = ' '.join(['WHEN id=%s THEN %s' % (pk, i) for i, pk in enumerate(ids)])
-            ordering = 'CASE %s END' % clauses
-            queryset = queryset.filter(pk__in=ids).extra(select={'ordering': ordering}, order_by=('ordering',))
+            #concatenazione di regex x le singole parole 
+            regex += r"\y{0}\y|".format(topic)
+
+        regex = regex[:-1]
+        regex += ")"
+        
+        #estrapola le mappe con nel titolo e nel topic le key prescelte
+        q1 = queryset.filter(title__iregex=regex).distinct().order_by('-title').values('id','title')
+        q2 = queryset.filter(maptopic__topic__iregex=regex).distinct().order_by('-title').values('id','title')
+        #merge
+        ids = [x['id'] for x in q1]+[x['id'] for x in q2]
+        #query  preservando l ordinamento
+        clauses = ' '.join(['WHEN id=%s THEN %s' % (pk, i) for i, pk in enumerate(ids)])
+        ordering = 'CASE %s END' % clauses
+        queryset = queryset.filter(pk__in=ids).extra(select={'ordering': ordering}, order_by=('ordering',));
+
+        # return queryset
         return queryset
 
 class MapList(ListCreateAPIView):
