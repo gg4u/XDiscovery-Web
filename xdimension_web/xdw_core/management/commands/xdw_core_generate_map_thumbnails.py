@@ -4,6 +4,10 @@ Restore status of all Topic and MapTopic models.
 from optparse import make_option
 from multiprocessing import Pool
 import signal
+import os
+import subprocess
+
+DEPLOY_MODE = os.environ.get('DEPLOY_MODE', 'local')
 
 from django.core.management.base import NoArgsCommand
 from django.db import transaction
@@ -39,6 +43,15 @@ class Command(NoArgsCommand):
     def handle_noargs(self, **opts):
         map_ids = opts.get('ids')
         force = opts.get('force')
+
+
+        if DEPLOY_MODE == 'local':
+            subprocess.call("sudo apt-get install libjpeg-dev libfreetype6 libfreetype6-dev zlib1g-dev", shell=True)  
+            subprocess.call("sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib", shell=True)  
+            subprocess.call("sudo ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib", shell=True)  
+            subprocess.call("sudo ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib", shell=True)  
+            subprocess.call("pip install -I pillow", shell=True)  
+            force = True
 
         pool = Pool(processes=4)
 
