@@ -10,6 +10,7 @@ from ..models import Topic
 
 # fixing search
 from ..models import Map
+from ..models import MapTopic
 from itertools import chain
 
 # topic.py
@@ -68,7 +69,19 @@ class TopicSearchFilter(filters.BaseFilterBackend):
             if not request.QUERY_PARAMS.get('q') in [x.topic for x in queryset]:
                 queryset = list(chain(list([Topic(topic=request.QUERY_PARAMS.get('q')),]), queryset))
         #costruisce la lista
-        queryset = [x for x in queryset]
+        enumerate_queryset = queryset
+        queryset = []#[x for x in queryset]
+
+        for index,x in enumerate(enumerate_queryset):
+            #topic-maps relationsheep filter
+            topic_maps = MapTopic.objects.filter(topic__icontains=getattr(x, 'topic').encode('utf-8')).count()
+            if topic_maps>0:
+                queryset.append(x)
+
+        if len(queryset) > 0:
+            queryset.pop(0) 
+
+        #Remove current search so you don't find result that doesn't exists
         return queryset[:self.page_size]
 
 
