@@ -1,1 +1,1 @@
-web: circusd circus.ini
+web: newrelic-admin run-program circusd circus.ini
