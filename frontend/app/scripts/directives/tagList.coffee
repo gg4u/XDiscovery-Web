@@ -21,7 +21,7 @@ angular.module('xdiscoveryApp').directive 'tagList', (config) ->
 				results: (data, page) ->
 					canSubmitWithReturn = yes
 					return results: [] unless data?.topic?.length
-					return results: ({ id: t.topic, text: t.topic} for t in data.topic)
+					return results: ({ id: t.topic, text: t.topic.replace('\\','')} for t in data.topic)
 			initSelection: (elem, callback) ->
 				tags = scope.ngModel
 				tags = tags.split(',') if angular.isString(tags)
