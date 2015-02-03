@@ -74,12 +74,12 @@ class TopicSearchFilter(filters.BaseFilterBackend):
 
         for index,x in enumerate(enumerate_queryset):
             #topic-maps relationsheep filter
-            topic_maps = MapTopic.objects.filter(topic__icontains=getattr(x, 'topic').encode('utf-8')).count()
+            topic_maps = getattr(x, 'count')
             if topic_maps>0:
                 queryset.append(x)
 
-        if len(queryset) > 0:
-            queryset.pop(0) 
+        # if len(queryset) > 0:
+        #     queryset.pop(0) 
 
         #Remove current search so you don't find result that doesn't exists
         return queryset[:self.page_size]
