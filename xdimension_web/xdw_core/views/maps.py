@@ -105,22 +105,16 @@ class TopicSearchFilter(filters.BaseFilterBackend):
         if "," in request.GET.get('topic',""):
             topics = set([t.strip().lower() for t in request.GET.get('topic').split(",")])
 
-        #Inizio una regex con una OR
-        regex = "";
-        if len(topics) != 0:
-            regex += "(?:"; 
+        q1 = queryset
+        q2 = queryset
 
-        for topic in topics:
-            #concatenazione di regex x le singole parole 
-            regex += r"\y{0}\y|".format(topic)
+        for t in topics:
+            q1 = q1.filter(title__icontains=t.replace('\\',''))
+            q2 = q2.filter(maptopic__topic__icontains=t.replace('\\',''))    
 
-        if len(topics) != 0:
-            regex = regex[:-1]
-            regex += ")"
-        
         #estrapola le mappe con nel titolo e nel topic le key prescelte
-        q1 = queryset.filter(title__iregex=regex).distinct().order_by('-title').values('id','title')
-        q2 = queryset.filter(maptopic__topic__iregex=regex).distinct().order_by('-title').values('id','title')
+        q1 = q1.distinct().order_by('-title').values('id','title')
+        q2 = q2.distinct().order_by('-title').values('id','title')
         #merge
         ids = [x['id'] for x in q1]+[x['id'] for x in q2]
         #query  preservando l ordinamento
