@@ -21,7 +21,7 @@
 	<!-- @if ENV='dist' -->
 	{% block extrahead %}{% endblock %}
         {% page_attribute "meta_description" as page_meta_description %}
-        <meta proprety="description" content="{dj{ meta.description|default:page_meta_description }dj}">
+        <meta property="description" content="{dj{ meta.description|default:page_meta_description }dj}">
         {% for property, content in meta.items %}{% if property != "description" %}<meta property="{dj{ property }dj}" content="{dj{ content }dj}">{% endif %}
         {% endfor %}
 	{% render_block "css" %}
