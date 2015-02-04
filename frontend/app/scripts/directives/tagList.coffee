@@ -21,7 +21,7 @@ angular.module('xdiscoveryApp').directive 'tagList', (config) ->
 				results: (data, page) ->
 					canSubmitWithReturn = yes
 					return results: [] unless data?.topic?.length
-					return results: ({ id: t.topic, text: t.topic} for t in data.topic)
+					return results: ({ id: t.topic, text: t.topic.replace('\\','')} for t in data.topic)
 			initSelection: (elem, callback) ->
 				tags = scope.ngModel
 				tags = tags.split(',') if angular.isString(tags)
@@ -31,8 +31,10 @@ angular.module('xdiscoveryApp').directive 'tagList', (config) ->
 			element.select2 'val', scope.ngModel
 
 		# Bind select2 val to search query
-		element.on 'change', (e) -> scope.$apply ->
-			scope.ngModel = e.val
+		element.on 'change', (e) -> 
+			scope.$apply -> 
+				scope.ngModel = e.val			
+			do $(".xd-atlas-search-button").click()
 
 		element.select2('container').find('input').on 'keydown', (e) ->
 			# Preventing tab to change focus so it can be used to add a token
