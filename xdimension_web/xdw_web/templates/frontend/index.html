@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title ng-bind-template="xDiscovery &ndash; {% verbatim %}{{documentTitle}}{% endverbatim %}">{% block title %}{% page_attribute "page_title" as page_title %}{% if page_title %}{{ page_title }}{% else %}{{ title|default:"XDiscovery" }}{% endif %}{% endblock %}</title>
+
 	<!-- For IE 9 and below. ICO should be 32x32 pixels in size -->
 	<!--[if IE]><link rel="shortcut icon" href="favicon-small.ico" type="image/x-icon"><![endif]-->
 	<!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
@@ -12,6 +13,8 @@
 	<link rel="icon" href="favicon.png" type="image/png">
 	<!-- Firefox, Chrome, Safari, IE 11+ and Opera. 32x32 pixels in size. -->
 	<link rel="icon" href="favicon-small.png" sizes="32x32" type="image/png">
+	<!-- end favicon -->
+
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="apple-itunes-app" content="app-id=859954749">
 
@@ -21,7 +24,7 @@
 	<link rel="stylesheet" href="{{ STATIC_URL }}frontend/styles/main.css">
 	{% block extrahead %}{% endblock %}
         {% page_attribute "meta_description" as page_meta_description %}
-        <meta proprety="description" content="{{ meta.description|default:page_meta_description }}">
+        <meta property="description" content="{{ meta.description|default:page_meta_description }}">
         {% for property, content in meta.items %}{% if property != "description" %}<meta property="{{ property }}" content="{{ content }}">{% endif %}
         {% endfor %}
 	{% render_block "css" %}
@@ -33,18 +36,21 @@
 	<!--[if lte IE 9]>
 	<style>
 		.left-off-canvas-menu { display:none; }
+		.#page { display:none; }
 	</style>
 	<![endif]-->
         {% render_hidden_placeholder "head"  %}
 </head>
 	<body ng-controller="siteCtrl">
 	  {% cms_toolbar %}
-		<!--[if lt IE 9]><![endif]-->
-			<div class="row" style="height: 100px; position: relative; top: 50%; margin-top: -50px;">
-	  		<p class="browsehappy text-center">You are using an <strong>outdated</strong> browser.</p>
-				<p>Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-			</div>
-
+		<!--[if lt IE 9]>
+			 <div class="unsupported">
+				<div class="row">
+		  		<p class="browsehappy text-center">You are using an <strong>outdated</strong> browser.</p>
+					<p>Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+				</div>
+		  	</div>
+		<![endif]-->
 
 		<div id="fb-root"></div>
 		<script>(function(d, s, id) {
