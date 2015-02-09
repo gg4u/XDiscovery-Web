@@ -48,6 +48,17 @@
 	</style>
 	<![endif]-->
         {% render_hidden_placeholder "head"  %}
+
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53537443-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </head>
 	<body ng-controller="siteCtrl">
 	  <!-- @if ENV='dist' -->
@@ -124,24 +135,24 @@
 				<!-- @endif -->
 				<!-- @if ENV!='dist' -->
 					<div class="row">
-						<div class="small-12 large-3 columns">
+						<div class="small-3 large-3 columns">
 							<h4>Company</h4>
 							<p><a href="">Who we are</a></p>
 							<p><a href="">What we do</a></p>
 							<p><a href="">Why we do it</a></p>
 						</div>
-						<div class="small-12 large-3 columns">
+						<div class="small-3 large-3 columns">
 							<h4>Services</h4>
 							<p><a href="">Discovery vs Search</a></p>
 							<p><a href="">Discovery Engine for Business</a></p>
 							<p><a href="">Portable Discovery Engine</a></p>
 							<p><a href="">The Atlas Project</a></p>
 						</div>
-						<div class="small-12 large-3 columns">
+						<div class="small-3 large-3 columns">
 							<h4>Atlas</h4>
 							<p><a href="">Learn Discovery Atlas</a></p>
 						</div>
-						<div class="small-12 large-3 columns">
+						<div class="small-3 large-3 columns">
 							<h4>Contacts</h4>
 							<p><a href="">Contact Us</a></p>
 							<p><a href="">Facebook</a></p>
@@ -153,8 +164,8 @@
 						<div class="row">
 							<div class="small-12 columns">
 								<ul class="right inline-list">
-									<li><a href="">Term of Service</a></li>
-									<li><a href="">Patent Pending</a></li>
+									<!--<li><a href="">Term of Service</a></li>-->
+									<li><a href="">Patent-Pending U.S. Serial No. 14/109,235</a></li>
 								</ul>
 							</div>
 						</div>
