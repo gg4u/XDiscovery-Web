@@ -575,7 +575,7 @@ $graph-page-header-height: 52px;
 		}
 	}
 
-	@media #{$large} {
+	@media #{$medium} {
 		&.has-banner {
 			bottom: 50px;
 		}
@@ -618,7 +618,7 @@ $graph-page-header-height: 52px;
 		}
 	}
 
-	@media #{$large} {
+	@media #{$medium} {
 		&.has-banner {
 			bottom: 50px;
 		}
@@ -651,7 +651,7 @@ $graph-page-header-height: 52px;
 		bottom: 16%;
 	}
 
-	@media #{$large} {
+	@media #{$medium} {
 		&.has-banner {
 			bottom: 50px;
 		}
@@ -682,7 +682,7 @@ $graph-page-header-height: 52px;
 		}
 	}
 
-	@media #{$large} {
+	@media #{$medium} {
 		&.has-banner {
 			bottom: 30px;
 		}
@@ -726,7 +726,7 @@ $graph-page-header-height: 52px;
 	}
 
 	display: none;
-	@media #{$large} {
+	@media #{$medium} {
 		display: block;
 	}
 }

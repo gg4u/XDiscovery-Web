@@ -13,3 +13,4 @@ db.sqlite
 /.vagrant/
 /package.box
 /.idea/
+npm-debug.log

@@ -12,6 +12,7 @@
     "angular-touch": "1.2.4",
     "angular-sanitize": "1.2.10",
     "select2": "latest",
+    "angulartics": "latest",
     "masonry": "latest",
     "angular-inview": "latest",
     "vivagraph": "latest",

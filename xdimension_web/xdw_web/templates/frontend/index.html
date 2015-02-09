@@ -24,11 +24,11 @@
 	<link rel="stylesheet" href="{{ STATIC_URL }}frontend/styles/main.css">
 	{% block extrahead %}{% endblock %}
         {% page_attribute "meta_description" as page_meta_description %}
-        <meta property="description" content="{{ meta_items.description|default:page_meta_description }}">
+        <meta property="description" content="{{meta_items.description|default:page_meta_description }}">
         {% for property, content in meta.items %}{% if property != "description" %}<meta property="{{ property }}" content="{{ content }}">{% endif %}
         {% endfor %}
         {% page_attribute "meta_keywords" as page_meta_keywords %}
-        <meta property="keywords" content="{{ meta_items.keywords|default:page_meta_keywords }}">
+        <meta property="description" content="{{meta_items.keywords|default:page_meta_keywords }}">
         {% for property, content in meta.items %}{% if property != "keywords" %}<meta property="{{ property }}" content="{{ content }}">{% endif %}
         {% endfor %}
 	{% render_block "css" %}
@@ -51,8 +51,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-53537443-1', 'none');
-  ga('send', 'pageview');
+  ga('create', 'UA-53537443-1', 'auto');
 
 </script>
 </head>
