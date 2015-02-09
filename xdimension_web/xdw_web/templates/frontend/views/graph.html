@@ -70,9 +70,12 @@
 					<iframe id="ytplayer" type="text/html" width="100%" height="360" src="{% verbatim %}{{map.getYoutubeSearchUrl(vivagraph.selected.info.title)}}{% endverbatim %}" frameborder="0" allowfullscreen=""></iframe>
 				</div>
 				<div ng-switch-when="sources" ng-class="'sources'">
-				<p>Webpages and resources about "{% verbatim %}{{vivagraph.selected.info.title}}{% endverbatim %}" topic, aggregated from search engines.
+				<p>News, webpages and resources about "{% verbatim %}{{vivagraph.selected.info.title}}{% endverbatim %}" topic, pulled from search engines.
 				</p>
 						<dl>
+							<dd>
+								<strong>News</strong> about: <a href="https://www.google.com/search?hl=en&gl=us&tbm=nws&q={% verbatim %}{{vivagraph.selected.info.title}}{% endverbatim %}" target="_blank" ng-bind="vivagraph.selected.info.title">&ndash;</a>
+							</dd>
 							<dd>
 								<strong>Google</strong> - Search for: <a href="http://www.google.com/?#q={% verbatim %}{{vivagraph.selected.info.title}}{% endverbatim %}" target="_blank" ng-bind="vivagraph.selected.info.title">&ndash;</a>
 							</dd>
@@ -86,6 +89,9 @@
 								<strong>DuckDuckGo</strong> - Search for: <a href="http://duckduckgo.com/?q={% verbatim %}{{vivagraph.selected.info.title}}{% endverbatim %}" target="_blank" ng-bind="vivagraph.selected.info.title">&ndash;</a>
 							</dd>
 						</dl>
+
+
+
 					</div>
 
 			</div>

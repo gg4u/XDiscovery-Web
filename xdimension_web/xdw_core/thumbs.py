@@ -76,7 +76,8 @@ def download_images(urls):
 
 TEXT_MARGIN = 10
 FONT_FNAME = os.path.join(os.path.dirname(__file__), 'fonts', 'sans.ttf')
-BG_COLOR = '#1c1e1f'
+#BG_COLOR = '#1c1e1f'
+BG_COLOR = '#f7f7f7'
 MAX_LINES = 3
 
 

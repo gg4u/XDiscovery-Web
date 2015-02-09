@@ -5,7 +5,17 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title ng-bind-template="xDiscovery &ndash; {{documentTitle}}"><!-- @if ENV='dist' -->{% block title %}{% page_attribute "page_title" as page_title %}{% if page_title %}{dj{ page_title }dj}{% else %}{dj{ title|default:"XDiscovery" }dj}{% endif %}{% endblock %}<!-- @endif --></title>
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+	<!-- For IE 9 and below. ICO should be 32x32 pixels in size -->
+	<!--[if IE]><link rel="shortcut icon" href="favicon-small.ico" type="image/x-icon"><![endif]-->
+	<!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
+	<link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+	<!-- Firefox, Chrome, Safari, IE 11+ and Opera. 196x196 pixels in size. -->
+	<link rel="icon" href="favicon.png" type="image/png">
+	<!-- Firefox, Chrome, Safari, IE 11+ and Opera. 32x32 pixels in size. -->
+	<link rel="icon" href="favicon-small.png" sizes="32x32" type="image/png">
+	<!-- end favicon -->
+
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="apple-itunes-app" content="app-id=859954749">
 
@@ -38,16 +48,33 @@
 	<!--[if lte IE 9]>
 	<style>
 		.left-off-canvas-menu { display:none; }
+		.#page { display:none; }
 	</style>
 	<![endif]-->
         {% render_hidden_placeholder "head"  %}
+
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53537443-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </head>
 	<body ng-controller="siteCtrl">
 	  <!-- @if ENV='dist' -->
 	  {% cms_toolbar %}
 	  <!-- @endif -->
-		<!--[if lt IE 9]>
-			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<!--[if lte IE 9]>
+			 <div class="unsupported">
+				<div class="row">
+		  		<p class="browsehappy text-center">You are using an <strong>outdated</strong> browser.</p>
+					<p>Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+				</div>
+		  	</div>
 		<![endif]-->
 
 		<div id="fb-root"></div>
@@ -112,24 +139,24 @@
 				<!-- @endif -->
 				<!-- @if ENV!='dist' -->
 					<div class="row">
-						<div class="small-12 large-3 columns">
+						<div class="small-3 large-3 columns">
 							<h4>Company</h4>
 							<p><a href="">Who we are</a></p>
 							<p><a href="">What we do</a></p>
 							<p><a href="">Why we do it</a></p>
 						</div>
-						<div class="small-12 large-3 columns">
+						<div class="small-3 large-3 columns">
 							<h4>Services</h4>
 							<p><a href="">Discovery vs Search</a></p>
 							<p><a href="">Discovery Engine for Business</a></p>
 							<p><a href="">Portable Discovery Engine</a></p>
 							<p><a href="">The Atlas Project</a></p>
 						</div>
-						<div class="small-12 large-3 columns">
+						<div class="small-3 large-3 columns">
 							<h4>Atlas</h4>
 							<p><a href="">Learn Discovery Atlas</a></p>
 						</div>
-						<div class="small-12 large-3 columns">
+						<div class="small-3 large-3 columns">
 							<h4>Contacts</h4>
 							<p><a href="">Contact Us</a></p>
 							<p><a href="">Facebook</a></p>
@@ -141,8 +168,8 @@
 						<div class="row">
 							<div class="small-12 columns">
 								<ul class="right inline-list">
-									<li><a href="">Term of Service</a></li>
-									<li><a href="">Patent Pending</a></li>
+									<!--<li><a href="">Term of Service</a></li>-->
+									<li><a href="">Patent-Pending U.S. Serial No. 14/109,235</a></li>
 								</ul>
 							</div>
 						</div>
