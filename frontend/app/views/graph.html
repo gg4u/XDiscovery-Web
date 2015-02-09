@@ -79,9 +79,12 @@
 					frameborder="0" allowfullscreen></iframe>
 				</div>
 				<div ng-switch-when="sources" ng-class="'sources'">
-				<p>Webpages and resources about "{{vivagraph.selected.info.title}}" topic, aggregated from search engines.
+				<p>News, webpages and resources about "{{vivagraph.selected.info.title}}" topic, pulled from search engines.
 				</p>
 						<dl>
+							<dd>
+								<strong>News</strong> about: <a href="https://www.google.com/search?hl=en&gl=us&tbm=nws&q={{vivagraph.selected.info.title}}" target="_blank" ng-bind="vivagraph.selected.info.title">&ndash;</a>
+							</dd>
 							<dd>
 								<strong>Google</strong> - Search for: <a href="http://www.google.com/?#q={{vivagraph.selected.info.title}}" target="_blank" ng-bind="vivagraph.selected.info.title">&ndash;</a>
 							</dd>
@@ -95,6 +98,9 @@
 								<strong>DuckDuckGo</strong> - Search for: <a href="http://duckduckgo.com/?q={{vivagraph.selected.info.title}}" target="_blank" ng-bind="vivagraph.selected.info.title">&ndash;</a>
 							</dd>
 						</dl>
+
+
+
 					</div>
 
 			</div>
