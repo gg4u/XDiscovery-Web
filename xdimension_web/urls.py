@@ -28,8 +28,20 @@ urlpatterns = patterns(
     # REST API
     url(r'^api-atlas/', include('xdimension_web.xdw_core.urls',
                                 namespace='xdw_core')),
+    url(r'^apple-touch-icon-precomposed\.png$', RedirectView.as_view(
+        url='{}frontend/apple-touch-icon-precomposed.png'.format(settings.STATIC_URL)
+    )),
+    url(r'^favicon-small\.ico$', RedirectView.as_view(
+        url='{}frontend/favicon-small.ico'.format(settings.STATIC_URL)
+    )),
     url(r'^favicon\.ico$', RedirectView.as_view(
         url='{}frontend/favicon.ico'.format(settings.STATIC_URL)
+    )),
+    url(r'^favicon-small\.png$', RedirectView.as_view(
+        url='{}frontend/favicon-small.png'.format(settings.STATIC_URL)
+    )),
+    url(r'^favicon\.png$', RedirectView.as_view(
+        url='{}frontend/favicon.png'.format(settings.STATIC_URL)
     ))
 )
 
