@@ -1,1 +1,1 @@
-web: run-program circusd circus.ini
+web: circusd circus.ini
