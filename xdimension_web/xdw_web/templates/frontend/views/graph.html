@@ -50,8 +50,6 @@
 	<div class="content row">
 		<div class="small-12 columns">
 
-			<h2 ng-bind="vivagraph.selected.info.title">&ndash;</h2>
-
 			<dl class="sub-nav">
 				<dd ng-class="{ 'active':!vivagraph.selected.tab }">
 					<a href="" ng-click="vivagraph.selected.tab = null">Topic</a></dd>
@@ -60,6 +58,8 @@
 				<dd ng-class="{ 'active':vivagraph.selected.tab=='sources' }">
 					<a href="" ng-click="vivagraph.selected.tab = 'sources'">Other Sources</a></dd>
 			</dl>
+
+			<h2 ng-bind="vivagraph.selected.info.title">&ndash;</h2>
 
 			<div class="tabbed content" ng-switch="vivagraph.selected.tab">
 				<div ng-switch-default="" ng-class="'topic'">
