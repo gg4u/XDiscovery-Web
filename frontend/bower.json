@@ -15,7 +15,7 @@
     "angulartics": "latest",
     "masonry": "latest",
     "angular-inview": "latest",
-    "vivagraph": "latest",
+    "vivagraph": "0.6.3",
     "foundation": "5.0.2",
     "hammerjs": "1.0.5",
     "ionicons": "1.4.0",
