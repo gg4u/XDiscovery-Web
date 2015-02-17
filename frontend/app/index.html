@@ -29,13 +29,14 @@
 	<link rel="stylesheet" href="/styles/main.css">
 	<!-- endbuild -->
 	<!-- @if ENV='dist' -->
+	<meta property="author" content="Luigi Assom">
 	{% block extrahead %}{% endblock %}
         {% page_attribute "meta_description" as page_meta_description %}
         <meta property="description" content="{dj{meta_items.description|default:page_meta_description }dj}">
         {% for property, content in meta.items %}{% if property != "description" %}<meta property="{dj{ property }dj}" content="{dj{ content }dj}">{% endif %}
         {% endfor %}
         {% page_attribute "meta_keywords" as page_meta_keywords %}
-        <meta property="description" content="{dj{meta_items.keywords|default:page_meta_keywords }dj}">
+        <meta property="keywords" content="{dj{meta_items.keywords|default:page_meta_keywords }dj}">
         {% for property, content in meta.items %}{% if property != "keywords" %}<meta property="{dj{ property }dj}" content="{dj{ content }dj}">{% endif %}
         {% endfor %}
 	{% render_block "css" %}
@@ -135,8 +136,11 @@
 				<footer class="xd-site-footer" ng-cloak ng-hide="site.hideFooter">
 				<!-- @if ENV='dist' -->
 				  {% static_placeholder "footer" %}
+		
 				<!-- @endif -->
+				
 				<!-- @if ENV!='dist' -->
+					
 					<div class="row">
 						<div class="small-3 large-3 columns">
 							<h4>Company</h4>
@@ -167,12 +171,15 @@
 						<div class="row">
 							<div class="small-12 columns">
 								<ul class="right inline-list">
-									<!--<li><a href="">Term of Service</a></li>-->
+									<!--
+									<li><a href="">Term of Service</a></li>-->
 									<li><a href="">Patent-Pending U.S. Serial No. 14/109,235</a></li>
 								</ul>
 							</div>
 						</div>
 					</div>
+
+			
 				<!-- @endif -->
 				</footer>
 
