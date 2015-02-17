@@ -27,6 +27,9 @@ class PartialResponseMiddleware(object):
 OK_URLS = ['/en/atlas', '/api', '/views', '/map', '/en/graph', '/media',
            '/graph', '/atlas']
 
+'''
+# This class is for hiding front-page if due to errors
+# uncomment in settings/common.py : ...WIPMiddleware 
 
 class WIPMiddleware(object):
 
@@ -38,3 +41,6 @@ class WIPMiddleware(object):
                 not request.GET.get('angular') and
                 not request.is_ajax()):
             return wip_page(request)
+
+
+'''

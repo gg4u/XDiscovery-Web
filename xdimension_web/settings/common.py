@@ -77,7 +77,7 @@ MIDDLEWARE_CLASSES += (
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'xdimension_web.xdw_web.middleware.WIPMiddleware',
+    #'xdimension_web.xdw_web.middleware.WIPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.doc.XViewMiddleware',
