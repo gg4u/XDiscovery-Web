@@ -55,14 +55,14 @@ SHARING_FMT_LONG = (
 )
 
 SHARING_FMT_SHORT = (
-    u'Learn in seconds: about {{topics}} and {{more_topics}} topics! '
+    u'#VisualMap #SemanticTree {{topics}} + {{more_topics}} topics! '
     #u'{url} | Get your maps > {app_url}'
-    u'Save your own visual references: LearnDiscovery mobile app (iOS)'
+    u'Make yours W LearnDiscovery app (iOS)'
 )
 
 SHARING_FMT_TWITTER_CARD = (
     u'#VisualMap #SemanticTree {{topics}} + {{more_topics}} #wikipedia topics! '
-    u'Save your own visual references: {app_url}'
+    u'Make yours W {app_url}'
 )
 
 GRAPH_DESCRIPTION_FMT = (

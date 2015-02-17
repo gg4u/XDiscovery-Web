@@ -21,7 +21,7 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 			tags = map.getTags()
 			topic = tags[0]
 			more_topics = map.nodeTitles.count - 1
-			"https://twitter.com/share?url=#{encodedMapUrl}&text=Learn%20in%20seconds%3A%20about%20%23#{topic}%20and%20other%20#{more_topics}%20topics%21%20Get%20your%20maps%20http%3A//tiny.cc/LearnDiscoveryApp"
+			"https://twitter.com/share?url=#{encodedMapUrl}&text=#VisualMap%20#SemanticTree%20#{topic}%20%2B%20#{more_topics}%20#wikipedia%20topics%21%20Make%20yours%20W%20http%3A//tiny.cc/LearnDiscoveryApp"
 		map.getRedditUrl = (title) ->
 			title = map.title unless title?
 			"http://www.reddit.com/submit?url=#{encodedMapUrl}&title=#{title}"
