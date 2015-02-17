@@ -4,7 +4,7 @@ import logging
 from django.core.urlresolvers import reverse
 from django.conf import settings
 
-from .views import wip_page
+# from .views import wip_page
 
 logger = logging.getLogger(__name__)
 
