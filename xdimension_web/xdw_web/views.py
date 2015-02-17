@@ -187,9 +187,11 @@ class GraphDetailView(View):
                       {'meta': og_context,
                        'title': map_.get_title()})
 
-
+'''
 @cache_page
 def wip_page(request):
-    '''Work in Progress.
+    '''
+       # Work in Progress.
     '''
     return render(request, 'xdw_web/wip.html')
+'''
