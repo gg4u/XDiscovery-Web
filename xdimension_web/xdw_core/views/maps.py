@@ -100,6 +100,7 @@ class TopicSearchFilter(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         #cicla sugli argomenti della request per prendere i topics cercati
         topics = []
+
         if request.QUERY_PARAMS.getlist('topic'):
             topics = set([t.strip().lower() for t in request.QUERY_PARAMS.getlist('topic')])
         if "," in request.GET.get('topic',""):
@@ -112,9 +113,11 @@ class TopicSearchFilter(filters.BaseFilterBackend):
             q1 = q1.filter(title__icontains=t.replace('\\',''))
             q2 = q2.filter(maptopic__topic__icontains=t.replace('\\',''))    
 
+        queryOrder = request.GET.get('ordering',"-title").encode("utf-8")
+
         #estrapola le mappe con nel titolo e nel topic le key prescelte
-        q1 = q1.distinct().order_by('-title').values('id','title')
-        q2 = q2.distinct().order_by('-title').values('id','title')
+        q1 = q1.distinct().order_by(queryOrder,"-title").values('id','title')
+        q2 = q2.distinct().order_by(queryOrder,"-title").values('id','title')
         #merge
         ids = [x['id'] for x in q1]+[x['id'] for x in q2]
         #query  preservando l ordinamento

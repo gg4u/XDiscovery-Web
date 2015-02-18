@@ -11,7 +11,7 @@ app.controller 'AtlasCtrl', ($scope, $rootScope, $location, xDiscoveryApi, mapSe
 	q = $location.search()['topic']
 	q = q.split(',') if angular.isString(q)
 	$scope.search =
-		ordering: $location.search()['ordering'] or '-popular'
+		ordering: $location.search()['ordering'] or '-popularity'
 		featured: parseInt($location.search()['featured']) == 1
 		query: q
 		lastQuery: q
