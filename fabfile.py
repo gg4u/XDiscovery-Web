@@ -82,9 +82,11 @@ def deploy(env, frontend='True', backend='True', branch=''):
         #  *after* db migration.
         #  - Db migration should happen in a separate utility heroku app
         app = get_app_name(env)
+        print app
         if not branch:
             branch = 'master' if env == 'production' else 'develop'
         local('git push {app} {branch}:master'.format(app=app, branch=branch))
+        #local('git push {app} origin:{branch}'.format(app=app, branch=branch))
         local('heroku run python manage.py migrate --all --noinput --app {}'
               .format(app))
 

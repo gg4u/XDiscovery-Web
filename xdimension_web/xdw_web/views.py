@@ -46,10 +46,11 @@ class AtlasView(View):
 
 SHARING_FMT_LONG = (
     u'A visual map about {{topics}} and {{more_topics}} topics. '
-    u'Make sense of semantic trees about: "{title}"! '
-    u'This map visualizes a portion of the mind-map of the English Wikipedia - mapped at XDiscovery. '
-    u'Correlations between topics are organized, so to effortlessly visualize and learn about a subject. '
-    u'To map and save your own visual reference: LearnDiscovery mobile app (iOS). '
+    u'Make sense of semantic trees about "{title}"! '
+    u'To access the mind-map of Wikipedia and save your maps: {app_url}'
+    #u'This map visualizes a portion of the mind-map of English Wikipedia - mapped at XDiscovery. '
+    #u'Correlations between topics are organized, so to effortlessly visualize and learn about a subject. '
+    #u'To map and save your own visual reference: LearnDiscovery mobile app (iOS). '
     #u'{url} | Made with #LearnDiscovery app >  Get the Human'
     #u'Knowledge in your hands > {app_url}'
 )
@@ -57,7 +58,8 @@ SHARING_FMT_LONG = (
 SHARING_FMT_SHORT = (
     u'#VisualMap #SemanticTree {{topics}} + {{more_topics}} topics! '
     #u'{url} | Get your maps > {app_url}'
-    u'Make yours W LearnDiscovery app (iOS)'
+    #u'Make yours W LearnDiscovery app (iOS)'
+    u'Make yours W {app_url}'
 )
 
 SHARING_FMT_TWITTER_CARD = (
