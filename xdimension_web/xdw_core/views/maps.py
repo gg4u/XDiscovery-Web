@@ -113,7 +113,7 @@ class TopicSearchFilter(filters.BaseFilterBackend):
             q1 = q1.filter(title__icontains=t.replace('\\',''))
             q2 = q2.filter(maptopic__topic__icontains=t.replace('\\',''))    
 
-        queryOrder = request.GET.get('ordering',"-title").encode("utf-8")
+        queryOrder = request.GET.get('ordering',"-popularity").encode("utf-8")
 
         #estrapola le mappe con nel titolo e nel topic le key prescelte
         q1 = q1.distinct().order_by(queryOrder,"-title").values('id','title')
