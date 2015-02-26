@@ -31,15 +31,40 @@ ATLAS_DESCRIPTION = u'The Atlas of Human Knowledge is a collection of visual map
 
 ATLAS_KEYWORDS = u'semantic, tree, trees, visual, learning, map, knowledge, mapping, connected, graph, graphs, education, discovery, ict4d, ict for development, share knowledge, learndiscovery, app'
 
+ATLAS_TITLE = u'Atlas of Human Knowledge - Visual maps, visualizing Wikipedia'
 
 class AtlasView(View):
     def get(self, request, path='index.html'):
+
+        og_context = get_opengraph_context()
+
+        og_context.update({
+            'description': ATLAS_DESCRIPTION,
+            'keywords' : ATLAS_KEYWORDS,
+            'title': ATLAS_TITLE  # Also set by angular
+        })
+
+        # Facebook
+        og_context.update({
+            'og:title': ATLAS_TITLE,
+            'og:description': ATLAS_DESCRIPTION
+        })
+
+        # Twitter
+        og_context.update({
+            'twitter:card': 'summary_large_image',
+            'twitter:site': '@XDiscovery',
+            'twitter:title': ATLAS_TITLE,
+            'twitter:description': ATLAS_DESCRIPTION,
+            'twitter:creator': '@XDiscoveryWorld',
+            'twitter:domain': Site.objects.get_current()
+        })
+
         return render(request,
                       'frontend/{}'.format(path),
-                      {'meta_items':
-                           {'description': ATLAS_DESCRIPTION, 'keywords' : ATLAS_KEYWORDS},
+                      {'meta':og_context,
                        # title is set by angular anyways
-                       'title': 'Atlas of Human Knowledge - Visual maps, visualizing Wikipedia'}
+                       'title': ATLAS_TITLE}
         )
 
 
