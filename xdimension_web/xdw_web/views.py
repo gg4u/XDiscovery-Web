@@ -49,8 +49,8 @@ class AtlasView(View):
         # Facebook
         og_context.update({
             'og:title': ATLAS_TITLE,
-            'og:description': ATLAS_DESCRIPTION
-            # 'og:image': ATLAS_IMG
+            'og:description': ATLAS_DESCRIPTION,
+            'og:image': ATLAS_IMG
         })
 
         # Twitter
@@ -60,8 +60,8 @@ class AtlasView(View):
             'twitter:title': ATLAS_TITLE,
             'twitter:description': ATLAS_DESCRIPTION,
             'twitter:creator': '@XDiscoveryWorld',
-            'twitter:domain': Site.objects.get_current()
-            # 'twitter:image:src': ATLAS_IMG
+            'twitter:domain': Site.objects.get_current(),
+            'twitter:image:src': ATLAS_IMG
         })
 
         return render(request,
