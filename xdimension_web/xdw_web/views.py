@@ -33,6 +33,8 @@ ATLAS_KEYWORDS = u'semantic, tree, trees, visual, learning, map, knowledge, mapp
 
 ATLAS_TITLE = u'Atlas of Human Knowledge - Visual maps, visualizing Wikipedia'
 
+ATLAS_IMG = u'{static_url}images/atlas-share-image.jpg'.format(static_url=settings.STATIC_URL)
+
 class AtlasView(View):
     def get(self, request, path='index.html'):
 
@@ -41,13 +43,15 @@ class AtlasView(View):
         og_context.update({
             'description': ATLAS_DESCRIPTION,
             'keywords' : ATLAS_KEYWORDS,
-            'title': ATLAS_TITLE  # Also set by angular
+            'title': ATLAS_TITLE,  # Also set by angular
+            'image': ATLAS_IMG
         })
 
         # Facebook
         og_context.update({
             'og:title': ATLAS_TITLE,
-            'og:description': ATLAS_DESCRIPTION
+            'og:description': ATLAS_DESCRIPTION,
+            'og:image': ATLAS_IMG
         })
 
         # Twitter
@@ -57,7 +61,8 @@ class AtlasView(View):
             'twitter:title': ATLAS_TITLE,
             'twitter:description': ATLAS_DESCRIPTION,
             'twitter:creator': '@XDiscoveryWorld',
-            'twitter:domain': Site.objects.get_current()
+            'twitter:domain': Site.objects.get_current(),
+            'twitter:image:src': ATLAS_IMG
         })
 
         return render(request,
