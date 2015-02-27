@@ -33,7 +33,7 @@ ATLAS_KEYWORDS = u'semantic, tree, trees, visual, learning, map, knowledge, mapp
 
 ATLAS_TITLE = u'Atlas of Human Knowledge - Visual maps, visualizing Wikipedia'
 
-ATLAS_IMG = u'{static_url}images/atlas-share-image.jpg'.format(static_url=settings.STATIC_URL)
+ATLAS_IMG = u'{static_url}frontend/images/atlas-share-image.jpg'.format(static_url=settings.STATIC_URL)
 
 class AtlasView(View):
     def get(self, request, path='index.html'):
