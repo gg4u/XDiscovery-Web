@@ -13,7 +13,7 @@ app.service 'xDiscoveryApi', ($resource, $http, $location, $sce, config) ->
 		map.voteUp = voteUp
 		map.voteDown = voteDown
 		# Urls
-		map.url = "#{$location.protocol()}://#{$location.host()}/graph/#{map.id}"
+		map.url = "#{$location.protocol()}://#{$location.host()}/en/graph/#{map.id}"
 		encodedMapUrl = encodeURIComponent(map.url)
 		map.getFacebookUrl = -> "https://www.facebook.com/sharer/sharer.php?u=#{encodedMapUrl}"
 		map.getGplusUrl = -> "https://plus.google.com/share?url=#{encodedMapUrl}"
