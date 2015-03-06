@@ -1,0 +1,134 @@
+/* carousel supporting full screen images */
+
+
+
+@media only screen and (min-width: 40.063em) {
+	.xd-carousel-container .rn-carousel-slides {
+	padding: 0;
+	}
+
+	.xd-carousel-container .rn-carousel-slides {
+	padding: 0;
+	height: 19em;
+	}
+
+	.slogan {
+	min-height: 19rem;
+	}
+
+	.slogan div {
+		min-height: 19rem;
+	}
+
+	.slogan p {
+		position: relative;
+		top: 7rem;
+		font-size: 3rem;
+		font-family: Gill Sans;
+		font-weight: 100;
+		padding-left: 4rem;
+		padding-right: 4rem;
+		color: white;
+	}
+
+	.slogan p a {
+		color: white;
+	}
+
+
+}
+
+@media only screen and (max-width: 40.063em) {
+
+	.slogan {
+	min-height: 12rem;
+	}
+
+	.slogan div {
+		min-height: 12rem;
+	}
+
+	.slogan p {
+		position: relative;
+		top: 4.7rem;
+		bottom: 4.5rem;
+		font-size: 1.3rem;
+		font-family: Gill Sans;
+		font-weight: 100;
+		padding-left: 4rem;
+		padding-right: 4rem;
+		color: white;
+	}
+
+	.slogan p a {
+		color: white;
+	}
+
+	.slogan br {
+		display: none;
+	}
+
+	.xd-carousel-container .rn-carousel-slides {
+		padding: 0;
+	}
+}
+
+	
+
+
+
+
+
+
+.slogan .slide-1 {
+	/*background: url(http://unplugged.ee/wp-content/uploads/2013/03/frank2.jpg);*/
+	background-color: #12af83;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	height: 100%;
+
+}
+
+.slogan .slide-2 {
+	/*background: url(http://unplugged.ee/wp-content/uploads/2013/03/frank2.jpg);*/
+	background-color: #12af83;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	height: 100%;
+
+}
+
+.slogan .slide-3 {
+	/*background: url(http://unplugged.ee/wp-content/uploads/2013/03/frank2.jpg);*/
+	background-color: #0067b4;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	height: 100%;
+
+}
+
+.slogan .slide-4 {
+	/*background: url(http://unplugged.ee/wp-content/uploads/2013/03/frank2.jpg);*/
+	background-color: #12af83;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	height: 100%;
+
+}
+
+
+.slogan .slide-5 {
+	/*background: url(http://unplugged.ee/wp-content/uploads/2013/03/frank2.jpg);*/
+	background-color: #1C1E1F;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	height: 100%;
+
+}
+
+
+
+
+
+
+

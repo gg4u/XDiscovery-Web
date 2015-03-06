@@ -1015,7 +1015,7 @@ a.xd-back-to-top {
 		display: block;
 		text-align: right;
 		&:after {
-			content: ' »';
+			content: ' \00BB';
 		}
 	}
 
