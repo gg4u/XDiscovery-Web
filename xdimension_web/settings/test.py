@@ -14,7 +14,7 @@ DATABASES = {
 }
 
 ADMINS = (
-    ('marco', 'marco@credra.com'),
+    ('luigi', 'luigi.assom@gmail.com'),
 )
 
 MANAGERS = ADMINS
