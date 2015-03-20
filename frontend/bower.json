@@ -21,7 +21,8 @@
     "ionicons": "1.4.0",
     "jquery-hammerjs": "*",
     "pace": "0.5.1",
-    "angular-carousel": "0.2.3"
+    "angular-carousel": "0.2.3",
+    "imagesloaded": "latest"
   },
   "devDependencies": {
     "angular-mocks": "1.2.20",
