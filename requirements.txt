@@ -1,3 +1,4 @@
+--allow-unverified django-mptt
 -r requirements/heroku.txt
 # for heroku to bootstrap memcache
 #pylibmc==1.2.2
